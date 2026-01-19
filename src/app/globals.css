@@ -456,6 +456,38 @@ a.categories-item:hover iconify-icon.category-icon {
 #banner .swiper-pagination {
   margin-bottom: 3rem;
 }
+
+/* Mobile Banner Adjustments */
+@media screen and (max-width: 767px) {
+  #banner .banner-img {
+    max-height: 40vh; /* Restrict image height */
+    width: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    display: block;
+  }
+  
+  #banner .banner-title {
+    font-size: 2.5rem; /* Smaller than display-4 */
+  }
+
+  #banner .swiper-pagination {
+    bottom: 0 !important;
+    margin-bottom: 10px !important;
+  }
+
+  #banner .content-wrapper {
+    text-align: center; /* Center text on mobile for better look */
+    padding-bottom: 5rem !important; /* Significantly increase padding to secure button from dots */
+    margin-bottom: 0 !important; /* Remove margin to rely on padding */
+  }
+  
+  #banner .img-wrapper {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+}
 #banner .swiper-pagination-bullet-active {
   background-color: var(--bs-body-color);
   background: var(--bs-body-color);
