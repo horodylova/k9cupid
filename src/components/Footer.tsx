@@ -8,33 +8,36 @@ export default function Footer() {
         <div className="container py-5 my-5">
           <div className="row">
             <div className="col-md-3">
-              <div className="footer-menu">
-                <Link href="/">
+              <div className="footer-menu footer-brand">
+                <Link href="/" className="footer-brand-link text-decoration-none">
                   <Image
                     src="/Cupid and Dogs-Picsart-BackgroundRemover.png"
                     alt="k9cupid logo"
-                    className="img-fluid logo-image mb-3"
+                    className="img-fluid footer-logo-image"
                     width={250}
                     height={250}
                     style={{ maxHeight: '120px', width: 'auto' }}
                   />
+                  <h5 className="footer-site-title mb-0">k9cupid</h5>
                 </Link>
-                <p className="blog-paragraph fs-6 mt-3">
-                  Your ultimate guide to finding the perfect canine companion. We help you discover, understand, and connect with the dog breed that fits your lifestyle.
-                </p>
-                <div className="social-links">
-                  <ul className="d-flex list-unstyled gap-2">
-                    <li className="social">
-                      <a href="#">
-                        <iconify-icon className="social-icon" icon="ri:facebook-fill"></iconify-icon>
-                      </a>
-                    </li>
-                    <li className="social">
-                      <a href="#">
-                        <iconify-icon className="social-icon" icon="ri:instagram-fill"></iconify-icon>
-                      </a>
-                    </li>
-                  </ul>
+                <div className="footer-brand-content">
+                  <p className="blog-paragraph fs-6 mt-3 footer-brand-text">
+                    Your ultimate guide to finding the perfect canine companion. We help you discover, understand, and connect with the dog breed that fits your lifestyle.
+                  </p>
+                  <div className="social-links">
+                    <ul className="d-flex list-unstyled gap-3">
+                      <li className="social">
+                        <a href="#">
+                          <iconify-icon className="social-icon" icon="ri:facebook-fill"></iconify-icon>
+                        </a>
+                      </li>
+                      <li className="social">
+                        <a href="#">
+                          <iconify-icon className="social-icon" icon="ri:instagram-fill"></iconify-icon>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
