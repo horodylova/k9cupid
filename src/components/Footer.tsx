@@ -4,8 +4,8 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <>
-      <footer id="footer" className="my-5">
-        <div className="container py-5 my-5">
+      <footer id="footer" className="mt-5">
+        <div className="container py-5">
           <div className="row">
             <div className="col-md-3">
               <div className="footer-menu footer-brand">

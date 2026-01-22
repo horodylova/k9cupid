@@ -116,8 +116,8 @@ export default function Header() {
       </div>
 
       <header>
-        <div className="container">
-          <div className="row py-0 align-items-center ">
+        <div className="container py-2">
+          <div className="row py-4 pb-0 pb-sm-4 align-items-center ">
 
             <div className="col-sm-4 col-lg-3 text-center text-sm-start">
               <div className="main-logo">

@@ -1,5 +1,3 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
-
 /*
 Theme Name: Waggy
 Theme URI: https://templatesjungle.com/
@@ -346,24 +344,128 @@ a {
   }
 }
 
+
 /* search bar style  */
 .search-bar {
-  background-color: #F1F1F0;
+  border: 1px solid #EAEAEA;
 }
 
-.search-bar .form-control {
-  background-color: transparent;
+.search-bar ::placeholder {
+  font-family: var(--secondary-font);
 }
 
-.search-bar .form-control:focus {
+.form-control:focus {
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+  border-color: #86b7fe;
+  outline: 0;
   box-shadow: none;
-  border-color: transparent;
 }
 
-.search-button {
-  cursor: pointer;
-  background: transparent;
+
+/* nav bar style  */
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show,
+.nav-link:focus,
+.nav-link:hover {
+  color: var(--accent-color);
+}
+
+/* category style */
+iconify-icon.category-icon {
+  color: #DEAD6F99;
+  font-size: 100px;
+  transition: all 0.3s ease-in;
+
+}
+
+a.categories-item:hover iconify-icon.category-icon {
+  color: #DEAD6F;
+}
+
+
+/* banner style */
+.swiper-pagination-bullet {
+  border: 1px solid var(--bs-body-color);
+  background-color: transparent;
+  opacity: 1;
+  width: var(--swiper-pagination-bullet-width, var(--swiper-pagination-bullet-size, 15px));
+  height: var(--swiper-pagination-bullet-height, var(--swiper-pagination-bullet-size, 15px));
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background-color: var(--bs-body-color);
+  background: var(--bs-body-color);
+}
+
+.swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+  margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 8px);
+}
+
+
+
+/* pet clothing */
+.card {
+  --bs-card-inner-border-radius: none;
+  --bs-card-bg: transparent;
+  background-color: transparent;
   border: none;
+}
+
+a.btn-cart {
+  border-radius: 0.25rem;
+  border: 1px solid rgba(65, 64, 62, 0.20);
+}
+
+a.btn-wishlist {
+
+  border-radius: 0.25rem;
+  border: 1px solid rgba(65, 64, 62, 0.20);
+}
+
+
+/* pet foodies style  */
+button.filter-button {
+  letter-spacing: 0.02125rem;
+  border: none;
+  border-bottom: 2px solid #D9D9D8;
+  background: transparent;
+  text-transform: uppercase;
+  font-size: 1.0625rem;
+  transition: all 0.3s ease-in;
+}
+
+button.filter-button.active,
+button.filter-button:hover {
+  border-bottom: 2px solid #DEAD6F;
+}
+
+/* testimonial style  */
+.testimonial-content {
+  color: #908F8D;
+}
+
+iconify-icon.quote-icon {
+  color: #F7EEE4;
+  font-size: 14rem;
+}
+
+
+/* register form  */
+.form-control {
+  color: #908F8D;
+  line-height: normal;
+  letter-spacing: 0.02125rem;
+  text-transform: capitalize;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(65, 64, 62, 0.20);
+  background: #FFF;
+  display: flex;
+  padding: 1.25rem 0rem 1.25rem 1.25rem;
+  align-items: center;
+  gap: 0.375rem;
+  align-self: stretch;
 }
 
 .form-control:focus {
@@ -395,7 +497,6 @@ a.blog-read {
 a.blog-read:hover {
   border-bottom: 3px solid #8a8a8a;
 }
-
 
 /* services style  */
 .service-icon {
@@ -433,9 +534,9 @@ a.blog-read:hover {
 /* footer style */
 iconify-icon.social-icon {
   color: #CACACA;
-  font-size: 1.5rem;
-  padding: 0.85rem;
-  border-radius: 50%;
+  font-size: 1.125rem;
+  padding: 0.75rem;
+  border-radius: 4.375rem;
   border: 1px solid #D9D9D8;
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.03);
   transition: all 0.5s ease;
@@ -466,61 +567,112 @@ iconify-icon.send-icon {
     border-bottom: 1px solid #d1d1d1;
   }
 
-  .offcanvas-body .nav-link {
-    font-size: 1.2rem;
-    padding-top: 14px;
-    padding-bottom: 14px;
-    color: var(--bs-dark-text);
+  .offcanvas-body .filter-categories {
+    width: 100%;
+    margin-bottom: 20px !important;
+    border: 1px solid #d1d1d1 !important;
+    padding: 14px;
+    border-radius: 8px;
   }
 
+  /* dropdown-menu */
+  .dropdown-menu {
+    padding: 0;
+    border: none;
+    line-height: 1.4;
+    font-size: 0.9em;
+  }
+
+  .dropdown-menu a {
+    padding-left: 0;
+  }
+
+  .dropdown-toggle::after {
+    position: absolute;
+    right: 0;
+    top: 21px;
+  }
 }
 
-#banner .swiper-pagination-bullet:hover,
-#banner .swiper-pagination-bullet-active {
-  background-color: var(--bs-body-color);
-  background: var(--bs-body-color);
-}
 
-#banner .swiper-pagination {
-  margin-bottom: 3rem;
-}
-
-/* Card Styles */
-.card {
-  --bs-card-inner-border-radius: none;
-  --bs-card-bg: transparent;
+/*--------------------------------------------------------------
+faqs section style start
+--------------------------------------------------------------*/
+.accordion-button:not(.collapsed) {
+  color: var(--body-text-color);
   background-color: transparent;
-  border: none;
+  box-shadow: none;
 }
 
-/* Blog Preview Styles */
-.blog-paragraph {
-  color: #908F8D;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: normal;
-  font-family: var(--secondary-font);
-  margin-bottom: 1rem;
+.accordion {
+  --bs-accordion-color: var(--light-text-color);
+  --bs-accordion-bg: none;
+  --bs-accordion-btn-color: var(--body-text-color);
 }
 
-.blog-read {
-  color: #908F8D;
-  font-size: 1rem;
-  letter-spacing: 0.02rem;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-bottom: 3px solid #D9D9D8;
-  transition: all 0.3s ease-in;
-  font-weight: 400;
-  display: inline-block; /* Ensure border works correctly */
-  line-height: 1.5; /* Add some line height */
+.accordion-button:not(.collapsed)::after {
+  background-image: url('https://api.iconify.design/eva/arrow-down-fill.svg?color=%2341403e');
+
 }
 
-.blog-read:hover {
-  color: #908F8D;
-  border-bottom: 3px solid #8a8a8a;
+.accordion-button::after {
+  background-image: url('https://api.iconify.design/eva/arrow-down-fill.svg?color=%2341403e');
 }
 
+.accordion-button:focus {
+  z-index: 3;
+  border-color: none;
+  box-shadow: none;
+}
+
+/*--------------------------------------------------------------
+Account section style start
+--------------------------------------------------------------*/
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  color: var(--accent-color);
+}
+
+
+/*--------------------------------------------------------------
+Blog section style start
+--------------------------------------------------------------*/
+/* ------ Pagination ------*/
+.pagination .page-numbers {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  color: var(--bs-body-color);
+  padding: 0 10px;
+  line-height: 1.4;
+  transition: 0.9s all;
+  border-radius: 8px;
+}
+
+.pagination .page-numbers:hover,
+.pagination .page-numbers.current {
+  color: var(--accent-color);
+}
+
+iconify-icon.pagination-arrow {
+  color: var(--bs-body-color);
+  transition: 0.9s all;
+}
+
+iconify-icon.pagination-arrow:hover {
+  color: var(--accent-color);
+}
+
+
+/*--------------------------------------------------------------
+Single Product section style start
+--------------------------------------------------------------*/
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+  color: var(--light-color);
+  background-color: var(--accent-color);
+}
 
 /* Mobile Banner Adjustments */
 @media screen and (max-width: 767px) {
@@ -575,6 +727,7 @@ iconify-icon.send-icon {
 }
 
 .main-logo .brand-text {
+  font-family: var(--font-chilanka), cursive;
   font-size: 2.5rem;
   margin: 0;
   line-height: 1;
@@ -656,7 +809,7 @@ iconify-icon.send-icon {
 
 /* Footer Site Title (Desktop) */
 .footer-site-title {
-  font-family: var(--heading-font), "Chilanka", cursive;
+  font-family: var(--font-chilanka), cursive;
   color: #000;
   font-weight: 700;
 }
@@ -669,4 +822,39 @@ iconify-icon.send-icon {
     gap: 10px;
     margin-bottom: 1rem;
   }
+}
+
+/* Blog Single Post Styles */
+.post-meta {
+  color: #908F8D;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  font-family: var(--secondary-font);
+}
+
+.post-category {
+  color: var(--bs-primary);
+  font-weight: 700;
+}
+
+.meta-date {
+  color: #908F8D;
+}
+
+.page-title {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.post-thumbnail img {
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+}
+
+.post-description {
+  font-family: var(--secondary-font);
+  color: #908F8D;
 }

@@ -1,10 +1,64 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { client } from '@/sanity/lib/client';
+import { urlFor } from '@/sanity/lib/image';
 
-const BlogPreview = () => {
-  const blogPosts = [
+interface BlogPost {
+  id: string;
+  date: string;
+  month: string;
+  image: string;
+  title: string;
+  excerpt: string;
+}
+
+interface SanityPost {
+  _id: string;
+  title: string;
+  slug: string;
+  mainImage: { asset: { _ref: string } };
+  publishedAt: string;
+  excerpt: string;
+}
+
+const BlogPreview = async () => {
+  const query = `*[_type == "post"] | order(publishedAt desc)[0...3] {
+    _id,
+    title,
+    "slug": slug.current,
+    mainImage,
+    publishedAt,
+    excerpt
+  }`;
+
+  let blogPosts: BlogPost[] = [];
+  
+  try {
+    const posts = await client.fetch<SanityPost[]>(query, {}, { next: { revalidate: 30 } }); // Revalidate every 30 seconds
+    console.log('Fetched posts from Sanity:', posts.length);
+    if (posts && posts.length > 0) {
+      blogPosts = posts.map((post) => {
+        const dateObj = new Date(post.publishedAt || new Date());
+        return {
+          id: post.slug, // Use slug as ID for the link
+          date: dateObj.getDate().toString(),
+          month: dateObj.toLocaleString('default', { month: 'short' }),
+          image: post.mainImage ? urlFor(post.mainImage).width(400).height(300).url() : '/images/placeholder.jpg',
+          title: post.title,
+          excerpt: post.excerpt,
+        };
+      });
+    }
+  } catch (error) {
+    console.error("Sanity fetch failed (likely due to missing project ID):", error);
+    // Fallback to static data if Sanity is not configured or fails
+  }
+
+  // Fallback static data if no posts found
+  if (blogPosts.length === 0) {
+    blogPosts = [
     {
-      id: 1,
+      id: 'finding-your-perfect-canine-companion', // changed to slug-like
       date: '20',
       month: 'Jan',
       image: '/images/portrait-adorable-little-french-bulldog.jpg',
@@ -12,7 +66,7 @@ const BlogPreview = () => {
       excerpt: 'Choosing the right dog involves understanding your lifestyle, activity level, and living situation. Discover how to find a furry friend that perfectly matches your personality.',
     },
     {
-      id: 2,
+      id: 'essential-tips-for-new-dog-parents',
       date: '21',
       month: 'Jan',
       image: '/images/portrait-brown-white-basenji-dog-wearing-white-earbuds-looking-into-camera-isolated-white.jpg',
@@ -20,7 +74,7 @@ const BlogPreview = () => {
       excerpt: 'Welcoming a new dog is an exciting journey. Learn the fundamental care tips, from nutrition to training, that every new pet parent should know for a smooth transition.',
     },
     {
-      id: 3,
+      id: 'creating-a-dog-friendly-home-environment',
       date: '22',
       month: 'Jan',
       image: '/images/adorable-white-bulldog-puppy-portrait.jpg',
@@ -28,6 +82,7 @@ const BlogPreview = () => {
       excerpt: 'Make your home safe and comfortable for your four-legged family member. Explore practical ideas for dog-proofing and creating cozy spaces that your pup will love.',
     },
   ];
+  }
 
   return (
     <section id="latest-blog" className="my-5">
@@ -53,7 +108,7 @@ const BlogPreview = () => {
                 <p className="secondary-font fs-6 m-0">{post.month}</p>
               </div>
               <div className="card position-relative">
-                <Link href="#">
+                <Link href={`/blog/${post.id}`}>
                   <Image
                     src={post.image}
                     className="img-fluid rounded-4"
@@ -64,12 +119,12 @@ const BlogPreview = () => {
                   />
                 </Link>
                 <div className="card-body p-0">
-                  <Link href="#">
+                  <Link href={`/blog/${post.id}`}>
                     <h3 className="card-title pt-4 pb-3 m-0">{post.title}</h3>
                   </Link>
                   <div className="card-text">
                     <p className="blog-paragraph fs-6">{post.excerpt}</p>
-                    <Link href="#" className="blog-read">
+                    <Link href={`/blog/${post.id}`} className="blog-read">
                       read more
                     </Link>
                   </div>
