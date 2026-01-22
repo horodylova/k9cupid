@@ -91,7 +91,7 @@ const BlogPreview = async () => {
           <div className="section-header d-md-flex justify-content-between align-items-center mb-3">
             <h2 className="display-3 fw-normal">Latest Blog Post</h2>
             <div>
-              <Link href="#" className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+              <Link href="/blog" className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                 Read all
                 <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1">
                   <use xlinkHref="#arrow-right"></use>

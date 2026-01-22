@@ -55,7 +55,7 @@ export default function Footer() {
                     <Link href="/breeds" className="nav-link">Breeds</Link>
                   </li>
                   <li className="menu-item">
-                    <Link href="/articles" className="nav-link">Articles</Link>
+                    <Link href="/blog" className="nav-link">Blog</Link>
                   </li>
                   <li className="menu-item">
                     <Link href="/about" className="nav-link">About Us</Link>
