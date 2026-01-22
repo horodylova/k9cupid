@@ -42,7 +42,7 @@ export default async function BlogPage() {
           id: post.slug,
           date: dateObj.getDate().toString(),
           month: dateObj.toLocaleString('default', { month: 'short' }),
-          image: post.mainImage ? urlFor(post.mainImage).width(400).height(300).url() : '/images/placeholder.jpg',
+          image: post.mainImage ? urlFor(post.mainImage).width(800).height(600).url() : '/images/placeholder.jpg',
           title: post.title,
           excerpt: post.excerpt,
         };
@@ -61,7 +61,7 @@ export default async function BlogPage() {
       month: 'Jan',
       image: '/images/portrait-adorable-little-french-bulldog.jpg',
       title: 'Finding Your Perfect Canine Companion',
-      excerpt: 'Choosing the right dog involves understanding your lifestyle, activity level, and living situation. Discover how to find a furry friend that perfectly matches your personality.',
+      excerpt: 'Choosing the right dog involves understanding your lifestyle, activity level, and living situation.',
     },
     {
       id: 'essential-tips-for-new-dog-parents',
@@ -69,7 +69,7 @@ export default async function BlogPage() {
       month: 'Jan',
       image: '/images/portrait-brown-white-basenji-dog-wearing-white-earbuds-looking-into-camera-isolated-white.jpg',
       title: 'Essential Tips for New Dog Parents',
-      excerpt: 'Welcoming a new dog is an exciting journey. Learn the fundamental care tips, from nutrition to training, that every new pet parent should know for a smooth transition.',
+      excerpt: 'Welcoming a new dog is an exciting journey. Learn the fundamental care tips, from nutrition to training.',
     },
     {
       id: 'creating-a-dog-friendly-home-environment',
@@ -77,7 +77,7 @@ export default async function BlogPage() {
       month: 'Jan',
       image: '/images/adorable-white-bulldog-puppy-portrait.jpg',
       title: 'Creating a Dog-Friendly Home Environment',
-      excerpt: 'Make your home safe and comfortable for your four-legged family member. Explore practical ideas for dog-proofing and creating cozy spaces that your pup will love.',
+      excerpt: 'Make your home safe and comfortable for your four-legged family member. Explore practical ideas.',
     },
   ];
   }
@@ -96,43 +96,75 @@ export default async function BlogPage() {
         </div>
       </section>
 
-      <section id="blog" className="my-5">
-        <div className="container py-5">
-          <div className="row">
+      <div className="my-5 py-5">
+        <div className="container">
+          <div className="row entry-container">
             {blogPosts.map((post) => (
-              <div className="col-md-4 mb-4" key={post.id}>
-                <article className="post-item card border-0 shadow-sm h-100">
-                  <div className="image-holder zoom-effect">
+              <div className="entry-item col-md-4 my-4" key={post.id}>
+                <div className="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
+                  <h3 className="secondary-font text-primary m-0">{post.date}</h3>
+                  <p className="secondary-font fs-6 m-0">{post.month}</p>
+                </div>
+                <div className="card position-relative">
+                  <Link href={`/blog/${post.id}`}>
+                    <Image
+                      src={post.image}
+                      className="img-fluid rounded-4"
+                      alt={post.title}
+                      width={800}
+                      height={600}
+                      style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                    />
+                  </Link>
+                  <div className="card-body p-0">
                     <Link href={`/blog/${post.id}`}>
-                      <Image
-                        src={post.image}
-                        alt={post.title}
-                        width={400}
-                        height={300}
-                        className="card-img-top object-fit-cover"
-                        style={{ height: '300px' }}
-                      />
+                      <h3 className="card-title pt-4 pb-3 m-0">{post.title}</h3>
                     </Link>
-                  </div>
-                  <div className="card-body">
-                    <div className="meta-date d-flex align-items-center mb-2">
-                      <div className="text-primary fw-bold me-2">{post.date}</div>
-                      <div className="text-uppercase text-muted">{post.month}</div>
+                    <div className="card-text">
+                      <p className="blog-paragraph fs-6">{post.excerpt}</p>
+                      <Link href={`/blog/${post.id}`} className="blog-read">read more</Link>
                     </div>
-                    <h3 className="card-title fs-4">
-                      <Link href={`/blog/${post.id}`} className="text-decoration-none text-dark">
-                        {post.title}
-                      </Link>
-                    </h3>
-                    <p className="card-text text-muted">{post.excerpt}</p>
-                    <Link href={`/blog/${post.id}`} className="text-decoration-none text-uppercase fw-bold text-primary">
-                      Read more
-                    </Link>
                   </div>
-                </article>
+                </div>
               </div>
             ))}
           </div>
+
+          <nav className="navigation paging-navigation text-center mt-3" role="navigation">
+            <div className="pagination loop-pagination d-flex justify-content-center align-items-center">
+              <Link href="#" className="pagination-arrow d-flex align-items-center mx-3">
+                <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
+              </Link>
+              <span aria-current="page" className="page-numbers mt-2 fs-3 mx-3 current">1</span>
+              <Link className="page-numbers mt-2 fs-3 mx-3" href="#">2</Link>
+              <Link className="page-numbers mt-2 fs-3 mx-3" href="#">3</Link>
+              <Link href="#" className="pagination-arrow d-flex align-items-center mx-3">
+                <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
+              </Link>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <section id="insta" className="my-5">
+        <div className="row g-0 py-5">
+          {[1, 2, 3, 4, 5, 6].map((num) => (
+            <div className="col instagram-item text-center position-relative" key={num}>
+              <div className="icon-overlay d-flex justify-content-center position-absolute">
+                <iconify-icon className="text-white" icon="la:instagram"></iconify-icon>
+              </div>
+              <Link href="#">
+                <Image 
+                  src={`/images/insta${num}.jpg`} 
+                  alt="insta-img" 
+                  width={300} 
+                  height={300} 
+                  className="img-fluid rounded-3" 
+                  style={{ width: '100%', height: 'auto' }}
+                />
+              </Link>
+            </div>
+          ))}
         </div>
       </section>
     </>
