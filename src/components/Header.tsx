@@ -3,9 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useCart } from '@/context/CartContext';
 
 export default function Header() {
   const [loading, setLoading] = useState(true);
+  const { items, totalItems, removeItem, totalPrice } = useCart();
 
   useEffect(() => {
     // Simulate preloader fade out
@@ -94,6 +96,61 @@ export default function Header() {
       )}
 
 
+      <div className="offcanvas offcanvas-end" data-bs-scroll="true" tabIndex={-1} id="offcanvasCart" aria-labelledby="My Cart">
+        <div className="offcanvas-header justify-content-center">
+          <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div className="offcanvas-body">
+          <div className="order-md-last">
+            <h4 className="d-flex justify-content-between align-items-center mb-3">
+              <span className="text-primary">Your cart</span>
+              <span className="badge bg-primary rounded-circle pt-2">{totalItems}</span>
+            </h4>
+            {items.length === 0 ? (
+              <div className="text-center py-5">
+                <p>Your cart is empty.</p>
+                <Link href="/shop" className="btn btn-primary btn-sm mt-2">Start Shopping</Link>
+              </div>
+            ) : (
+              <>
+                <ul className="list-group mb-3">
+                  {items.map((item) => (
+                    <li key={item.id} className="list-group-item d-flex justify-content-between lh-sm">
+                      <div className="d-flex align-items-center">
+                        <div className="me-3" style={{ width: '50px', height: '50px', position: 'relative' }}>
+                          <Image src={item.image} alt={item.name} fill style={{ objectFit: 'cover' }} className="rounded" />
+                        </div>
+                        <div>
+                          <h6 className="my-0">{item.name}</h6>
+                          <small className="text-muted">Qty: {item.quantity}</small>
+                        </div>
+                      </div>
+                      <div className="d-flex flex-column align-items-end">
+                        <span className="text-muted">${(item.price * item.quantity).toFixed(2)}</span>
+                        <button
+                          className="btn btn-link text-danger p-0 text-decoration-none"
+                          style={{ fontSize: '0.8rem' }}
+                          onClick={() => removeItem(item.id)}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                  <li className="list-group-item d-flex justify-content-between">
+                    <span>Total (USD)</span>
+                    <strong>${totalPrice.toFixed(2)}</strong>
+                  </li>
+                </ul>
+                <div className="d-grid gap-2">
+                  <Link href="/cart" className="btn btn-primary">View Cart</Link>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
       <div className="offcanvas offcanvas-end" data-bs-scroll="true" tabIndex={-1} id="offcanvasSearch"
         aria-labelledby="Search">
         <div className="offcanvas-header justify-content-center">
@@ -179,7 +236,15 @@ export default function Header() {
                   </Link>
                 </li>
 
-
+                <li>
+                  <a href="#" className="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
+                    aria-controls="offcanvasCart">
+                    <iconify-icon icon="mdi:cart" className="fs-4 position-relative"></iconify-icon>
+                    <span className="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
+                      {totalItems}
+                    </span>
+                  </a>
+                </li>
 
                 <li>
                   <a href="#" className="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch"
@@ -228,6 +293,9 @@ export default function Header() {
                     <Link href="/about" className="nav-link">About Us</Link>
                   </li>
                   <li className="nav-item">
+                    <Link href="/shop" className="nav-link">Shop</Link>
+                  </li>
+                  <li className="nav-item">
                     <Link href="/contact" className="nav-link">Contact</Link>
                   </li>
                 </ul>
@@ -243,6 +311,15 @@ export default function Header() {
                       <Link href="/wishlist" className="mx-3">
                         <iconify-icon icon="mdi:heart" className="fs-4"></iconify-icon>
                       </Link>
+                    </li>
+                    <li>
+                      <a href="#" className="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
+                        aria-controls="offcanvasCart">
+                        <iconify-icon icon="mdi:cart" className="fs-4 position-relative"></iconify-icon>
+                        <span className="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
+                          {totalItems}
+                        </span>
+                      </a>
                     </li>
                   </ul>
                 </div>
