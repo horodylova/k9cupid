@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { getBreeds, Dog } from "@/lib/api";
 import BreedSearchBar from "@/components/BreedSearchBar";
+import BreedImage from "@/components/BreedImage";
 import { Suspense } from "react";
 
 function getTemperamentTags(breed: Dog) {
@@ -131,13 +131,9 @@ export default async function BreedsPage({ searchParams }: Props) {
                   <div key={breed.name} className="col-md-4 my-4">
                     <div className="card position-relative h-100">
                       <Link href="/404">
-                        <Image
+                        <BreedImage 
                           src={breed.image_link}
-                          className="img-fluid rounded-4"
                           alt={breed.name}
-                          width={600}
-                          height={600}
-                          style={{ width: '100%', height: '300px', objectFit: 'cover' }}
                         />
                       </Link>
                       <div className="card-body p-0 pt-4 d-flex flex-column">
