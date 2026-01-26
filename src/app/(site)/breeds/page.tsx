@@ -58,8 +58,7 @@ export default async function BreedsPage({ searchParams }: Props) {
   const end = offset + breeds.length;
   const hasNextPage = currentPage < totalPages;
   const hasPrevPage = currentPage > 1;
-
-  // Helper function to generate pagination links
+ 
   const getPageLink = (page: number) => {
     const params = new URLSearchParams();
     if (name) params.append('name', name);
@@ -77,6 +76,19 @@ export default async function BreedsPage({ searchParams }: Props) {
     
     return `/breeds?${params.toString()}`;
   };
+
+  const paginationRange: (number | string)[] = [];
+  if (totalPages <= 7) {
+     for(let i=1; i<=totalPages; i++) paginationRange.push(i);
+  } else {
+     paginationRange.push(1);
+     if (currentPage > 3) paginationRange.push('...');
+     const start = Math.max(2, currentPage - 1);
+     const end = Math.min(totalPages - 1, currentPage + 1);
+     for(let i=start; i<=end; i++) paginationRange.push(i);
+     if (currentPage < totalPages - 2) paginationRange.push('...');
+     paginationRange.push(totalPages);
+  }
 
   return (
     <>
@@ -160,16 +172,23 @@ export default async function BreedsPage({ searchParams }: Props) {
                         <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
                       </Link>
                     )}
-                    
-                    {hasPrevPage && (
-                      <Link className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(currentPage - 1)}>{currentPage - 1}</Link>
-                    )}
-                    
-                    <span aria-current="page" className="page-numbers mt-2 fs-3 mx-3 current">{currentPage}</span>
-                    
-                    {hasNextPage && (
-                      <Link className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(currentPage + 1)}>{currentPage + 1}</Link>
-                    )}
+
+                    {paginationRange.map((page, index) => {
+                      if (page === '...') {
+                        return <span key={`dots-${index}`} className="page-numbers mt-2 fs-3 mx-3">...</span>;
+                      }
+                      
+                      const isCurrent = page === currentPage;
+                      if (isCurrent) {
+                        return <span key={page} aria-current="page" className="page-numbers mt-2 fs-3 mx-3 current">{page}</span>;
+                      }
+                      
+                      return (
+                        <Link key={page} className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(page as number)}>
+                          {page}
+                        </Link>
+                      );
+                    })}
 
                     {hasNextPage && (
                       <Link href={getPageLink(currentPage + 1)} className="pagination-arrow d-flex align-items-center mx-3">
