@@ -94,7 +94,7 @@ export default function ShopPage() {
 
       <div className="shopify-grid">
         <div className="container py-5 my-5">
-          <div className="row flex-md-row-reverse g-md-5 mb-5">
+          <div className="row flex-column-reverse flex-md-row-reverse g-md-5 mb-5">
 
             <main className="col-md-9">
               <div className="filter-shop d-md-flex justify-content-between align-items-center">
@@ -214,83 +214,83 @@ export default function ShopPage() {
                 </div>
                 <div className="widget-product-categories pt-5">
                   <h4 className="widget-title">Categories</h4>
-                  <ul className="product-categories sidebar-list list-unstyled">
-                    <li className="cat-item">
+                  <ul className="product-categories sidebar-list list-unstyled row">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">All Products</a>
                     </li>
-                    <li className="cat-item">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Matching Sets</a>
                     </li>
-                    <li className="cat-item">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Personalized Gear</a>
                     </li>
-                    <li className="cat-item">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Jewelry & Charms</a>
                     </li>
-                    <li className="cat-item">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Apparel</a>
                     </li>
-                    <li className="cat-item">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Accessories</a>
                     </li>
                   </ul>
                 </div>
                 <div className="widget-product-tags pt-3">
                   <h4 className="widget-title">Tags</h4>
-                  <ul className="product-tags sidebar-list list-unstyled">
-                    <li className="tags-item">
+                  <ul className="product-tags sidebar-list list-unstyled row">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Bandanas</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Safety</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Gift Ideas</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Travel</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Summer</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Handmade</a>
                     </li>
                   </ul>
                 </div>
                 <div className="widget-product-brands pt-3">
                   <h4 className="widget-title">Brands</h4>
-                  <ul className="product-tags sidebar-list list-unstyled">
-                    <li className="tags-item">
+                  <ul className="product-tags sidebar-list list-unstyled row">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">K9Cupid Originals</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Paws & People</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">SafeTails</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">CustomCraft</a>
                     </li>
                   </ul>
                 </div>
                 <div className="widget-price-filter pt-3">
                   <h4 className="widget-titlewidget-title">Filter By Price</h4>
-                  <ul className="product-tags sidebar-list list-unstyled">
-                    <li className="tags-item">
+                  <ul className="product-tags sidebar-list list-unstyled row">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">Less than $10</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">$10- $20</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">$20- $30</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">$30- $40</a>
                     </li>
-                    <li className="tags-item">
+                    <li className="tags-item col-6 col-md-12 mb-2">
                       <a href="#" className="nav-link">$40- $50</a>
                     </li>
                   </ul>

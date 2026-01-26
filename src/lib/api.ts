@@ -28,6 +28,8 @@ export interface Dog {
 export interface BreedSearchOptions {
   name?: string;
   shedding?: number;
+  grooming?: number;
+  playfulness?: number;
   barking?: number;
   energy?: number;
   protectiveness?: number;
@@ -60,6 +62,8 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
     
     if (options.name) params.append('name', options.name);
     if (options.shedding) params.append('shedding', options.shedding.toString());
+    // if (options.grooming) params.append('grooming', options.grooming.toString());
+    if (options.playfulness) params.append('playfulness', options.playfulness.toString());
     if (options.barking) params.append('barking', options.barking.toString());
     if (options.energy) params.append('energy', options.energy.toString());
     if (options.protectiveness) params.append('protectiveness', options.protectiveness.toString());
@@ -72,6 +76,7 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
       options.energy !== undefined ||
       options.trainability !== undefined ||
       options.shedding !== undefined ||
+      options.grooming !== undefined ||
       options.barking !== undefined ||
       options.protectiveness !== undefined;
 
@@ -132,6 +137,9 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
       }
       if (options.shedding) {
         dogs = dogs.filter(dog => dog.shedding <= options.shedding!);
+      }
+      if (options.grooming) {
+        dogs = dogs.filter(dog => dog.grooming >= options.grooming!);
       }
       if (options.barking) {
         dogs = dogs.filter(dog => dog.barking <= options.barking!);

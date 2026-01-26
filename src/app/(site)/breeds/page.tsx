@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getBreeds, Dog } from "@/lib/api";
 import BreedSearchBar from "@/components/BreedSearchBar";
 import BreedImage from "@/components/BreedImage";
@@ -6,15 +7,20 @@ import { Suspense } from "react";
 
 function getTemperamentTags(breed: Dog) {
   const tags = [];
-  if (breed.good_with_children >= 4) tags.push("Good with Kids");
-  if (breed.good_with_other_dogs >= 4) tags.push("Dog Friendly");
-  if (breed.trainability >= 4) tags.push("Easy to Train");
+  if (breed.good_with_children >= 3) tags.push("Good with Kids");
+  if (breed.good_with_other_dogs >= 3) tags.push("Dog Friendly");
+  if (breed.good_with_strangers >= 3) tags.push("Friendly Stranger");
+  if (breed.trainability >= 3) tags.push("Easy to Train");
   if (breed.energy >= 4) tags.push("High Energy");
+  else if (breed.energy === 3) tags.push("Medium Energy");
   if (breed.shedding <= 2) tags.push("Low Shedding");
+  if (breed.grooming <= 2) tags.push("Easy Grooming");
+  if (breed.grooming > 3) tags.push("High Grooming");
   if (breed.barking <= 2) tags.push("Quiet");
-  if (breed.playfulness >= 4) tags.push("Playful");
-  if (breed.protectiveness >= 4) tags.push("Protective");
-  return tags.slice(0, 3);
+  if (breed.playfulness >= 5) tags.push("Very Playful");
+  if (breed.playfulness >= 3 && breed.playfulness < 5) tags.push("Playful");
+  if (breed.protectiveness >= 3) tags.push("Protective");
+  return tags.slice(0, 5);
 }
 
 type Props = {
@@ -26,6 +32,8 @@ export default async function BreedsPage({ searchParams }: Props) {
   const energy = searchParams.energy ? Number(searchParams.energy) : undefined;
   const trainability = searchParams.trainability ? Number(searchParams.trainability) : undefined;
   const shedding = searchParams.shedding ? Number(searchParams.shedding) : undefined;
+  const grooming = searchParams.grooming ? Number(searchParams.grooming) : undefined;
+  const playfulness = searchParams.playfulness ? Number(searchParams.playfulness) : undefined;
   const barking = searchParams.barking ? Number(searchParams.barking) : undefined;
   const protectiveness = searchParams.protectiveness ? Number(searchParams.protectiveness) : undefined;
   const good_with_children = searchParams.good_with_children ? Number(searchParams.good_with_children) : undefined;
@@ -40,6 +48,8 @@ export default async function BreedsPage({ searchParams }: Props) {
     energy,
     trainability,
     shedding,
+    grooming,
+    playfulness,
     barking,
     protectiveness,
     good_with_children,
@@ -65,6 +75,8 @@ export default async function BreedsPage({ searchParams }: Props) {
     if (energy) params.append('energy', energy.toString());
     if (trainability) params.append('trainability', trainability.toString());
     if (shedding) params.append('shedding', shedding.toString());
+    if (grooming) params.append('grooming', grooming.toString());
+    if (playfulness) params.append('playfulness', playfulness.toString());
     if (barking) params.append('barking', barking.toString());
     if (protectiveness) params.append('protectiveness', protectiveness.toString());
     if (good_with_children) params.append('good_with_children', good_with_children.toString());
@@ -111,7 +123,7 @@ export default async function BreedsPage({ searchParams }: Props) {
 
       <div className="shopify-grid">
         <div className="container py-5 my-5">
-          <div className="row flex-md-row-reverse g-md-5 mb-5">
+          <div className="row flex-column-reverse flex-md-row-reverse g-md-5 mb-5">
 
             <main className="col-md-9">
               <div className="filter-shop d-md-flex justify-content-between align-items-center">
@@ -196,7 +208,7 @@ export default async function BreedsPage({ searchParams }: Props) {
               )}
             </main>
 
-            <aside className="col-md-3 mt-5">
+            <aside className="col-md-3 mt-4 mt-md-5 mb-5 mb-md-0">
               <div className="sidebar">
                 <div className="widget-menu">
                   <div className="widget-search-bar">
@@ -204,29 +216,45 @@ export default async function BreedsPage({ searchParams }: Props) {
                   </div>
                 </div>
 
-                <div className="widget-product-categories pt-5">
-                  <h4 className="widget-title">Filters</h4>
-                  <ul className="product-categories sidebar-list list-unstyled">
-                    <li className="cat-item">
+                <div className="widget-product-categories pt-0 pt-md-5">
+                  <div className="d-flex align-items-center mb-4">
+                    <Image 
+                      src="/Cupid%20with%20Dogs-white-puppy.png"
+                      alt="Cupid Matchmaker"
+                      width={70}
+                      height={70}
+                      className="me-3"
+                      style={{ objectFit: "contain" }}
+                    />
+                    <h4 className="widget-title m-0">Find Your Match</h4>
+                  </div>
+                  <ul className="product-categories sidebar-list list-unstyled row">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <Link href="/breeds?good_with_children=5" className="nav-link">Good with Children</Link>
                     </li>
-                    <li className="cat-item">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <Link href="/breeds?good_with_other_dogs=5" className="nav-link">Good with Other Dogs</Link>
                     </li>
-                    <li className="cat-item">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <Link href="/breeds?good_with_strangers=5" className="nav-link">Good with Strangers</Link>
                     </li>
-                    <li className="cat-item">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <Link href="/breeds?energy=5" className="nav-link">High Energy</Link>
                     </li>
-                    <li className="cat-item">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <Link href="/breeds?trainability=5" className="nav-link">Easy to Train</Link>
                     </li>
-                     <li className="cat-item">
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <Link href="/breeds?shedding=1" className="nav-link">Low Shedding</Link>
                     </li>
-                    <li className="cat-item">
-                      <Link href="/breeds?barking=1" className="nav-link">Low Barking</Link>
+                    <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?grooming=3" className="nav-link">High Grooming</Link>
+          </li>
+                    <li className="cat-item col-6 col-md-12 mb-2">
+                      <Link href="/breeds?playfulness=5" className="nav-link">Very Playful</Link>
+                    </li>
+                    <li className="cat-item col-6 col-md-12 mb-2">
+                      <Link href="/breeds?barking=1" className="nav-link">Quiet</Link>
                     </li>
                   </ul>
                 </div>
