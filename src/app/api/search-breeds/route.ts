@@ -10,9 +10,9 @@ export async function GET(request: Request) {
   }
 
   try {
-    const breeds = await getBreeds({ name: query });
+    const result = await getBreeds({ name: query });
     // Filter to get unique names
-    const uniqueSuggestions = Array.from(new Set(breeds.map(breed => breed.name)));
+    const uniqueSuggestions = Array.from(new Set(result.breeds.map(breed => breed.name)));
     return NextResponse.json(uniqueSuggestions);
   } catch (error) {
     console.error('Error in search-breeds API:', error);
