@@ -28,23 +28,36 @@ export default async function BreedsPage({ searchParams }: Props) {
   const shedding = searchParams.shedding ? Number(searchParams.shedding) : undefined;
   const barking = searchParams.barking ? Number(searchParams.barking) : undefined;
   const protectiveness = searchParams.protectiveness ? Number(searchParams.protectiveness) : undefined;
+  const good_with_children = searchParams.good_with_children ? Number(searchParams.good_with_children) : undefined;
+  const good_with_other_dogs = searchParams.good_with_other_dogs ? Number(searchParams.good_with_other_dogs) : undefined;
+  const good_with_strangers = searchParams.good_with_strangers ? Number(searchParams.good_with_strangers) : undefined;
 
   const offset = searchParams.offset ? Number(searchParams.offset) : 0;
   const limit = 20;
 
-  const breeds = await getBreeds({
+  const result = await getBreeds({
     name,
     energy,
     trainability,
     shedding,
     barking,
     protectiveness,
-    offset
+    good_with_children,
+    good_with_other_dogs,
+    good_with_strangers,
+    offset,
+    limit
   });
 
+  const breeds = result.breeds;
+  const total = result.total;
+
   const currentPage = Math.floor(offset / limit) + 1;
-  const start = offset + 1;
+  const totalPages = Math.ceil(total / limit);
+  const start = breeds.length > 0 ? offset + 1 : 0;
   const end = offset + breeds.length;
+  const hasNextPage = currentPage < totalPages;
+  const hasPrevPage = currentPage > 1;
 
   // Helper function to generate pagination links
   const getPageLink = (page: number) => {
@@ -55,6 +68,9 @@ export default async function BreedsPage({ searchParams }: Props) {
     if (shedding) params.append('shedding', shedding.toString());
     if (barking) params.append('barking', barking.toString());
     if (protectiveness) params.append('protectiveness', protectiveness.toString());
+    if (good_with_children) params.append('good_with_children', good_with_children.toString());
+    if (good_with_other_dogs) params.append('good_with_other_dogs', good_with_other_dogs.toString());
+    if (good_with_strangers) params.append('good_with_strangers', good_with_strangers.toString());
     
     const newOffset = (page - 1) * limit;
     if (newOffset > 0) params.append('offset', newOffset.toString());
@@ -86,11 +102,11 @@ export default async function BreedsPage({ searchParams }: Props) {
           <div className="row flex-md-row-reverse g-md-5 mb-5">
 
             <main className="col-md-9">
-                      <div className="filter-shop d-md-flex justify-content-between align-items-center">
-                        <div className="showing-product">
-                          <p className="m-0">Showing {start}–{end} breeds</p>
-                        </div>
-                        <div className="sort-by">
+              <div className="filter-shop d-md-flex justify-content-between align-items-center">
+                <div className="showing-product">
+                  <p className="m-0">Showing {start}–{end} of {total} breeds</p>
+                </div>
+                <div className="sort-by">
                   <select className="filter-categories border-0 m-0">
                     <option value="">Sort by name</option>
                     <option value="">Life span</option>
@@ -130,31 +146,39 @@ export default async function BreedsPage({ searchParams }: Props) {
                 ))}
               </div>
 
-              <nav className="navigation paging-navigation text-center mt-5" role="navigation">
-                <div className="pagination loop-pagination d-flex justify-content-center align-items-center">
-                  {currentPage > 1 && (
-                    <Link href={getPageLink(currentPage - 1)} className="pagination-arrow d-flex align-items-center mx-3">
-                      <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
-                    </Link>
-                  )}
-                  
-                  {currentPage > 1 && (
-                    <Link className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(currentPage - 1)}>{currentPage - 1}</Link>
-                  )}
-                  
-                  <span aria-current="page" className="page-numbers mt-2 fs-3 mx-3 current">{currentPage}</span>
-                  
-                  {breeds.length === limit && (
-                    <Link className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(currentPage + 1)}>{currentPage + 1}</Link>
-                  )}
-
-                  {breeds.length === limit && (
-                    <Link href={getPageLink(currentPage + 1)} className="pagination-arrow d-flex align-items-center mx-3">
-                      <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
-                    </Link>
-                  )}
+              {breeds.length === 0 && (
+                <div className="text-center py-5">
+                  <p className="fs-4">No breeds found matching your criteria.</p>
                 </div>
-              </nav>
+              )}
+
+              {totalPages > 1 && (
+                <nav className="navigation paging-navigation text-center mt-5" role="navigation">
+                  <div className="pagination loop-pagination d-flex justify-content-center align-items-center">
+                    {hasPrevPage && (
+                      <Link href={getPageLink(currentPage - 1)} className="pagination-arrow d-flex align-items-center mx-3">
+                        <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
+                      </Link>
+                    )}
+                    
+                    {hasPrevPage && (
+                      <Link className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(currentPage - 1)}>{currentPage - 1}</Link>
+                    )}
+                    
+                    <span aria-current="page" className="page-numbers mt-2 fs-3 mx-3 current">{currentPage}</span>
+                    
+                    {hasNextPage && (
+                      <Link className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(currentPage + 1)}>{currentPage + 1}</Link>
+                    )}
+
+                    {hasNextPage && (
+                      <Link href={getPageLink(currentPage + 1)} className="pagination-arrow d-flex align-items-center mx-3">
+                        <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
+                      </Link>
+                    )}
+                  </div>
+                </nav>
+              )}
             </main>
 
             <aside className="col-md-3 mt-5">
