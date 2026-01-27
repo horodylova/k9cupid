@@ -39,6 +39,7 @@ export interface BreedSearchOptions {
   good_with_other_dogs?: number;
   good_with_strangers?: number;
   max_life_expectancy?: number;
+  size?: "toy" | "small" | "medium" | "large";
   sort?: string;
   offset?: number;
   limit?: number;
@@ -86,6 +87,7 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
       options.barking !== undefined ||
       options.protectiveness !== undefined ||
       options.max_life_expectancy !== undefined ||
+      options.size !== undefined ||
       (options.sort !== undefined && options.sort !== 'name');
 
     // API Ninjas requires at least one filtering parameter.
@@ -163,6 +165,23 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
       }
       if (options.max_life_expectancy) {
         dogs = dogs.filter(dog => dog.max_life_expectancy >= options.max_life_expectancy!);
+      }
+
+      if (options.size) {
+        dogs = dogs.filter(dog => {
+          const height = dog.max_height_male;
+          let category: "toy" | "small" | "medium" | "large";
+          if (height < 12) {
+            category = "toy";
+          } else if (height < 18) {
+            category = "small";
+          } else if (height < 30) {
+            category = "medium";
+          } else {
+            category = "large";
+          }
+          return category === options.size;
+        });
       }
 
       // Apply sorting

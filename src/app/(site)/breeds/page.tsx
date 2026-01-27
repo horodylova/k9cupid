@@ -44,6 +44,8 @@ export default async function BreedsPage({ searchParams }: Props) {
   const good_with_children = searchParams.good_with_children ? Number(searchParams.good_with_children) : undefined;
   const good_with_other_dogs = searchParams.good_with_other_dogs ? Number(searchParams.good_with_other_dogs) : undefined;
   const good_with_strangers = searchParams.good_with_strangers ? Number(searchParams.good_with_strangers) : undefined;
+  const sizeParam = typeof searchParams.size === 'string' ? searchParams.size : undefined;
+  const size = sizeParam === "toy" || sizeParam === "small" || sizeParam === "medium" || sizeParam === "large" ? sizeParam : undefined;
   const sort = typeof searchParams.sort === 'string' ? searchParams.sort : undefined;
 
   const offset = searchParams.offset ? Number(searchParams.offset) : 0;
@@ -63,6 +65,7 @@ export default async function BreedsPage({ searchParams }: Props) {
     good_with_children,
     good_with_other_dogs,
     good_with_strangers,
+    size,
     sort,
     offset,
     limit
@@ -93,6 +96,7 @@ export default async function BreedsPage({ searchParams }: Props) {
     if (good_with_children) params.append('good_with_children', good_with_children.toString());
     if (good_with_other_dogs) params.append('good_with_other_dogs', good_with_other_dogs.toString());
     if (good_with_strangers) params.append('good_with_strangers', good_with_strangers.toString());
+    if (size) params.append('size', size);
     if (sort && sort !== 'name') params.append('sort', sort);
     
     const newOffset = (page - 1) * limit;
@@ -275,6 +279,24 @@ export default async function BreedsPage({ searchParams }: Props) {
                     </li>
                     <li className="cat-item col-6 col-md-12 mb-2">
                       <Link href="/breeds?max_life_expectancy=17" className="nav-link">Long-Lived</Link>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="widget-product-categories pt-4">
+                  <h4 className="widget-title mb-3">Size</h4>
+                  <ul className="product-categories sidebar-list list-unstyled">
+                    <li className="cat-item mb-2">
+                      <Link href="/breeds?size=toy" className="nav-link">Toy Breeds</Link>
+                    </li>
+                    <li className="cat-item mb-2">
+                      <Link href="/breeds?size=small" className="nav-link">Small Breeds</Link>
+                    </li>
+                    <li className="cat-item mb-2">
+                      <Link href="/breeds?size=medium" className="nav-link">Medium Breeds</Link>
+                    </li>
+                    <li className="cat-item mb-2">
+                      <Link href="/breeds?size=large" className="nav-link">Large Breeds</Link>
                     </li>
                   </ul>
                 </div>
