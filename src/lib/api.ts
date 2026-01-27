@@ -227,3 +227,38 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
     return { breeds: [], total: 0 };
   }
 }
+
+export interface TheDogApiBreed {
+  id: number;
+  name: string;
+  description?: string;
+  history?: string;
+  bred_for?: string;
+  perfect_for?: string;
+  breed_group?: string;
+  life_span?: string;
+  temperament?: string;
+  origin?: string;
+}
+
+export async function getAdditionalBreedDetails(name: string): Promise<TheDogApiBreed | null> {
+  const apiKey = process.env.NEXT_PUBLIC_DOG_API_KEY;
+  if (!apiKey) return null;
+
+  try {
+    const res = await fetch(`https://api.thedogapi.com/v1/breeds/search?q=${encodeURIComponent(name)}`, {
+      headers: { 'x-api-key': apiKey },
+      next: { revalidate: 3600 }
+    });
+
+    if (!res.ok) return null;
+
+    const breeds: TheDogApiBreed[] = await res.json();
+    // Find exact match or return first result
+    const match = breeds.find(b => b.name.toLowerCase() === name.toLowerCase()) || breeds[0];
+    return match || null;
+  } catch (error) {
+    console.error('Error fetching additional breed details:', error);
+    return null;
+  }
+}

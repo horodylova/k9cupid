@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getBreeds, Dog } from "@/lib/api";
+import { getBreeds, Dog, getAdditionalBreedDetails } from "@/lib/api";
 import BreedGallery from "@/components/BreedGallery";
 import { notFound } from "next/navigation";
 
@@ -26,7 +26,11 @@ function getTemperamentTags(breed: Dog) {
 export default async function BreedPage({ params }: { params: { name: string } }) {
   const decodedName = decodeURIComponent(params.name);
   
-  const result = await getBreeds({ name: decodedName });
+  const [result, additionalDetails] = await Promise.all([
+    getBreeds({ name: decodedName }),
+    getAdditionalBreedDetails(decodedName)
+  ]);
+
   const breed = result.breeds.find(b => b.name === decodedName) || result.breeds[0];
 
   if (!breed) {
@@ -79,10 +83,9 @@ export default async function BreedPage({ params }: { params: { name: string } }
                   <span className="ms-2 text-muted">Life Expectancy</span>
                 </div>
                 
-                <p>
-                  The {breed.name} is a {breed.coat_length ? 'long-coated' : 'short-coated'} breed. 
-                  It is known for being {tags.join(', ').toLowerCase()}.
-                </p>
+                {additionalDetails?.description && (
+                  <p>{additionalDetails.description}</p>
+                )}
 
                 <div className="cart-wrap">
                   <div className="product-quantity pt-2">
@@ -100,6 +103,18 @@ export default async function BreedPage({ params }: { params: { name: string } }
                 </div>
 
                 <div className="meta-product pt-4">
+                  {additionalDetails?.bred_for && (
+                     <div className="meta-item d-flex align-items-baseline mb-2">
+                       <h6 className="item-title fw-bold no-margin pe-2">Bred For:</h6>
+                       <span className="text-muted">{additionalDetails.bred_for}</span>
+                     </div>
+                  )}
+                  {additionalDetails?.perfect_for && (
+                     <div className="meta-item d-flex align-items-baseline mb-2">
+                       <h6 className="item-title fw-bold no-margin pe-2">Perfect For:</h6>
+                       <span className="text-muted">{additionalDetails.perfect_for}</span>
+                     </div>
+                  )}
                   <div className="meta-item d-flex align-items-baseline">
                     <h6 className="item-title fw-bold no-margin pe-2">Traits:</h6>
                     <ul className="select-list list-unstyled d-flex flex-wrap gap-1">
@@ -124,6 +139,9 @@ export default async function BreedPage({ params }: { params: { name: string } }
               <div className="nav flex-row flex-wrap flex-md-column nav-pills me-3 col-lg-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <button className="nav-link fs-5 mb-2 text-start active" id="v-pills-stats-tab" data-bs-toggle="pill" data-bs-target="#v-pills-stats" type="button" role="tab" aria-controls="v-pills-stats" aria-selected="true">Statistics</button>
                 <button className="nav-link fs-5 mb-2 text-start" id="v-pills-additional-tab" data-bs-toggle="pill" data-bs-target="#v-pills-additional" type="button" role="tab" aria-controls="v-pills-additional" aria-selected="false">Physical Attributes</button>
+                {additionalDetails?.history && (
+                  <button className="nav-link fs-5 mb-2 text-start" id="v-pills-history-tab" data-bs-toggle="pill" data-bs-target="#v-pills-history" type="button" role="tab" aria-controls="v-pills-history" aria-selected="false">History</button>
+                )}
               </div>
               <div className="tab-content w-100" id="v-pills-tabContent">
                 <div className="tab-pane fade show active" id="v-pills-stats" role="tabpanel" aria-labelledby="v-pills-stats-tab">
@@ -202,6 +220,12 @@ export default async function BreedPage({ params }: { params: { name: string } }
                     </tbody>
                   </table>
                 </div>
+                {additionalDetails?.history && (
+                  <div className="tab-pane fade" id="v-pills-history" role="tabpanel" aria-labelledby="v-pills-history-tab">
+                    <h2>Breed History</h2>
+                    <p className="lead">{additionalDetails.history}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
