@@ -30,6 +30,7 @@ export interface BreedSearchOptions {
   shedding?: number;
   grooming?: number;
   playfulness?: number;
+  drooling?: number;
   barking?: number;
   energy?: number;
   protectiveness?: number;
@@ -37,6 +38,8 @@ export interface BreedSearchOptions {
   good_with_children?: number;
   good_with_other_dogs?: number;
   good_with_strangers?: number;
+  max_life_expectancy?: number;
+  sort?: string;
   offset?: number;
   limit?: number;
 }
@@ -63,7 +66,8 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
     if (options.name) params.append('name', options.name);
     if (options.shedding) params.append('shedding', options.shedding.toString());
     // if (options.grooming) params.append('grooming', options.grooming.toString());
-    if (options.playfulness) params.append('playfulness', options.playfulness.toString());
+    // if (options.playfulness) params.append('playfulness', options.playfulness.toString());
+    // if (options.drooling) params.append('drooling', options.drooling.toString());
     if (options.barking) params.append('barking', options.barking.toString());
     if (options.energy) params.append('energy', options.energy.toString());
     if (options.protectiveness) params.append('protectiveness', options.protectiveness.toString());
@@ -77,8 +81,12 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
       options.trainability !== undefined ||
       options.shedding !== undefined ||
       options.grooming !== undefined ||
+      options.playfulness !== undefined ||
+      options.drooling !== undefined ||
       options.barking !== undefined ||
-      options.protectiveness !== undefined;
+      options.protectiveness !== undefined ||
+      options.max_life_expectancy !== undefined ||
+      (options.sort !== undefined && options.sort !== 'name');
 
     // API Ninjas requires at least one filtering parameter.
     if (Array.from(params.keys()).length === 0) {
@@ -141,11 +149,27 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
       if (options.grooming) {
         dogs = dogs.filter(dog => dog.grooming >= options.grooming!);
       }
+      if (options.playfulness) {
+        dogs = dogs.filter(dog => dog.playfulness >= options.playfulness!);
+      }
+      if (options.drooling) {
+        dogs = dogs.filter(dog => dog.drooling <= options.drooling!);
+      }
       if (options.barking) {
         dogs = dogs.filter(dog => dog.barking <= options.barking!);
       }
       if (options.protectiveness) {
         dogs = dogs.filter(dog => dog.protectiveness >= options.protectiveness!);
+      }
+      if (options.max_life_expectancy) {
+        dogs = dogs.filter(dog => dog.max_life_expectancy >= options.max_life_expectancy!);
+      }
+
+      // Apply sorting
+      if (options.sort === 'life_span') {
+        dogs.sort((a, b) => (b.max_life_expectancy || 0) - (a.max_life_expectancy || 0));
+      } else if (options.sort === 'name') {
+        dogs.sort((a, b) => a.name.localeCompare(b.name));
       }
       
       const total = dogs.length;

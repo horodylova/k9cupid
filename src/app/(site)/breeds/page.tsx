@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getBreeds, Dog } from "@/lib/api";
 import BreedSearchBar from "@/components/BreedSearchBar";
+import BreedSorter from "@/components/BreedSorter";
 import BreedImage from "@/components/BreedImage";
 import { Suspense } from "react";
 
@@ -14,13 +15,15 @@ function getTemperamentTags(breed: Dog) {
   if (breed.energy >= 4) tags.push("High Energy");
   else if (breed.energy === 3) tags.push("Medium Energy");
   if (breed.shedding <= 2) tags.push("Low Shedding");
+  if (breed.drooling <= 1) tags.push("Low Drooling");
   if (breed.grooming <= 2) tags.push("Easy Grooming");
   if (breed.grooming > 3) tags.push("High Grooming");
   if (breed.barking <= 2) tags.push("Quiet");
   if (breed.playfulness >= 5) tags.push("Very Playful");
   if (breed.playfulness >= 3 && breed.playfulness < 5) tags.push("Playful");
   if (breed.protectiveness >= 3) tags.push("Protective");
-  return tags.slice(0, 5);
+  if (breed.max_life_expectancy >= 17) tags.push("Long-Lived");
+  return tags.slice(0, 10);
 }
 
 type Props = {
@@ -34,11 +37,14 @@ export default async function BreedsPage({ searchParams }: Props) {
   const shedding = searchParams.shedding ? Number(searchParams.shedding) : undefined;
   const grooming = searchParams.grooming ? Number(searchParams.grooming) : undefined;
   const playfulness = searchParams.playfulness ? Number(searchParams.playfulness) : undefined;
+  const drooling = searchParams.drooling ? Number(searchParams.drooling) : undefined;
   const barking = searchParams.barking ? Number(searchParams.barking) : undefined;
   const protectiveness = searchParams.protectiveness ? Number(searchParams.protectiveness) : undefined;
+  const max_life_expectancy = searchParams.max_life_expectancy ? Number(searchParams.max_life_expectancy) : undefined;
   const good_with_children = searchParams.good_with_children ? Number(searchParams.good_with_children) : undefined;
   const good_with_other_dogs = searchParams.good_with_other_dogs ? Number(searchParams.good_with_other_dogs) : undefined;
   const good_with_strangers = searchParams.good_with_strangers ? Number(searchParams.good_with_strangers) : undefined;
+  const sort = typeof searchParams.sort === 'string' ? searchParams.sort : undefined;
 
   const offset = searchParams.offset ? Number(searchParams.offset) : 0;
   const limit = 20;
@@ -50,11 +56,14 @@ export default async function BreedsPage({ searchParams }: Props) {
     shedding,
     grooming,
     playfulness,
+    drooling,
     barking,
     protectiveness,
+    max_life_expectancy,
     good_with_children,
     good_with_other_dogs,
     good_with_strangers,
+    sort,
     offset,
     limit
   });
@@ -77,11 +86,14 @@ export default async function BreedsPage({ searchParams }: Props) {
     if (shedding) params.append('shedding', shedding.toString());
     if (grooming) params.append('grooming', grooming.toString());
     if (playfulness) params.append('playfulness', playfulness.toString());
+    if (drooling) params.append('drooling', drooling.toString());
     if (barking) params.append('barking', barking.toString());
     if (protectiveness) params.append('protectiveness', protectiveness.toString());
+    if (max_life_expectancy) params.append('max_life_expectancy', max_life_expectancy.toString());
     if (good_with_children) params.append('good_with_children', good_with_children.toString());
     if (good_with_other_dogs) params.append('good_with_other_dogs', good_with_other_dogs.toString());
     if (good_with_strangers) params.append('good_with_strangers', good_with_strangers.toString());
+    if (sort && sort !== 'name') params.append('sort', sort);
     
     const newOffset = (page - 1) * limit;
     if (newOffset > 0) params.append('offset', newOffset.toString());
@@ -131,10 +143,9 @@ export default async function BreedsPage({ searchParams }: Props) {
                   <p className="m-0">Showing {start}–{end} of {total} breeds</p>
                 </div>
                 <div className="sort-by">
-                  <select className="filter-categories border-0 m-0">
-                    <option value="">Sort by name</option>
-                    <option value="">Life span</option>
-                  </select>
+                  <Suspense fallback={<div>Loading sort...</div>}>
+                    <BreedSorter />
+                  </Suspense>
                 </div>
               </div>
 
@@ -248,13 +259,22 @@ export default async function BreedsPage({ searchParams }: Props) {
                       <Link href="/breeds?shedding=1" className="nav-link">Low Shedding</Link>
                     </li>
                     <li className="cat-item col-6 col-md-12 mb-2">
-            <Link href="/breeds?grooming=3" className="nav-link">High Grooming</Link>
-          </li>
+                      <Link href="/breeds?grooming=5" className="nav-link">High Grooming</Link>
+                    </li>
                     <li className="cat-item col-6 col-md-12 mb-2">
                       <Link href="/breeds?playfulness=5" className="nav-link">Very Playful</Link>
                     </li>
                     <li className="cat-item col-6 col-md-12 mb-2">
+                      <Link href="/breeds?drooling=1" className="nav-link">Low Drooling</Link>
+                    </li>
+                    <li className="cat-item col-6 col-md-12 mb-2">
                       <Link href="/breeds?barking=1" className="nav-link">Quiet</Link>
+                    </li>
+                    <li className="cat-item col-6 col-md-12 mb-2">
+                      <Link href="/breeds?protectiveness=5" className="nav-link">Protective</Link>
+                    </li>
+                    <li className="cat-item col-6 col-md-12 mb-2">
+                      <Link href="/breeds?max_life_expectancy=17" className="nav-link">Long-Lived</Link>
                     </li>
                   </ul>
                 </div>
