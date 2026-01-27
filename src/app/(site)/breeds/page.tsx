@@ -157,14 +157,14 @@ export default async function BreedsPage({ searchParams }: Props) {
                 {breeds.map((breed) => (
                   <div key={breed.name} className="col-md-4 my-4">
                     <div className="card position-relative h-100">
-                      <Link href="/404">
+                      <Link href={`/breeds/${encodeURIComponent(breed.name)}`}>
                         <BreedImage 
                           src={breed.image_link}
                           alt={breed.name}
                         />
                       </Link>
                       <div className="card-body p-0 pt-4 d-flex flex-column">
-                        <Link href="/404">
+                        <Link href={`/breeds/${encodeURIComponent(breed.name)}`}>
                           <h3 className="card-title m-0">{breed.name}</h3>
                         </Link>
                         
