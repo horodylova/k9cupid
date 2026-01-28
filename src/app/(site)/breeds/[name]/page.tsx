@@ -169,6 +169,10 @@ export default async function BreedPage({ params }: { params: { name: string } }
                             Barking
                             <span className="badge bg-primary rounded-pill">{breed.barking}/5</span>
                           </li>
+                          <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Drooling
+                            <span className="badge bg-primary rounded-pill">{breed.drooling}/5</span>
+                          </li>
                         </ul>
                      </div>
                      <div className="col-md-6">
@@ -188,6 +192,10 @@ export default async function BreedPage({ params }: { params: { name: string } }
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Shedding
                             <span className="badge bg-primary rounded-pill">{breed.shedding}/5</span>
+                          </li>
+                          <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Coat Length
+                            <span className="badge bg-primary rounded-pill">{6 - breed.coat_length}/5</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Grooming
