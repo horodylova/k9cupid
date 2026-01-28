@@ -145,28 +145,6 @@ export default async function BlogPage() {
           </nav>
         </div>
       </div>
-
-      <section id="insta" className="my-5">
-        <div className="row g-0 py-5">
-          {[1, 2, 3, 4, 5, 6].map((num) => (
-            <div className="col instagram-item text-center position-relative" key={num}>
-              <div className="icon-overlay d-flex justify-content-center position-absolute">
-                <iconify-icon className="text-white" icon="la:instagram"></iconify-icon>
-              </div>
-              <Link href="#">
-                <Image 
-                  src={`/images/insta${num}.jpg`} 
-                  alt="insta-img" 
-                  width={300} 
-                  height={300} 
-                  className="img-fluid rounded-3" 
-                  style={{ width: '100%', height: 'auto' }}
-                />
-              </Link>
-            </div>
-          ))}
-        </div>
-      </section>
     </>
   );
 }
