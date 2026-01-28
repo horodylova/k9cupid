@@ -4,10 +4,13 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const [loading, setLoading] = useState(true);
   const { items, totalItems, removeItem, totalPrice } = useCart();
+  const router = useRouter();
+  const [sizeValue, setSizeValue] = useState('');
 
   useEffect(() => {
     // Simulate preloader fade out
@@ -268,12 +271,22 @@ export default function Header() {
               </div>
 
               <div className="offcanvas-body justify-content-between">
-                <select className="filter-categories border-0 mb-0 me-5">
-                  <option>Browse by Size</option>
-                  <option>Small Breeds</option>
-                  <option>Medium Breeds</option>
-                  <option>Large Breeds</option>
-                  <option>Giant Breeds</option>
+                <select
+                  className="filter-categories border-0 mb-0 me-5"
+                  value={sizeValue}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    setSizeValue(v);
+                    if (v) {
+                      router.push(`/breeds?size=${encodeURIComponent(v)}`);
+                    }
+                  }}
+                >
+                  <option value="">Browse by Size</option>
+                  <option value="toy">Toy Breeds</option>
+                  <option value="small">Small Breeds</option>
+                  <option value="medium">Medium Breeds</option>
+                  <option value="large">Large Breeds</option>
                 </select>
 
                 <ul className="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
