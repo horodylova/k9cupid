@@ -50,6 +50,51 @@ export interface BreedsResult {
   total: number;
 }
 
+function sanitizeDog(dog: Dog): Dog {
+  // Fix life expectancy issues (e.g., 1214 -> 12-14)
+  if (dog.min_life_expectancy > 30) {
+    const str = dog.min_life_expectancy.toString();
+    if (str.length === 4) {
+      const p1 = parseInt(str.substring(0, 2));
+      const p2 = parseInt(str.substring(2));
+      if (!isNaN(p1) && !isNaN(p2) && p1 < 30 && p2 < 30) {
+        dog.min_life_expectancy = p1;
+        if (dog.max_life_expectancy > 30) {
+          dog.max_life_expectancy = p2;
+        }
+      }
+    } else if (str.length === 3) {
+      // e.g. 810 -> 8-10
+      const p1 = parseInt(str.substring(0, 1));
+      const p2 = parseInt(str.substring(1));
+      if (!isNaN(p1) && !isNaN(p2) && p1 < 30 && p2 < 30) {
+        dog.min_life_expectancy = p1;
+        if (dog.max_life_expectancy > 30) {
+          dog.max_life_expectancy = p2;
+        }
+      }
+    }
+  }
+
+  // Double check max if it wasn't fixed above
+  if (dog.max_life_expectancy > 30) {
+    const str = dog.max_life_expectancy.toString();
+    if (str.length === 4) {
+      const p2 = parseInt(str.substring(2));
+      if (!isNaN(p2) && p2 < 30) {
+        dog.max_life_expectancy = p2;
+      }
+    } else if (str.length === 3) {
+      const p2 = parseInt(str.substring(1));
+      if (!isNaN(p2) && p2 < 30) {
+        dog.max_life_expectancy = p2;
+      }
+    }
+  }
+
+  return dog;
+}
+
 export async function getBreeds(options: BreedSearchOptions = {}): Promise<BreedsResult> {
   const apiKey = process.env.NEXT_PUBLIC_API_NINJAS_KEY;
   
@@ -127,7 +172,7 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
           uniqueDogsMap.set(dog.name, dog);
         }
       });
-      let dogs: Dog[] = Array.from(uniqueDogsMap.values());
+      let dogs: Dog[] = Array.from(uniqueDogsMap.values()).map(sanitizeDog);
 
       // Apply manual filters
       if (options.good_with_children) {
@@ -215,7 +260,8 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
       return { breeds: [], total: 0 };
     }
 
-    const dogs: Dog[] = await res.json();
+    const rawDogs: Dog[] = await res.json();
+    const dogs = rawDogs.map(sanitizeDog);
 
     // For non-filtered requests, we can't know the total, so we estimate
     // If we got fewer than limit, we're on the last page
