@@ -858,3 +858,54 @@ Single Product section style start
   font-family: var(--secondary-font);
   color: #908F8D;
 }
+.custom-alert {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid #D9D9D8;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  background: #FFF;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+
+.custom-alert--success {
+  border-color: rgba(31, 136, 61, 0.3); /* мягкий зеленый бордер */
+  background: #F0FFF4; /* пастельно-зеленый фон */
+}
+
+.custom-alert--error {
+  border-color: rgba(185, 28, 28, 0.3); /* мягкий красный бордер */
+  background: #FFF5F5; /* пастельно-красный фон */
+}
+
+.custom-alert__media {
+  flex: 0 0 auto;
+}
+
+.custom-alert__img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #D9D9D8;
+  background: #FFF;
+}
+
+.custom-alert__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.custom-alert__title {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.02rem;
+}
+
+.custom-alert__text {
+  margin: 0;
+  color: #908F8D; /* соответствует стилистике blog-paragraph */
+  line-height: 1.4;
+}
