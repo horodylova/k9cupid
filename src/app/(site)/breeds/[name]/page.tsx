@@ -195,7 +195,7 @@ export default async function BreedPage({ params }: { params: { name: string } }
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Coat Length
-                            <span className="badge bg-primary rounded-pill">{6 - breed.coat_length}/5</span>
+                            <span className="badge bg-primary rounded-pill">{breed.coat_length}/5</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Grooming
