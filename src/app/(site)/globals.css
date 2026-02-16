@@ -475,10 +475,10 @@ iconify-icon.quote-icon {
 
 /* blog style */
 .blog-paragraph {
-  color: #908F8D;
-  font-size: 1rem;
+  color: #222;
+  font-size: 1.125rem;
   font-weight: 400;
-  line-height: normal;
+  line-height: 1.95;
   font-family: var(--secondary-font);
 }
 
@@ -856,7 +856,8 @@ Single Product section style start
 
 .post-description {
   font-family: var(--secondary-font);
-  color: #908F8D;
+  color: #222;
+  line-height: 1.95;
 }
 .custom-alert {
   display: flex;
