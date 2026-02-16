@@ -92,8 +92,8 @@ function sanitizeDog(dog: Dog): Dog {
     }
   }
 
-  if (dog.coat_length < 1) {
-    dog.coat_length = 1;
+  if (dog.coat_length < 0) {
+    dog.coat_length = 0;
   } else if (dog.coat_length > 5) {
     dog.coat_length = 5;
   }

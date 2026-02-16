@@ -38,6 +38,14 @@ export default async function BreedPage({ params }: { params: { name: string } }
   }
 
   const tags = getTemperamentTags(breed);
+  const formatScore = (score: number) => (score >= 1 ? `${score}/5` : 'N/A');
+  const getCoatLengthDisplay = (coatLength: number) => {
+    if (coatLength < 1 || coatLength > 5) {
+      return 'N/A';
+    }
+    const inverted = 6 - coatLength;
+    return `${inverted}/5`;
+  };
 
   return (
     <>
@@ -151,27 +159,27 @@ export default async function BreedPage({ params }: { params: { name: string } }
                         <ul className="list-group list-group-flush">
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Energy Level
-                            <span className="badge bg-primary rounded-pill">{breed.energy}/5</span>
+                            <span className="badge bg-primary rounded-pill">{formatScore(breed.energy)}</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Trainability
-                            <span className="badge bg-primary rounded-pill">{breed.trainability}/5</span>
+                            <span className="badge bg-primary rounded-pill">{formatScore(breed.trainability)}</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Playfulness
-                            <span className="badge bg-primary rounded-pill">{breed.playfulness}/5</span>
+                            <span className="badge bg-primary rounded-pill">{formatScore(breed.playfulness)}</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Protectiveness
-                            <span className="badge bg-primary rounded-pill">{breed.protectiveness}/5</span>
+                            <span className="badge bg-primary rounded-pill">{formatScore(breed.protectiveness)}</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Barking
-                            <span className="badge bg-primary rounded-pill">{breed.barking}/5</span>
+                            <span className="badge bg-primary rounded-pill">{formatScore(breed.barking)}</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Drooling
-                            <span className="badge bg-primary rounded-pill">{breed.drooling}/5</span>
+                            <span className="badge bg-primary rounded-pill">{formatScore(breed.drooling)}</span>
                           </li>
                         </ul>
                      </div>
@@ -179,27 +187,27 @@ export default async function BreedPage({ params }: { params: { name: string } }
                         <ul className="list-group list-group-flush">
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Good with Children
-                            <span className="badge bg-primary rounded-pill">{breed.good_with_children}/5</span>
+                            <span className="badge bg-primary rounded-pill">{formatScore(breed.good_with_children)}</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Good with Other Dogs
-                            <span className="badge bg-primary rounded-pill">{breed.good_with_other_dogs}/5</span>
+                            <span className="badge bg-primary rounded-pill">{formatScore(breed.good_with_other_dogs)}</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Good with Strangers
-                            <span className="badge bg-primary rounded-pill">{breed.good_with_strangers}/5</span>
+                            <span className="badge bg-primary rounded-pill">{formatScore(breed.good_with_strangers)}</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Shedding
-                            <span className="badge bg-primary rounded-pill">{breed.shedding}/5</span>
+                            <span className="badge bg-primary rounded-pill">{formatScore(breed.shedding)}</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Coat Length
-                            <span className="badge bg-primary rounded-pill">{breed.coat_length}/5</span>
+                            <span className="badge bg-primary rounded-pill">{getCoatLengthDisplay(breed.coat_length)}</span>
                           </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Grooming
-                            <span className="badge bg-primary rounded-pill">{breed.grooming}/5</span>
+                            <span className="badge bg-primary rounded-pill">{formatScore(breed.grooming)}</span>
                           </li>
                         </ul>
                      </div>
