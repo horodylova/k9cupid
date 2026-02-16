@@ -240,7 +240,7 @@ export default function Header() {
                 </li>
 
                 <li>
-                  <a href="#" className="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
+                  <a href="#" className="mx-3 d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
                     aria-controls="offcanvasCart">
                     <iconify-icon icon="mdi:cart" className="fs-4 position-relative"></iconify-icon>
                     <span className="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
@@ -305,7 +305,7 @@ export default function Header() {
                   <li className="nav-item">
                     <Link href="/about" className="nav-link">About Us</Link>
                   </li>
-                  <li className="nav-item">
+                  <li className="nav-item d-none">
                     <Link href="/shop" className="nav-link">Shop</Link>
                   </li>
                   <li className="nav-item">
@@ -326,7 +326,7 @@ export default function Header() {
                       </Link>
                     </li>
                     <li>
-                      <a href="#" className="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
+                      <a href="#" className="mx-3 d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
                         aria-controls="offcanvasCart">
                         <iconify-icon icon="mdi:cart" className="fs-4 position-relative"></iconify-icon>
                         <span className="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
