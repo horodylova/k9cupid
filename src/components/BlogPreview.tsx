@@ -21,6 +21,33 @@ interface SanityPost {
   excerpt: string;
 }
 
+const fallbackBlogPosts: BlogPost[] = [
+  {
+    id: 'finding-your-perfect-canine-companion',
+    date: '20',
+    month: 'Jan',
+    image: '/images/portrait-adorable-little-french-bulldog.jpg',
+    title: 'Finding Your Perfect Canine Companion',
+    excerpt: 'Choosing the right dog involves understanding your lifestyle, activity level, and living situation. Discover how to find a furry friend that perfectly matches your personality.',
+  },
+  {
+    id: 'essential-tips-for-new-dog-parents',
+    date: '21',
+    month: 'Jan',
+    image: '/images/portrait-brown-white-basenji-dog-wearing-white-earbuds-looking-into-camera-isolated-white.jpg',
+    title: 'Essential Tips for New Dog Parents',
+    excerpt: 'Welcoming a new dog is an exciting journey. Learn the fundamental care tips, from nutrition to training, that every new pet parent should know for a smooth transition.',
+  },
+  {
+    id: 'creating-a-dog-friendly-home-environment',
+    date: '22',
+    month: 'Jan',
+    image: '/images/adorable-white-bulldog-puppy-portrait.jpg',
+    title: 'Creating a Dog-Friendly Home Environment',
+    excerpt: 'Make your home safe and comfortable for your four-legged family member. Explore practical ideas for dog-proofing and creating cozy spaces that your pup will love.',
+  },
+];
+
 const BlogPreview = async () => {
   const query = `*[_type == "post"] | order(publishedAt desc)[0...3] {
     _id,
@@ -51,37 +78,14 @@ const BlogPreview = async () => {
     }
   } catch (error) {
     console.error("Sanity fetch failed (likely due to missing project ID):", error);
-    // Fallback to static data if Sanity is not configured or fails
   }
 
-  // Fallback static data if no posts found
   if (blogPosts.length === 0) {
-    blogPosts = [
-    {
-      id: 'finding-your-perfect-canine-companion', // changed to slug-like
-      date: '20',
-      month: 'Jan',
-      image: '/images/portrait-adorable-little-french-bulldog.jpg',
-      title: 'Finding Your Perfect Canine Companion',
-      excerpt: 'Choosing the right dog involves understanding your lifestyle, activity level, and living situation. Discover how to find a furry friend that perfectly matches your personality.',
-    },
-    {
-      id: 'essential-tips-for-new-dog-parents',
-      date: '21',
-      month: 'Jan',
-      image: '/images/portrait-brown-white-basenji-dog-wearing-white-earbuds-looking-into-camera-isolated-white.jpg',
-      title: 'Essential Tips for New Dog Parents',
-      excerpt: 'Welcoming a new dog is an exciting journey. Learn the fundamental care tips, from nutrition to training, that every new pet parent should know for a smooth transition.',
-    },
-    {
-      id: 'creating-a-dog-friendly-home-environment',
-      date: '22',
-      month: 'Jan',
-      image: '/images/adorable-white-bulldog-puppy-portrait.jpg',
-      title: 'Creating a Dog-Friendly Home Environment',
-      excerpt: 'Make your home safe and comfortable for your four-legged family member. Explore practical ideas for dog-proofing and creating cozy spaces that your pup will love.',
-    },
-  ];
+    if (process.env.NODE_ENV !== 'production') {
+      blogPosts = fallbackBlogPosts;
+    } else {
+      return null;
+    }
   }
 
   return (

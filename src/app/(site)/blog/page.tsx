@@ -21,6 +21,33 @@ interface SanityPost {
   excerpt: string;
 }
 
+const fallbackBlogPosts: BlogPost[] = [
+  {
+    id: 'finding-your-perfect-canine-companion',
+    date: '20',
+    month: 'Jan',
+    image: '/images/portrait-adorable-little-french-bulldog.jpg',
+    title: 'Finding Your Perfect Canine Companion',
+    excerpt: 'Choosing the right dog involves understanding your lifestyle, activity level, and living situation.',
+  },
+  {
+    id: 'essential-tips-for-new-dog-parents',
+    date: '21',
+    month: 'Jan',
+    image: '/images/portrait-brown-white-basenji-dog-wearing-white-earbuds-looking-into-camera-isolated-white.jpg',
+    title: 'Essential Tips for New Dog Parents',
+    excerpt: 'Welcoming a new dog is an exciting journey. Learn the fundamental care tips, from nutrition to training.',
+  },
+  {
+    id: 'creating-a-dog-friendly-home-environment',
+    date: '22',
+    month: 'Jan',
+    image: '/images/adorable-white-bulldog-puppy-portrait.jpg',
+    title: 'Creating a Dog-Friendly Home Environment',
+    excerpt: 'Make your home safe and comfortable for your four-legged family member. Explore practical ideas.',
+  },
+];
+
 export default async function BlogPage() {
   const query = `*[_type == "post"] | order(publishedAt desc) {
     _id,
@@ -52,34 +79,10 @@ export default async function BlogPage() {
     console.error("Sanity fetch failed:", error);
   }
 
-  // Fallback if empty
   if (blogPosts.length === 0) {
-    blogPosts = [
-    {
-      id: 'finding-your-perfect-canine-companion',
-      date: '20',
-      month: 'Jan',
-      image: '/images/portrait-adorable-little-french-bulldog.jpg',
-      title: 'Finding Your Perfect Canine Companion',
-      excerpt: 'Choosing the right dog involves understanding your lifestyle, activity level, and living situation.',
-    },
-    {
-      id: 'essential-tips-for-new-dog-parents',
-      date: '21',
-      month: 'Jan',
-      image: '/images/portrait-brown-white-basenji-dog-wearing-white-earbuds-looking-into-camera-isolated-white.jpg',
-      title: 'Essential Tips for New Dog Parents',
-      excerpt: 'Welcoming a new dog is an exciting journey. Learn the fundamental care tips, from nutrition to training.',
-    },
-    {
-      id: 'creating-a-dog-friendly-home-environment',
-      date: '22',
-      month: 'Jan',
-      image: '/images/adorable-white-bulldog-puppy-portrait.jpg',
-      title: 'Creating a Dog-Friendly Home Environment',
-      excerpt: 'Make your home safe and comfortable for your four-legged family member. Explore practical ideas.',
-    },
-  ];
+    if (process.env.NODE_ENV !== 'production') {
+      blogPosts = fallbackBlogPosts;
+    }
   }
 
   return (
