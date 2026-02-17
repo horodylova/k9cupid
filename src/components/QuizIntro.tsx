@@ -1,6 +1,13 @@
+ "use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { homeTypeQuestion, QuizOptionId } from "@/lib/quizQuestions";
 
 export default function QuizIntro() {
+  const [started, setStarted] = useState(false);
+  const [selectedHomeOption, setSelectedHomeOption] = useState<QuizOptionId | null>(null);
+
   return (
     <>
       <section id="banner" className="py-3" style={{ background: "#F9F3EC" }}>
@@ -54,9 +61,31 @@ export default function QuizIntro() {
               <button
                 type="button"
                 className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 py-3 px-5"
+                onClick={() => setStarted(true)}
               >
                 Start the Quiz
               </button>
+              {started && (
+                <div className="mt-5">
+                  <h3 className="h4 mb-3">{homeTypeQuestion.title}</h3>
+                  <div className="d-flex flex-column gap-2">
+                    {homeTypeQuestion.options.map((option) => (
+                      <button
+                        key={option.id}
+                        type="button"
+                        className={`btn w-100 text-start ${
+                          selectedHomeOption === option.id
+                            ? "btn-primary"
+                            : "btn-outline-secondary"
+                        }`}
+                        onClick={() => setSelectedHomeOption(option.id)}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             <div className="col-lg-5 mt-5 mt-lg-0">
               <div className="p-4 p-md-5 border rounded-4 bg-light">
@@ -76,4 +105,3 @@ export default function QuizIntro() {
     </>
   );
 }
-
