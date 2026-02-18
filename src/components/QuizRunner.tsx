@@ -23,6 +23,7 @@ export default function QuizRunner() {
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [pageReady, setPageReady] = useState(false);
 
   const totalSteps = 5;
 
@@ -108,6 +109,21 @@ export default function QuizRunner() {
   const [hasResumed, setHasResumed] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (document.readyState === "complete") {
+      setPageReady(true);
+      return;
+    }
+    const onLoad = () => setPageReady(true);
+    window.addEventListener("load", onLoad, { once: true });
+    return () => {
+      window.removeEventListener("load", onLoad);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isInitialized || hasResumed) {
       return;
     }
@@ -137,7 +153,7 @@ export default function QuizRunner() {
     setHasResumed(true);
   }, [isInitialized, hasResumed, session]);
 
-  if (!isInitialized) {
+  if (!isInitialized || !pageReady) {
     return null;
   }
 
