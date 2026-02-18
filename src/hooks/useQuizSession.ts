@@ -13,12 +13,14 @@ import {
 
 export function useQuizSession() {
   const [session, setSession] = useState<QuizSession | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     const existing = loadQuizSession();
     if (existing) {
       setSession(existing);
     }
+    setIsInitialized(true);
   }, []);
 
   const startNew = () => {
@@ -61,6 +63,6 @@ export function useQuizSession() {
     startNew,
     recordAnswer,
     setStatus,
+    isInitialized,
   };
 }
-

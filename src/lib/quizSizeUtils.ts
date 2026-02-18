@@ -83,3 +83,72 @@ export function getHomeSizeSuitability(answerId: QuizOptionId, dog: Dog): number
   return 1;
 }
 
+export function getSharedSpacesSizeAndSheddingSuitability(
+  selectedIds: QuizOptionId[],
+  dog: Dog
+): number {
+  const hasCloseContact =
+    selectedIds.includes("shared_sofa") ||
+    selectedIds.includes("shared_bed") ||
+    selectedIds.includes("shared_car");
+
+  const prefersOwnSpace = selectedIds.includes("shared_own_space");
+  const isNotSureOnly =
+    selectedIds.length === 1 && selectedIds.includes("shared_not_sure");
+
+  if (!selectedIds.length || isNotSureOnly) {
+    return 3;
+  }
+
+  const size = getDogSizeCategory(dog);
+  const sizeIndex = getSizeIndex(size);
+  const shedding = dog.shedding;
+
+  if (hasCloseContact && !prefersOwnSpace) {
+    if (sizeIndex <= 2 && shedding <= 3) {
+      return 5;
+    }
+    if (sizeIndex <= 2 && shedding > 3) {
+      return 4;
+    }
+    if (sizeIndex === 3 && shedding <= 3) {
+      return 4;
+    }
+    if (sizeIndex === 3 && shedding > 3) {
+      return 3;
+    }
+    if (sizeIndex === 4 && shedding <= 2) {
+      return 3;
+    }
+    return 2;
+  }
+
+  if (prefersOwnSpace && !hasCloseContact) {
+    if (sizeIndex === 4) {
+      return shedding >= 3 ? 5 : 4;
+    }
+    if (sizeIndex === 3) {
+      return 4;
+    }
+    if (sizeIndex === 2) {
+      return 3;
+    }
+    return 2;
+  }
+
+  if (hasCloseContact && prefersOwnSpace) {
+    if (sizeIndex === 3 && shedding <= 3) {
+      return 5;
+    }
+    if (sizeIndex <= 2 && shedding <= 3) {
+      return 4;
+    }
+    if (sizeIndex === 4 && shedding <= 2) {
+      return 3;
+    }
+    return 3;
+  }
+
+  return 3;
+}
+

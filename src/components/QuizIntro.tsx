@@ -1,12 +1,18 @@
  "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { homeTypeQuestion, QuizOptionId } from "@/lib/quizQuestions";
+import { useEffect, useState } from "react";
+import { loadQuizSession } from "@/lib/quizStorage";
 
 export default function QuizIntro() {
-  const [started, setStarted] = useState(false);
-  const [selectedHomeOption, setSelectedHomeOption] = useState<QuizOptionId | null>(null);
+  const [hasSavedSession, setHasSavedSession] = useState(false);
+
+  useEffect(() => {
+    const session = loadQuizSession();
+    if (session && session.answers.length > 0) {
+      setHasSavedSession(true);
+    }
+  }, []);
 
   return (
     <>
@@ -28,7 +34,7 @@ export default function QuizIntro() {
         </div>
       </section>
 
-      <section className="py-5 my-5">
+      <section className="py-4 my-4">
         <div className="container">
           <div className="row align-items-center g-md-5">
             <div className="col-lg-7">
@@ -58,34 +64,22 @@ export default function QuizIntro() {
                 into topics that matter most to you while skipping what is not
                 relevant.
               </p>
-              <button
-                type="button"
-                className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 py-3 px-5"
-                onClick={() => setStarted(true)}
-              >
-                Start the Quiz
-              </button>
-              {started && (
-                <div className="mt-5">
-                  <h3 className="h4 mb-3">{homeTypeQuestion.title}</h3>
-                  <div className="d-flex flex-column gap-2">
-                    {homeTypeQuestion.options.map((option) => (
-                      <button
-                        key={option.id}
-                        type="button"
-                        className={`btn w-100 text-start ${
-                          selectedHomeOption === option.id
-                            ? "btn-primary"
-                            : "btn-outline-secondary"
-                        }`}
-                        onClick={() => setSelectedHomeOption(option.id)}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+              <div className="d-flex flex-column flex-md-row gap-3">
+                <Link
+                  href="/quiz/start"
+                  className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 py-3 px-5"
+                >
+                  Start the Quiz
+                </Link>
+                {hasSavedSession && (
+                  <Link
+                    href="/quiz/start"
+                    className="btn btn-primary btn-lg text-uppercase fs-6 rounded-1 py-3 px-5"
+                  >
+                    Continue your quiz
+                  </Link>
+                )}
+              </div>
             </div>
             <div className="col-lg-5 mt-5 mt-lg-0">
               <div className="p-4 p-md-5 border rounded-4 bg-light">
