@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { homeTypeQuestion, QuizOptionId } from "@/lib/quizQuestions";
+import {
+  homeTypeQuestion,
+  physicalHandlingQuestion,
+  QuizOptionId,
+} from "@/lib/quizQuestions";
 import { useQuizSession } from "@/hooks/useQuizSession";
 import { clearQuizSession } from "@/lib/quizStorage";
 import SharedSpacesQuestion from "@/components/SharedSpacesQuestion";
@@ -14,9 +18,9 @@ export default function QuizRunner() {
   const router = useRouter();
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
-  const [step, setStep] = useState<1 | 2>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
 
-  const totalSteps = 2;
+  const totalSteps = 3;
 
   const selectedHome = session?.answers.find(
     (answer) => answer.id === homeTypeQuestion.id
@@ -27,6 +31,12 @@ export default function QuizRunner() {
   )?.value as QuizOptionId[] | undefined;
 
   const selectedSharedSpaces = sharedSpacesValue ?? [];
+
+  const physicalHandlingValue = session?.answers.find(
+    (answer) => answer.id === physicalHandlingQuestion.id
+  )?.value as QuizOptionId | undefined;
+
+  const selectedPhysicalHandling = physicalHandlingValue;
 
   const hasProgress = !!session && session.answers.length > 0;
 
@@ -79,13 +89,37 @@ export default function QuizRunner() {
     };
   }, [hasProgress]);
 
+  useEffect(() => {
+    if (!isInitialized) {
+      return;
+    }
+
+    if (!selectedHome) {
+      setStep(1);
+      return;
+    }
+
+    if (selectedSharedSpaces.length === 0) {
+      setStep(2);
+      return;
+    }
+
+    setStep(3);
+  }, [
+    isInitialized,
+    selectedHome,
+    selectedSharedSpaces.length,
+    selectedPhysicalHandling,
+  ]);
+
   if (!isInitialized) {
     return null;
   }
 
   const canContinue =
     (step === 1 && !!selectedHome) ||
-    (step === 2 && selectedSharedSpaces.length > 0);
+    (step === 2 && selectedSharedSpaces.length > 0) ||
+    (step === 3 && !!selectedPhysicalHandling);
 
   const handleContinue = () => {
     if (step >= totalSteps) {
@@ -173,6 +207,69 @@ export default function QuizRunner() {
                         })
                       }
                     />
+                  )}
+
+                  {step === 3 && (
+                    <div className="h-100 d-flex flex-column">
+                      <div className="mb-3 text-center text-md-start">
+                        <h1 className="h4 mb-1">
+                          How confident do you feel handling a strong dog?
+                        </h1>
+                        <p className="mb-0 text-muted">
+                          Think about real-life walks, busy streets, and sudden pulls on the leash.
+                        </p>
+                      </div>
+                      <div className="row g-3 mt-2">
+                        {physicalHandlingQuestion.options.map((option, index) => {
+                          const isSelected = selectedPhysicalHandling === option.id;
+                          const isPrimaryChoice = index <= 1;
+
+                          return (
+                            <div key={option.id} className="col-md-6">
+                              <button
+                                type="button"
+                                className="w-100 border-0 bg-transparent p-0 text-start h-100"
+                                onClick={() =>
+                                  recordAnswer({
+                                    id: physicalHandlingQuestion.id,
+                                    value: option.id,
+                                  })
+                                }
+                              >
+                                <div
+                                  className={`rounded-4 h-100 d-flex flex-column justify-content-between p-3 p-md-4 ${
+                                    isSelected
+                                      ? "border border-2 border-primary bg-white"
+                                      : "border border-2 border-transparent bg-light"
+                                  }`}
+                                >
+                                  <div className="d-flex align-items-center mb-2">
+                                    <div
+                                      className={`rounded-circle d-inline-flex align-items-center justify-content-center me-3 ${
+                                        isPrimaryChoice
+                                          ? "bg-primary text-white"
+                                          : "bg-white text-primary"
+                                      }`}
+                                      style={{ width: 32, height: 32 }}
+                                    >
+                                      {index + 1}
+                                    </div>
+                                    <div className="fw-semibold">
+                                      {option.label.split("–")[0].trim()}
+                                    </div>
+                                  </div>
+                                  <div className="mt-1 small text-muted">
+                                    {option.label.includes("–")
+                                      ? option.label.split("–").slice(1).join("–").trim()
+                                      : "This choice helps us understand how much strength you are comfortable managing on the leash."}
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
                   )}
                 </div>
 

@@ -8,7 +8,11 @@ export type QuizOptionId =
   | "shared_bed"
   | "shared_car"
   | "shared_own_space"
-  | "shared_not_sure";
+  | "shared_not_sure"
+  | "handling_very_confident"
+  | "handling_somewhat_confident"
+  | "handling_prefer_easy_control"
+  | "handling_not_sure";
 
 export type QuizOption = {
   id: QuizOptionId;
@@ -73,6 +77,31 @@ export const sharedSpacesQuestion: QuizQuestion = {
       id: "shared_not_sure",
       label: "I am not sure yet",
       imageSrc: "/sharing-space-photo-question/box.jpg",
+    },
+  ],
+};
+
+export const physicalHandlingQuestion: QuizQuestion = {
+  id: "physical_handling",
+  type: "single_choice",
+  title:
+    "How confident do you feel about physically handling a strong dog on a leash (for example, 30+ kg / 65+ lbs)?",
+  options: [
+    {
+      id: "handling_very_confident",
+      label: "Very confident – I am used to strong dogs",
+    },
+    {
+      id: "handling_somewhat_confident",
+      label: "Somewhat confident – with training and the right equipment",
+    },
+    {
+      id: "handling_prefer_easy_control",
+      label: "I prefer a dog I can easily control on my own",
+    },
+    {
+      id: "handling_not_sure",
+      label: "I am not sure / I have never had a dog",
     },
   ],
 };

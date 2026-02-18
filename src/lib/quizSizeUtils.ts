@@ -152,3 +152,46 @@ export function getSharedSpacesSizeAndSheddingSuitability(
   return 3;
 }
 
+export function getPhysicalHandlingSuitability(
+  answerId: QuizOptionId,
+  dog: Dog
+): number {
+  const size = getDogSizeCategory(dog);
+  const sizeIndex = getSizeIndex(size);
+  const trainability = dog.trainability;
+
+  if (
+    answerId === "handling_very_confident" ||
+    answerId === "handling_somewhat_confident"
+  ) {
+    if (sizeIndex >= 3) {
+      return 5;
+    }
+    return 4;
+  }
+
+  let baseScore = 3;
+
+  if (sizeIndex === 1 || sizeIndex === 2) {
+    baseScore = 5;
+  } else if (sizeIndex === 3) {
+    baseScore = 4;
+  } else {
+    baseScore = 2;
+  }
+
+  if (trainability >= 4) {
+    baseScore += 1;
+  } else if (trainability <= 2) {
+    baseScore -= 1;
+  }
+
+  if (baseScore > 5) {
+    return 5;
+  }
+  if (baseScore < 1) {
+    return 1;
+  }
+  return baseScore;
+}
+
