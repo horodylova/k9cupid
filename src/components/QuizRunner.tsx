@@ -285,7 +285,7 @@ export default function QuizRunner() {
                                       {option.label.split("–")[0].trim()}
                                     </div>
                                   </div>
-                                  <div className="mt-1 small text-muted">
+                                  <div className="mt-2 text-muted fs-6 lh-lg">
                                     {option.label.includes("–")
                                       ? option.label.split("–").slice(1).join("–").trim()
                                       : "This choice helps us understand how much strength you are comfortable managing on the leash."}
