@@ -7,20 +7,22 @@ import Image from "next/image";
 import {
   homeTypeQuestion,
   physicalHandlingQuestion,
+  childrenQuestion,
   QuizOptionId,
 } from "@/lib/quizQuestions";
 import { useQuizSession } from "@/hooks/useQuizSession";
 import { clearQuizSession } from "@/lib/quizStorage";
 import SharedSpacesQuestion from "@/components/SharedSpacesQuestion";
+import ChildrenQuestion from "@/components/ChildrenQuestion";
 
 export default function QuizRunner() {
   const { session, recordAnswer, isInitialized } = useQuizSession();
   const router = useRouter();
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
 
-  const totalSteps = 3;
+  const totalSteps = 4;
 
   const selectedHome = session?.answers.find(
     (answer) => answer.id === homeTypeQuestion.id
@@ -37,6 +39,12 @@ export default function QuizRunner() {
   )?.value as QuizOptionId | undefined;
 
   const selectedPhysicalHandling = physicalHandlingValue;
+
+  const childrenValue = session?.answers.find(
+    (answer) => answer.id === childrenQuestion.id
+  )?.value as QuizOptionId[] | undefined;
+
+  const selectedChildren = childrenValue ?? [];
 
   const hasProgress = !!session && session.answers.length > 0;
 
@@ -104,12 +112,18 @@ export default function QuizRunner() {
       return;
     }
 
-    setStep(3);
+    if (!selectedPhysicalHandling) {
+      setStep(3);
+      return;
+    }
+
+    setStep(4);
   }, [
     isInitialized,
     selectedHome,
     selectedSharedSpaces.length,
     selectedPhysicalHandling,
+    selectedChildren.length,
   ]);
 
   if (!isInitialized) {
@@ -119,14 +133,15 @@ export default function QuizRunner() {
   const canContinue =
     (step === 1 && !!selectedHome) ||
     (step === 2 && selectedSharedSpaces.length > 0) ||
-    (step === 3 && !!selectedPhysicalHandling);
+    (step === 3 && !!selectedPhysicalHandling) ||
+    (step === 4 && selectedChildren.length > 0);
 
   const handleContinue = () => {
     if (step >= totalSteps) {
       return;
     }
     setStep((current) =>
-      current < totalSteps ? ((current + 1) as 1 | 2) : current
+      current < totalSteps ? ((current + 1) as 1 | 2 | 3 | 4) : current
     );
   };
 
@@ -270,6 +285,18 @@ export default function QuizRunner() {
                         })}
                       </div>
                     </div>
+                  )}
+
+                  {step === 4 && (
+                    <ChildrenQuestion
+                      selected={selectedChildren}
+                      onChange={(next) =>
+                        recordAnswer({
+                          id: childrenQuestion.id,
+                          value: next,
+                        })
+                      }
+                    />
                   )}
                 </div>
 

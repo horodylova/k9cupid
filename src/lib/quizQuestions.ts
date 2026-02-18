@@ -12,7 +12,11 @@ export type QuizOptionId =
   | "handling_very_confident"
   | "handling_somewhat_confident"
   | "handling_prefer_easy_control"
-  | "handling_not_sure";
+  | "handling_not_sure"
+  | "children_none"
+  | "children_babies_toddlers"
+  | "children_young"
+  | "children_older";
 
 export type QuizOption = {
   id: QuizOptionId;
@@ -102,6 +106,30 @@ export const physicalHandlingQuestion: QuizQuestion = {
     {
       id: "handling_not_sure",
       label: "I am not sure / I have never had a dog",
+    },
+  ],
+};
+
+export const childrenQuestion: QuizQuestion = {
+  id: "children_in_household",
+  type: "multi_choice",
+  title: "Do you have children living with you or visiting regularly?",
+  options: [
+    {
+      id: "children_none",
+      label: "No children",
+    },
+    {
+      id: "children_babies_toddlers",
+      label: "Babies / toddlers (0–3 years)",
+    },
+    {
+      id: "children_young",
+      label: "Young children (4–6 years)",
+    },
+    {
+      id: "children_older",
+      label: "Older children (7+ years)",
     },
   ],
 };

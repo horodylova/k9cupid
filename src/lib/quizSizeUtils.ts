@@ -195,3 +195,67 @@ export function getPhysicalHandlingSuitability(
   return baseScore;
 }
 
+export function getChildrenInHouseholdSuitability(
+  selectedIds: QuizOptionId[],
+  dog: Dog
+): number {
+  const hasBabiesOrToddlers = selectedIds.includes("children_babies_toddlers");
+  const hasYoungChildren = selectedIds.includes("children_young");
+  const hasOlderChildren = selectedIds.includes("children_older");
+  const hasAnyChildren = hasBabiesOrToddlers || hasYoungChildren || hasOlderChildren;
+  const hasNoneOnly =
+    selectedIds.length === 1 && selectedIds.includes("children_none");
+
+  const goodWithChildren = dog.good_with_children;
+
+  if (!selectedIds.length || hasNoneOnly) {
+    if (goodWithChildren >= 4) {
+      return 4;
+    }
+    if (goodWithChildren === 3) {
+      return 3;
+    }
+    return 2;
+  }
+
+  if (hasBabiesOrToddlers || hasYoungChildren) {
+    if (goodWithChildren >= 5) {
+      return 5;
+    }
+    if (goodWithChildren === 4) {
+      return 4;
+    }
+    if (goodWithChildren === 3) {
+      return 2;
+    }
+    return 1;
+  }
+
+  if (hasOlderChildren && !hasBabiesOrToddlers && !hasYoungChildren) {
+    if (goodWithChildren >= 5) {
+      return 5;
+    }
+    if (goodWithChildren === 4) {
+      return 4;
+    }
+    if (goodWithChildren === 3) {
+      return 3;
+    }
+    if (goodWithChildren === 2) {
+      return 2;
+    }
+    return 1;
+  }
+
+  if (hasAnyChildren) {
+    if (goodWithChildren >= 4) {
+      return 4;
+    }
+    if (goodWithChildren === 3) {
+      return 3;
+    }
+    return 2;
+  }
+
+  return 3;
+}
