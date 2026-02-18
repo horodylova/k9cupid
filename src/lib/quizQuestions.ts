@@ -16,7 +16,11 @@ export type QuizOptionId =
   | "children_none"
   | "children_babies_toddlers"
   | "children_young"
-  | "children_older";
+  | "children_older"
+  | "pets_dog"
+  | "pets_cat"
+  | "pets_small_animals"
+  | "pets_none";
 
 export type QuizOption = {
   id: QuizOptionId;
@@ -130,6 +134,30 @@ export const childrenQuestion: QuizQuestion = {
     {
       id: "children_older",
       label: "Older children (7+ years)",
+    },
+  ],
+};
+
+export const otherPetsQuestion: QuizQuestion = {
+  id: "other_pets",
+  type: "multi_choice",
+  title: "Do you have other pets at home?",
+  options: [
+    {
+      id: "pets_dog",
+      label: "Another dog",
+    },
+    {
+      id: "pets_cat",
+      label: "A cat",
+    },
+    {
+      id: "pets_small_animals",
+      label: "Other small animals",
+    },
+    {
+      id: "pets_none",
+      label: "No other pets",
     },
   ],
 };

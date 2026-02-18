@@ -8,21 +8,23 @@ import {
   homeTypeQuestion,
   physicalHandlingQuestion,
   childrenQuestion,
+  otherPetsQuestion,
   QuizOptionId,
 } from "@/lib/quizQuestions";
 import { useQuizSession } from "@/hooks/useQuizSession";
 import { clearQuizSession } from "@/lib/quizStorage";
 import SharedSpacesQuestion from "@/components/SharedSpacesQuestion";
 import ChildrenQuestion from "@/components/ChildrenQuestion";
+import PetsQuestion from "@/components/PetsQuestion";
 
 export default function QuizRunner() {
   const { session, recordAnswer, isInitialized } = useQuizSession();
   const router = useRouter();
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
 
-  const totalSteps = 4;
+  const totalSteps = 5;
 
   const selectedHome = session?.answers.find(
     (answer) => answer.id === homeTypeQuestion.id
@@ -45,6 +47,12 @@ export default function QuizRunner() {
   )?.value as QuizOptionId[] | undefined;
 
   const selectedChildren = childrenValue ?? [];
+
+  const otherPetsValue = session?.answers.find(
+    (answer) => answer.id === otherPetsQuestion.id
+  )?.value as QuizOptionId[] | undefined;
+
+  const selectedOtherPets = otherPetsValue ?? [];
 
   const hasProgress = !!session && session.answers.length > 0;
 
@@ -97,34 +105,37 @@ export default function QuizRunner() {
     };
   }, [hasProgress]);
 
+  const [hasResumed, setHasResumed] = useState(false);
+
   useEffect(() => {
-    if (!isInitialized) {
+    if (!isInitialized || hasResumed) {
       return;
     }
 
-    if (!selectedHome) {
-      setStep(1);
-      return;
+    const answers = session?.answers ?? [];
+    const hasHome = answers.some((a) => a.id === homeTypeQuestion.id);
+    const shared = answers.find((a) => a.id === "shared_spaces")?.value as QuizOptionId[] | undefined;
+    const hasShared = Array.isArray(shared) && shared.length > 0;
+    const hasHandling = answers.some((a) => a.id === physicalHandlingQuestion.id && !!a.value);
+    const children = answers.find((a) => a.id === childrenQuestion.id)?.value as QuizOptionId[] | undefined;
+    const hasChildren = Array.isArray(children) && children.length > 0;
+
+    let target: 1 | 2 | 3 | 4 | 5 = 1;
+    if (!hasHome) {
+      target = 1;
+    } else if (!hasShared) {
+      target = 2;
+    } else if (!hasHandling) {
+      target = 3;
+    } else if (!hasChildren) {
+      target = 4;
+    } else {
+      target = 5;
     }
 
-    if (selectedSharedSpaces.length === 0) {
-      setStep(2);
-      return;
-    }
-
-    if (!selectedPhysicalHandling) {
-      setStep(3);
-      return;
-    }
-
-    setStep(4);
-  }, [
-    isInitialized,
-    selectedHome,
-    selectedSharedSpaces.length,
-    selectedPhysicalHandling,
-    selectedChildren.length,
-  ]);
+    setStep(target);
+    setHasResumed(true);
+  }, [isInitialized, hasResumed, session]);
 
   if (!isInitialized) {
     return null;
@@ -134,14 +145,15 @@ export default function QuizRunner() {
     (step === 1 && !!selectedHome) ||
     (step === 2 && selectedSharedSpaces.length > 0) ||
     (step === 3 && !!selectedPhysicalHandling) ||
-    (step === 4 && selectedChildren.length > 0);
+    (step === 4 && selectedChildren.length > 0) ||
+    (step === 5 && selectedOtherPets.length > 0);
 
   const handleContinue = () => {
     if (step >= totalSteps) {
       return;
     }
     setStep((current) =>
-      current < totalSteps ? ((current + 1) as 1 | 2 | 3 | 4) : current
+      current < totalSteps ? ((current + 1) as 1 | 2 | 3 | 4 | 5) : current
     );
   };
 
@@ -293,6 +305,18 @@ export default function QuizRunner() {
                       onChange={(next) =>
                         recordAnswer({
                           id: childrenQuestion.id,
+                          value: next,
+                        })
+                      }
+                    />
+                  )}
+
+                  {step === 5 && (
+                    <PetsQuestion
+                      selected={selectedOtherPets}
+                      onChange={(next) =>
+                        recordAnswer({
+                          id: otherPetsQuestion.id,
                           value: next,
                         })
                       }

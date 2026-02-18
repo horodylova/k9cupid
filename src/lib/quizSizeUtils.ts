@@ -259,3 +259,61 @@ export function getChildrenInHouseholdSuitability(
 
   return 3;
 }
+
+export function getOtherPetsSuitability(
+  selectedIds: QuizOptionId[],
+  dog: Dog
+): number {
+  const hasDog = selectedIds.includes("pets_dog");
+  const hasCat = selectedIds.includes("pets_cat");
+  const hasSmallAnimals = selectedIds.includes("pets_small_animals");
+  const hasNoneOnly = selectedIds.length === 1 && selectedIds.includes("pets_none");
+
+  const goodWithOtherDogs = dog.good_with_other_dogs;
+  const trainability = dog.trainability;
+  const goodWithStrangers = dog.good_with_strangers;
+
+  if (!selectedIds.length || hasNoneOnly) {
+    if (goodWithOtherDogs >= 4) {
+      return 4;
+    }
+    if (goodWithOtherDogs === 3) {
+      return 3;
+    }
+    return 2;
+  }
+
+  if (hasDog || hasCat) {
+    let base = 3;
+    if (goodWithOtherDogs >= 5) {
+      base = 5;
+    } else if (goodWithOtherDogs === 4) {
+      base = 4;
+    } else if (goodWithOtherDogs === 3) {
+      base = 2;
+    } else {
+      base = 1;
+    }
+    if (trainability >= 4) {
+      base += 1;
+    }
+    if (goodWithStrangers >= 4) {
+      base += 1;
+    }
+    if (base > 5) return 5;
+    if (base < 1) return 1;
+    return base;
+  }
+
+  if (hasSmallAnimals) {
+    if (goodWithOtherDogs >= 4) {
+      return 4;
+    }
+    if (goodWithOtherDogs === 3) {
+      return 3;
+    }
+    return 2;
+  }
+
+  return 3;
+}
