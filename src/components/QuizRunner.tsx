@@ -327,7 +327,11 @@ export default function QuizRunner() {
                 <div className="mt-4 d-flex justify-content-end">
                   <button
                     type="button"
-                    className="btn btn-primary px-4"
+                    className={`btn px-4 ${
+                      canContinue
+                        ? "btn-primary"
+                        : "btn-light opacity-100 text-body border border-2"
+                    }`}
                     disabled={!canContinue}
                     onClick={handleContinue}
                   >
