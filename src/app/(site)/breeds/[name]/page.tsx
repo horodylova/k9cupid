@@ -40,11 +40,10 @@ export default async function BreedPage({ params }: { params: { name: string } }
   const tags = getTemperamentTags(breed);
   const formatScore = (score: number) => (score >= 1 ? `${score}/5` : 'N/A');
   const getCoatLengthDisplay = (coatLength: number) => {
-    if (coatLength < 1 || coatLength > 5) {
+    if (coatLength < 0 || coatLength > 5) {
       return 'N/A';
     }
-    const inverted = 6 - coatLength;
-    return `${inverted}/5`;
+    return `${coatLength}/5`;
   };
 
   return (

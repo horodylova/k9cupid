@@ -38,6 +38,7 @@ export default async function BreedsPage({ searchParams }: Props) {
   const grooming = searchParams.grooming ? Number(searchParams.grooming) : undefined;
   const playfulness = searchParams.playfulness ? Number(searchParams.playfulness) : undefined;
   const drooling = searchParams.drooling ? Number(searchParams.drooling) : undefined;
+  const coat_length = searchParams.coat_length ? Number(searchParams.coat_length) : undefined;
   const barking = searchParams.barking ? Number(searchParams.barking) : undefined;
   const protectiveness = searchParams.protectiveness ? Number(searchParams.protectiveness) : undefined;
   const max_life_expectancy = searchParams.max_life_expectancy ? Number(searchParams.max_life_expectancy) : undefined;
@@ -59,6 +60,7 @@ export default async function BreedsPage({ searchParams }: Props) {
     grooming,
     playfulness,
     drooling,
+    coat_length,
     barking,
     protectiveness,
     max_life_expectancy,
@@ -90,6 +92,7 @@ export default async function BreedsPage({ searchParams }: Props) {
     if (grooming) params.append('grooming', grooming.toString());
     if (playfulness) params.append('playfulness', playfulness.toString());
     if (drooling) params.append('drooling', drooling.toString());
+    if (coat_length) params.append('coat_length', coat_length.toString());
     if (barking) params.append('barking', barking.toString());
     if (protectiveness) params.append('protectiveness', protectiveness.toString());
     if (max_life_expectancy) params.append('max_life_expectancy', max_life_expectancy.toString());
@@ -263,7 +266,7 @@ export default async function BreedsPage({ searchParams }: Props) {
                       <Link href="/breeds?shedding=1" className="nav-link">Low Shedding</Link>
                     </li>
                     <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?grooming=5" className="nav-link">High Grooming</Link>
+                      <Link href="/breeds?grooming=4" className="nav-link">High Grooming</Link>
                     </li>
                     <li className="cat-item col-6 col-md-12 mb-2">
                       <Link href="/breeds?playfulness=5" className="nav-link">Very Playful</Link>

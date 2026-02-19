@@ -16,10 +16,11 @@ export default function BreedImage({ src, alt }: BreedImageProps) {
       src={imgSrc}
       className="img-fluid rounded-4"
       alt={alt}
+      onError={() => setImgSrc('/no-image-available.jpg')}
       width={500}
       height={300}
-      onError={() => setImgSrc('/no-image-available.jpg')}
-      style={{ width: '100%', height: '300px', objectFit: 'cover', objectPosition: '40% center' }}
+      sizes="(max-width: 768px) 100vw, 33vw"
+      style={{ width: '100%', height: 'auto', display: 'block' }}
       unoptimized
     />
   );

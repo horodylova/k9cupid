@@ -31,6 +31,7 @@ export interface BreedSearchOptions {
   grooming?: number;
   playfulness?: number;
   drooling?: number;
+  coat_length?: number;
   barking?: number;
   energy?: number;
   protectiveness?: number;
@@ -98,6 +99,40 @@ function sanitizeDog(dog: Dog): Dog {
     dog.coat_length = 5;
   }
 
+  const coatOverrides: Record<string, number> = {
+    "Afghan Hound": 5,
+    "American Hairless Terrier": 0,
+    "Bearded Collie": 5,
+    "Bichon Frise": 4,
+    "Black Russian Terrier": 4,
+    "Bouvier des Flandres": 4,
+    "Briard": 5,
+    "Cocker Spaniel": 4,
+    "Coton de Tulear": 4,
+    "German Longhaired Pointer": 4,
+    "Giant Schnauzer": 4,
+    "Komondor": 5,
+    "Leonberger": 4,
+    "Maltese": 5,
+    "Miniature Schnauzer": 4,
+    "Old English Sheepdog": 5,
+    "Polish Lowland Sheepdog": 4,
+    "Poodle (Miniature)": 4,
+    "Poodle (Standard)": 4,
+    "Poodle (Toy)": 4,
+    "Portuguese Water Dog": 4,
+    "Puli": 5,
+    "Shih Tzu": 5,
+    "Soft Coated Wheaten Terrier": 4,
+    "Spanish Water Dog": 4,
+    "Yorkshire Terrier": 5
+  };
+
+  const override = coatOverrides[dog.name];
+  if (override !== undefined) {
+    dog.coat_length = override;
+  }
+
   return dog;
 }
 
@@ -135,6 +170,7 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
       options.grooming !== undefined ||
       options.playfulness !== undefined ||
       options.drooling !== undefined ||
+      options.coat_length !== undefined ||
       options.barking !== undefined ||
       options.protectiveness !== undefined ||
       options.max_life_expectancy !== undefined ||
@@ -207,6 +243,9 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
       }
       if (options.drooling) {
         dogs = dogs.filter(dog => dog.drooling <= options.drooling!);
+      }
+      if (options.coat_length !== undefined) {
+        dogs = dogs.filter(dog => dog.coat_length <= options.coat_length!);
       }
       if (options.barking) {
         dogs = dogs.filter(dog => dog.barking <= options.barking!);
