@@ -20,7 +20,11 @@ export type QuizOptionId =
   | "pets_dog"
   | "pets_cat"
   | "pets_small_animals"
-  | "pets_none";
+  | "pets_none"
+  | "visitors_very_often"
+  | "visitors_regularly"
+  | "visitors_occasionally"
+  | "visitors_almost_never";
 
 export type QuizOption = {
   id: QuizOptionId;
@@ -158,6 +162,30 @@ export const otherPetsQuestion: QuizQuestion = {
     {
       id: "pets_none",
       label: "No other pets",
+    },
+  ],
+};
+
+export const visitorsQuestion: QuizQuestion = {
+  id: "home_visitors",
+  type: "single_choice",
+  title: "How often do you usually have visitors at home (friends, family, guests)?",
+  options: [
+    {
+      id: "visitors_very_often",
+      label: "Very often – several times a week",
+    },
+    {
+      id: "visitors_regularly",
+      label: "Regularly – a few times a month",
+    },
+    {
+      id: "visitors_occasionally",
+      label: "Occasionally – a few times a year",
+    },
+    {
+      id: "visitors_almost_never",
+      label: "Almost never",
     },
   ],
 };

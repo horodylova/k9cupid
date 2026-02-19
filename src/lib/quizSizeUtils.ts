@@ -317,3 +317,95 @@ export function getOtherPetsSuitability(
 
   return 3;
 }
+
+export type VisitorsFilterPreferences = {
+  goodWithStrangersMin: number;
+  protectivenessMin?: number;
+  protectivenessMax?: number;
+};
+
+export function getVisitorsFilterPreferences(
+  answerId: QuizOptionId
+): VisitorsFilterPreferences | null {
+  if (answerId === "visitors_very_often") {
+    return { goodWithStrangersMin: 5, protectivenessMax: 3 };
+  }
+  if (answerId === "visitors_regularly") {
+    return { goodWithStrangersMin: 4, protectivenessMax: 4 };
+  }
+  if (answerId === "visitors_occasionally") {
+    return { goodWithStrangersMin: 3, protectivenessMin: 3 };
+  }
+  if (answerId === "visitors_almost_never") {
+    return { goodWithStrangersMin: 2, protectivenessMin: 3 };
+  }
+  return null;
+}
+
+export function getVisitorsSuitability(
+  answerId: QuizOptionId,
+  dog: Dog
+): number {
+  const goodWithStrangers = dog.good_with_strangers;
+  const protectiveness = dog.protectiveness;
+
+  if (answerId === "visitors_very_often") {
+    if (goodWithStrangers >= 5 && protectiveness <= 3) {
+      return 5;
+    }
+    if (goodWithStrangers >= 4 && protectiveness <= 3) {
+      return 4;
+    }
+    if (goodWithStrangers >= 4 && protectiveness === 4) {
+      return 3;
+    }
+    if (goodWithStrangers >= 3) {
+      return 2;
+    }
+    return 1;
+  }
+
+  if (answerId === "visitors_regularly") {
+    if (goodWithStrangers >= 4 && protectiveness <= 4) {
+      return 5;
+    }
+    if (goodWithStrangers >= 3 && protectiveness <= 4) {
+      return 4;
+    }
+    if (goodWithStrangers >= 3 && protectiveness === 5) {
+      return 3;
+    }
+    if (goodWithStrangers >= 2) {
+      return 2;
+    }
+    return 1;
+  }
+
+  if (answerId === "visitors_occasionally") {
+    if (protectiveness >= 3 && protectiveness <= 4) {
+      return goodWithStrangers >= 3 ? 5 : 4;
+    }
+    if (protectiveness === 5) {
+      return 3;
+    }
+    if (protectiveness === 2) {
+      return 3;
+    }
+    return 2;
+  }
+
+  if (answerId === "visitors_almost_never") {
+    if (protectiveness >= 3 && protectiveness <= 4) {
+      return goodWithStrangers >= 3 ? 5 : 4;
+    }
+    if (protectiveness === 5) {
+      return 4;
+    }
+    if (protectiveness === 2) {
+      return 3;
+    }
+    return 2;
+  }
+
+  return 3;
+}

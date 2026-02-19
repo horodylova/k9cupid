@@ -9,6 +9,7 @@ import {
   physicalHandlingQuestion,
   childrenQuestion,
   otherPetsQuestion,
+  visitorsQuestion,
   QuizOptionId,
 } from "@/lib/quizQuestions";
 import { useQuizSession } from "@/hooks/useQuizSession";
@@ -22,10 +23,10 @@ export default function QuizRunner() {
   const router = useRouter();
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6>(1);
   const [pageReady, setPageReady] = useState(false);
 
-  const totalSteps = 5;
+  const totalSteps = 6;
 
   const selectedHome = session?.answers.find(
     (answer) => answer.id === homeTypeQuestion.id
@@ -54,6 +55,12 @@ export default function QuizRunner() {
   )?.value as QuizOptionId[] | undefined;
 
   const selectedOtherPets = otherPetsValue ?? [];
+
+  const visitorsValue = session?.answers.find(
+    (answer) => answer.id === visitorsQuestion.id
+  )?.value as QuizOptionId | undefined;
+
+  const selectedVisitors = visitorsValue;
 
   const hasProgress = !!session && session.answers.length > 0;
 
@@ -135,8 +142,10 @@ export default function QuizRunner() {
     const hasHandling = answers.some((a) => a.id === physicalHandlingQuestion.id && !!a.value);
     const children = answers.find((a) => a.id === childrenQuestion.id)?.value as QuizOptionId[] | undefined;
     const hasChildren = Array.isArray(children) && children.length > 0;
+    const hasOtherPets = answers.some((a) => a.id === otherPetsQuestion.id && Array.isArray(a.value) && a.value.length > 0);
+    const hasVisitors = answers.some((a) => a.id === visitorsQuestion.id && !!a.value);
 
-    let target: 1 | 2 | 3 | 4 | 5 = 1;
+    let target: 1 | 2 | 3 | 4 | 5 | 6 = 1;
     if (!hasHome) {
       target = 1;
     } else if (!hasShared) {
@@ -145,8 +154,12 @@ export default function QuizRunner() {
       target = 3;
     } else if (!hasChildren) {
       target = 4;
-    } else {
+    } else if (!hasOtherPets) {
       target = 5;
+    } else if (!hasVisitors) {
+      target = 6;
+    } else {
+      target = 6;
     }
 
     setStep(target);
@@ -162,14 +175,15 @@ export default function QuizRunner() {
     (step === 2 && selectedSharedSpaces.length > 0) ||
     (step === 3 && !!selectedPhysicalHandling) ||
     (step === 4 && selectedChildren.length > 0) ||
-    (step === 5 && selectedOtherPets.length > 0);
+    (step === 5 && selectedOtherPets.length > 0) ||
+    (step === 6 && !!selectedVisitors);
 
   const handleContinue = () => {
     if (step >= totalSteps) {
       return;
     }
     setStep((current) =>
-      current < totalSteps ? ((current + 1) as 1 | 2 | 3 | 4 | 5) : current
+      current < totalSteps ? ((current + 1) as 1 | 2 | 3 | 4 | 5 | 6) : current
     );
   };
 
@@ -337,6 +351,35 @@ export default function QuizRunner() {
                         })
                       }
                     />
+                  )}
+
+                  {step === 6 && (
+                    <>
+                      <div className="mb-3">
+                        <h1 className="h4 mb-1">{visitorsQuestion.title}</h1>
+                      </div>
+                      <div className="d-flex flex-column gap-3">
+                        {visitorsQuestion.options.map((option) => (
+                          <button
+                            key={option.id}
+                            type="button"
+                            className={`btn w-100 text-start ${
+                              selectedVisitors === option.id
+                                ? "btn-primary"
+                                : "btn-outline-secondary"
+                            }`}
+                            onClick={() =>
+                              recordAnswer({
+                                id: visitorsQuestion.id,
+                                value: option.id,
+                              })
+                            }
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
+                    </>
                   )}
                 </div>
 
