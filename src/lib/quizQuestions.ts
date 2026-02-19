@@ -32,12 +32,25 @@ export type QuizOption = {
   imageSrc?: string;
 };
 
+export type QuizScaleLabel = {
+  value: number;
+  label: string;
+};
+
 export type QuizQuestion = {
   id: string;
   type: QuizQuestionType;
   title: string;
   description?: string;
   options: QuizOption[];
+};
+
+export type QuizScaleQuestion = {
+  id: string;
+  type: "scale";
+  title: string;
+  description?: string;
+  scaleLabels: QuizScaleLabel[];
 };
 
 export const homeTypeQuestion: QuizQuestion = {
@@ -186,6 +199,34 @@ export const visitorsQuestion: QuizQuestion = {
     {
       id: "visitors_almost_never",
       label: "Almost never",
+    },
+  ],
+};
+
+export const noiseToleranceQuestion: QuizScaleQuestion = {
+  id: "noise_tolerance",
+  type: "scale",
+  title: "How sensitive is your environment to barking and noise?",
+  scaleLabels: [
+    {
+      value: 1,
+      label: "Barking is not a problem at all",
+    },
+    {
+      value: 2,
+      label: "A bit of barking is fine",
+    },
+    {
+      value: 3,
+      label: "Some barking is okay, but not constant",
+    },
+    {
+      value: 4,
+      label: "I prefer a mostly quiet dog",
+    },
+    {
+      value: 5,
+      label: "Barking would be a serious problem (neighbours / building rules)",
     },
   ],
 };

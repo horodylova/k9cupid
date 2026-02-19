@@ -10,6 +10,7 @@ import {
   childrenQuestion,
   otherPetsQuestion,
   visitorsQuestion,
+  noiseToleranceQuestion,
   QuizOptionId,
 } from "@/lib/quizQuestions";
 import { useQuizSession } from "@/hooks/useQuizSession";
@@ -17,16 +18,17 @@ import { clearQuizSession } from "@/lib/quizStorage";
 import SharedSpacesQuestion from "@/components/SharedSpacesQuestion";
 import ChildrenQuestion from "@/components/ChildrenQuestion";
 import PetsQuestion from "@/components/PetsQuestion";
+import ScaleQuestion from "@/components/ScaleQuestion";
 
 export default function QuizRunner() {
   const { session, recordAnswer, isInitialized } = useQuizSession();
   const router = useRouter();
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(1);
   const [pageReady, setPageReady] = useState(false);
 
-  const totalSteps = 6;
+  const totalSteps = 7;
 
   const selectedHome = session?.answers.find(
     (answer) => answer.id === homeTypeQuestion.id
@@ -61,6 +63,13 @@ export default function QuizRunner() {
   )?.value as QuizOptionId | undefined;
 
   const selectedVisitors = visitorsValue;
+
+  const noiseToleranceValue = session?.answers.find(
+    (answer) => answer.id === noiseToleranceQuestion.id
+  )?.value as number | undefined;
+
+  const selectedNoiseTolerance =
+    typeof noiseToleranceValue === "number" ? noiseToleranceValue : undefined;
 
   const hasProgress = !!session && session.answers.length > 0;
 
@@ -144,8 +153,11 @@ export default function QuizRunner() {
     const hasChildren = Array.isArray(children) && children.length > 0;
     const hasOtherPets = answers.some((a) => a.id === otherPetsQuestion.id && Array.isArray(a.value) && a.value.length > 0);
     const hasVisitors = answers.some((a) => a.id === visitorsQuestion.id && !!a.value);
+    const hasNoiseTolerance = answers.some(
+      (a) => a.id === noiseToleranceQuestion.id && typeof a.value === "number"
+    );
 
-    let target: 1 | 2 | 3 | 4 | 5 | 6 = 1;
+    let target: 1 | 2 | 3 | 4 | 5 | 6 | 7 = 1;
     if (!hasHome) {
       target = 1;
     } else if (!hasShared) {
@@ -158,8 +170,10 @@ export default function QuizRunner() {
       target = 5;
     } else if (!hasVisitors) {
       target = 6;
+    } else if (!hasNoiseTolerance) {
+      target = 7;
     } else {
-      target = 6;
+      target = 7;
     }
 
     setStep(target);
@@ -176,14 +190,17 @@ export default function QuizRunner() {
     (step === 3 && !!selectedPhysicalHandling) ||
     (step === 4 && selectedChildren.length > 0) ||
     (step === 5 && selectedOtherPets.length > 0) ||
-    (step === 6 && !!selectedVisitors);
+    (step === 6 && !!selectedVisitors) ||
+    (step === 7 && typeof selectedNoiseTolerance === "number");
 
   const handleContinue = () => {
     if (step >= totalSteps) {
       return;
     }
     setStep((current) =>
-      current < totalSteps ? ((current + 1) as 1 | 2 | 3 | 4 | 5 | 6) : current
+      current < totalSteps
+        ? ((current + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7)
+        : current
     );
   };
 
@@ -380,6 +397,21 @@ export default function QuizRunner() {
                         ))}
                       </div>
                     </>
+                  )}
+
+                  {step === 7 && (
+                    <ScaleQuestion
+                      title={noiseToleranceQuestion.title}
+                      subtitle={noiseToleranceQuestion.description}
+                      labels={noiseToleranceQuestion.scaleLabels}
+                      value={selectedNoiseTolerance}
+                      onChange={(next) =>
+                        recordAnswer({
+                          id: noiseToleranceQuestion.id,
+                          value: next,
+                        })
+                      }
+                    />
                   )}
                 </div>
 

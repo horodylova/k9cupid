@@ -409,3 +409,73 @@ export function getVisitorsSuitability(
 
   return 3;
 }
+
+export type BarkingFilterPreferences = {
+  barkingMax?: number;
+  barkingMin?: number;
+  weight: "high" | "medium" | "low";
+};
+
+export function getBarkingFilterPreferences(
+  tolerance: number
+): BarkingFilterPreferences | null {
+  if (!Number.isFinite(tolerance)) {
+    return null;
+  }
+
+  if (tolerance >= 5) {
+    return { barkingMax: 2, weight: "high" };
+  }
+  if (tolerance === 4) {
+    return { barkingMax: 3, weight: "high" };
+  }
+  if (tolerance === 3) {
+    return { barkingMax: 4, weight: "medium" };
+  }
+  if (tolerance === 2) {
+    return { barkingMax: 4, weight: "low" };
+  }
+  if (tolerance === 1) {
+    return { barkingMax: 5, weight: "low" };
+  }
+
+  return null;
+}
+
+export function getBarkingSuitability(tolerance: number, dog: Dog): number {
+  const barking = dog.barking;
+
+  if (tolerance >= 5) {
+    if (barking <= 2) return 5;
+    if (barking === 3) return 4;
+    if (barking === 4) return 2;
+    return 1;
+  }
+
+  if (tolerance === 4) {
+    if (barking <= 3) return 5;
+    if (barking === 4) return 3;
+    return 1;
+  }
+
+  if (tolerance === 3) {
+    if (barking <= 3) return 4;
+    if (barking === 4) return 3;
+    return 2;
+  }
+
+  if (tolerance === 2) {
+    if (barking >= 3 && barking <= 4) return 5;
+    if (barking === 2) return 4;
+    if (barking === 5) return 3;
+    return 2;
+  }
+
+  if (tolerance === 1) {
+    if (barking >= 4) return 5;
+    if (barking === 3) return 4;
+    return 3;
+  }
+
+  return 3;
+}
