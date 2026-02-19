@@ -24,7 +24,16 @@ export type QuizOptionId =
   | "visitors_very_often"
   | "visitors_regularly"
   | "visitors_occasionally"
-  | "visitors_almost_never";
+  | "visitors_almost_never"
+  | "hair_not_bothered"
+  | "hair_okay_clean"
+  | "hair_prefer_less"
+  | "hair_prefer_minimal"
+  | "hair_allergies"
+  | "drooling_fine"
+  | "drooling_okay"
+  | "drooling_prefer_less"
+  | "drooling_uncomfortable";
 
 export type QuizOption = {
   id: QuizOptionId;
@@ -227,6 +236,87 @@ export const noiseToleranceQuestion: QuizScaleQuestion = {
     {
       value: 5,
       label: "Barking would be a serious problem (neighbours / building rules)",
+    },
+  ],
+};
+
+export const hairToleranceQuestion: QuizQuestion = {
+  id: "hair_tolerance",
+  type: "single_choice",
+  title: "How do you feel about dog hair on clothes and furniture?",
+  options: [
+    {
+      id: "hair_not_bothered",
+      label: "It does not bother me at all",
+    },
+    {
+      id: "hair_okay_clean",
+      label: "It is okay, I will just clean more often",
+    },
+    {
+      id: "hair_prefer_less",
+      label: "I prefer less hair, but can accept some",
+    },
+    {
+      id: "hair_prefer_minimal",
+      label: "I really prefer minimal hair",
+    },
+    {
+      id: "hair_allergies",
+      label: "I have allergies / hair is a big problem for me",
+    },
+  ],
+};
+
+export const groomingTimeQuestion: QuizScaleQuestion = {
+  id: "grooming_time",
+  type: "scale",
+  title:
+    "How much time are you willing to spend on grooming (brushing, baths, trimming)?",
+  scaleLabels: [
+    {
+      value: 1,
+      label: "Almost no grooming – quick wipe and go",
+    },
+    {
+      value: 2,
+      label: "A bit of brushing from time to time",
+    },
+    {
+      value: 3,
+      label: "Regular brushing a few times a month",
+    },
+    {
+      value: 4,
+      label: "Weekly grooming sessions are fine",
+    },
+    {
+      value: 5,
+      label: "I enjoy grooming and can do it often",
+    },
+  ],
+};
+
+export const droolingToleranceQuestion: QuizQuestion = {
+  id: "drooling_tolerance",
+  type: "single_choice",
+  title: "How do you feel about drooling (saliva on toys, floor, clothes)?",
+  options: [
+    {
+      id: "drooling_fine",
+      label: "Totally fine, that is part of the charm",
+    },
+    {
+      id: "drooling_okay",
+      label: "Okay in moderation",
+    },
+    {
+      id: "drooling_prefer_less",
+      label: "I would prefer less drooling",
+    },
+    {
+      id: "drooling_uncomfortable",
+      label: "Drooling would be very uncomfortable for me",
     },
   ],
 };

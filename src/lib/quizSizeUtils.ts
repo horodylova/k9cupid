@@ -479,3 +479,248 @@ export function getBarkingSuitability(tolerance: number, dog: Dog): number {
 
   return 3;
 }
+
+export type HairTolerancePreferences = {
+  sheddingMax?: number;
+  sheddingMin?: number;
+  coatLengthMax?: number;
+  weight: "high" | "medium" | "low";
+};
+
+export function getHairToleranceLevel(answerId: QuizOptionId): number | null {
+  if (answerId === "hair_not_bothered") return 1;
+  if (answerId === "hair_okay_clean") return 2;
+  if (answerId === "hair_prefer_less") return 3;
+  if (answerId === "hair_prefer_minimal") return 4;
+  if (answerId === "hair_allergies") return 5;
+  return null;
+}
+
+export function getHairTolerancePreferences(
+  answerId: QuizOptionId
+): HairTolerancePreferences | null {
+  const level = getHairToleranceLevel(answerId);
+  if (!level) {
+    return null;
+  }
+
+  if (level >= 5) {
+    return { sheddingMax: 2, coatLengthMax: 2, weight: "high" };
+  }
+  if (level === 4) {
+    return { sheddingMax: 2, coatLengthMax: 2, weight: "high" };
+  }
+  if (level === 3) {
+    return { sheddingMax: 3, weight: "medium" };
+  }
+  if (level === 2) {
+    return { sheddingMin: 3, weight: "low" };
+  }
+  if (level === 1) {
+    return { sheddingMin: 3, weight: "low" };
+  }
+  return null;
+}
+
+export function getHairToleranceSuitability(level: number, dog: Dog): number {
+  const shedding = dog.shedding;
+  const coatLength = dog.coat_length;
+
+  if (level >= 5) {
+    if (shedding <= 2 && coatLength <= 2) return 5;
+    if (shedding <= 2) return 4;
+    if (shedding === 3) return 3;
+    if (shedding === 4) return 2;
+    return 1;
+  }
+
+  if (level === 4) {
+    if (shedding <= 2 && coatLength <= 3) return 5;
+    if (shedding <= 2) return 4;
+    if (shedding === 3) return 3;
+    if (shedding === 4) return 2;
+    return 1;
+  }
+
+  if (level === 3) {
+    if (shedding <= 3) return 4;
+    if (shedding === 4) return 3;
+    return 2;
+  }
+
+  if (level === 2) {
+    if (shedding >= 4) return 5;
+    if (shedding === 3) return 4;
+    return 3;
+  }
+
+  if (level === 1) {
+    if (shedding >= 4) return 5;
+    if (shedding === 3) return 4;
+    return 3;
+  }
+
+  return 3;
+}
+
+export type GroomingTimePreferences = {
+  groomingMax?: number;
+  groomingMin?: number;
+  weight: "high" | "medium" | "low";
+};
+
+export function getGroomingTimePreferences(
+  time: number
+): GroomingTimePreferences | null {
+  if (!Number.isFinite(time)) {
+    return null;
+  }
+
+  if (time >= 5) {
+    return { groomingMin: 4, weight: "high" };
+  }
+  if (time === 4) {
+    return { groomingMin: 4, weight: "medium" };
+  }
+  if (time === 3) {
+    return { groomingMax: 3, weight: "medium" };
+  }
+  if (time === 2) {
+    return { groomingMax: 2, weight: "high" };
+  }
+  if (time === 1) {
+    return { groomingMax: 2, weight: "high" };
+  }
+  return null;
+}
+
+export function getGroomingTimeSuitability(time: number, dog: Dog): number {
+  const grooming = dog.grooming;
+
+  if (time >= 5) {
+    if (grooming >= 4) return 5;
+    if (grooming === 3) return 4;
+    if (grooming === 2) return 3;
+    return 2;
+  }
+
+  if (time === 4) {
+    if (grooming >= 4) return 5;
+    if (grooming === 3) return 4;
+    if (grooming === 2) return 2;
+    return 1;
+  }
+
+  if (time === 3) {
+    if (grooming <= 3) return 4;
+    if (grooming === 4) return 3;
+    return 2;
+  }
+
+  if (time <= 2) {
+    if (grooming <= 2) return 5;
+    if (grooming === 3) return 3;
+    if (grooming === 4) return 2;
+    return 1;
+  }
+
+  return 3;
+}
+
+export type CoatCarePreferences = {
+  sheddingMax?: number;
+  groomingMax?: number;
+  coatLengthMax?: number;
+  weight: "high" | "medium" | "low";
+};
+
+export function getCoatCarePreferences(
+  hairToleranceLevel: number,
+  groomingTime: number
+): CoatCarePreferences | null {
+  if (!Number.isFinite(hairToleranceLevel) || !Number.isFinite(groomingTime)) {
+    return null;
+  }
+
+  if (hairToleranceLevel >= 4 && groomingTime <= 2) {
+    return { sheddingMax: 2, groomingMax: 2, coatLengthMax: 2, weight: "high" };
+  }
+
+  if (hairToleranceLevel >= 4) {
+    return { sheddingMax: 2, coatLengthMax: 2, weight: "high" };
+  }
+
+  if (groomingTime <= 2) {
+    return { groomingMax: 2, weight: "high" };
+  }
+
+  if (groomingTime >= 4) {
+    return { weight: "medium" };
+  }
+
+  return null;
+}
+
+export type DroolingPreferences = {
+  droolingMax?: number;
+  weight: "high" | "medium" | "low";
+};
+
+export function getDroolingToleranceLevel(answerId: QuizOptionId): number | null {
+  if (answerId === "drooling_fine") return 1;
+  if (answerId === "drooling_okay") return 2;
+  if (answerId === "drooling_prefer_less") return 3;
+  if (answerId === "drooling_uncomfortable") return 4;
+  return null;
+}
+
+export function getDroolingPreferences(
+  answerId: QuizOptionId
+): DroolingPreferences | null {
+  const level = getDroolingToleranceLevel(answerId);
+  if (!level) {
+    return null;
+  }
+
+  if (level >= 4) {
+    return { droolingMax: 1, weight: "high" };
+  }
+  if (level === 3) {
+    return { droolingMax: 2, weight: "medium" };
+  }
+  if (level === 2) {
+    return { droolingMax: 3, weight: "low" };
+  }
+  return { droolingMax: 4, weight: "low" };
+}
+
+export function getDroolingSuitability(level: number, dog: Dog): number {
+  const drooling = dog.drooling;
+
+  if (level >= 4) {
+    if (drooling <= 1) return 5;
+    if (drooling === 2) return 4;
+    if (drooling === 3) return 2;
+    return 1;
+  }
+
+  if (level === 3) {
+    if (drooling <= 2) return 5;
+    if (drooling === 3) return 3;
+    return 1;
+  }
+
+  if (level === 2) {
+    if (drooling <= 3) return 4;
+    if (drooling === 4) return 3;
+    return 2;
+  }
+
+  if (level === 1) {
+    if (drooling >= 4) return 5;
+    if (drooling === 3) return 4;
+    return 3;
+  }
+
+  return 3;
+}

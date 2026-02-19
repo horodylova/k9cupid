@@ -11,6 +11,9 @@ import {
   otherPetsQuestion,
   visitorsQuestion,
   noiseToleranceQuestion,
+  hairToleranceQuestion,
+  groomingTimeQuestion,
+  droolingToleranceQuestion,
   QuizOptionId,
 } from "@/lib/quizQuestions";
 import { useQuizSession } from "@/hooks/useQuizSession";
@@ -25,10 +28,10 @@ export default function QuizRunner() {
   const router = useRouter();
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10>(1);
   const [pageReady, setPageReady] = useState(false);
 
-  const totalSteps = 7;
+  const totalSteps = 10;
 
   const selectedHome = session?.answers.find(
     (answer) => answer.id === homeTypeQuestion.id
@@ -70,6 +73,25 @@ export default function QuizRunner() {
 
   const selectedNoiseTolerance =
     typeof noiseToleranceValue === "number" ? noiseToleranceValue : undefined;
+
+  const hairToleranceValue = session?.answers.find(
+    (answer) => answer.id === hairToleranceQuestion.id
+  )?.value as QuizOptionId | undefined;
+
+  const selectedHairTolerance = hairToleranceValue;
+
+  const groomingTimeValue = session?.answers.find(
+    (answer) => answer.id === groomingTimeQuestion.id
+  )?.value as number | undefined;
+
+  const selectedGroomingTime =
+    typeof groomingTimeValue === "number" ? groomingTimeValue : undefined;
+
+  const droolingToleranceValue = session?.answers.find(
+    (answer) => answer.id === droolingToleranceQuestion.id
+  )?.value as QuizOptionId | undefined;
+
+  const selectedDroolingTolerance = droolingToleranceValue;
 
   const hasProgress = !!session && session.answers.length > 0;
 
@@ -156,8 +178,17 @@ export default function QuizRunner() {
     const hasNoiseTolerance = answers.some(
       (a) => a.id === noiseToleranceQuestion.id && typeof a.value === "number"
     );
+    const hasHairTolerance = answers.some(
+      (a) => a.id === hairToleranceQuestion.id && !!a.value
+    );
+    const hasGroomingTime = answers.some(
+      (a) => a.id === groomingTimeQuestion.id && typeof a.value === "number"
+    );
+    const hasDroolingTolerance = answers.some(
+      (a) => a.id === droolingToleranceQuestion.id && !!a.value
+    );
 
-    let target: 1 | 2 | 3 | 4 | 5 | 6 | 7 = 1;
+    let target: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 = 1;
     if (!hasHome) {
       target = 1;
     } else if (!hasShared) {
@@ -172,8 +203,14 @@ export default function QuizRunner() {
       target = 6;
     } else if (!hasNoiseTolerance) {
       target = 7;
+    } else if (!hasHairTolerance) {
+      target = 8;
+    } else if (!hasGroomingTime) {
+      target = 9;
+    } else if (!hasDroolingTolerance) {
+      target = 10;
     } else {
-      target = 7;
+      target = 10;
     }
 
     setStep(target);
@@ -191,7 +228,10 @@ export default function QuizRunner() {
     (step === 4 && selectedChildren.length > 0) ||
     (step === 5 && selectedOtherPets.length > 0) ||
     (step === 6 && !!selectedVisitors) ||
-    (step === 7 && typeof selectedNoiseTolerance === "number");
+    (step === 7 && typeof selectedNoiseTolerance === "number") ||
+    (step === 8 && !!selectedHairTolerance) ||
+    (step === 9 && typeof selectedGroomingTime === "number") ||
+    (step === 10 && !!selectedDroolingTolerance);
 
   const handleContinue = () => {
     if (step >= totalSteps) {
@@ -199,7 +239,7 @@ export default function QuizRunner() {
     }
     setStep((current) =>
       current < totalSteps
-        ? ((current + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7)
+        ? ((current + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10)
         : current
     );
   };
@@ -412,6 +452,79 @@ export default function QuizRunner() {
                         })
                       }
                     />
+                  )}
+
+                  {step === 8 && (
+                    <>
+                      <div className="mb-3">
+                        <h1 className="h4 mb-1">{hairToleranceQuestion.title}</h1>
+                      </div>
+                      <div className="d-flex flex-column gap-3">
+                        {hairToleranceQuestion.options.map((option) => (
+                          <button
+                            key={option.id}
+                            type="button"
+                            className={`btn w-100 text-start ${
+                              selectedHairTolerance === option.id
+                                ? "btn-primary"
+                                : "btn-outline-secondary"
+                            }`}
+                            onClick={() =>
+                              recordAnswer({
+                                id: hairToleranceQuestion.id,
+                                value: option.id,
+                              })
+                            }
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+
+                  {step === 9 && (
+                    <ScaleQuestion
+                      title={groomingTimeQuestion.title}
+                      subtitle={groomingTimeQuestion.description}
+                      labels={groomingTimeQuestion.scaleLabels}
+                      value={selectedGroomingTime}
+                      onChange={(next) =>
+                        recordAnswer({
+                          id: groomingTimeQuestion.id,
+                          value: next,
+                        })
+                      }
+                    />
+                  )}
+
+                  {step === 10 && (
+                    <>
+                      <div className="mb-3">
+                        <h1 className="h4 mb-1">{droolingToleranceQuestion.title}</h1>
+                      </div>
+                      <div className="d-flex flex-column gap-3">
+                        {droolingToleranceQuestion.options.map((option) => (
+                          <button
+                            key={option.id}
+                            type="button"
+                            className={`btn w-100 text-start ${
+                              selectedDroolingTolerance === option.id
+                                ? "btn-primary"
+                                : "btn-outline-secondary"
+                            }`}
+                            onClick={() =>
+                              recordAnswer({
+                                id: droolingToleranceQuestion.id,
+                                value: option.id,
+                              })
+                            }
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
+                    </>
                   )}
                 </div>
 
