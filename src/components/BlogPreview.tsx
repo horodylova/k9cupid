@@ -17,7 +17,8 @@ interface SanityPost {
   title: string;
   slug: string;
   mainImage: { asset: { _ref: string } };
-  publishedAt: string;
+  publishedAt?: string;
+  _createdAt: string;
   excerpt: string;
 }
 
@@ -55,6 +56,7 @@ const BlogPreview = async () => {
     "slug": slug.current,
     mainImage,
     publishedAt,
+    _createdAt,
     excerpt
   }`;
 
@@ -65,7 +67,8 @@ const BlogPreview = async () => {
     console.log('Fetched posts from Sanity:', posts.length);
     if (posts && posts.length > 0) {
       blogPosts = posts.map((post) => {
-        const dateObj = new Date(post.publishedAt || new Date());
+        const dateSource = post.publishedAt || post._createdAt;
+        const dateObj = new Date(dateSource);
         return {
           id: post.slug, // Use slug as ID for the link
           date: dateObj.getDate().toString(),

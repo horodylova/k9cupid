@@ -29,6 +29,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
     title,
     mainImage,
     publishedAt,
+    _createdAt,
     body,
     "categories": categories[]->title,
     tags,
@@ -188,7 +189,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
     }
   };
 
-  const dateObj = new Date(post.publishedAt || new Date());
+  const dateObj = new Date(post.publishedAt || post._createdAt);
   const dateStr = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   return (

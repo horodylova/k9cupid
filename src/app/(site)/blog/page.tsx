@@ -17,7 +17,8 @@ interface SanityPost {
   title: string;
   slug: string;
   mainImage: { asset: { _ref: string } };
-  publishedAt: string;
+  publishedAt?: string;
+  _createdAt: string;
   excerpt: string;
 }
 
@@ -55,6 +56,7 @@ export default async function BlogPage() {
     "slug": slug.current,
     mainImage,
     publishedAt,
+    _createdAt,
     excerpt
   }`;
 
@@ -64,7 +66,8 @@ export default async function BlogPage() {
     const posts = await client.fetch<SanityPost[]>(query, {}, { next: { revalidate: 30 } });
     if (posts && posts.length > 0) {
       blogPosts = posts.map((post) => {
-        const dateObj = new Date(post.publishedAt || new Date());
+        const dateSource = post.publishedAt || post._createdAt;
+        const dateObj = new Date(dateSource);
         return {
           id: post.slug,
           date: dateObj.getDate().toString(),
