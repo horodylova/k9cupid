@@ -25,7 +25,7 @@ interface SanityPost {
 }
 
 const BlogPreview = async () => {
-  const query = `*[_type == "post"] | order(publishedAt desc)[0...3] {
+  const query = `*[_type == "post"] | order(publishedAt desc)[0...4] {
     _id,
     title,
     "slug": slug.current,
@@ -64,7 +64,9 @@ const BlogPreview = async () => {
   }
 
   const featuredPost = blogPosts.find((post) => post.featured) ?? blogPosts[0];
-  const secondaryPosts = blogPosts.filter((post) => post.id !== featuredPost?.id).slice(0, 2);
+  const secondaryPosts = blogPosts.filter((post) => post.id !== featuredPost?.id);
+  const belowFeaturedPost = secondaryPosts[0];
+  const sidePosts = secondaryPosts.slice(1, 3);
 
   return (
     <section id="latest-blog" className="my-5">
@@ -88,14 +90,14 @@ const BlogPreview = async () => {
         {featuredPost && (
           <div className="row g-4">
             <div className="col-lg-7">
-              <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+              <div className="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
                 <Link href={`/blog/${featuredPost.id}`}>
                   <Image
                     src={featuredPost.image}
                     className="img-fluid"
                     alt={featuredPost.title}
                     width={720}
-                    height={520}
+                    height={420}
                     style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
                   />
                 </Link>
@@ -113,10 +115,33 @@ const BlogPreview = async () => {
                   </Link>
                 </div>
               </div>
+              {belowFeaturedPost && (
+                <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
+                  <Link href={`/blog/${belowFeaturedPost.id}`}>
+                    <Image
+                      src={belowFeaturedPost.image}
+                      className="img-fluid"
+                      alt={belowFeaturedPost.title}
+                      width={720}
+                      height={360}
+                      style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                    />
+                  </Link>
+                  <div className="card-body p-4">
+                    <div className="text-uppercase text-muted fw-semibold mb-2">
+                      {belowFeaturedPost.month} {belowFeaturedPost.date}
+                    </div>
+                    <Link href={`/blog/${belowFeaturedPost.id}`}>
+                      <h4 className="card-title mb-2">{belowFeaturedPost.title}</h4>
+                    </Link>
+                    <p className="blog-paragraph fs-6 mb-0">{belowFeaturedPost.excerpt}</p>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="col-lg-5">
               <div className="row g-4">
-                {secondaryPosts.map((post) => (
+                {sidePosts.map((post) => (
                   <div key={post.id} className="col-12">
                     <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
                       <Link href={`/blog/${post.id}`}>

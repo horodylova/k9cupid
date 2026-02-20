@@ -119,12 +119,6 @@ export default async function BlogPage() {
                     <div className="text-uppercase text-muted fw-semibold mb-2">Editor’s Pick</div>
                     <h2 className="display-5 fw-normal mb-0">Featured Story</h2>
                   </div>
-                  <Link href="/blog" className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-                    Browse all
-                    <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1">
-                      <use xlinkHref="#arrow-right"></use>
-                    </svg>
-                  </Link>
                 </div>
               </div>
               <div className="col-lg-7">
