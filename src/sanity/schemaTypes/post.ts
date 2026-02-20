@@ -44,6 +44,12 @@ export const post = defineType({
       type: 'datetime',
     }),
     defineField({
+      name: 'featured',
+      title: 'Featured story',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
       name: 'categories',
       title: 'Categories',
       type: 'array',

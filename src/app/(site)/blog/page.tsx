@@ -10,6 +10,7 @@ interface BlogPost {
   image: string;
   title: string;
   excerpt: string;
+  featured?: boolean;
 }
 
 interface SanityPost {
@@ -20,6 +21,7 @@ interface SanityPost {
   publishedAt?: string;
   _createdAt: string;
   excerpt: string;
+  featured?: boolean;
 }
 
 const fallbackBlogPosts: BlogPost[] = [
@@ -57,7 +59,8 @@ export default async function BlogPage() {
     mainImage,
     publishedAt,
     _createdAt,
-    excerpt
+    excerpt,
+    featured
   }`;
 
   let blogPosts: BlogPost[] = [];
@@ -75,6 +78,7 @@ export default async function BlogPage() {
           image: post.mainImage ? urlFor(post.mainImage).width(800).height(600).url() : '/images/placeholder.jpg',
           title: post.title,
           excerpt: post.excerpt,
+          featured: post.featured ?? false,
         };
       });
     }
@@ -87,6 +91,9 @@ export default async function BlogPage() {
       blogPosts = fallbackBlogPosts;
     }
   }
+
+  const featuredPost = blogPosts.find((post) => post.featured) ?? blogPosts[0];
+  const gridPosts = blogPosts.filter((post) => post.id !== featuredPost?.id);
 
   return (
     <>
@@ -104,8 +111,58 @@ export default async function BlogPage() {
 
       <div className="my-5 py-5">
         <div className="container">
+          {featuredPost && (
+            <div className="row g-4 align-items-stretch mb-5">
+              <div className="col-12">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <div className="text-uppercase text-muted fw-semibold mb-2">Editor’s Pick</div>
+                    <h2 className="display-5 fw-normal mb-0">Featured Story</h2>
+                  </div>
+                  <Link href="/blog" className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                    Browse all
+                    <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1">
+                      <use xlinkHref="#arrow-right"></use>
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+              <div className="col-lg-7">
+                <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+                  <Link href={`/blog/${featuredPost.id}`}>
+                    <Image
+                      src={featuredPost.image}
+                      className="img-fluid"
+                      alt={featuredPost.title}
+                      width={960}
+                      height={640}
+                      style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                    />
+                  </Link>
+                </div>
+              </div>
+              <div className="col-lg-5">
+                <div className="card border-0 shadow-sm rounded-4 h-100">
+                  <div className="card-body p-4 p-lg-5 d-flex flex-column">
+                    <div className="text-uppercase text-muted fw-semibold mb-3">
+                      {featuredPost.month} {featuredPost.date}
+                    </div>
+                    <Link href={`/blog/${featuredPost.id}`}>
+                      <h3 className="card-title mb-3">{featuredPost.title}</h3>
+                    </Link>
+                    <p className="blog-paragraph fs-6 mb-4">{featuredPost.excerpt}</p>
+                    <div className="mt-auto">
+                      <Link href={`/blog/${featuredPost.id}`} className="blog-read">
+                        read more
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="row entry-container">
-            {blogPosts.map((post) => (
+            {gridPosts.map((post) => (
               <div className="entry-item col-md-4 my-4" key={post.id}>
                 <div className="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
                   <h3 className="secondary-font text-primary m-0">{post.date}</h3>
