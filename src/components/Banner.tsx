@@ -60,7 +60,7 @@ export default function Banner() {
               <div className="content-wrapper col-md-7 p-3 p-md-5 mb-3 mb-md-5">
                 <div className="secondary-font text-primary text-uppercase mb-2 mb-md-4">Dog Care Guides</div>
                 <h2 className="banner-title display-4 display-md-1 fw-normal">Tips for a happy <span className="text-primary">life together</span></h2>
-                <Link href="/articles" className="btn btn-outline-dark btn-md btn-lg-md text-uppercase fs-6 rounded-1 mt-3">
+                <Link href="/blog" className="btn btn-outline-dark btn-md btn-lg-md text-uppercase fs-6 rounded-1 mt-3">
                   Read Articles
                   <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1">
                     <use xlinkHref="#arrow-right"></use>

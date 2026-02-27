@@ -498,6 +498,165 @@ a.blog-read:hover {
   border-bottom: 3px solid #8a8a8a;
 }
 
+.post-description a,
+.post-description a:visited {
+  color: var(--accent-color);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.post-description a:hover,
+.post-description a:focus-visible {
+  color: #b98241;
+  text-decoration-color: #b98241;
+}
+
+.quiz-interim-card {
+  min-height: 720px;
+  background: url("/images/adorable-white-bulldog-puppy-portrait.jpg") center 110%/cover no-repeat;
+  padding-right: 260px;
+  border: none;
+  border-radius: 1rem;
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: clamp(260px, 40vh, 360px);
+}
+
+.quiz-interim-content {
+  max-width: 640px;
+  background: transparent;
+  color: #222;
+  position: relative;
+  z-index: 2;
+  margin-top: 0;
+  transform: none;
+  padding-left: 0;
+}
+
+.quiz-interim-title {
+  font-size: clamp(1.4rem, 1.9vw, 2rem);
+  line-height: 1.2;
+}
+
+.quiz-interim-copy {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.quiz-interim-logo {
+  position: absolute;
+  top: 56px;
+  left: 12px;
+  right: auto;
+  width: clamp(160px, 18vw, 320px);
+  height: auto;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.quiz-interim-actions {
+  margin-top: 0.5rem;
+}
+.quiz-interim-actions .btn {
+  font-size: 0.9rem;
+  padding: 0.6rem 1rem;
+}
+
+.quiz-interim-hero {
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.quiz-interim-logo-static {
+  flex: 0 0 auto;
+  width: clamp(180px, 22vw, 280px);
+  height: auto;
+  margin-top: 0;
+}
+
+.quiz-interim-text {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.quiz-interim-puppy {
+  position: absolute;
+  right: 24px;
+  bottom: 16px;
+  width: min(32vw, 260px);
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 991px) {
+  .quiz-interim-card {
+    min-height: 620px;
+    padding-right: 220px;
+    padding-bottom: clamp(240px, 44vh, 340px);
+  }
+
+
+  .quiz-interim-puppy {
+    right: 18px;
+    width: min(38vw, 220px);
+    bottom: 12px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .quiz-interim-content {
+    max-width: 100%;
+    transform: none;
+    padding-left: 0;
+  }
+
+  .quiz-interim-card {
+    padding-right: 1.5rem;
+    min-height: 600px;
+    padding-bottom: clamp(260px, 48vh, 360px);
+  }
+
+  .quiz-interim-title {
+    font-size: 1.5rem;
+  }
+
+  .quiz-interim-copy {
+    font-size: 0.95rem;
+  }
+
+  .quiz-interim-actions {
+    gap: 0.5rem;
+  }
+
+  .quiz-interim-actions .btn {
+    font-size: 0.78rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .quiz-interim-logo {
+    top: 40px;
+    left: 8px;
+    right: auto;
+    width: clamp(120px, 34vw, 220px);
+  }
+
+  .quiz-interim-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .quiz-interim-text {
+    max-width: 100%;
+    gap: 0.4rem;
+  }
+}
+
 /* services style  */
 .service-icon {
   font-size: 30px;
@@ -705,13 +864,37 @@ Single Product section style start
     justify-content: center;
   }
 }
-#banner .swiper-pagination-bullet-active {
-  background-color: var(--bs-body-color);
-  background: var(--bs-body-color);
-}
-
 #banner .swiper-pagination {
   margin-bottom: 3rem;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#banner .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #41403E;
+  background-color: transparent;
+  opacity: 1;
+  transition: all 0.25s ease;
+}
+
+#banner .swiper-pagination-bullet-active {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px rgba(222, 173, 111, 0.25);
+}
+
+.featured-story-media {
+  aspect-ratio: 3 / 2;
+}
+
+@media screen and (max-width: 991px) {
+  .featured-story-media {
+    aspect-ratio: 4 / 3;
+  }
 }
 
 /* Header Logo Style */

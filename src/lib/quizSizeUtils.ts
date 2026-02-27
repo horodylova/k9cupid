@@ -152,6 +152,41 @@ export function getSharedSpacesSizeAndSheddingSuitability(
   return 3;
 }
 
+export function getSharedSpacesSizeSuitability(
+  selectedIds: QuizOptionId[],
+  dog: Dog
+): number {
+  const hasFurniture = selectedIds.includes("shared_sofa") || selectedIds.includes("shared_bed");
+  const hasCar = selectedIds.includes("shared_car");
+  const prefersOwnSpace = selectedIds.includes("shared_own_space");
+
+  const size = getDogSizeCategory(dog);
+
+  // If "Own space" is explicitly selected and NO furniture sharing is selected,
+  // then the dog's size doesn't matter for furniture crowding.
+  if (prefersOwnSpace && !hasFurniture) {
+    return 5;
+  }
+
+  // If sharing furniture (Sofa or Bed)
+  if (hasFurniture) {
+    if (size === "toy" || size === "small") return 5;
+    if (size === "medium") return 4;
+    // Large dogs take up a lot of space on furniture
+    return 3;
+  }
+
+  // If only sharing car (and not furniture)
+  if (hasCar) {
+    // Large dogs might be harder to fit in some cars, but generally okay
+    if (size === "large") return 4;
+    return 5;
+  }
+
+  // Default neutral if "not sure" or other combinations
+  return 3;
+}
+
 export function getPhysicalHandlingSuitability(
   answerId: QuizOptionId,
   dog: Dog

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -22,16 +22,23 @@ import SharedSpacesQuestion from "@/components/SharedSpacesQuestion";
 import ChildrenQuestion from "@/components/ChildrenQuestion";
 import PetsQuestion from "@/components/PetsQuestion";
 import ScaleQuestion from "@/components/ScaleQuestion";
+import { getQuizInterimBreeds } from "@/app/actions";
+import QuizInterimGrid from "@/components/quiz-interim/QuizInterimGrid";
+import { Dog } from "@/lib/api";
 
 export default function QuizRunner() {
   const { session, recordAnswer, isInitialized } = useQuizSession();
   const router = useRouter();
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11>(1);
   const [pageReady, setPageReady] = useState(false);
+  const [interimBreeds, setInterimBreeds] = useState<Dog[]>([]);
+  const [isLoadingInterim, setIsLoadingInterim] = useState(false);
+  const [showShortlist, setShowShortlist] = useState(false);
+  const fetchingRef = useRef(false);
 
-  const totalSteps = 10;
+  const totalSteps = 11;
 
   const selectedHome = session?.answers.find(
     (answer) => answer.id === homeTypeQuestion.id
@@ -188,7 +195,7 @@ export default function QuizRunner() {
       (a) => a.id === droolingToleranceQuestion.id && !!a.value
     );
 
-    let target: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 = 1;
+    let target: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 = 1;
     if (!hasHome) {
       target = 1;
     } else if (!hasShared) {
@@ -210,12 +217,27 @@ export default function QuizRunner() {
     } else if (!hasDroolingTolerance) {
       target = 10;
     } else {
-      target = 10;
+      target = 11;
     }
 
     setStep(target);
     setHasResumed(true);
   }, [isInitialized, hasResumed, session]);
+
+  useEffect(() => {
+    if (step === 11 && session?.answers && !fetchingRef.current) {
+      fetchingRef.current = true;
+      setIsLoadingInterim(true);
+      getQuizInterimBreeds(session.answers)
+        .then((result) => {
+          setInterimBreeds(result.breeds);
+        })
+        .finally(() => {
+          setIsLoadingInterim(false);
+          fetchingRef.current = false;
+        });
+    }
+  }, [step, session?.answers]);
 
   if (!isInitialized || !pageReady) {
     return null;
@@ -231,7 +253,8 @@ export default function QuizRunner() {
     (step === 7 && typeof selectedNoiseTolerance === "number") ||
     (step === 8 && !!selectedHairTolerance) ||
     (step === 9 && typeof selectedGroomingTime === "number") ||
-    (step === 10 && !!selectedDroolingTolerance);
+    (step === 10 && !!selectedDroolingTolerance) ||
+    step === 11;
 
   const handleContinue = () => {
     if (step >= totalSteps) {
@@ -239,7 +262,7 @@ export default function QuizRunner() {
     }
     setStep((current) =>
       current < totalSteps
-        ? ((current + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10)
+        ? ((current + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11)
         : current
     );
   };
@@ -267,16 +290,22 @@ export default function QuizRunner() {
         </div>
       </section>
 
-      <section className="py-4 my-4">
+      <section className={step === 11 ? "py-3 my-2" : "py-4 my-4"}>
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <div className="border rounded-4 p-4 p-md-5 d-flex flex-column">
-                <div className="mb-4">
-                  <div className="secondary-font text-uppercase text-muted mb-2">
-                    Step {step} of {totalSteps}
+            <div className={step === 11 ? "col-12" : "col-lg-8"}>
+              <div
+                className={`rounded-4 p-4 p-md-5 d-flex flex-column${
+                  step === 11 ? "" : " border"
+                }`}
+              >
+                {step !== 11 && (
+                  <div className="mb-4">
+                    <div className="secondary-font text-uppercase text-muted mb-2">
+                      Step {step} of {totalSteps}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div
                   className="flex-grow-1"
@@ -526,22 +555,96 @@ export default function QuizRunner() {
                       </div>
                     </>
                   )}
+                  {step === 11 && !showShortlist && (
+                    <div className="rounded-4 p-3 p-md-4 quiz-interim-card position-relative">
+                      <div className="quiz-interim-content rounded-4 p-3 p-md-4">
+                        <div className="mb-3">
+                          <div className="text-uppercase fw-semibold" style={{ letterSpacing: "0.12em" }}>
+                            You did the work
+                          </div>
+                        </div>
+
+                        <div className="quiz-interim-hero d-flex align-items-start gap-3">
+                          <div className="d-none d-md-block flex-shrink-0">
+                            <Image
+                              src="/Cupid and Dogs-Picsart-BackgroundRemover.png"
+                              alt="Cupid and dogs"
+                              width={320}
+                              height={320}
+                              className="quiz-interim-logo-static img-fluid"
+                              style={{ maxHeight: "320px", width: "auto" }}
+                            />
+                          </div>
+                          <div className="flex-grow-1 quiz-interim-text">
+                            <h1 className="display-6 fw-normal mb-2 quiz-interim-title">A promising pack is ready.</h1>
+                            <p className="fs-5 mb-3 quiz-interim-copy">
+                              We narrowed the list to breeds that can truly fit your life. Want to meet them now, or keep tuning things like
+                              friendliness, dog social skills, and vibe?
+                            </p>
+                            <div className="d-flex flex-column flex-md-row gap-2 quiz-interim-actions">
+                              <button
+                                type="button"
+                                className="btn btn-light text-uppercase fw-semibold"
+                                onClick={() => setShowShortlist(true)}
+                                disabled={isLoadingInterim}
+                              >
+                                {isLoadingInterim ? (
+                                  <>
+                                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                    Loading...
+                                  </>
+                                ) : (
+                                  "Show the shortlist"
+                                )}
+                              </button>
+                              <button type="button" className="btn btn-outline-dark text-uppercase fw-semibold">
+                                Keep refining
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {step === 11 && showShortlist && (
+                    <div className="rounded-4 p-3 p-md-4" style={{ backgroundColor: "#FFF7EC" }}>
+                      <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h2 className="h4 mb-0">Your Interim Matches</h2>
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-outline-secondary"
+                          onClick={() => setShowShortlist(false)}
+                        >
+                          Back
+                        </button>
+                      </div>
+                      <QuizInterimGrid breeds={interimBreeds} />
+                      <div className="mt-4 text-center">
+                        <button type="button" className="btn btn-outline-dark text-uppercase fw-semibold">
+                          Keep refining
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                <div className="mt-4 d-flex justify-content-end">
-                  <button
-                    type="button"
-                    className={`btn px-4 ${
-                      canContinue
-                        ? "btn-primary"
-                        : "btn-light opacity-100 text-body border border-2"
-                    }`}
-                    disabled={!canContinue}
-                    onClick={handleContinue}
-                  >
-                    Continue to next step
-                  </button>
-                </div>
+                {step !== 11 && (
+                  <div className="mt-4 d-flex justify-content-end">
+                    <button
+                      type="button"
+                      className={`btn px-4 ${
+                        canContinue
+                          ? "btn-primary"
+                          : "btn-light opacity-100 text-body border border-2"
+                      }`}
+                      disabled={!canContinue}
+                      onClick={handleContinue}
+                    >
+                      Continue to next step
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
