@@ -567,13 +567,12 @@ export default function QuizRunner() {
                         <div className="quiz-interim-hero d-flex align-items-start gap-3">
                           <div className="d-none d-md-block flex-shrink-0">
                             <Image
-                              src="/Cupid and Dogs-Picsart-BackgroundRemover.png"
-                              alt="Cupid and dogs"
-                              width={320}
-                              height={320}
-                              className="quiz-interim-logo-static img-fluid"
-                              style={{ maxHeight: "320px", width: "auto" }}
-                            />
+                            src="/Cupid and Dogs-Picsart-BackgroundRemover.png"
+                            alt="Cupid and dogs"
+                            width={320}
+                            height={320}
+                            className="quiz-interim-logo-static img-fluid"
+                          />
                           </div>
                           <div className="flex-grow-1 quiz-interim-text">
                             <h1 className="display-6 fw-normal mb-2 quiz-interim-title">A promising pack is ready.</h1>
