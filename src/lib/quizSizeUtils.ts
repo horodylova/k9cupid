@@ -778,3 +778,113 @@ export function getWorkScheduleSuitability(
 
   return 3;
 }
+
+export function getActivityLevelSuitability(answerId: QuizOptionId, dog: Dog): number {
+  const energy = dog.energy;
+  const playfulness = dog.playfulness;
+
+  // A: Sports partner (High Energy/Playfulness)
+  if (answerId === "activity_sports") {
+    if (energy >= 4 && playfulness >= 4) return 5;
+    if (energy >= 3 && playfulness >= 3) return 4;
+    return 2;
+  }
+
+  // B: Regular walks (Medium)
+  if (answerId === "activity_regular") {
+    if (energy >= 3 && energy <= 4) return 5;
+    if (energy === 2 || energy === 5) return 3;
+    return 2;
+  }
+
+  // C: Calm walks (Low-Medium)
+  if (answerId === "activity_calm_walks") {
+    if (energy <= 3) return 5;
+    if (energy === 4) return 3;
+    return 1;
+  }
+
+  // D: Couch potato (Low)
+  if (answerId === "activity_couch") {
+    if (energy <= 2 && playfulness <= 3) return 5;
+    if (energy === 3) return 3;
+    return 1;
+  }
+
+  return 3;
+}
+
+export function getActiveImportanceSuitability(answerId: QuizOptionId, dog: Dog): number {
+  const energy = dog.energy;
+  const playfulness = dog.playfulness;
+
+  if (answerId === "importance_endurance") {
+    if (energy >= 4) return 5;
+    if (energy === 3) return 3;
+    return 1;
+  }
+
+  if (answerId === "importance_play") {
+    if (playfulness >= 4) return 5;
+    if (playfulness === 3) return 3;
+    return 1;
+  }
+
+  if (answerId === "importance_calm_home") {
+    if (energy >= 3) {
+      if (playfulness <= 3) return 5;
+      return 4;
+    }
+    return 2;
+  }
+
+  return 3;
+}
+
+export function getActiveDaysSuitability(answerId: QuizOptionId, dog: Dog): number {
+  const energy = dog.energy;
+
+  if (answerId === "days_5_7") {
+    if (energy === 5) return 5;
+    if (energy === 4) return 4;
+    return 3;
+  }
+
+  if (answerId === "days_2_4") {
+    if (energy >= 3 && energy <= 4) return 5;
+    if (energy === 2 || energy === 5) return 3;
+    return 1;
+  }
+
+  if (answerId === "days_0_1") {
+    if (energy <= 3) return 5;
+    if (energy === 4) return 2;
+    return 1;
+  }
+
+  return 3;
+}
+
+export function getWalksTimeSuitability(answerValue: number, dog: Dog): number {
+  const energy = dog.energy;
+
+  if (answerValue === 1) { // Up to 30 min
+    if (energy <= 2) return 5;
+    if (energy === 3) return 3;
+    return 1;
+  }
+  if (answerValue === 2) { // 30-45 min
+    if (energy <= 3) return 5;
+    if (energy === 4) return 3;
+    return 2;
+  }
+  if (answerValue === 3) { // 45-60 min
+    if (energy <= 4) return 5;
+    return 3;
+  }
+  if (answerValue === 4 || answerValue === 5) { // 60+ min
+    return 5;
+  }
+
+  return 3;
+}

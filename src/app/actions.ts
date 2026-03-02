@@ -17,6 +17,10 @@ import {
   getDroolingToleranceLevel,
   getDroolingSuitability,
   getWorkScheduleSuitability,
+  getActivityLevelSuitability,
+  getActiveImportanceSuitability,
+  getActiveDaysSuitability,
+  getWalksTimeSuitability,
 } from "@/lib/quizSizeUtils";
 
 export type InterimQuizResult = {
@@ -35,6 +39,10 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
   const noiseToleranceAnswer = answers.find((a) => a.id === "noise_tolerance")?.value as number;
   const droolingToleranceAnswer = answers.find((a) => a.id === "drooling_tolerance")?.value as QuizOptionId;
   const workScheduleAnswer = answers.find((a) => a.id === "work_schedule")?.value as QuizOptionId;
+  const activityLevelAnswer = answers.find((a) => a.id === "activity_level")?.value as QuizOptionId;
+  const activeImportanceAnswer = answers.find((a) => a.id === "active_importance")?.value as QuizOptionId;
+  const activeDaysAnswer = answers.find((a) => a.id === "active_days")?.value as QuizOptionId;
+  const walksTimeAnswer = answers.find((a) => a.id === "walks_time")?.value as number;
 
   const allowedSizes = new Set<string>();
 
@@ -156,6 +164,30 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
       if (workScheduleAnswer) {
         const score = getWorkScheduleSuitability(workScheduleAnswer, dog);
         totalScore += score * 3; // Medium importance
+      }
+
+      // 10. Activity Level Suitability
+      if (activityLevelAnswer) {
+        const score = getActivityLevelSuitability(activityLevelAnswer, dog);
+        totalScore += score * 3;
+      }
+
+      // 11. Active Importance (Conditional)
+      if (activeImportanceAnswer) {
+        const score = getActiveImportanceSuitability(activeImportanceAnswer, dog);
+        totalScore += score * 2;
+      }
+
+      // 12. Active Days (Conditional)
+      if (activeDaysAnswer) {
+        const score = getActiveDaysSuitability(activeDaysAnswer, dog);
+        totalScore += score * 3;
+      }
+
+      // 13. Walks Time
+      if (typeof walksTimeAnswer === "number") {
+        const score = getWalksTimeSuitability(walksTimeAnswer, dog);
+        totalScore += score * 3;
       }
 
       return { dog, score: totalScore };

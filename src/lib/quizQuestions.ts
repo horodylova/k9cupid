@@ -36,7 +36,17 @@ export type QuizOptionId =
   | "drooling_uncomfortable"
   | "schedule_mostly_home"
   | "schedule_office_part_time"
-  | "schedule_office_full_time";
+  | "schedule_office_full_time"
+  | "activity_sports"
+  | "activity_regular"
+  | "activity_calm_walks"
+  | "activity_couch"
+  | "importance_endurance"
+  | "importance_play"
+  | "importance_calm_home"
+  | "days_5_7"
+  | "days_2_4"
+  | "days_0_1";
 
 export type QuizOption = {
   id: QuizOptionId;
@@ -344,5 +354,86 @@ export const workScheduleQuestion: QuizQuestion = {
       label: "Office or away from home for 7+ hours a day",
       imageSrc: "/work-home-office/work-late.jpg",
     },
+  ],
+};
+
+export const activityLevelQuestion: QuizQuestion = {
+  id: "activity_level",
+  type: "single_choice",
+  title: "How do you imagine your joint activity with the dog?",
+  options: [
+    {
+      id: "activity_sports",
+      label: "I want the dog to be my sports partner: running, hiking, long active walks",
+      imageSrc: "/images/quiz/activity_sports.jpg",
+    },
+    {
+      id: "activity_regular",
+      label: "Regular walks 1-2 times a day, occasionally active weekends",
+      imageSrc: "/images/quiz/activity_regular.jpg",
+    },
+    {
+      id: "activity_calm_walks",
+      label: "Short but steady walks, more time at home together",
+      imageSrc: "/images/quiz/activity_calm_walks.jpg",
+    },
+    {
+      id: "activity_couch",
+      label: "I move little, the dog should be calm and not require much activity",
+      imageSrc: "/images/quiz/activity_couch.jpg",
+    },
+  ],
+};
+
+export const activeImportanceQuestion: QuizQuestion = {
+  id: "active_importance",
+  type: "single_choice",
+  title: "When you say 'active dog', what is most important to you?",
+  options: [
+    {
+      id: "importance_endurance",
+      label: "That it can run a lot and endure physical load",
+    },
+    {
+      id: "importance_play",
+      label: "That it loves to play and involve me in activities",
+    },
+    {
+      id: "importance_calm_home",
+      label: "That it is enduring in nature, but rests calmly at home",
+    },
+  ],
+};
+
+export const activeDaysQuestion: QuizQuestion = {
+  id: "active_days",
+  type: "single_choice",
+  title: "How many days a week are you realistically ready to devote to active pursuits (running, sports, training)?",
+  options: [
+    {
+      id: "days_5_7",
+      label: "5–7 days",
+    },
+    {
+      id: "days_2_4",
+      label: "2–4 days",
+    },
+    {
+      id: "days_0_1",
+      label: "0–1 days",
+    },
+  ],
+};
+
+export const walksTimeQuestion: QuizScaleQuestion = {
+  id: "walks_time",
+  type: "scale",
+  title: "On an average day, how much total time can you realistically spend walking your dog?",
+  scaleLabels: [
+    { value: 1, label: "Up to 30 minutes" },
+    { value: 2, label: "30–45 minutes" },
+    { value: 3, label: "45–60 minutes" },
+    { value: 4, label: "60–90 minutes" },
+    { value: 5, label: "More than 90 minutes" },
   ],
 };

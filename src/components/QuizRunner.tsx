@@ -15,6 +15,10 @@ import {
   groomingTimeQuestion,
   droolingToleranceQuestion,
   workScheduleQuestion,
+  activityLevelQuestion,
+  activeImportanceQuestion,
+  activeDaysQuestion,
+  walksTimeQuestion,
   QuizOptionId,
 } from "@/lib/quizQuestions";
 import { useQuizSession } from "@/hooks/useQuizSession";
@@ -29,6 +33,9 @@ import VisitorsQuestion from "@/components/VisitorsQuestion";
 import HairToleranceQuestion from "@/components/HairToleranceQuestion";
 import DroolingToleranceQuestion from "@/components/DroolingToleranceQuestion";
 import WorkScheduleQuestion from "@/components/WorkScheduleQuestion";
+import ActivityLevelQuestion from "@/components/ActivityLevelQuestion";
+import ActiveImportanceQuestion from "@/components/ActiveImportanceQuestion";
+import ActiveDaysQuestion from "@/components/ActiveDaysQuestion";
 import { getQuizInterimBreeds } from "@/app/actions";
 import QuizInterimGrid from "@/components/quiz-interim/QuizInterimGrid";
 import { Dog } from "@/lib/api";
@@ -39,14 +46,14 @@ export default function QuizRunner() {
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
   const [showStartOverModal, setShowStartOverModal] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17>(1);
   const [pageReady, setPageReady] = useState(false);
   const [interimBreeds, setInterimBreeds] = useState<Dog[]>([]);
   const [isLoadingInterim, setIsLoadingInterim] = useState(false);
   const [showShortlist, setShowShortlist] = useState(false);
   const fetchingRef = useRef(false);
 
-  const totalSteps = 13;
+  const totalSteps = 17;
 
   const selectedHome = session?.answers.find(
     (answer) => answer.id === homeTypeQuestion.id
@@ -113,6 +120,31 @@ export default function QuizRunner() {
   )?.value as QuizOptionId | undefined;
 
   const selectedWorkSchedule = workScheduleValue;
+
+  const activityLevelValue = session?.answers.find(
+    (answer) => answer.id === activityLevelQuestion.id
+  )?.value as QuizOptionId | undefined;
+
+  const selectedActivityLevel = activityLevelValue;
+
+  const activeImportanceValue = session?.answers.find(
+    (answer) => answer.id === activeImportanceQuestion.id
+  )?.value as QuizOptionId | undefined;
+
+  const selectedActiveImportance = activeImportanceValue;
+
+  const activeDaysValue = session?.answers.find(
+    (answer) => answer.id === activeDaysQuestion.id
+  )?.value as QuizOptionId | undefined;
+
+  const selectedActiveDays = activeDaysValue;
+
+  const walksTimeValue = session?.answers.find(
+    (answer) => answer.id === walksTimeQuestion.id
+  )?.value as number | undefined;
+
+  const selectedWalksTime =
+    typeof walksTimeValue === "number" ? walksTimeValue : undefined;
 
   const hasProgress = !!session && session.answers.length > 0;
 
@@ -211,8 +243,20 @@ export default function QuizRunner() {
     const hasWorkSchedule = answers.some(
       (a) => a.id === workScheduleQuestion.id && !!a.value
     );
+    const hasActivityLevel = answers.some(
+      (a) => a.id === activityLevelQuestion.id && !!a.value
+    );
+    const hasActiveImportance = answers.some(
+      (a) => a.id === activeImportanceQuestion.id && !!a.value
+    );
+    const hasActiveDays = answers.some(
+      (a) => a.id === activeDaysQuestion.id && !!a.value
+    );
+    const hasWalksTime = answers.some(
+      (a) => a.id === walksTimeQuestion.id && typeof a.value === "number"
+    );
 
-    let target: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 = 1;
+    let target: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 = 1;
     if (!hasHome) {
       target = 1;
     } else if (!hasShared) {
@@ -240,9 +284,34 @@ export default function QuizRunner() {
       // because that's where they land after question 10.
       // They must click "Refine" to go to 12.
       target = 11;
-    } else {
-      // Work Schedule answered. Show Refined Results (Step 13).
+    } else if (!hasActivityLevel) {
       target = 13;
+    } else {
+      // Work Schedule answered. Check Activity Level answer for branching.
+      const activityVal = answers.find(
+        (a) => a.id === activityLevelQuestion.id
+      )?.value as QuizOptionId;
+      const isActiveType =
+        activityVal === "activity_sports" || activityVal === "activity_regular";
+
+      if (isActiveType) {
+        if (!hasActiveImportance) {
+          target = 14;
+        } else if (!hasActiveDays) {
+          target = 15;
+        } else if (!hasWalksTime) {
+          target = 16;
+        } else {
+          target = 17;
+        }
+      } else {
+        // Skip 14 & 15 if not active type
+        if (!hasWalksTime) {
+          target = 16;
+        } else {
+          target = 17;
+        }
+      }
     }
 
     setStep(target);
@@ -250,7 +319,7 @@ export default function QuizRunner() {
   }, [isInitialized, hasResumed, session]);
 
   useEffect(() => {
-    if ((step === 11 || step === 13) && session?.answers && !fetchingRef.current) {
+    if ((step === 11 || step === 17) && session?.answers && !fetchingRef.current) {
       fetchingRef.current = true;
       setIsLoadingInterim(true);
       getQuizInterimBreeds(session.answers)
@@ -280,16 +349,47 @@ export default function QuizRunner() {
     (step === 9 && typeof selectedGroomingTime === "number") ||
     (step === 10 && !!selectedDroolingTolerance) ||
     step === 11 ||
-    (step === 12 && !!selectedWorkSchedule);
+    (step === 12 && !!selectedWorkSchedule) ||
+    (step === 13 && !!selectedActivityLevel) ||
+    (step === 14 && !!selectedActiveImportance) ||
+    (step === 15 && !!selectedActiveDays) ||
+    (step === 16 && typeof selectedWalksTime === "number") ||
+    step === 17;
 
   const handleContinue = () => {
     if (step >= totalSteps) {
       return;
     }
-    setStep((current) =>
-      current < totalSteps
-        ? ((current + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13)
-        : current
+
+    let nextStep = step + 1;
+    if (step === 13) {
+      const isLowActivity =
+        selectedActivityLevel === "activity_calm_walks" ||
+        selectedActivityLevel === "activity_couch";
+      if (isLowActivity) {
+        nextStep = 16;
+      }
+    }
+
+    setStep(
+      nextStep as
+        | 1
+        | 2
+        | 3
+        | 4
+        | 5
+        | 6
+        | 7
+        | 8
+        | 9
+        | 10
+        | 11
+        | 12
+        | 13
+        | 14
+        | 15
+        | 16
+        | 17
     );
   };
 
@@ -320,16 +420,16 @@ export default function QuizRunner() {
         </div>
       </section>
 
-      <section className={(step === 11 || step === 13) ? "py-3 my-2" : "py-4 my-4"}>
+      <section className={(step === 11 || step === 17) ? "py-3 my-2" : "py-4 my-4"}>
         <div className="container">
           <div className="row justify-content-center">
-            <div className={(step === 11 || step === 13) ? "col-12" : "col-lg-8"}>
+            <div className={(step === 11 || step === 17) ? "col-12" : "col-lg-8"}>
               <div
                 className={`rounded-4 p-4 p-md-5 d-flex flex-column${
-                  (step === 11 || step === 13) ? "" : " border"
+                  (step === 11 || step === 17) ? "" : " border"
                 }`}
               >
-                {step !== 11 && step !== 13 && (
+                {step !== 11 && step !== 17 && (
                   <div className="mb-4">
                     <div className="secondary-font text-uppercase text-muted mb-2">
                       Step {step} of {totalSteps}
@@ -562,7 +662,57 @@ export default function QuizRunner() {
                     </div>
                   )}
 
-                  {step === 13 && !showShortlist && (
+                  {step === 13 && (
+                    <ActivityLevelQuestion
+                      selected={selectedActivityLevel}
+                      onChange={(value) =>
+                        recordAnswer({
+                          id: activityLevelQuestion.id,
+                          value: value,
+                        })
+                      }
+                    />
+                  )}
+
+                  {step === 14 && (
+                    <ActiveImportanceQuestion
+                      selected={selectedActiveImportance}
+                      onChange={(value) =>
+                        recordAnswer({
+                          id: activeImportanceQuestion.id,
+                          value: value,
+                        })
+                      }
+                    />
+                  )}
+
+                  {step === 15 && (
+                    <ActiveDaysQuestion
+                      selected={selectedActiveDays}
+                      onChange={(value) =>
+                        recordAnswer({
+                          id: activeDaysQuestion.id,
+                          value: value,
+                        })
+                      }
+                    />
+                  )}
+
+                  {step === 16 && (
+                    <ScaleQuestion
+                      title={walksTimeQuestion.title}
+                      labels={walksTimeQuestion.scaleLabels}
+                      value={selectedWalksTime}
+                      onChange={(next) =>
+                        recordAnswer({
+                          id: walksTimeQuestion.id,
+                          value: next,
+                        })
+                      }
+                    />
+                  )}
+
+                  {step === 17 && !showShortlist && (
                     <div className="rounded-4 p-3 p-md-4 quiz-interim-card position-relative">
                       <div className="quiz-interim-content rounded-4 p-3 p-md-4">
                         <div className="mb-3">
@@ -584,7 +734,7 @@ export default function QuizRunner() {
                           <div className="flex-grow-1 quiz-interim-text">
                             <h1 className="display-6 fw-normal mb-2 quiz-interim-title">Updated Matches</h1>
                             <p className="fs-5 mb-3 quiz-interim-copy">
-                              We&apos;ve refined your matches based on your work schedule. 
+                              We&apos;ve refined your matches based on your lifestyle and activity preferences. 
                               More questions coming soon!
                             </p>
                             <div className="d-flex flex-column flex-md-row gap-2 quiz-interim-actions">
@@ -617,7 +767,7 @@ export default function QuizRunner() {
                     </div>
                   )}
 
-                  {step === 13 && showShortlist && (
+                  {step === 17 && showShortlist && (
                     <div className="rounded-4 p-3 p-md-4" style={{ backgroundColor: "#FFF7EC" }}>
                       <div className="d-flex justify-content-between align-items-center mb-3">
                         <h2 className="h4 mb-0">Your Refined Matches</h2>
@@ -634,7 +784,7 @@ export default function QuizRunner() {
                   )}
                 </div>
 
-                {step !== 11 && step !== 13 && (
+                {step !== 11 && step !== 17 && (
                   <div className="mt-4 d-flex justify-content-end">
                     <button
                       type="button"
