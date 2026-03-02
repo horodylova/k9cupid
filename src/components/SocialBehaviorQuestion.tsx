@@ -1,20 +1,20 @@
 "use client";
 
-import { homeTypeQuestion, QuizOptionId } from "@/lib/quizQuestions";
+import { socialBehaviorQuestion, QuizOptionId } from "@/lib/quizQuestions";
 
 type Props = {
   selected?: QuizOptionId;
   onChange: (value: QuizOptionId) => void;
 };
 
-export default function HomeTypeQuestion({ selected, onChange }: Props) {
+export default function SocialBehaviorQuestion({ selected, onChange }: Props) {
   return (
     <>
       <div className="mb-3">
-        <h1 className="h3 mb-0">{homeTypeQuestion.title}</h1>
+        <h1 className="h3 mb-0">{socialBehaviorQuestion.title}</h1>
       </div>
       <div className="d-flex flex-column gap-3">
-        {homeTypeQuestion.options.map((option: { id: string; label: string }) => (
+        {socialBehaviorQuestion.options.map((option: { id: string; label: string }) => (
           <button
             key={option.id}
             type="button"

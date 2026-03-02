@@ -1,42 +1,39 @@
-export type QuizQuestionType = "single_choice" | "multi_choice" | "scale";
+import { QuizQuestion, QuizScaleQuestion } from "@/lib/types";
 
 export type QuizOptionId =
-  | "home_studio"
   | "home_apartment"
-  | "home_house"
+  | "home_house_small"
+  | "home_house_large"
+  | "handling_novice"
+  | "handling_comfortable"
+  | "handling_experienced"
+  | "children_toddlers"
+  | "children_school"
+  | "children_teens"
+  | "children_none"
+  | "pets_dogs"
+  | "pets_cats"
+  | "pets_small"
+  | "pets_none"
   | "shared_sofa"
   | "shared_bed"
-  | "shared_car"
-  | "shared_own_space"
-  | "shared_not_sure"
-  | "handling_very_confident"
-  | "handling_somewhat_confident"
-  | "handling_prefer_easy_control"
-  | "handling_not_sure"
-  | "children_none"
-  | "children_babies_toddlers"
-  | "children_young"
-  | "children_older"
-  | "pets_dog"
-  | "pets_cat"
-  | "pets_small_animals"
-  | "pets_none"
-  | "visitors_very_often"
-  | "visitors_regularly"
-  | "visitors_occasionally"
-  | "visitors_almost_never"
+  | "shared_own_bed"
+  | "shared_floor"
   | "hair_not_bothered"
   | "hair_okay_clean"
   | "hair_prefer_less"
   | "hair_prefer_minimal"
   | "hair_allergies"
-  | "drooling_fine"
-  | "drooling_okay"
+  | "visitors_daily"
+  | "visitors_weekly"
+  | "visitors_monthly"
+  | "visitors_rarely"
+  | "drooling_not_bothered"
   | "drooling_prefer_less"
-  | "drooling_uncomfortable"
-  | "schedule_mostly_home"
-  | "schedule_office_part_time"
-  | "schedule_office_full_time"
+  | "drooling_avoid"
+  | "work_home"
+  | "work_part_time"
+  | "work_full_time"
   | "activity_sports"
   | "activity_regular"
   | "activity_calm_walks"
@@ -46,84 +43,47 @@ export type QuizOptionId =
   | "importance_calm_home"
   | "days_5_7"
   | "days_2_4"
-  | "days_0_1";
+  | "days_0_1"
+  | "social_friendly"
+  | "social_polite"
+  | "social_guardian";
 
-export type QuizOption = {
-  id: QuizOptionId;
-  label: string;
-  imageSrc?: string;
-};
-
-export type QuizScaleLabel = {
-  value: number;
-  label: string;
-};
-
-export type QuizQuestion = {
-  id: string;
-  type: QuizQuestionType;
-  title: string;
-  description?: string;
-  options: QuizOption[];
-};
-
-export type QuizScaleQuestion = {
-  id: string;
-  type: "scale";
-  title: string;
-  description?: string;
-  scaleLabels: QuizScaleLabel[];
+export const socialBehaviorQuestion: QuizQuestion = {
+  id: "social_behavior",
+  type: "single_choice",
+  title: "How should your dog react to strangers and guests?",
+  options: [
+    {
+      id: "social_friendly",
+      label: "Friendly to everyone (loves guests, happy to see strangers)",
+    },
+    {
+      id: "social_polite",
+      label: "Polite but watchful (calm, observes first, warms up slowly)",
+    },
+    {
+      id: "social_guardian",
+      label: "Guardian / Protective (barks at strangers, protects the home)",
+    },
+  ],
 };
 
 export const homeTypeQuestion: QuizQuestion = {
   id: "home_type",
   type: "single_choice",
-  title: "Which of these best describes your current home?",
+  title: "Where do you live?",
   options: [
-    {
-      id: "home_studio",
-      label: "A small studio or one-room apartment",
-    },
     {
       id: "home_apartment",
-      label: "A regular apartment with separate rooms",
+      label: "Apartment / Condo (No yard)",
     },
     {
-      id: "home_house",
-      label: "A house or townhouse with a yard",
-    },
-  ],
-};
-
-export const sharedSpacesQuestion: QuizQuestion = {
-  id: "shared_spaces",
-  type: "multi_choice",
-  title: "Where are you comfortable sharing space with your future dog?",
-  options: [
-    {
-      id: "shared_sofa",
-      label: "On the sofa",
-      imageSrc: "/sharing-space-photo-question/sofa.jpg",
+      id: "home_house_small",
+      label: "House with small yard / Patio",
     },
     {
-      id: "shared_bed",
-      label: "On the bed",
-      imageSrc: "/sharing-space-photo-question/bed.jpg",
-    },
-    {
-      id: "shared_car",
-      label: "In the car on trips",
-      imageSrc: "/sharing-space-photo-question/car.jpg",
-    },
-    {
-      id: "shared_own_space",
-      label: "Only on their own space",
-      imageSrc: "/sharing-space-photo-question/own-bed.jpg",
-    },
-    {
-      id: "shared_not_sure",
-      label: "I am not sure yet",
-      imageSrc: "/sharing-space-photo-question/box.jpg",
+      id: "home_house_large",
+      label: "House with large yard / Acreage",
     },
   ],
 };
@@ -131,68 +91,63 @@ export const sharedSpacesQuestion: QuizQuestion = {
 export const physicalHandlingQuestion: QuizQuestion = {
   id: "physical_handling",
   type: "single_choice",
-  title:
-    "How confident do you feel about physically handling a strong dog on a leash (for example, 30+ kg / 65+ lbs)?",
+  title: "How much experience do you have with dogs?",
   options: [
     {
-      id: "handling_very_confident",
-      label: "Very confident – I am used to strong dogs",
+      id: "handling_novice",
+      label: "I'm a first-time owner (or close to it)",
     },
     {
-      id: "handling_somewhat_confident",
-      label: "Somewhat confident – with training and the right equipment",
+      id: "handling_comfortable",
+      label: "I've had a dog before, I'm comfortable",
     },
     {
-      id: "handling_prefer_easy_control",
-      label: "I prefer a dog I can easily control on my own",
-    },
-    {
-      id: "handling_not_sure",
-      label: "I am not sure / I have never had a dog",
+      id: "handling_experienced",
+      label: "I'm very experienced / Professional",
     },
   ],
 };
 
 export const childrenQuestion: QuizQuestion = {
   id: "children_in_household",
-  type: "multi_choice",
-  title: "Do you have children living with you or visiting regularly?",
+  type: "multiple_choice",
+  title: "Who lives in your home? (Select all that apply)",
   options: [
     {
+      id: "children_toddlers",
+      label: "Toddlers / Young children (0-5 yrs)",
+    },
+    {
+      id: "children_school",
+      label: "School-age children (6-12 yrs)",
+    },
+    {
+      id: "children_teens",
+      label: "Teenagers (13+)",
+    },
+    {
       id: "children_none",
-      label: "No children",
-    },
-    {
-      id: "children_babies_toddlers",
-      label: "Babies / toddlers (0–3 years)",
-    },
-    {
-      id: "children_young",
-      label: "Young children (4–6 years)",
-    },
-    {
-      id: "children_older",
-      label: "Older children (7+ years)",
+      label: "Adults only",
     },
   ],
 };
 
 export const otherPetsQuestion: QuizQuestion = {
   id: "other_pets",
-  type: "multi_choice",
-  title: "Do you have other pets at home?",
+  type: "multiple_choice",
+  title: "Do you have other pets?",
   options: [
     {
-      id: "pets_dog",
-      label: "Another dog",
+      id: "pets_dogs",
+      label: "Yes, other dog(s)",
     },
     {
-      id: "pets_cat",
-      label: "A cat",
+      id: "pets_cats",
+      label: "Yes, cat(s)",
     },
     {
-      id: "pets_small_animals",
-      label: "Other small animals",
+      id: "pets_small",
+      label: "Yes, small animals (birds, hamsters, etc.)",
     },
     {
       id: "pets_none",
@@ -201,25 +156,53 @@ export const otherPetsQuestion: QuizQuestion = {
   ],
 };
 
+export const sharedSpacesQuestion: QuizQuestion = {
+  id: "shared_spaces",
+  type: "multiple_choice",
+  title: "Where will the dog be allowed to sleep/rest?",
+  options: [
+    {
+      id: "shared_sofa",
+      label: "On the sofa/furniture",
+      imageSrc: "/sharing-space-photo-question/sofa.jpg",
+    },
+    {
+      id: "shared_bed",
+      label: "In my bed",
+      imageSrc: "/sharing-space-photo-question/bed.jpg",
+    },
+    {
+      id: "shared_own_bed",
+      label: "In their own dog bed",
+      imageSrc: "/sharing-space-photo-question/own-bed.jpg",
+    },
+    {
+      id: "shared_floor",
+      label: "Anywhere (Floor/Crate/etc.)",
+      imageSrc: "/sharing-space-photo-question/box.jpg",
+    },
+  ],
+};
+
 export const visitorsQuestion: QuizQuestion = {
   id: "home_visitors",
   type: "single_choice",
-  title: "How often do you usually have visitors at home (friends, family, guests)?",
+  title: "How often do you have visitors?",
   options: [
     {
-      id: "visitors_very_often",
-      label: "Very often – several times a week",
+      id: "visitors_daily",
+      label: "Almost every day",
     },
     {
-      id: "visitors_regularly",
-      label: "Regularly – a few times a month",
+      id: "visitors_weekly",
+      label: "Once or twice a week",
     },
     {
-      id: "visitors_occasionally",
-      label: "Occasionally – a few times a year",
+      id: "visitors_monthly",
+      label: "Once or twice a month",
     },
     {
-      id: "visitors_almost_never",
+      id: "visitors_rarely",
       label: "Almost never",
     },
   ],
@@ -228,23 +211,16 @@ export const visitorsQuestion: QuizQuestion = {
 export const noiseToleranceQuestion: QuizScaleQuestion = {
   id: "noise_tolerance",
   type: "scale",
-  title: "How sensitive is your environment to barking and noise?",
+  title: "How much barking can you tolerate?",
+  description: "Some breeds are naturally more vocal than others.",
   scaleLabels: [
     {
       value: 1,
-      label: "Barking is not a problem at all",
-    },
-    {
-      value: 2,
-      label: "A bit of barking is fine",
+      label: "I prefer a very quiet dog (apartment friendly)",
     },
     {
       value: 3,
-      label: "Some barking is okay, but not constant",
-    },
-    {
-      value: 4,
-      label: "I prefer a mostly quiet dog",
+      label: "Average amount is okay",
     },
     {
       value: 5,
@@ -297,15 +273,15 @@ export const groomingTimeQuestion: QuizScaleQuestion = {
     },
     {
       value: 3,
-      label: "Regular brushing a few times a month",
+      label: "Weekly brushing is fine",
     },
     {
       value: 4,
-      label: "Weekly grooming sessions are fine",
+      label: "Daily brushing if needed",
     },
     {
       value: 5,
-      label: "I enjoy grooming and can do it often",
+      label: "I love grooming / Professional grooming is fine",
     },
   ],
 };
@@ -313,23 +289,19 @@ export const groomingTimeQuestion: QuizScaleQuestion = {
 export const droolingToleranceQuestion: QuizQuestion = {
   id: "drooling_tolerance",
   type: "single_choice",
-  title: "How do you feel about drooling (saliva on toys, floor, clothes)?",
+  title: "How do you feel about drooling?",
   options: [
     {
-      id: "drooling_fine",
-      label: "Totally fine, that is part of the charm",
-    },
-    {
-      id: "drooling_okay",
-      label: "Okay in moderation",
+      id: "drooling_not_bothered",
+      label: "It doesn't bother me",
     },
     {
       id: "drooling_prefer_less",
-      label: "I would prefer less drooling",
+      label: "I prefer less, but can handle some",
     },
     {
-      id: "drooling_uncomfortable",
-      label: "Drooling would be very uncomfortable for me",
+      id: "drooling_avoid",
+      label: "I want to avoid it completely",
     },
   ],
 };
@@ -340,19 +312,19 @@ export const workScheduleQuestion: QuizQuestion = {
   title: "What does your typical work schedule look like?",
   options: [
     {
-      id: "schedule_mostly_home",
+      id: "work_home",
       label: "Mostly at home (remote / hybrid with many days at home)",
       imageSrc: "/work-home-office/work-home.jpg",
     },
     {
-      id: "schedule_office_part_time",
+      id: "work_part_time",
       label: "Office or away from home for 4–6 hours a day",
-      imageSrc: "/work-home-office/office.jpg",
+      imageSrc: "/work-home-office/work-late.jpg",
     },
     {
-      id: "schedule_office_full_time",
+      id: "work_full_time",
       label: "Office or away from home for 7+ hours a day",
-      imageSrc: "/work-home-office/work-late.jpg",
+      imageSrc: "/work-home-office/office.jpg",
     },
   ],
 };
@@ -360,21 +332,21 @@ export const workScheduleQuestion: QuizQuestion = {
 export const activityLevelQuestion: QuizQuestion = {
   id: "activity_level",
   type: "single_choice",
-  title: "How do you imagine your joint activity with the dog?",
+  title: "How do you envision your activity with the dog?",
   options: [
     {
       id: "activity_sports",
-      label: "I want the dog to be my sports partner: running, hiking, long active walks",
+      label: "My sports partner: running, hiking, long active walks",
       imageSrc: "/images/quiz/activity_sports.jpg",
     },
     {
       id: "activity_regular",
-      label: "Regular walks 1-2 times a day, occasionally active weekends",
+      label: "Regular walks 1–2 times a day, occasional active weekends",
       imageSrc: "/images/quiz/activity_regular.jpg",
     },
     {
       id: "activity_calm_walks",
-      label: "Short but steady walks, more time at home together",
+      label: "Short but stable walks, more home time together",
       imageSrc: "/images/quiz/activity_calm_walks.jpg",
     },
     {

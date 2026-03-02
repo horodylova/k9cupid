@@ -19,6 +19,7 @@ import {
   activeImportanceQuestion,
   activeDaysQuestion,
   walksTimeQuestion,
+  socialBehaviorQuestion,
   QuizOptionId,
 } from "@/lib/quizQuestions";
 import { useQuizSession } from "@/hooks/useQuizSession";
@@ -36,6 +37,7 @@ import WorkScheduleQuestion from "@/components/WorkScheduleQuestion";
 import ActivityLevelQuestion from "@/components/ActivityLevelQuestion";
 import ActiveImportanceQuestion from "@/components/ActiveImportanceQuestion";
 import ActiveDaysQuestion from "@/components/ActiveDaysQuestion";
+import SocialBehaviorQuestion from "@/components/SocialBehaviorQuestion";
 import { getQuizInterimBreeds } from "@/app/actions";
 import QuizInterimGrid from "@/components/quiz-interim/QuizInterimGrid";
 import { Dog } from "@/lib/api";
@@ -46,14 +48,14 @@ export default function QuizRunner() {
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
   const [showStartOverModal, setShowStartOverModal] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18>(1);
   const [pageReady, setPageReady] = useState(false);
   const [interimBreeds, setInterimBreeds] = useState<Dog[]>([]);
   const [isLoadingInterim, setIsLoadingInterim] = useState(false);
   const [showShortlist, setShowShortlist] = useState(false);
   const fetchingRef = useRef(false);
 
-  const totalSteps = 17;
+  const totalSteps = 18;
 
   const selectedHome = session?.answers.find(
     (answer) => answer.id === homeTypeQuestion.id
@@ -145,6 +147,12 @@ export default function QuizRunner() {
 
   const selectedWalksTime =
     typeof walksTimeValue === "number" ? walksTimeValue : undefined;
+
+  const socialBehaviorValue = session?.answers.find(
+    (answer) => answer.id === socialBehaviorQuestion.id
+  )?.value as QuizOptionId | undefined;
+
+  const selectedSocialBehavior = socialBehaviorValue;
 
   const hasProgress = !!session && session.answers.length > 0;
 
@@ -255,8 +263,11 @@ export default function QuizRunner() {
     const hasWalksTime = answers.some(
       (a) => a.id === walksTimeQuestion.id && typeof a.value === "number"
     );
+    const hasSocialBehavior = answers.some(
+      (a) => a.id === socialBehaviorQuestion.id && !!a.value
+    );
 
-    let target: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 = 1;
+    let target: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 = 1;
     if (!hasHome) {
       target = 1;
     } else if (!hasShared) {
@@ -301,15 +312,19 @@ export default function QuizRunner() {
           target = 15;
         } else if (!hasWalksTime) {
           target = 16;
-        } else {
+        } else if (!hasSocialBehavior) {
           target = 17;
+        } else {
+          target = 18;
         }
       } else {
         // Skip 14 & 15 if not active type
         if (!hasWalksTime) {
           target = 16;
-        } else {
+        } else if (!hasSocialBehavior) {
           target = 17;
+        } else {
+          target = 18;
         }
       }
     }
@@ -319,7 +334,7 @@ export default function QuizRunner() {
   }, [isInitialized, hasResumed, session]);
 
   useEffect(() => {
-    if ((step === 11 || step === 17) && session?.answers && !fetchingRef.current) {
+    if ((step === 11 || step === 18) && session?.answers && !fetchingRef.current) {
       fetchingRef.current = true;
       setIsLoadingInterim(true);
       getQuizInterimBreeds(session.answers)
@@ -354,7 +369,8 @@ export default function QuizRunner() {
     (step === 14 && !!selectedActiveImportance) ||
     (step === 15 && !!selectedActiveDays) ||
     (step === 16 && typeof selectedWalksTime === "number") ||
-    step === 17;
+    (step === 17 && !!selectedSocialBehavior) ||
+    step === 18;
 
   const handleContinue = () => {
     if (step >= totalSteps) {
@@ -390,6 +406,7 @@ export default function QuizRunner() {
         | 15
         | 16
         | 17
+        | 18
     );
   };
 
@@ -655,7 +672,11 @@ export default function QuizRunner() {
                       </div>
                       <QuizInterimGrid breeds={interimBreeds} />
                       <div className="mt-4 text-center">
-                        <button type="button" className="btn btn-outline-dark text-uppercase fw-semibold">
+                        <button 
+                          type="button" 
+                          className="btn btn-outline-dark text-uppercase fw-semibold"
+                          onClick={() => setStep(12)}
+                        >
                           Keep refining
                         </button>
                       </div>
@@ -712,62 +733,72 @@ export default function QuizRunner() {
                     />
                   )}
 
-                  {step === 17 && !showShortlist && (
+                  {step === 17 && (
+                    <SocialBehaviorQuestion
+                      selected={selectedSocialBehavior}
+                      onChange={(value) =>
+                        recordAnswer({
+                          id: socialBehaviorQuestion.id,
+                          value: value,
+                        })
+                      }
+                    />
+                  )}
+
+                  {step === 18 && !showShortlist && (
                     <div className="rounded-4 p-3 p-md-4 quiz-interim-card position-relative">
-                      <div className="quiz-interim-content rounded-4 p-3 p-md-4">
-                        <div className="mb-3">
-                          <div className="text-uppercase fw-semibold" style={{ letterSpacing: "0.12em" }}>
-                            Refined Results
+                      <div className="row align-items-center">
+                        <div className="col-md-4 text-center mb-4 mb-md-0">
+                          <div className="position-relative d-inline-block">
+                            <Image
+                              src="/Cupid and Dogs-Picsart-BackgroundRemover.png"
+                              alt="Refined Results"
+                              width={320}
+                              height={320}
+                              className="quiz-interim-logo-static img-fluid"
+                            />
                           </div>
                         </div>
+                        <div className="col-md-8">
+                          <h2 className="display-6 mb-3 secondary-font">Updated Matches</h2>
+                          <p className="lead mb-4">
+                            We&apos;ve refined your matches based on your lifestyle and activity preferences. Here are your top recommendations!
+                          </p>
 
-                        <div className="quiz-interim-hero d-flex align-items-start gap-3">
-                          <div className="d-none d-md-block flex-shrink-0">
-                            <Image
-                            src="/Cupid and Dogs-Picsart-BackgroundRemover.png"
-                            alt="Cupid and dogs"
-                            width={320}
-                            height={320}
-                            className="quiz-interim-logo-static img-fluid"
-                          />
-                          </div>
-                          <div className="flex-grow-1 quiz-interim-text">
-                            <h1 className="display-6 fw-normal mb-2 quiz-interim-title">Updated Matches</h1>
-                            <p className="fs-5 mb-3 quiz-interim-copy">
-                              We&apos;ve refined your matches based on your lifestyle and activity preferences. 
-                              More questions coming soon!
-                            </p>
-                            <div className="d-flex flex-column flex-md-row gap-2 quiz-interim-actions">
-                              <button
-                                type="button"
-                                className="btn btn-light text-uppercase fw-semibold"
-                                onClick={() => setShowShortlist(true)}
-                                disabled={isLoadingInterim}
-                              >
-                                {isLoadingInterim ? (
-                                  <>
-                                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                    Loading...
-                                  </>
-                                ) : (
-                                  "Show the shortlist"
-                                )}
-                              </button>
-                              <button
-                                type="button"
-                                className="btn btn-outline-danger text-uppercase fw-semibold"
-                                onClick={handleStartOver}
-                              >
-                                Start Over
-                              </button>
-                          </div>
+                          <div className="d-flex flex-column flex-md-row gap-2 quiz-interim-actions">
+                            <button
+                              type="button"
+                              className="btn btn-primary btn-lg px-5 rounded-pill text-uppercase fw-semibold"
+                              onClick={() => setShowShortlist(true)}
+                              disabled={isLoadingInterim}
+                            >
+                              {isLoadingInterim ? (
+                                <>
+                                  <span
+                                    className="spinner-border spinner-border-sm me-2"
+                                    role="status"
+                                    aria-hidden="true"
+                                  ></span>
+                                  Updating...
+                                </>
+                              ) : (
+                                "View Results"
+                              )}
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-outline-danger text-uppercase fw-semibold"
+                              onClick={handleStartOver}
+                            >
+                              Start Over
+                            </button>
                           </div>
                         </div>
                       </div>
                     </div>
                   )}
 
-                  {step === 17 && showShortlist && (
+                  {step === 18 && showShortlist && (
                     <div className="rounded-4 p-3 p-md-4" style={{ backgroundColor: "#FFF7EC" }}>
                       <div className="d-flex justify-content-between align-items-center mb-3">
                         <h2 className="h4 mb-0">Your Refined Matches</h2>
@@ -784,19 +815,15 @@ export default function QuizRunner() {
                   )}
                 </div>
 
-                {step !== 11 && step !== 17 && (
+                {step !== 18 && (
                   <div className="mt-4 d-flex justify-content-end">
                     <button
                       type="button"
-                      className={`btn px-4 ${
-                        canContinue
-                          ? "btn-primary"
-                          : "btn-light opacity-100 text-body border border-2"
-                      }`}
-                      disabled={!canContinue}
+                      className="btn btn-primary btn-lg px-5 rounded-pill"
                       onClick={handleContinue}
+                      disabled={!canContinue}
                     >
-                      Continue to next step
+                      {step === 11 ? "Keep Refining" : "Continue"}
                     </button>
                   </div>
                 )}
@@ -805,6 +832,27 @@ export default function QuizRunner() {
           </div>
         </div>
       </section>
+
+      {/* Sticky footer for Interim results (Step 11) when list is shown */}
+      {step === 11 && showShortlist && (
+        <div className="fixed-bottom bg-white border-top py-3 shadow-lg" style={{ zIndex: 1000 }}>
+          <div className="container d-flex justify-content-between align-items-center">
+            <div className="d-none d-md-block">
+              <span className="fw-semibold">Want more precise matches?</span>
+              <span className="text-muted ms-2">Continue to refine by activity & lifestyle.</span>
+            </div>
+            <div className="d-md-none">
+              <span className="fw-semibold">Want more precise matches?</span>
+            </div>
+            <button 
+              className="btn btn-primary px-4 rounded-pill fw-semibold"
+              onClick={() => setStep(12)}
+            >
+              Continue Quiz →
+            </button>
+          </div>
+        </div>
+      )}
 
       {showLeaveModal && pendingHref && (
         <div

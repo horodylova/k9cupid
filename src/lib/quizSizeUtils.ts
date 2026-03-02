@@ -18,9 +18,6 @@ function getDogSizeCategory(dog: Dog): SizeCategory {
 }
 
 export function getPreferredSizesForHome(answerId: QuizOptionId): SizeCategory[] {
-  if (answerId === "home_studio") {
-    return ["toy", "small", "medium"];
-  }
   if (answerId === "home_apartment") {
     return ["toy", "small", "medium", "large"];
   }
@@ -45,7 +42,7 @@ export function getHomeSizeSuitability(answerId: QuizOptionId, dog: Dog): number
   const sizeIndex = getSizeIndex(size);
   const energy = dog.energy;
 
-  if (answerId === "home_house") {
+  if (answerId === "home_house_small" || answerId === "home_house_large") {
     return 5;
   }
 
@@ -62,25 +59,7 @@ export function getHomeSizeSuitability(answerId: QuizOptionId, dog: Dog): number
     return 2;
   }
 
-  if (sizeIndex <= 2 && energy <= 3) {
-    return 5;
-  }
-  if (sizeIndex <= 2 && energy >= 4) {
-    return 3;
-  }
-  if (sizeIndex === 3 && energy <= 2) {
-    return 4;
-  }
-  if (sizeIndex === 3 && energy === 3) {
-    return 3;
-  }
-  if (sizeIndex === 4 && energy <= 2) {
-    return 3;
-  }
-  if (sizeIndex === 4 && energy === 3) {
-    return 2;
-  }
-  return 1;
+  return 3;
 }
 
 export function getSharedSpacesSizeAndSheddingSuitability(
@@ -89,14 +68,13 @@ export function getSharedSpacesSizeAndSheddingSuitability(
 ): number {
   const hasCloseContact =
     selectedIds.includes("shared_sofa") ||
-    selectedIds.includes("shared_bed") ||
-    selectedIds.includes("shared_car");
+    selectedIds.includes("shared_bed");
 
-  const prefersOwnSpace = selectedIds.includes("shared_own_space");
-  const isNotSureOnly =
-    selectedIds.length === 1 && selectedIds.includes("shared_not_sure");
-
-  if (!selectedIds.length || isNotSureOnly) {
+  const prefersOwnSpace = 
+    selectedIds.includes("shared_own_bed") ||
+    selectedIds.includes("shared_floor");
+    
+  if (!selectedIds.length) {
     return 3;
   }
 
@@ -157,8 +135,7 @@ export function getSharedSpacesSizeSuitability(
   dog: Dog
 ): number {
   const hasFurniture = selectedIds.includes("shared_sofa") || selectedIds.includes("shared_bed");
-  const hasCar = selectedIds.includes("shared_car");
-  const prefersOwnSpace = selectedIds.includes("shared_own_space");
+  const prefersOwnSpace = selectedIds.includes("shared_own_bed") || selectedIds.includes("shared_floor");
 
   const size = getDogSizeCategory(dog);
 
@@ -176,13 +153,6 @@ export function getSharedSpacesSizeSuitability(
     return 3;
   }
 
-  // If only sharing car (and not furniture)
-  if (hasCar) {
-    // Large dogs might be harder to fit in some cars, but generally okay
-    if (size === "large") return 4;
-    return 5;
-  }
-
   // Default neutral if "not sure" or other combinations
   return 3;
 }
@@ -196,8 +166,8 @@ export function getPhysicalHandlingSuitability(
   const trainability = dog.trainability;
 
   if (
-    answerId === "handling_very_confident" ||
-    answerId === "handling_somewhat_confident"
+    answerId === "handling_experienced" ||
+    answerId === "handling_comfortable"
   ) {
     return 5;
   }
@@ -232,9 +202,9 @@ export function getChildrenInHouseholdSuitability(
   dog: Dog
 ): number {
   const hasNone = selectedIds.includes("children_none");
-  const hasBabies = selectedIds.includes("children_babies_toddlers");
-  const hasYoung = selectedIds.includes("children_young");
-  const hasOlder = selectedIds.includes("children_older");
+  const hasBabies = selectedIds.includes("children_toddlers");
+  const hasYoung = selectedIds.includes("children_school");
+  const hasOlder = selectedIds.includes("children_teens");
 
   // If "No children" is selected, or no children options are selected at all,
   // we show all dogs regardless of their score (return max suitability).
@@ -279,9 +249,9 @@ export function getOtherPetsSuitability(
   selectedIds: QuizOptionId[],
   dog: Dog
 ): number {
-  const hasDog = selectedIds.includes("pets_dog");
-  const hasCat = selectedIds.includes("pets_cat");
-  const hasSmallAnimals = selectedIds.includes("pets_small_animals");
+  const hasDog = selectedIds.includes("pets_dogs");
+  const hasCat = selectedIds.includes("pets_cats");
+  const hasSmallAnimals = selectedIds.includes("pets_small");
   const hasNoneOnly = selectedIds.length === 1 && selectedIds.includes("pets_none");
 
   const goodWithOtherDogs = dog.good_with_other_dogs;
@@ -336,16 +306,16 @@ export type VisitorsFilterPreferences = {
 export function getVisitorsFilterPreferences(
   answerId: QuizOptionId
 ): VisitorsFilterPreferences | null {
-  if (answerId === "visitors_very_often") {
+  if (answerId === "visitors_daily") {
     return { goodWithStrangersMin: 5, protectivenessMax: 3 };
   }
-  if (answerId === "visitors_regularly") {
+  if (answerId === "visitors_weekly") {
     return { goodWithStrangersMin: 4, protectivenessMax: 4 };
   }
-  if (answerId === "visitors_occasionally") {
+  if (answerId === "visitors_monthly") {
     return { goodWithStrangersMin: 3, protectivenessMin: 3 };
   }
-  if (answerId === "visitors_almost_never") {
+  if (answerId === "visitors_rarely") {
     return { goodWithStrangersMin: 2, protectivenessMin: 3 };
   }
   return null;
@@ -358,7 +328,7 @@ export function getVisitorsSuitability(
   const goodWithStrangers = dog.good_with_strangers;
   const protectiveness = dog.protectiveness;
 
-  if (answerId === "visitors_very_often") {
+  if (answerId === "visitors_daily") {
     if (goodWithStrangers >= 5 && protectiveness <= 3) {
       return 5;
     }
@@ -374,7 +344,7 @@ export function getVisitorsSuitability(
     return 1;
   }
 
-  if (answerId === "visitors_regularly") {
+  if (answerId === "visitors_weekly") {
     if (goodWithStrangers >= 4 && protectiveness <= 4) {
       return 5;
     }
@@ -390,7 +360,7 @@ export function getVisitorsSuitability(
     return 1;
   }
 
-  if (answerId === "visitors_occasionally") {
+  if (answerId === "visitors_monthly") {
     if (protectiveness >= 3 && protectiveness <= 4) {
       return goodWithStrangers >= 3 ? 5 : 4;
     }
@@ -403,7 +373,7 @@ export function getVisitorsSuitability(
     return 2;
   }
 
-  if (answerId === "visitors_almost_never") {
+  if (answerId === "visitors_rarely") {
     return 5;
   }
 
@@ -670,10 +640,10 @@ export type DroolingPreferences = {
 };
 
 export function getDroolingToleranceLevel(answerId: QuizOptionId): number | null {
-  if (answerId === "drooling_fine") return 1;
-  if (answerId === "drooling_okay") return 2;
+  if (answerId === "drooling_not_bothered") return 1;
+  // if (answerId === "drooling_okay") return 2; // Removed as it maps to not bothered or prefer less
   if (answerId === "drooling_prefer_less") return 3;
-  if (answerId === "drooling_uncomfortable") return 4;
+  if (answerId === "drooling_avoid") return 4;
   return null;
 }
 
@@ -735,14 +705,14 @@ export function getWorkScheduleSuitability(
   // 1. Mostly at home (remote / hybrid)
   // Can handle dogs with separation anxiety issues (though we don't have that data directly),
   // but high energy/barking is fine as owner is there.
-  if (answerId === "schedule_mostly_home") {
+  if (answerId === "work_home") {
     // Almost any dog fits here, maybe slightly prefer dogs that enjoy company
     return 5;
   }
 
   // 2. Office or away 4-6 hours
   // Moderate time alone.
-  if (answerId === "schedule_office_part_time") {
+  if (answerId === "work_part_time") {
     let score = 5;
     
     // Very high energy dogs might get bored/destructive if left alone
@@ -759,7 +729,7 @@ export function getWorkScheduleSuitability(
 
   // 3. Office or away 7+ hours
   // Long time alone. Needs independent, lower energy, calm dogs.
-  if (answerId === "schedule_office_full_time") {
+  if (answerId === "work_full_time") {
     let score = 5;
 
     // High energy dogs struggle with long isolation
@@ -884,6 +854,36 @@ export function getWalksTimeSuitability(answerValue: number, dog: Dog): number {
   }
   if (answerValue === 4 || answerValue === 5) { // 60+ min
     return 5;
+  }
+
+  return 3;
+}
+
+export function getSocialBehaviorSuitability(answerId: QuizOptionId, dog: Dog): number {
+  const protectiveness = dog.protectiveness || 3;
+  const strangers = dog.good_with_strangers || 3;
+
+  // Friendly to everyone
+  if (answerId === "social_friendly") {
+    // Wants high friendliness, low protectiveness
+    if (strangers >= 4 && protectiveness <= 3) return 5;
+    if (strangers >= 3 && protectiveness <= 4) return 3;
+    return 1;
+  }
+
+  // Polite but watchful
+  if (answerId === "social_polite") {
+    // Wants balanced
+    if (protectiveness >= 2 && protectiveness <= 4 && strangers >= 2 && strangers <= 4) return 5;
+    return 3;
+  }
+
+  // Guardian / Protective
+  if (answerId === "social_guardian") {
+    // Wants high protectiveness
+    if (protectiveness >= 4) return 5;
+    if (protectiveness >= 3) return 3;
+    return 1;
   }
 
   return 3;

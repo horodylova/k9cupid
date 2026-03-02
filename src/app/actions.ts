@@ -21,6 +21,7 @@ import {
   getActiveImportanceSuitability,
   getActiveDaysSuitability,
   getWalksTimeSuitability,
+  getSocialBehaviorSuitability,
 } from "@/lib/quizSizeUtils";
 
 export type InterimQuizResult = {
@@ -43,6 +44,7 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
   const activeImportanceAnswer = answers.find((a) => a.id === "active_importance")?.value as QuizOptionId;
   const activeDaysAnswer = answers.find((a) => a.id === "active_days")?.value as QuizOptionId;
   const walksTimeAnswer = answers.find((a) => a.id === "walks_time")?.value as number;
+  const socialBehaviorAnswer = answers.find((a) => a.id === "social_behavior")?.value as QuizOptionId;
 
   const allowedSizes = new Set<string>();
 
@@ -187,6 +189,12 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
       // 13. Walks Time
       if (typeof walksTimeAnswer === "number") {
         const score = getWalksTimeSuitability(walksTimeAnswer, dog);
+        totalScore += score * 3;
+      }
+
+      // 14. Social Behavior
+      if (socialBehaviorAnswer) {
+        const score = getSocialBehaviorSuitability(socialBehaviorAnswer, dog);
         totalScore += score * 3;
       }
 
