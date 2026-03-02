@@ -33,7 +33,10 @@ export type QuizOptionId =
   | "drooling_fine"
   | "drooling_okay"
   | "drooling_prefer_less"
-  | "drooling_uncomfortable";
+  | "drooling_uncomfortable"
+  | "schedule_mostly_home"
+  | "schedule_office_part_time"
+  | "schedule_office_full_time";
 
 export type QuizOption = {
   id: QuizOptionId;
@@ -317,6 +320,29 @@ export const droolingToleranceQuestion: QuizQuestion = {
     {
       id: "drooling_uncomfortable",
       label: "Drooling would be very uncomfortable for me",
+    },
+  ],
+};
+
+export const workScheduleQuestion: QuizQuestion = {
+  id: "work_schedule",
+  type: "single_choice",
+  title: "What does your typical work schedule look like?",
+  options: [
+    {
+      id: "schedule_mostly_home",
+      label: "Mostly at home (remote / hybrid with many days at home)",
+      imageSrc: "/work-home-office/work-home.jpg",
+    },
+    {
+      id: "schedule_office_part_time",
+      label: "Office or away from home for 4–6 hours a day",
+      imageSrc: "/work-home-office/office.jpg",
+    },
+    {
+      id: "schedule_office_full_time",
+      label: "Office or away from home for 7+ hours a day",
+      imageSrc: "/work-home-office/work-late.jpg",
     },
   ],
 };

@@ -723,3 +723,58 @@ export function getDroolingSuitability(level: number, dog: Dog): number {
 
   return 3;
 }
+
+export function getWorkScheduleSuitability(
+  answerId: QuizOptionId,
+  dog: Dog
+): number {
+  const energy = dog.energy;
+  const barking = dog.barking;
+  const trainability = dog.trainability;
+
+  // 1. Mostly at home (remote / hybrid)
+  // Can handle dogs with separation anxiety issues (though we don't have that data directly),
+  // but high energy/barking is fine as owner is there.
+  if (answerId === "schedule_mostly_home") {
+    // Almost any dog fits here, maybe slightly prefer dogs that enjoy company
+    return 5;
+  }
+
+  // 2. Office or away 4-6 hours
+  // Moderate time alone.
+  if (answerId === "schedule_office_part_time") {
+    let score = 5;
+    
+    // Very high energy dogs might get bored/destructive if left alone
+    if (energy >= 5) score -= 1;
+    
+    // Excessive barking might be a sign of separation anxiety or boredom
+    if (barking >= 4) score -= 1;
+
+    // Hard to train dogs might have harder time adjusting to routine?
+    if (trainability <= 2) score -= 0.5;
+
+    return Math.max(1, Math.round(score));
+  }
+
+  // 3. Office or away 7+ hours
+  // Long time alone. Needs independent, lower energy, calm dogs.
+  if (answerId === "schedule_office_full_time") {
+    let score = 5;
+
+    // High energy dogs struggle with long isolation
+    if (energy >= 4) score -= 2;
+    if (energy === 3) score -= 0.5;
+
+    // Barking is a concern for neighbours when away
+    if (barking >= 4) score -= 1.5;
+    if (barking === 3) score -= 0.5;
+
+    // Independent dogs do better? (Trainability often correlates with need for engagement, so maybe lower trainability is actually okay here? 
+    // Or high trainability means they learn routine better? Let's stick to Energy/Barking as main proxies for "calmness")
+
+    return Math.max(1, Math.round(score));
+  }
+
+  return 3;
+}

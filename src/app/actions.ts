@@ -16,6 +16,7 @@ import {
   getBarkingSuitability,
   getDroolingToleranceLevel,
   getDroolingSuitability,
+  getWorkScheduleSuitability,
 } from "@/lib/quizSizeUtils";
 
 export type InterimQuizResult = {
@@ -33,6 +34,7 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
   const visitorsAnswer = answers.find((a) => a.id === "home_visitors")?.value as QuizOptionId;
   const noiseToleranceAnswer = answers.find((a) => a.id === "noise_tolerance")?.value as number;
   const droolingToleranceAnswer = answers.find((a) => a.id === "drooling_tolerance")?.value as QuizOptionId;
+  const workScheduleAnswer = answers.find((a) => a.id === "work_schedule")?.value as QuizOptionId;
 
   const allowedSizes = new Set<string>();
 
@@ -148,6 +150,12 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
           const score = getDroolingSuitability(level, dog);
           totalScore += score * 3;
         }
+      }
+
+      // 9. Work Schedule Suitability
+      if (workScheduleAnswer) {
+        const score = getWorkScheduleSuitability(workScheduleAnswer, dog);
+        totalScore += score * 3; // Medium importance
       }
 
       return { dog, score: totalScore };
