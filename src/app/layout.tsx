@@ -21,6 +21,22 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "k9cupid - Find Your Perfect Dog Match",
   description: "Discover the dog breed that fits your lifestyle with k9cupid.",
+  icons: {
+    icon: '/icon.svg',
+    apple: '/icon.svg',
+  },
+  openGraph: {
+    title: "k9cupid - Find Your Perfect Dog Match",
+    description: "Discover the dog breed that fits your lifestyle with k9cupid.",
+    images: [
+      {
+        url: '/icon.svg',
+        width: 512,
+        height: 512,
+        alt: 'k9cupid Logo',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
