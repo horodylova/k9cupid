@@ -234,65 +234,40 @@ export function getChildrenInHouseholdSuitability(
   selectedIds: QuizOptionId[],
   dog: Dog
 ): number {
-  const hasBabiesOrToddlers = selectedIds.includes("children_babies_toddlers");
-  const hasYoungChildren = selectedIds.includes("children_young");
-  const hasOlderChildren = selectedIds.includes("children_older");
-  const hasAnyChildren = hasBabiesOrToddlers || hasYoungChildren || hasOlderChildren;
-  const hasNoneOnly =
-    selectedIds.length === 1 && selectedIds.includes("children_none");
+  const hasNone = selectedIds.includes("children_none");
+  const hasBabies = selectedIds.includes("children_babies_toddlers");
+  const hasYoung = selectedIds.includes("children_young");
+  const hasOlder = selectedIds.includes("children_older");
 
-  const goodWithChildren = dog.good_with_children;
-
-  if (!selectedIds.length || hasNoneOnly) {
-    if (goodWithChildren >= 4) {
-      return 4;
-    }
-    if (goodWithChildren === 3) {
-      return 3;
-    }
-    return 2;
+  // If "No children" is selected, or no children options are selected at all,
+  // we show all dogs regardless of their score (return max suitability).
+  if (hasNone || (!hasBabies && !hasYoung && !hasOlder)) {
+    return 5;
   }
 
-  if (hasBabiesOrToddlers || hasYoungChildren) {
-    if (goodWithChildren >= 5) {
-      return 5;
-    }
-    if (goodWithChildren === 4) {
-      return 4;
-    }
-    if (goodWithChildren === 3) {
-      return 2;
-    }
-    return 1;
+  // Determine the minimum required score based on the most sensitive age group selected
+  let minRequiredScore = 3; // Default for older children
+
+  if (hasBabies) {
+    minRequiredScore = 5; // Babies require 5 stars
+  } else if (hasYoung) {
+    minRequiredScore = 4; // Young children (4-6) require 4 stars
+  } else if (hasOlder) {
+    minRequiredScore = 3; // Older children (7+) require 3 stars
   }
 
-  if (hasOlderChildren && !hasBabiesOrToddlers && !hasYoungChildren) {
-    if (goodWithChildren >= 5) {
-      return 5;
-    }
-    if (goodWithChildren === 4) {
-      return 4;
-    }
-    if (goodWithChildren === 3) {
-      return 3;
-    }
-    if (goodWithChildren === 2) {
-      return 2;
-    }
-    return 1;
+  const dogScore = dog.good_with_children;
+
+  if (dogScore >= minRequiredScore) {
+    return 5;
   }
 
-  if (hasAnyChildren) {
-    if (goodWithChildren >= 4) {
-      return 4;
-    }
-    if (goodWithChildren === 3) {
-      return 3;
-    }
-    return 2;
+  // Near miss logic
+  if (dogScore === minRequiredScore - 1) {
+    return 3;
   }
 
-  return 3;
+  return 1;
 }
 
 export function getOtherPetsSuitability(
