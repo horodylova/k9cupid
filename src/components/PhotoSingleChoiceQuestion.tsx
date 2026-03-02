@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { QuizOptionId, QuizOption } from "@/lib/quizQuestions";
+import { QuizOptionId } from "@/lib/quizQuestions";
+import { QuizOption } from "@/lib/types";
 
 type PhotoSingleChoiceQuestionProps = {
   title: string;
@@ -31,7 +32,7 @@ export default function PhotoSingleChoiceQuestion({
               <button
                 type="button"
                 className="w-100 border-0 bg-transparent p-0"
-                onClick={() => onChange(option.id)}
+                onClick={() => onChange(option.id as QuizOptionId)}
               >
                 <div
                   className={`rounded-4 h-100 d-flex flex-column overflow-hidden ${

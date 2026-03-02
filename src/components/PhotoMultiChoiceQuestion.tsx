@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { QuizOptionId, QuizOption } from "@/lib/quizQuestions";
+import { QuizOptionId } from "@/lib/quizQuestions";
+import { QuizOption } from "@/lib/types";
 
 type PhotoMultiChoiceQuestionProps = {
   title: string;
@@ -34,14 +35,14 @@ export default function PhotoMultiChoiceQuestion({
       </div>
       <div className="row g-3">
         {options.map((option) => {
-          const isSelected = selected.includes(option.id);
+          const isSelected = selected.includes(option.id as QuizOptionId);
 
           return (
             <div key={option.id} className="col-6 col-md-4">
               <button
                 type="button"
                 className="w-100 border-0 bg-transparent p-0"
-                onClick={() => toggleOption(option.id)}
+                onClick={() => toggleOption(option.id as QuizOptionId)}
               >
                 <div
                   className={`rounded-4 h-100 d-flex flex-column overflow-hidden ${

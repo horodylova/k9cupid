@@ -28,7 +28,7 @@ export default function PhysicalHandlingQuestion({ selected, onChange }: Props) 
               <button
                 type="button"
                 className="w-100 border-0 bg-transparent p-0 text-start h-100"
-                onClick={() => onChange(option.id)}
+                onClick={() => onChange(option.id as QuizOptionId)}
               >
                 <div
                   className={`rounded-4 h-100 d-flex flex-column justify-content-between p-3 p-md-4 ${

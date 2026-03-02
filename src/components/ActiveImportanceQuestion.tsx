@@ -23,7 +23,7 @@ export default function ActiveImportanceQuestion({ selected, onChange }: Props) 
                 ? "btn-primary"
                 : "btn-outline-secondary"
             }`}
-            onClick={() => onChange(option.id)}
+            onClick={() => onChange(option.id as QuizOptionId)}
           >
             {option.label}
           </button>

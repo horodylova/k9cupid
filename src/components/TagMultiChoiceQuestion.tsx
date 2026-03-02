@@ -1,4 +1,5 @@
-import { QuizOption, QuizOptionId } from "@/lib/quizQuestions";
+import { QuizOptionId } from "@/lib/quizQuestions";
+import { QuizOption } from "@/lib/types";
 
 type TagMultiChoiceQuestionProps = {
   title: string;
@@ -56,7 +57,7 @@ export default function TagMultiChoiceQuestion({
                   ? "btn-primary"
                   : "btn-light border border-2 border-secondary text-body"
               }`}
-              onClick={() => handleToggle(option.id)}
+              onClick={() => handleToggle(option.id as QuizOptionId)}
             >
               <span>{option.label}</span>
             </button>
