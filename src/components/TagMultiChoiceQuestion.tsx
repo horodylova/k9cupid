@@ -46,7 +46,7 @@ export default function TagMultiChoiceQuestion({
       </div>
       <div className="d-flex flex-wrap gap-2 mt-1">
         {options.map((option) => {
-          const isSelected = selected.includes(option.id);
+          const isSelected = selected.includes(option.id as QuizOptionId);
 
           return (
             <button
