@@ -199,10 +199,7 @@ export function getPhysicalHandlingSuitability(
     answerId === "handling_very_confident" ||
     answerId === "handling_somewhat_confident"
   ) {
-    if (sizeIndex >= 3) {
-      return 5;
-    }
-    return 4;
+    return 5;
   }
 
   let baseScore = 3;
@@ -284,13 +281,7 @@ export function getOtherPetsSuitability(
   const goodWithStrangers = dog.good_with_strangers;
 
   if (!selectedIds.length || hasNoneOnly) {
-    if (goodWithOtherDogs >= 4) {
-      return 4;
-    }
-    if (goodWithOtherDogs === 3) {
-      return 3;
-    }
-    return 2;
+    return 5;
   }
 
   if (hasDog || hasCat) {
@@ -405,16 +396,7 @@ export function getVisitorsSuitability(
   }
 
   if (answerId === "visitors_almost_never") {
-    if (protectiveness >= 3 && protectiveness <= 4) {
-      return goodWithStrangers >= 3 ? 5 : 4;
-    }
-    if (protectiveness === 5) {
-      return 4;
-    }
-    if (protectiveness === 2) {
-      return 3;
-    }
-    return 2;
+    return 5;
   }
 
   return 3;
@@ -475,16 +457,11 @@ export function getBarkingSuitability(tolerance: number, dog: Dog): number {
   }
 
   if (tolerance === 2) {
-    if (barking >= 3 && barking <= 4) return 5;
-    if (barking === 2) return 4;
-    if (barking === 5) return 3;
-    return 2;
+    return 5;
   }
 
   if (tolerance === 1) {
-    if (barking >= 4) return 5;
-    if (barking === 3) return 4;
-    return 3;
+    return 5;
   }
 
   return 3;
@@ -534,40 +511,42 @@ export function getHairTolerancePreferences(
 
 export function getHairToleranceSuitability(level: number, dog: Dog): number {
   const shedding = dog.shedding;
-  const coatLength = dog.coat_length;
+  // const coatLength = dog.coat_length; // Coat length might be less critical than shedding for allergies, but keeping it for strict checks if needed.
 
-  if (level >= 5) {
-    if (shedding <= 2 && coatLength <= 2) return 5;
-    if (shedding <= 2) return 4;
-    if (shedding === 3) return 3;
-    if (shedding === 4) return 2;
-    return 1;
-  }
-
-  if (level === 4) {
-    if (shedding <= 2 && coatLength <= 3) return 5;
-    if (shedding <= 2) return 4;
-    if (shedding === 3) return 3;
-    if (shedding === 4) return 2;
-    return 1;
-  }
-
-  if (level === 3) {
-    if (shedding <= 3) return 4;
-    if (shedding === 4) return 3;
-    return 2;
-  }
-
-  if (level === 2) {
-    if (shedding >= 4) return 5;
-    if (shedding === 3) return 4;
-    return 3;
-  }
-
+  // Level 1: "It does not bother me at all" -> Ignore factor (all dogs are perfect)
   if (level === 1) {
-    if (shedding >= 4) return 5;
-    if (shedding === 3) return 4;
-    return 3;
+    return 5;
+  }
+
+  // Level 2: "It is okay, I will just clean more often" -> Tolerant of shedding
+  if (level === 2) {
+    // We don't penalize shedding, but maybe slight preference for non-extreme?
+    // Actually, if they are okay with cleaning, high shedding is fine.
+    // Low shedding is also fine.
+    return 5;
+  }
+
+  // Level 3: "I prefer less hair, but can accept some"
+  if (level === 3) {
+    if (shedding <= 3) return 5; // Low to medium shedding is perfect
+    if (shedding === 4) return 3; // High shedding is tolerable but not ideal
+    return 2; // Very high shedding is discouraged
+  }
+
+  // Level 4: "I really prefer minimal hair"
+  if (level === 4) {
+    if (shedding <= 2) return 5; // Low shedding is perfect
+    if (shedding === 3) return 3; // Medium is okay-ish
+    return 1; // High shedding is bad
+  }
+
+  // Level 5: "I have allergies / hair is a big problem for me"
+  if (level >= 5) {
+    // Strict requirement for low shedding
+    if (shedding <= 1) return 5; // Very low shedding
+    if (shedding === 2) return 4; // Low shedding
+    if (shedding === 3) return 2; // Medium is risky
+    return 1; // High shedding is a no-go
   }
 
   return 3;
@@ -607,30 +586,36 @@ export function getGroomingTimePreferences(
 export function getGroomingTimeSuitability(time: number, dog: Dog): number {
   const grooming = dog.grooming;
 
+  // Level 5: "I enjoy grooming and can do it often" -> Ignore factor (all dogs are perfect)
   if (time >= 5) {
-    if (grooming >= 4) return 5;
-    if (grooming === 3) return 4;
-    if (grooming === 2) return 3;
-    return 2;
+    return 5;
   }
 
+  // Level 4: "Weekly grooming sessions are fine" -> Ignore factor (all dogs are perfect)
   if (time === 4) {
-    if (grooming >= 4) return 5;
-    if (grooming === 3) return 4;
-    if (grooming === 2) return 2;
-    return 1;
+    return 5;
   }
 
+  // Level 3: "Regular brushing a few times a month" -> Medium maintenance
   if (time === 3) {
-    if (grooming <= 3) return 4;
-    if (grooming === 4) return 3;
+    if (grooming <= 3) return 5; // Low to medium is perfect
+    if (grooming === 4) return 3; // High is risky
+    if (grooming === 5) return 2; // Very high is too much
     return 2;
   }
 
-  if (time <= 2) {
-    if (grooming <= 2) return 5;
-    if (grooming === 3) return 3;
-    if (grooming === 4) return 2;
+  // Level 2: "A bit of brushing from time to time" -> Low maintenance
+  if (time === 2) {
+    if (grooming <= 2) return 5; // Low is perfect
+    if (grooming === 3) return 3; // Medium is okay-ish
+    return 1; // High is bad
+  }
+
+  // Level 1: "Almost no grooming - quick wipe and go" -> Very low maintenance
+  if (time <= 1) {
+    if (grooming === 1) return 5; // Very low is perfect
+    if (grooming === 2) return 4; // Low is okay
+    if (grooming >= 3) return 1; // Anything else is too much work
     return 1;
   }
 
@@ -721,15 +706,11 @@ export function getDroolingSuitability(level: number, dog: Dog): number {
   }
 
   if (level === 2) {
-    if (drooling <= 3) return 4;
-    if (drooling === 4) return 3;
-    return 2;
+    return 5;
   }
 
   if (level === 1) {
-    if (drooling >= 4) return 5;
-    if (drooling === 3) return 4;
-    return 3;
+    return 5;
   }
 
   return 3;

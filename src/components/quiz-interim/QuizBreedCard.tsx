@@ -15,7 +15,7 @@ export default function QuizBreedCard({ breed }: QuizBreedCardProps) {
   return (
     <Link href={`/breeds/${encodeURIComponent(breed.name)}`} target="_blank" className="text-decoration-none">
       <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white">
-        <div className="position-relative" style={{ paddingTop: "100%" }}>
+        <div className="position-relative" style={{ paddingTop: "75%" }}>
           <Image
             src={imgSrc}
             alt={breed.name}
