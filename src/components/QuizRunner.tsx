@@ -22,6 +22,11 @@ import SharedSpacesQuestion from "@/components/SharedSpacesQuestion";
 import ChildrenQuestion from "@/components/ChildrenQuestion";
 import PetsQuestion from "@/components/PetsQuestion";
 import ScaleQuestion from "@/components/ScaleQuestion";
+import HomeTypeQuestion from "@/components/HomeTypeQuestion";
+import PhysicalHandlingQuestion from "@/components/PhysicalHandlingQuestion";
+import VisitorsQuestion from "@/components/VisitorsQuestion";
+import HairToleranceQuestion from "@/components/HairToleranceQuestion";
+import DroolingToleranceQuestion from "@/components/DroolingToleranceQuestion";
 import { getQuizInterimBreeds } from "@/app/actions";
 import QuizInterimGrid from "@/components/quiz-interim/QuizInterimGrid";
 import { Dog } from "@/lib/api";
@@ -31,6 +36,7 @@ export default function QuizRunner() {
   const router = useRouter();
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
+  const [showStartOverModal, setShowStartOverModal] = useState(false);
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11>(1);
   const [pageReady, setPageReady] = useState(false);
   const [interimBreeds, setInterimBreeds] = useState<Dog[]>([]);
@@ -267,6 +273,10 @@ export default function QuizRunner() {
     );
   };
 
+  const handleStartOver = () => {
+    setShowStartOverModal(true);
+  };
+
   return (
     <>
       <section id="banner" className="py-3" style={{ background: "#F9F3EC" }}>
@@ -312,32 +322,15 @@ export default function QuizRunner() {
                   style={{ minHeight: "260px" }}
                 >
                   {step === 1 && (
-                    <>
-                      <div className="mb-3">
-                        <h1 className="h3 mb-0">{homeTypeQuestion.title}</h1>
-                      </div>
-                      <div className="d-flex flex-column gap-3">
-                        {homeTypeQuestion.options.map((option) => (
-                          <button
-                            key={option.id}
-                            type="button"
-                            className={`btn w-100 text-start ${
-                              selectedHome === option.id
-                                ? "btn-primary"
-                                : "btn-outline-secondary"
-                            }`}
-                            onClick={() =>
-                              recordAnswer({
-                                id: homeTypeQuestion.id,
-                                value: option.id,
-                              })
-                            }
-                          >
-                            {option.label}
-                          </button>
-                        ))}
-                      </div>
-                    </>
+                    <HomeTypeQuestion
+                      selected={selectedHome}
+                      onChange={(value) =>
+                        recordAnswer({
+                          id: homeTypeQuestion.id,
+                          value: value,
+                        })
+                      }
+                    />
                   )}
 
                   {step === 2 && (
@@ -353,66 +346,15 @@ export default function QuizRunner() {
                   )}
 
                   {step === 3 && (
-                    <div className="h-100 d-flex flex-column">
-                      <div className="mb-3 text-center text-md-start">
-                        <h1 className="h4 mb-1">
-                          How confident do you feel handling a strong dog?
-                        </h1>
-                        <p className="mb-0 text-muted">
-                          Think about real-life walks, busy streets, and sudden pulls on the leash.
-                        </p>
-                      </div>
-                      <div className="row g-3 mt-2">
-                        {physicalHandlingQuestion.options.map((option, index) => {
-                          const isSelected = selectedPhysicalHandling === option.id;
-                          const isPrimaryChoice = index <= 1;
-
-                          return (
-                            <div key={option.id} className="col-md-6">
-                              <button
-                                type="button"
-                                className="w-100 border-0 bg-transparent p-0 text-start h-100"
-                                onClick={() =>
-                                  recordAnswer({
-                                    id: physicalHandlingQuestion.id,
-                                    value: option.id,
-                                  })
-                                }
-                              >
-                                <div
-                                  className={`rounded-4 h-100 d-flex flex-column justify-content-between p-3 p-md-4 ${
-                                    isSelected
-                                      ? "border border-2 border-primary bg-white"
-                                      : "border border-2 border-transparent bg-light"
-                                  }`}
-                                >
-                                  <div className="d-flex align-items-center mb-2">
-                                    <div
-                                      className={`rounded-circle d-inline-flex align-items-center justify-content-center me-3 ${
-                                        isPrimaryChoice
-                                          ? "bg-primary text-white"
-                                          : "bg-white text-primary"
-                                      }`}
-                                      style={{ width: 32, height: 32 }}
-                                    >
-                                      {index + 1}
-                                    </div>
-                                    <div className="fw-semibold">
-                                      {option.label.split("–")[0].trim()}
-                                    </div>
-                                  </div>
-                                  <div className="mt-2 text-muted fs-6 lh-lg">
-                                    {option.label.includes("–")
-                                      ? option.label.split("–").slice(1).join("–").trim()
-                                      : "This choice helps us understand how much strength you are comfortable managing on the leash."}
-                                  </div>
-                                </div>
-                              </button>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
+                    <PhysicalHandlingQuestion
+                      selected={selectedPhysicalHandling}
+                      onChange={(value) =>
+                        recordAnswer({
+                          id: physicalHandlingQuestion.id,
+                          value: value,
+                        })
+                      }
+                    />
                   )}
 
                   {step === 4 && (
@@ -440,32 +382,15 @@ export default function QuizRunner() {
                   )}
 
                   {step === 6 && (
-                    <>
-                      <div className="mb-3">
-                        <h1 className="h4 mb-1">{visitorsQuestion.title}</h1>
-                      </div>
-                      <div className="d-flex flex-column gap-3">
-                        {visitorsQuestion.options.map((option) => (
-                          <button
-                            key={option.id}
-                            type="button"
-                            className={`btn w-100 text-start ${
-                              selectedVisitors === option.id
-                                ? "btn-primary"
-                                : "btn-outline-secondary"
-                            }`}
-                            onClick={() =>
-                              recordAnswer({
-                                id: visitorsQuestion.id,
-                                value: option.id,
-                              })
-                            }
-                          >
-                            {option.label}
-                          </button>
-                        ))}
-                      </div>
-                    </>
+                    <VisitorsQuestion
+                      selected={selectedVisitors}
+                      onChange={(value) =>
+                        recordAnswer({
+                          id: visitorsQuestion.id,
+                          value: value,
+                        })
+                      }
+                    />
                   )}
 
                   {step === 7 && (
@@ -484,32 +409,15 @@ export default function QuizRunner() {
                   )}
 
                   {step === 8 && (
-                    <>
-                      <div className="mb-3">
-                        <h1 className="h4 mb-1">{hairToleranceQuestion.title}</h1>
-                      </div>
-                      <div className="d-flex flex-column gap-3">
-                        {hairToleranceQuestion.options.map((option) => (
-                          <button
-                            key={option.id}
-                            type="button"
-                            className={`btn w-100 text-start ${
-                              selectedHairTolerance === option.id
-                                ? "btn-primary"
-                                : "btn-outline-secondary"
-                            }`}
-                            onClick={() =>
-                              recordAnswer({
-                                id: hairToleranceQuestion.id,
-                                value: option.id,
-                              })
-                            }
-                          >
-                            {option.label}
-                          </button>
-                        ))}
-                      </div>
-                    </>
+                    <HairToleranceQuestion
+                      selected={selectedHairTolerance}
+                      onChange={(value) =>
+                        recordAnswer({
+                          id: hairToleranceQuestion.id,
+                          value: value,
+                        })
+                      }
+                    />
                   )}
 
                   {step === 9 && (
@@ -528,32 +436,15 @@ export default function QuizRunner() {
                   )}
 
                   {step === 10 && (
-                    <>
-                      <div className="mb-3">
-                        <h1 className="h4 mb-1">{droolingToleranceQuestion.title}</h1>
-                      </div>
-                      <div className="d-flex flex-column gap-3">
-                        {droolingToleranceQuestion.options.map((option) => (
-                          <button
-                            key={option.id}
-                            type="button"
-                            className={`btn w-100 text-start ${
-                              selectedDroolingTolerance === option.id
-                                ? "btn-primary"
-                                : "btn-outline-secondary"
-                            }`}
-                            onClick={() =>
-                              recordAnswer({
-                                id: droolingToleranceQuestion.id,
-                                value: option.id,
-                              })
-                            }
-                          >
-                            {option.label}
-                          </button>
-                        ))}
-                      </div>
-                    </>
+                    <DroolingToleranceQuestion
+                      selected={selectedDroolingTolerance}
+                      onChange={(value) =>
+                        recordAnswer({
+                          id: droolingToleranceQuestion.id,
+                          value: value,
+                        })
+                      }
+                    />
                   )}
                   {step === 11 && !showShortlist && (
                     <div className="rounded-4 p-3 p-md-4 quiz-interim-card position-relative">
@@ -599,6 +490,13 @@ export default function QuizRunner() {
                               <button type="button" className="btn btn-outline-dark text-uppercase fw-semibold">
                                 Keep refining
                               </button>
+                              <button
+                                type="button"
+                                className="btn btn-outline-danger text-uppercase fw-semibold"
+                                onClick={handleStartOver}
+                              >
+                                Start Over
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -612,10 +510,10 @@ export default function QuizRunner() {
                         <h2 className="h4 mb-0">Your Interim Matches</h2>
                         <button
                           type="button"
-                          className="btn btn-sm btn-outline-secondary"
+                          className="btn btn-outline-dark px-4 fw-semibold"
                           onClick={() => setShowShortlist(false)}
                         >
-                          Back
+                          ← Back
                         </button>
                       </div>
                       <QuizInterimGrid breeds={interimBreeds} />
@@ -716,6 +614,55 @@ export default function QuizRunner() {
                 }}
               >
                 Save and come back later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showStartOverModal && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{ background: "rgba(0,0,0,0.45)", zIndex: 1050 }}
+        >
+          <div
+            className="rounded-4 p-4 p-md-5 shadow-lg"
+            style={{ maxWidth: 720, width: "100%", background: "#FFF7EC" }}
+          >
+            <div className="row g-4 align-items-center mb-4">
+              <div className="col-md-4 text-center text-md-start">
+                <Image
+                  src="/Cupid with Dogs-white-puppy.png"
+                  alt="Cupid with dog illustration"
+                  width={120}
+                  height={120}
+                  className="img-fluid"
+                />
+                <h2 className="h5 mb-0 mt-3">Start from scratch?</h2>
+              </div>
+              <div className="col-md-8">
+                <p className="mb-0">
+                  Are you sure you want to start over? All your progress will be lost.
+                </p>
+              </div>
+            </div>
+            <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
+              <button
+                type="button"
+                className="btn btn-outline-secondary flex-fill"
+                onClick={() => setShowStartOverModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger flex-fill"
+                onClick={() => {
+                  clearQuizSession();
+                  window.location.reload();
+                }}
+              >
+                Yes, start over
               </button>
             </div>
           </div>

@@ -9,6 +9,9 @@ import {
   getChildrenInHouseholdSuitability,
   getOtherPetsSuitability,
   getSharedSpacesSizeSuitability,
+  getHairToleranceLevel,
+  getHairToleranceSuitability,
+  getGroomingTimeSuitability,
 } from "@/lib/quizSizeUtils";
 
 export type InterimQuizResult = {
@@ -21,6 +24,8 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
   const childrenAnswer = answers.find((a) => a.id === "children_in_household")?.value as QuizOptionId[];
   const petsAnswer = answers.find((a) => a.id === "other_pets")?.value as QuizOptionId[];
   const sharedSpacesAnswer = answers.find((a) => a.id === "shared_spaces")?.value as QuizOptionId[];
+  const hairToleranceAnswer = answers.find((a) => a.id === "hair_tolerance")?.value as QuizOptionId;
+  const groomingTimeAnswer = answers.find((a) => a.id === "grooming_time")?.value as number;
 
   const allowedSizes = new Set<string>();
 
@@ -70,7 +75,9 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
 
       const avgSizeScore = sizeFactors > 0 ? sizeScoreSum / sizeFactors : 3;
 
-      if (avgSizeScore < 2) return null;
+      // REMOVED HARD FILTER: if (avgSizeScore < 2) return null;
+      // We keep all dogs and let the low score push them to the bottom of the list.
+      // This ensures we always show "best available" results even if not ideal.
 
       totalScore += avgSizeScore * 10;
 
@@ -80,13 +87,39 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
         totalScore += childScore * 5;
       }
 
-      // 3. Other Pets Suitability
+      // 3. Hair & Grooming Suitability (Combined)
+      // We calculate an average score from both factors if they are present.
+      let hairGroomingScoreSum = 0;
+      let hairGroomingFactors = 0;
+
+      if (hairToleranceAnswer) {
+        const hairLevel = getHairToleranceLevel(hairToleranceAnswer);
+        if (hairLevel) {
+          hairGroomingScoreSum += getHairToleranceSuitability(hairLevel, dog);
+          hairGroomingFactors++;
+        }
+      }
+
+      if (groomingTimeAnswer) {
+        // Only count if answer is valid (1-5)
+        if (groomingTimeAnswer >= 1 && groomingTimeAnswer <= 5) {
+          hairGroomingScoreSum += getGroomingTimeSuitability(groomingTimeAnswer, dog);
+          hairGroomingFactors++;
+        }
+      }
+
+      if (hairGroomingFactors > 0) {
+        const avgHairGroomingScore = hairGroomingScoreSum / hairGroomingFactors;
+        totalScore += avgHairGroomingScore * 4; // Weighted highly (4x)
+      }
+
+      // 4. Other Pets Suitability
       if (petsAnswer && petsAnswer.length > 0) {
         const petScore = getOtherPetsSuitability(petsAnswer, dog);
         totalScore += petScore * 3;
       }
 
-      // 4. Trainability Bonus
+      // 5. Trainability Bonus
       totalScore += (dog.trainability || 0);
 
       return { dog, score: totalScore };

@@ -259,12 +259,20 @@ export function getChildrenInHouseholdSuitability(
     return 5;
   }
 
-  // Near miss logic
-  if (dogScore === minRequiredScore - 1) {
-    return 3;
+  // Flexible scoring: penalize based on how far off the dog is
+  const diff = minRequiredScore - dogScore;
+  
+  if (diff === 1) {
+    return 4; // Close match
+  }
+  if (diff === 2) {
+    return 3; // Acceptable match
+  }
+  if (diff === 3) {
+    return 2; // Poor match
   }
 
-  return 1;
+  return 1; // Very poor match
 }
 
 export function getOtherPetsSuitability(
