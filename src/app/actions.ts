@@ -12,6 +12,10 @@ import {
   getHairToleranceLevel,
   getHairToleranceSuitability,
   getGroomingTimeSuitability,
+  getVisitorsSuitability,
+  getBarkingSuitability,
+  getDroolingToleranceLevel,
+  getDroolingSuitability,
 } from "@/lib/quizSizeUtils";
 
 export type InterimQuizResult = {
@@ -26,6 +30,9 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
   const sharedSpacesAnswer = answers.find((a) => a.id === "shared_spaces")?.value as QuizOptionId[];
   const hairToleranceAnswer = answers.find((a) => a.id === "hair_tolerance")?.value as QuizOptionId;
   const groomingTimeAnswer = answers.find((a) => a.id === "grooming_time")?.value as number;
+  const visitorsAnswer = answers.find((a) => a.id === "home_visitors")?.value as QuizOptionId;
+  const noiseToleranceAnswer = answers.find((a) => a.id === "noise_tolerance")?.value as number;
+  const droolingToleranceAnswer = answers.find((a) => a.id === "drooling_tolerance")?.value as QuizOptionId;
 
   const allowedSizes = new Set<string>();
 
@@ -122,13 +129,35 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
       // 5. Trainability Bonus
       totalScore += (dog.trainability || 0);
 
+      // 6. Visitors Suitability
+      if (visitorsAnswer) {
+        const score = getVisitorsSuitability(visitorsAnswer, dog);
+        totalScore += score * 3;
+      }
+
+      // 7. Noise Suitability
+      if (typeof noiseToleranceAnswer === "number") {
+        const score = getBarkingSuitability(noiseToleranceAnswer, dog);
+        totalScore += score * 3;
+      }
+
+      // 8. Drooling Suitability
+      if (droolingToleranceAnswer) {
+        const level = getDroolingToleranceLevel(droolingToleranceAnswer);
+        if (level) {
+          const score = getDroolingSuitability(level, dog);
+          totalScore += score * 3;
+        }
+      }
+
       return { dog, score: totalScore };
     })
     .filter((item): item is { dog: Dog; score: number } => item !== null);
 
   scoredDogs.sort((a, b) => b.score - a.score);
 
-  const topDogs = scoredDogs.slice(0, 32).map((item) => item.dog);
+  // Return ALL dogs, not just top 32
+  const topDogs = scoredDogs.map((item) => item.dog);
 
   return { breeds: topDogs };
 }

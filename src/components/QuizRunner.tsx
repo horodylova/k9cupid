@@ -668,6 +668,31 @@ export default function QuizRunner() {
           </div>
         </div>
       )}
+
+      {step === 11 && showShortlist && (
+        <div
+          className="position-fixed bottom-0 start-0 w-100 p-3 p-md-4 text-center border-top shadow-lg"
+          style={{
+            background: "rgba(255, 247, 236, 0.95)",
+            backdropFilter: "blur(10px)",
+            zIndex: 1040,
+          }}
+        >
+          <div className="container" style={{ maxWidth: 720 }}>
+            <h3 className="h5 mb-2">We are not done yet!</h3>
+            <p className="mb-3 text-muted small">
+              This is just a preliminary list based on size & lifestyle. We want to find dogs that match your <strong>character & activity</strong> too.
+            </p>
+            <button
+              type="button"
+              className="btn btn-primary px-5 py-2 fw-semibold rounded-pill"
+              onClick={() => setShowShortlist(false)}
+            >
+              Continue to Character Questions
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
