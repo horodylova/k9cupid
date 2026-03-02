@@ -25,33 +25,57 @@ interface SanityPost {
 }
 
 const BlogPreview = async () => {
-  const query = `*[_type == "post"] | order(publishedAt desc)[0...4] {
-    _id,
-    title,
-    "slug": slug.current,
-    mainImage,
-    publishedAt,
-    _createdAt,
-    excerpt,
-    featured
+  const query = `{
+    "featured": *[_type == "post" && featured == true] | order(_updatedAt desc)[0] {
+      _id,
+      title,
+      "slug": slug.current,
+      mainImage,
+      publishedAt,
+      _createdAt,
+      excerpt,
+      featured
+    },
+    "latest": *[_type == "post"] | order(publishedAt desc)[0...4] {
+      _id,
+      title,
+      "slug": slug.current,
+      mainImage,
+      publishedAt,
+      _createdAt,
+      excerpt,
+      featured
+    }
   }`;
 
   let blogPosts: BlogPost[] = [];
   
   try {
-    const posts = await client.fetch<SanityPost[]>(query, {}, { next: { revalidate: 30 } });
-    if (posts && posts.length > 0) {
-      blogPosts = posts.map((post) => {
+    const data = await client.fetch<{ featured: SanityPost | null; latest: SanityPost[] }>(query, {}, { next: { revalidate: 30 } });
+    
+    // Determine the featured post: either the explicitly featured one or the latest one
+    const featuredRaw = data.featured || data.latest[0];
+    
+    // Filter out the featured post from the latest list to avoid duplication
+    // We want 3 secondary posts. If featured was in latest, we take the next one.
+    // If featured was NOT in latest (old post), we still take 3 from latest.
+    const secondaryRaw = data.latest.filter(p => p._id !== featuredRaw?._id).slice(0, 3);
+    
+    // Combine for processing
+    const postsToProcess = featuredRaw ? [featuredRaw, ...secondaryRaw] : secondaryRaw;
+
+    if (postsToProcess.length > 0) {
+      blogPosts = postsToProcess.map((post) => {
         const dateSource = post.publishedAt || post._createdAt;
         const dateObj = new Date(dateSource);
         return {
-          id: post.slug, // Use slug as ID for the link
+          id: post.slug,
           date: dateObj.getDate().toString(),
           month: dateObj.toLocaleString('default', { month: 'short' }),
           image: post.mainImage ? urlFor(post.mainImage).width(400).height(300).url() : '/images/placeholder.jpg',
           title: post.title,
           excerpt: post.excerpt,
-          featured: post.featured ?? false,
+          featured: post._id === featuredRaw?._id, // Mark only the chosen one as featured for UI logic
         };
       });
     }

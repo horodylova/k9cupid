@@ -20,6 +20,7 @@ interface SanityPost {
   mainImage: { asset: { _ref: string } };
   publishedAt?: string;
   _createdAt: string;
+  _updatedAt: string;
   excerpt: string;
   featured?: boolean;
 }
@@ -51,7 +52,9 @@ const fallbackBlogPosts: BlogPost[] = [
   },
 ];
 
-export default async function BlogPage() {
+export const revalidate = 60;
+
+export default async function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
   const query = `*[_type == "post"] | order(publishedAt desc) {
     _id,
     title,
@@ -59,6 +62,7 @@ export default async function BlogPage() {
     mainImage,
     publishedAt,
     _createdAt,
+    _updatedAt,
     excerpt,
     featured
   }`;
@@ -67,6 +71,17 @@ export default async function BlogPage() {
   
   try {
     const posts = await client.fetch<SanityPost[]>(query, {}, { next: { revalidate: 30 } });
+    
+    // Logic to pick the correct featured post (most recently updated one among featured)
+    let featuredRaw = posts.filter(p => p.featured).sort((a, b) => 
+      new Date(b._updatedAt).getTime() - new Date(a._updatedAt).getTime()
+    )[0];
+
+    // Fallback if no featured post found
+    if (!featuredRaw && posts.length > 0) {
+      featuredRaw = posts[0];
+    }
+
     if (posts && posts.length > 0) {
       blogPosts = posts.map((post) => {
         const dateSource = post.publishedAt || post._createdAt;
@@ -78,7 +93,7 @@ export default async function BlogPage() {
           image: post.mainImage ? urlFor(post.mainImage).width(800).height(600).url() : '/images/placeholder.jpg',
           title: post.title,
           excerpt: post.excerpt,
-          featured: post.featured ?? false,
+          featured: post._id === featuredRaw?._id, // Only mark the chosen one as featured
         };
       });
     }
@@ -92,8 +107,19 @@ export default async function BlogPage() {
     }
   }
 
+  // Pagination Logic
+  const page = parseInt(searchParams?.page || '1', 10);
+  const POSTS_PER_PAGE = 6;
+
   const featuredPost = blogPosts.find((post) => post.featured) ?? blogPosts[0];
-  const gridPosts = blogPosts.filter((post) => post.id !== featuredPost?.id);
+  const allGridPosts = blogPosts.filter((post) => post.id !== featuredPost?.id);
+  
+  const totalPosts = allGridPosts.length;
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+  
+  const startIndex = (page - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+  const currentGridPosts = allGridPosts.slice(startIndex, endIndex);
 
   return (
     <>
@@ -111,7 +137,7 @@ export default async function BlogPage() {
 
       <div className="my-5 py-5">
         <div className="container">
-          {featuredPost && (
+          {page === 1 && featuredPost && (
             <div className="row g-4 align-items-stretch mb-5">
               <div className="col-12">
                 <div className="d-flex justify-content-between align-items-center mb-3">
@@ -156,7 +182,7 @@ export default async function BlogPage() {
             </div>
           )}
           <div className="row entry-container">
-            {gridPosts.map((post) => (
+            {currentGridPosts.map((post) => (
               <div className="entry-item col-md-4 my-4" key={post.id}>
                 <div className="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
                   <h3 className="secondary-font text-primary m-0">{post.date}</h3>
@@ -186,20 +212,66 @@ export default async function BlogPage() {
               </div>
             ))}
           </div>
+          
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <nav className="navigation paging-navigation text-center mt-5" role="navigation">
+              <div className="pagination loop-pagination d-flex justify-content-center align-items-center">
+                
+                {/* Previous Button */}
+                {page > 1 ? (
+                  <Link href={`/blog?page=${page - 1}`} className="pagination-arrow d-flex align-items-center mx-3">
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
+                  </Link>
+                ) : (
+                  <span className="pagination-arrow d-flex align-items-center mx-3 text-muted" style={{ opacity: 0.5, cursor: 'not-allowed' }}>
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
+                  </span>
+                )}
 
-          <nav className="navigation paging-navigation text-center mt-3" role="navigation">
-            <div className="pagination loop-pagination d-flex justify-content-center align-items-center">
-              <Link href="#" className="pagination-arrow d-flex align-items-center mx-3">
-                <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
-              </Link>
-              <span aria-current="page" className="page-numbers mt-2 fs-3 mx-3 current">1</span>
-              <Link className="page-numbers mt-2 fs-3 mx-3" href="#">2</Link>
-              <Link className="page-numbers mt-2 fs-3 mx-3" href="#">3</Link>
-              <Link href="#" className="pagination-arrow d-flex align-items-center mx-3">
-                <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
-              </Link>
-            </div>
-          </nav>
+                {/* Page Numbers */}
+                {[...Array(totalPages)].map((_, i) => {
+                  const pageNum = i + 1;
+                  // Show first, last, current, and adjacent pages
+                  if (
+                    pageNum === 1 ||
+                    pageNum === totalPages ||
+                    (pageNum >= page - 1 && pageNum <= page + 1)
+                  ) {
+                    if (pageNum === page) {
+                      return (
+                        <span key={pageNum} aria-current="page" className="page-numbers mt-2 fs-3 mx-3 current">
+                          {pageNum}
+                        </span>
+                      );
+                    }
+                    return (
+                      <Link key={pageNum} className="page-numbers mt-2 fs-3 mx-3" href={`/blog?page=${pageNum}`}>
+                        {pageNum}
+                      </Link>
+                    );
+                  } else if (
+                    pageNum === page - 2 ||
+                    pageNum === page + 2
+                  ) {
+                    return <span key={pageNum} className="page-numbers mt-2 fs-3 mx-3">...</span>;
+                  }
+                  return null;
+                })}
+
+                {/* Next Button */}
+                {page < totalPages ? (
+                  <Link href={`/blog?page=${page + 1}`} className="pagination-arrow d-flex align-items-center mx-3">
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
+                  </Link>
+                ) : (
+                  <span className="pagination-arrow d-flex align-items-center mx-3 text-muted" style={{ opacity: 0.5, cursor: 'not-allowed' }}>
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
+                  </span>
+                )}
+              </div>
+            </nav>
+          )}
         </div>
       </div>
     </>
