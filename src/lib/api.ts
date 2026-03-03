@@ -185,64 +185,59 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
     }
 
     if (manualFiltersActive) {
-      // Fetch ALL breeds robustly (sequential to avoid rate limits and missing data)
+      // Fetch ALL breeds with controlled concurrency (batched) to avoid rate limits
       const allDogs: Dog[] = [];
-      let offset = 0;
-      const limit = 20;
-      let keepFetching = true;
+      const offsets = Array.from({ length: 20 }, (_, i) => i * 20); // Check up to 400 items
+      const batchSize = 5; // 5 parallel requests at a time
 
-      while (keepFetching) {
-        const p = new URLSearchParams(params);
-        p.append('limit', limit.toString());
-        p.append('offset', offset.toString());
+      for (let i = 0; i < offsets.length; i += batchSize) {
+        const batchOffsets = offsets.slice(i, i + batchSize);
         
-        try {
-          // Retry logic for stability
-          let attempts = 0;
-          let success = false;
-          let dogsInBatch: Dog[] = [];
+        const batchPromises = batchOffsets.map(async (offset) => {
+          const p = new URLSearchParams(params);
+          p.append('limit', '20');
+          p.append('offset', offset.toString());
 
-          while (attempts < 3 && !success) {
-            try {
-              const res = await fetch(`https://api.api-ninjas.com/v1/dogs?${p.toString()}`, {
-                headers: { 'X-Api-Key': apiKey },
-                next: { revalidate: 3600 }
-              });
-              
-              if (res.ok) {
-                dogsInBatch = await res.json();
-                success = true;
-              } else {
-                console.warn(`API Error ${res.status} for offset ${offset}. Retrying...`);
-                await new Promise(r => setTimeout(r, 500)); // Wait before retry
-              }
-            } catch (err) {
-              console.warn(`Network error for offset ${offset}:`, err);
-              await new Promise(r => setTimeout(r, 500));
-            }
-            attempts++;
-          }
+          try {
+            const res = await fetch(`https://api.api-ninjas.com/v1/dogs?${p.toString()}`, {
+              headers: { 'X-Api-Key': apiKey },
+              next: { revalidate: 3600 }
+            });
 
-          if (success) {
-            if (dogsInBatch.length === 0) {
-              keepFetching = false; // End of list
+            if (res.ok) {
+              const data = await res.json();
+              return data;
             } else {
-              allDogs.push(...dogsInBatch);
-              offset += limit;
-              // Safety break to prevent infinite loops if API is behaving weirdly
-              if (offset > 1000) keepFetching = false; 
+              console.warn(`API Error ${res.status} for offset ${offset}`);
+              return [];
             }
-          } else {
-            console.error(`Failed to fetch offset ${offset} after 3 attempts. Stopping.`);
-            keepFetching = false; // Stop to avoid partial/corrupted state loop
+          } catch (err) {
+            console.error(`Error fetching offset ${offset}:`, err);
+            return [];
           }
+        });
 
-        } catch (e) {
-          console.error(`Critical error fetching offset ${offset}:`, e);
-          keepFetching = false;
+        const batchResults = await Promise.all(batchPromises);
+        
+        batchResults.forEach((dogs) => {
+          if (dogs && dogs.length > 0) {
+            allDogs.push(...dogs);
+          }
+        });
+
+        // If an entire batch returns empty arrays, we likely reached the end of the list
+        // However, with concurrency, we might have gaps if one fails, so we don't break immediately unless truly done.
+        // But for this API, if offset X returns empty, offset X+20 will too.
+        // Let's check if the LAST item in the batch was empty.
+        const lastResult = batchResults[batchResults.length - 1];
+        if (lastResult && lastResult.length === 0) {
+          break; 
         }
+
+        // Small delay between batches to be nice to the API
+        await new Promise(resolve => setTimeout(resolve, 200));
       }
-      
+
       // Remove duplicates
       const uniqueDogsMap = new Map();
       allDogs.forEach(dog => {
@@ -319,6 +314,11 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
       
       const total = dogs.length;
       
+      // If fetchAll is requested, return everything without pagination
+      if (options.fetchAll) {
+        return { breeds: dogs, total };
+      }
+
       // Apply pagination AFTER filtering
       const paginatedDogs = dogs.slice(offset, offset + limit);
       
