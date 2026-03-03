@@ -241,6 +241,8 @@ export function getChildrenInHouseholdSuitability(
 
   const dogScore = dog.good_with_children;
 
+  // Classic family dogs (Golden, Lab, Beagle, etc) often have 5 here.
+  // We want to make sure they get a FULL 5, maybe even bonus points elsewhere.
   if (dogScore >= minRequiredScore) {
     return 5;
   }
@@ -431,30 +433,26 @@ export function getBarkingFilterPreferences(
 export function getBarkingSuitability(tolerance: number, dog: Dog): number {
   const barking = dog.barking;
 
-  if (tolerance >= 5) {
+  // Tolerance 1: "Strictly quiet"
+  if (tolerance <= 1) {
     if (barking <= 2) return 5;
-    if (barking === 3) return 4;
-    if (barking === 4) return 2;
-    return 1;
+    if (barking === 3) return 3;
+    if (barking >= 4) return 1;
+    return 3;
   }
 
-  if (tolerance === 4) {
+  // Tolerance 2-3: "Average barking is okay"
+  if (tolerance <= 3) {
     if (barking <= 3) return 5;
     if (barking === 4) return 3;
-    return 1;
+    if (barking >= 5) return 2;
+    return 4;
   }
 
-  if (tolerance === 3) {
-    if (barking <= 3) return 4;
-    if (barking === 4) return 3;
-    return 2;
-  }
-
-  if (tolerance === 2) {
-    return 5;
-  }
-
-  if (tolerance === 1) {
+  // Tolerance 4-5: "I don't mind vocal dogs"
+  if (tolerance >= 4) {
+    // If user doesn't mind noise, all dogs are fine.
+    // Maybe even prefer watchdogs (high barking)?
     return 5;
   }
 
@@ -523,15 +521,17 @@ export function getHairToleranceSuitability(level: number, dog: Dog): number {
   // Level 3: "I prefer less hair, but can accept some"
   if (level === 3) {
     if (shedding <= 3) return 5; // Low to medium shedding is perfect
-    if (shedding === 4) return 3; // High shedding is tolerable but not ideal
-    return 2; // Very high shedding is discouraged
+    if (shedding === 4) return 3; // High shedding is tolerable
+    if (shedding >= 5) return 2; // Very high shedding is discouraged but not impossible
+    return 3;
   }
 
   // Level 4: "I really prefer minimal hair"
   if (level === 4) {
     if (shedding <= 2) return 5; // Low shedding is perfect
-    if (shedding === 3) return 3; // Medium is okay-ish
-    return 1; // High shedding is bad
+    if (shedding === 3) return 4; // Medium is okay
+    if (shedding === 4) return 2; // High shedding is bad
+    return 1;
   }
 
   // Level 5: "I have allergies / hair is a big problem for me"

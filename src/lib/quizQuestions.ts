@@ -216,15 +216,15 @@ export const noiseToleranceQuestion: QuizScaleQuestion = {
   scaleLabels: [
     {
       value: 1,
-      label: "I prefer a very quiet dog (apartment friendly)",
+      label: "Strictly quiet (Apartment / Sensitive neighbours)",
     },
     {
       value: 3,
-      label: "Average amount is okay",
+      label: "Average barking is okay (Alerts, Play)",
     },
     {
       value: 5,
-      label: "Barking would be a serious problem (neighbours / building rules)",
+      label: "I don't mind vocal dogs / I want a watchdog",
     },
   ],
 };
