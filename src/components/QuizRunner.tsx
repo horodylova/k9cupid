@@ -132,12 +132,30 @@ function calculateFinalBreeds(breeds: Dog[], answers: { id: string; value: unkno
 
     // 5. Training / Purpose
     const purposeVal = getAnswer("purpose") as string | undefined;
+    
     if (purposeVal === "purpose_guard") {
-      if (breed.protectiveness >= 4) score += 15;
+      // Guardian needs high protectiveness
+      if (breed.protectiveness >= 4) score += 20;
+      else if (breed.protectiveness <= 2) score -= 20; // A guardian must protect!
+
+      // Guardian needs to be trainable and intelligent
+      if (breed.trainability >= 4) score += 10;
+      
+      // Guardian implies physical capability (Size/Strength)
+      // Small dogs can be watchdogs, but "Guardian" implies protection.
+      if (breed.max_weight_male >= 50) score += 20; // Large/Giant bonus
+      else if (breed.max_weight_male >= 30) score += 10; // Medium bonus
+      else if (breed.max_weight_male < 20) score -= 30; // Toy/Small penalty (Unsuitable for protection)
+
     } else if (purposeVal === "purpose_active") {
-      if (breed.energy >= 4) score += 10;
+      // Active partner needs energy and endurance
+      if (breed.energy >= 4) score += 15;
+      // Trainability helps for sports
+      if (breed.trainability >= 4) score += 5;
+
     } else if (purposeVal === "purpose_service") {
       if (breed.trainability >= 4) score += 15;
+      if (breed.good_with_strangers >= 4) score += 10; // Service dogs usually need to be social/neutral
     } else if (purposeVal === "purpose_companion") {
       if (breed.good_with_children >= 4 || breed.playfulness >= 4) score += 10;
     }
@@ -162,6 +180,21 @@ function calculateFinalBreeds(breeds: Dog[], answers: { id: string; value: unkno
     // (Implicit from noise tolerance if we had it mapped, assuming noise tolerance question exists)
     // const noiseVal = getAnswer(noiseToleranceQuestion.id);
     
+    // 8. Experience / Handling
+    const handlingVal = getAnswer("physical_handling") as string | undefined;
+    if (handlingVal === "handling_novice") {
+      // Novice needs easy trainability
+      if (breed.trainability >= 4) score += 10;
+      else if (breed.trainability <= 2) score -= 10;
+      
+      // Novice might struggle with very protective dogs
+      if (breed.protectiveness >= 5) score -= 5; 
+    } else if (handlingVal === "handling_experienced") {
+      // Experienced can handle difficult dogs and train them well
+      if (breed.trainability >= 4) score += 5; // They can unlock full potential
+      if (breed.protectiveness >= 4) score += 5; // Can handle guard dogs
+    }
+
     return { breed, score };
   });
 
