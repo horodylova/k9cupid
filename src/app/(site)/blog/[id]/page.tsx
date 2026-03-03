@@ -1,3 +1,4 @@
+import ReadAlso from '@/components/ReadAlso';
 import Image from 'next/image';
 import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
@@ -263,6 +264,8 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                         ))}
                       </div>
                     )}
+                    
+                    <ReadAlso currentDate={post.publishedAt || post._createdAt} />
                     
                     <div className="post-navigation border-top border-bottom py-4 mt-5">
                       <div className="row align-items-center">

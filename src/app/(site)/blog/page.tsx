@@ -55,7 +55,7 @@ const fallbackBlogPosts: BlogPost[] = [
 export const revalidate = 60;
 
 export default async function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
-  const query = `*[_type == "post"] | order(publishedAt desc) {
+  const query = `*[_type == "post"] | order(coalesce(publishedAt, _createdAt) desc) {
     _id,
     title,
     "slug": slug.current,
