@@ -42,7 +42,17 @@ export function getHomeSizeSuitability(answerId: QuizOptionId, dog: Dog): number
   const sizeIndex = getSizeIndex(size);
   const energy = dog.energy;
 
-  if (answerId === "home_house_small" || answerId === "home_house_large") {
+  if (answerId === "home_house_large") {
+    // Large houses are ideal for medium/large dogs that need space.
+    // Small dogs are also fine, but we give a slight preference to larger breeds
+    // to reflect the user's capacity to house them.
+    if (sizeIndex >= 3) {
+      return 5;
+    }
+    return 4;
+  }
+
+  if (answerId === "home_house_small") {
     return 5;
   }
 
@@ -169,7 +179,13 @@ export function getPhysicalHandlingSuitability(
     answerId === "handling_experienced" ||
     answerId === "handling_comfortable"
   ) {
-    return 5;
+    // If user is comfortable with large dogs, prioritize larger breeds slightly
+    // as they explicitly signaled this capability.
+    if (sizeIndex >= 3) {
+      return 5;
+    }
+    // Small dogs are still suitable, but may feel "small" for someone seeking a "large dog experience"
+    return 4;
   }
 
   let baseScore = 3;
