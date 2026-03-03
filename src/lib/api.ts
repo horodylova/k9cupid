@@ -185,42 +185,63 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
     }
 
     if (manualFiltersActive) {
-      // Fetch ALL breeds in parallel (batched to avoid rate limits)
-      const offsets = Array.from({ length: 20 }, (_, i) => i * 20);
-      const batchSize = 5;
+      // Fetch ALL breeds robustly (sequential to avoid rate limits and missing data)
       const allDogs: Dog[] = [];
-      
-      for (let i = 0; i < offsets.length; i += batchSize) {
-        const batchOffsets = offsets.slice(i, i + batchSize);
-        const batchPromises = batchOffsets.map(async (fetchOffset) => {
-          const p = new URLSearchParams(params);
-          p.append('limit', '20');
-          p.append('offset', fetchOffset.toString());
-          
-          try {
-            const res = await fetch(`https://api.api-ninjas.com/v1/dogs?${p.toString()}`, {
-              headers: { 'X-Api-Key': apiKey },
-              next: { revalidate: 3600 }
-            });
-            if (!res.ok) {
-              console.error(`API Error for offset ${fetchOffset}: ${res.status} ${res.statusText}`);
-              return [];
-            }
-            return await res.json();
-          } catch (e) {
-            console.error(`Error fetching offset ${fetchOffset}:`, e);
-            return [];
-          }
-        });
+      let offset = 0;
+      const limit = 20;
+      let keepFetching = true;
 
-        const batchResults = await Promise.all(batchPromises);
-        batchResults.flat().forEach(dog => allDogs.push(dog));
+      while (keepFetching) {
+        const p = new URLSearchParams(params);
+        p.append('limit', limit.toString());
+        p.append('offset', offset.toString());
         
-        // Small delay between batches to be nice to the API
-        await new Promise(resolve => setTimeout(resolve, 200));
+        try {
+          // Retry logic for stability
+          let attempts = 0;
+          let success = false;
+          let dogsInBatch: Dog[] = [];
+
+          while (attempts < 3 && !success) {
+            try {
+              const res = await fetch(`https://api.api-ninjas.com/v1/dogs?${p.toString()}`, {
+                headers: { 'X-Api-Key': apiKey },
+                next: { revalidate: 3600 }
+              });
+              
+              if (res.ok) {
+                dogsInBatch = await res.json();
+                success = true;
+              } else {
+                console.warn(`API Error ${res.status} for offset ${offset}. Retrying...`);
+                await new Promise(r => setTimeout(r, 500)); // Wait before retry
+              }
+            } catch (err) {
+              console.warn(`Network error for offset ${offset}:`, err);
+              await new Promise(r => setTimeout(r, 500));
+            }
+            attempts++;
+          }
+
+          if (success) {
+            if (dogsInBatch.length === 0) {
+              keepFetching = false; // End of list
+            } else {
+              allDogs.push(...dogsInBatch);
+              offset += limit;
+              // Safety break to prevent infinite loops if API is behaving weirdly
+              if (offset > 1000) keepFetching = false; 
+            }
+          } else {
+            console.error(`Failed to fetch offset ${offset} after 3 attempts. Stopping.`);
+            keepFetching = false; // Stop to avoid partial/corrupted state loop
+          }
+
+        } catch (e) {
+          console.error(`Critical error fetching offset ${offset}:`, e);
+          keepFetching = false;
+        }
       }
-      
-      // Remove duplicates
       
       // Remove duplicates
       const uniqueDogsMap = new Map();
