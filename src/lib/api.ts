@@ -44,6 +44,7 @@ export interface BreedSearchOptions {
   sort?: string;
   offset?: number;
   limit?: number;
+  fetchAll?: boolean;
 }
 
 export interface BreedsResult {
@@ -161,6 +162,7 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
     if (options.trainability) params.append('trainability', options.trainability.toString());
 
     const manualFiltersActive = 
+      options.fetchAll ||
       options.good_with_children !== undefined || 
       options.good_with_other_dogs !== undefined || 
       options.good_with_strangers !== undefined ||
@@ -183,29 +185,42 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
     }
 
     if (manualFiltersActive) {
-      // Fetch ALL breeds in parallel
+      // Fetch ALL breeds in parallel (batched to avoid rate limits)
       const offsets = Array.from({ length: 20 }, (_, i) => i * 20);
+      const batchSize = 5;
+      const allDogs: Dog[] = [];
       
-      const fetchPromises = offsets.map(async (fetchOffset) => {
-        const p = new URLSearchParams(params);
-        p.append('limit', '20');
-        p.append('offset', fetchOffset.toString());
-        
-        try {
-          const res = await fetch(`https://api.api-ninjas.com/v1/dogs?${p.toString()}`, {
-            headers: { 'X-Api-Key': apiKey },
-            next: { revalidate: 3600 }
-          });
-          if (!res.ok) return [];
-          return await res.json();
-        } catch (e) {
-          console.error(`Error fetching offset ${fetchOffset}:`, e);
-          return [];
-        }
-      });
+      for (let i = 0; i < offsets.length; i += batchSize) {
+        const batchOffsets = offsets.slice(i, i + batchSize);
+        const batchPromises = batchOffsets.map(async (fetchOffset) => {
+          const p = new URLSearchParams(params);
+          p.append('limit', '20');
+          p.append('offset', fetchOffset.toString());
+          
+          try {
+            const res = await fetch(`https://api.api-ninjas.com/v1/dogs?${p.toString()}`, {
+              headers: { 'X-Api-Key': apiKey },
+              next: { revalidate: 3600 }
+            });
+            if (!res.ok) {
+              console.error(`API Error for offset ${fetchOffset}: ${res.status} ${res.statusText}`);
+              return [];
+            }
+            return await res.json();
+          } catch (e) {
+            console.error(`Error fetching offset ${fetchOffset}:`, e);
+            return [];
+          }
+        });
 
-      const results = await Promise.all(fetchPromises);
-      const allDogs = results.flat();
+        const batchResults = await Promise.all(batchPromises);
+        batchResults.flat().forEach(dog => allDogs.push(dog));
+        
+        // Small delay between batches to be nice to the API
+        await new Promise(resolve => setTimeout(resolve, 200));
+      }
+      
+      // Remove duplicates
       
       // Remove duplicates
       const uniqueDogsMap = new Map();

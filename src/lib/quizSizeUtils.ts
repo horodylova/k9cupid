@@ -3,7 +3,7 @@ import { QuizOptionId } from "@/lib/quizQuestions";
 
 export type SizeCategory = "toy" | "small" | "medium" | "large";
 
-function getDogSizeCategory(dog: Dog): SizeCategory {
+export function getDogSizeCategory(dog: Dog): SizeCategory {
   const height = dog.max_height_male;
   if (height < 12) {
     return "toy";

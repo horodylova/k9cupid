@@ -22,6 +22,7 @@ import {
   getActiveDaysSuitability,
   getWalksTimeSuitability,
   getSocialBehaviorSuitability,
+  getDogSizeCategory,
 } from "@/lib/quizSizeUtils";
 
 export type InterimQuizResult = {
@@ -55,21 +56,16 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
     ["toy", "small", "medium", "large"].forEach((s) => allowedSizes.add(s));
   }
 
-  const sizesToFetch = Array.from(allowedSizes);
+  // Fetch ALL breeds once (batched) to ensure we have the full dataset
+  const { breeds: allBreeds } = await getBreeds({ fetchAll: true });
 
-  const promises = sizesToFetch.map((size) =>
-    getBreeds({ size: size as "toy" | "small" | "medium" | "large", limit: 50 })
-  );
-  const results = await Promise.all(promises);
-
-  let allDogs: Dog[] = [];
-  results.forEach((r) => {
-    allDogs = [...allDogs, ...r.breeds];
+  // Filter by allowed sizes
+  const filteredDogs = allBreeds.filter((dog) => {
+    const size = getDogSizeCategory(dog);
+    return allowedSizes.has(size);
   });
 
-  const uniqueDogs = Array.from(new Map(allDogs.map((d) => [d.name, d])).values());
-
-  const scoredDogs = uniqueDogs
+  const scoredDogs = filteredDogs
     .map((dog) => {
       let totalScore = 0;
 
