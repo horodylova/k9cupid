@@ -38,7 +38,7 @@ export default function PhotoMultiChoiceQuestion({
           const isSelected = selected.includes(option.id as QuizOptionId);
 
           return (
-            <div key={option.id} className="col-6 col-md-4">
+            <div key={option.id} className="col-6 col-md-3">
               <button
                 type="button"
                 className="w-100 border-0 bg-transparent p-0"
@@ -53,14 +53,14 @@ export default function PhotoMultiChoiceQuestion({
                 >
                   <div
                     className="w-100 position-relative"
-                    style={{ height: "160px" }}
+                    style={{ height: "200px" }}
                   >
                     {option.imageSrc ? (
                       <Image
                         src={option.imageSrc}
                         alt={option.label}
                         fill
-                        sizes="(max-width: 768px) 50vw, 33vw"
+                        sizes="(max-width: 768px) 50vw, 25vw"
                         className="object-fit-cover w-100 h-100"
                       />
                     ) : (

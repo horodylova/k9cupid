@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { loadQuizSession } from "@/lib/quizStorage";
+import { loadQuizSession, clearQuizSession } from "@/lib/quizStorage";
 
 export default function QuizIntro() {
   const [hasSavedSession, setHasSavedSession] = useState(false);
@@ -67,6 +67,7 @@ export default function QuizIntro() {
               <div className="d-flex flex-column flex-md-row gap-3">
                 <Link
                   href="/quiz/start"
+                  onClick={() => clearQuizSession()}
                   className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 py-3 px-5"
                 >
                   Start the Quiz

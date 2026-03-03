@@ -17,6 +17,9 @@ export default function PhotoSingleChoiceQuestion({
   selected,
   onChange,
 }: PhotoSingleChoiceQuestionProps) {
+  // Use col-md-3 to ensure 4 items fit in one row on desktop/tablet
+  const colClass = options.length === 4 ? "col-12 col-md-3" : "col-12 col-md-4";
+
   return (
     <div>
       <div className="mb-3 text-start">
@@ -28,7 +31,7 @@ export default function PhotoSingleChoiceQuestion({
           const isSelected = selected === option.id;
 
           return (
-            <div key={option.id} className="col-12 col-md-4">
+            <div key={option.id} className={colClass}>
               <button
                 type="button"
                 className="w-100 border-0 bg-transparent p-0"
@@ -43,7 +46,7 @@ export default function PhotoSingleChoiceQuestion({
                 >
                   <div
                     className="w-100 position-relative"
-                    style={{ height: "180px" }}
+                    style={{ height: "200px" }}
                   >
                     {option.imageSrc ? (
                       <Image

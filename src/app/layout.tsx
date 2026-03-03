@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Chilanka, Montserrat } from "next/font/google";
 import Script from "next/script";
 import { CartProvider } from "@/context/CartContext";
+import { NavigationProvider } from "@/context/NavigationContext";
 
 const chilanka = Chilanka({
   weight: "400",
@@ -43,9 +44,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${chilanka.variable} ${montserrat.variable}`}>
       <body>
-        <CartProvider>
-          {children}
-        </CartProvider>
+        <NavigationProvider>
+          <CartProvider>
+            {children}
+          </CartProvider>
+        </NavigationProvider>
         <Script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" strategy="afterInteractive" />
       </body>
     </html>

@@ -20,6 +20,7 @@ import {
   activeDaysQuestion,
   walksTimeQuestion,
   socialBehaviorQuestion,
+  purposeQuestion,
   QuizOptionId,
 } from "@/lib/quizQuestions";
 import { useQuizSession } from "@/hooks/useQuizSession";
@@ -38,24 +39,180 @@ import ActivityLevelQuestion from "@/components/ActivityLevelQuestion";
 import ActiveImportanceQuestion from "@/components/ActiveImportanceQuestion";
 import ActiveDaysQuestion from "@/components/ActiveDaysQuestion";
 import SocialBehaviorQuestion from "@/components/SocialBehaviorQuestion";
+import PurposeQuestion from "@/components/PurposeQuestion";
+import { useNavigation } from "@/context/NavigationContext";
 import { getQuizInterimBreeds } from "@/app/actions";
 import QuizInterimGrid from "@/components/quiz-interim/QuizInterimGrid";
 import { Dog } from "@/lib/api";
 
+function calculateFinalBreeds(breeds: Dog[], answers: { id: string; value: unknown }[]): Dog[] {
+  // Helper to get answer value
+  const getAnswer = (id: string) => {
+    const ans = answers.find((a) => a.id === id);
+    return ans ? ans.value : undefined;
+  };
+
+  const scores = breeds.map((breed) => {
+    let score = 100; // Base score
+
+    // 1. Children
+    const childrenVal = getAnswer("children") as string[] | undefined;
+    const hasToddlers = childrenVal?.includes("children_toddlers");
+    const hasSchool = childrenVal?.includes("children_school");
+    
+    if (hasToddlers) {
+      if (breed.good_with_children >= 4) score += 10;
+      else if (breed.good_with_children <= 3) score -= 15; // Penalty for toddlers if not great
+    } else if (hasSchool) {
+      if (breed.good_with_children >= 3) score += 5;
+    }
+
+    // 2. Other Pets
+    const petsVal = getAnswer("other_pets") as string[] | undefined;
+    const hasDogs = petsVal?.includes("pets_dogs");
+    const hasCats = petsVal?.includes("pets_cats");
+    const hasSmall = petsVal?.includes("pets_small");
+    
+    if (hasDogs) {
+      if (breed.good_with_other_dogs >= 4) score += 10;
+      else if (breed.good_with_other_dogs <= 2) score -= 10;
+    }
+    if (hasCats || hasSmall) {
+      // High prey drive penalty (using good_with_other_dogs as proxy or if we had prey_drive field)
+      // Assuming good_with_other_dogs correlates slightly with general social/prey
+      if (breed.good_with_other_dogs >= 4) score += 5;
+      else if (breed.good_with_other_dogs <= 2) score -= 5;
+    }
+
+    // 3. Visitors / Strangers
+    const visitorsVal = getAnswer("visitors") as string | undefined;
+    const socialVal = getAnswer("social_behavior") as string | undefined;
+    
+    if (visitorsVal === "visitors_daily" || visitorsVal === "visitors_weekly") {
+      if (breed.good_with_strangers >= 4) score += 10;
+      else if (breed.good_with_strangers <= 2) score -= 5;
+    } else if (visitorsVal === "visitors_rarely") {
+      // Maybe prefers guard dog?
+      if (breed.protectiveness >= 4) score += 5;
+    }
+
+    if (socialVal === "social_friendly") {
+      if (breed.good_with_strangers >= 4) score += 10;
+    } else if (socialVal === "social_guardian") {
+      if (breed.protectiveness >= 4) score += 10;
+    }
+
+    // 4. Activity Level & Energy
+    // This is crucial. Match user energy to dog energy.
+    const activityVal = getAnswer("activity_level") as string | undefined;
+    const activeImportance = getAnswer("active_importance") as string | undefined;
+    
+    // Determine user's energy tier
+    let userEnergy = 3; // Default medium
+    if (activityVal === "activity_couch") userEnergy = 1;
+    else if (activityVal === "activity_calm_walks") userEnergy = 2;
+    else if (activityVal === "activity_regular") userEnergy = 4;
+    else if (activityVal === "activity_sports") userEnergy = 5;
+
+    // Dog energy: 1-5
+    const diff = Math.abs(breed.energy - userEnergy);
+    
+    // Penalty for mismatch
+    if (diff === 0) score += 20; // Perfect match
+    else if (diff === 1) score += 10; // Close
+    else if (diff === 2) score -= 10; // Mismatch
+    else score -= 30; // Strong mismatch (e.g. Couch potato vs Husky)
+
+    // Weight importance
+    if (activeImportance === "importance_endurance" && userEnergy >= 4) {
+      if (breed.energy >= 4) score += 10;
+    } else if (activeImportance === "importance_calm_home") {
+      if (breed.energy <= 3) score += 10;
+    }
+
+    // 5. Training / Purpose
+    const purposeVal = getAnswer("purpose") as string | undefined;
+    if (purposeVal === "purpose_guard") {
+      if (breed.protectiveness >= 4) score += 15;
+    } else if (purposeVal === "purpose_active") {
+      if (breed.energy >= 4) score += 10;
+    } else if (purposeVal === "purpose_service") {
+      if (breed.trainability >= 4) score += 15;
+    } else if (purposeVal === "purpose_companion") {
+      if (breed.good_with_children >= 4 || breed.playfulness >= 4) score += 10;
+    }
+
+    // 6. Maintenance (Grooming/Shedding)
+    const hairVal = getAnswer("hair_tolerance") as string | undefined;
+    if (hairVal === "hair_allergies") {
+      if (breed.shedding <= 1) score += 20;
+      else score -= 50; // Deal breaker
+    } else if (hairVal === "hair_prefer_minimal") {
+      if (breed.shedding <= 2) score += 10;
+      else if (breed.shedding >= 4) score -= 10;
+    }
+
+    const droolVal = getAnswer("drooling_tolerance") as string | undefined;
+    if (droolVal === "drooling_avoid") {
+      if (breed.drooling <= 1) score += 10;
+      else if (breed.drooling >= 3) score -= 10;
+    }
+
+    // 7. Barking
+    // (Implicit from noise tolerance if we had it mapped, assuming noise tolerance question exists)
+    // const noiseVal = getAnswer(noiseToleranceQuestion.id);
+    
+    return { breed, score };
+  });
+
+  // Sort by score desc
+  scores.sort((a, b) => b.score - a.score);
+
+  // Return top 10 breeds
+  return scores.slice(0, 10).map((s) => s.breed);
+}
+
+function getActivityAnalysis(answers: { id: string; value: unknown }[]) {
+  const getAnswer = (id: string) => {
+    const ans = answers.find((a) => a.id === id);
+    return ans ? ans.value : undefined;
+  };
+
+  const activityVal = getAnswer("activity_level") as string | undefined;
+  
+  if (activityVal === "activity_sports" || activityVal === "activity_regular") {
+    return {
+      title: "Active Adventurer",
+      text: "You lead an active lifestyle and are looking for a partner who can keep up! We prioritized breeds with high energy and endurance."
+    };
+  } else if (activityVal === "activity_calm_walks") {
+    return {
+      title: "Casual Walker",
+      text: "You enjoy moderate activity but appreciate downtime. We prioritized balanced breeds that are playful but not hyperactive."
+    };
+  } else {
+    return {
+      title: "Relaxed Homebody",
+      text: "You prefer a laid-back lifestyle. We prioritized calm, lower-energy breeds that are happy to lounge with you."
+    };
+  }
+}
+
 export default function QuizRunner() {
   const { session, recordAnswer, isInitialized } = useQuizSession();
   const router = useRouter();
-  const [pendingHref, setPendingHref] = useState<string | null>(null);
-  const [showLeaveModal, setShowLeaveModal] = useState(false);
   const [showStartOverModal, setShowStartOverModal] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19>(1);
   const [pageReady, setPageReady] = useState(false);
   const [interimBreeds, setInterimBreeds] = useState<Dog[]>([]);
+  const [finalBreeds, setFinalBreeds] = useState<Dog[]>([]);
   const [isLoadingInterim, setIsLoadingInterim] = useState(false);
   const [showShortlist, setShowShortlist] = useState(false);
+  const [showLeaveModal, setShowLeaveModal] = useState(false);
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
   const fetchingRef = useRef(false);
 
-  const totalSteps = 18;
+  const totalSteps = 19;
 
   const selectedHome = session?.answers.find(
     (answer) => answer.id === homeTypeQuestion.id
@@ -154,57 +311,6 @@ export default function QuizRunner() {
 
   const selectedSocialBehavior = socialBehaviorValue;
 
-  const hasProgress = !!session && session.answers.length > 0;
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const handleClick = (event: MouseEvent) => {
-      if (!hasProgress) {
-        return;
-      }
-
-      const target = event.target as HTMLElement | null;
-      if (!target) {
-        return;
-      }
-
-      const anchor = target.closest("a");
-      if (!anchor) {
-        return;
-      }
-
-      const href = anchor.getAttribute("href");
-      if (!href) {
-        return;
-      }
-
-      if (href.startsWith("#")) {
-        return;
-      }
-
-      if (href.startsWith("mailto:") || href.startsWith("tel:")) {
-        return;
-      }
-
-      if (href === "/quiz/start") {
-        return;
-      }
-      event.preventDefault();
-      event.stopPropagation();
-      setPendingHref(href);
-      setShowLeaveModal(true);
-    };
-
-    window.addEventListener("click", handleClick, true);
-
-    return () => {
-      window.removeEventListener("click", handleClick, true);
-    };
-  }, [hasProgress]);
-
   const [hasResumed, setHasResumed] = useState(false);
 
   useEffect(() => {
@@ -222,20 +328,49 @@ export default function QuizRunner() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!isInitialized || hasResumed) {
-      return;
-    }
+  const selectedPurpose = session?.answers.find(
+    (a) => a.id === purposeQuestion.id
+  )?.value as QuizOptionId;
 
-    const answers = session?.answers ?? [];
-    const hasHome = answers.some((a) => a.id === homeTypeQuestion.id);
-    const shared = answers.find((a) => a.id === "shared_spaces")?.value as QuizOptionId[] | undefined;
-    const hasShared = Array.isArray(shared) && shared.length > 0;
-    const hasHandling = answers.some((a) => a.id === physicalHandlingQuestion.id && !!a.value);
-    const children = answers.find((a) => a.id === childrenQuestion.id)?.value as QuizOptionId[] | undefined;
-    const hasChildren = Array.isArray(children) && children.length > 0;
-    const hasOtherPets = answers.some((a) => a.id === otherPetsQuestion.id && Array.isArray(a.value) && a.value.length > 0);
-    const hasVisitors = answers.some((a) => a.id === visitorsQuestion.id && !!a.value);
+  const { setInterceptor, removeInterceptor } = useNavigation();
+
+  useEffect(() => {
+    if (step < 19) {
+      setInterceptor((path) => {
+        setPendingHref(path);
+        setShowLeaveModal(true);
+      });
+    } else {
+      removeInterceptor();
+    }
+    
+    return () => removeInterceptor();
+  }, [step, setInterceptor, removeInterceptor]);
+
+  // Restore state on load
+  useEffect(() => {
+    if (!isInitialized) return;
+    // Prevent auto-advance if we've already resumed/restored the session
+    if (hasResumed) return;
+
+    // Check if we already have answers
+    const answers = session?.answers || [];
+    const hasHome = answers.some((a) => a.id === homeTypeQuestion.id && !!a.value);
+    const hasShared = answers.some(
+      (a) => a.id === "shared_spaces" && (a.value as string[])?.length > 0
+    );
+    const hasHandling = answers.some(
+      (a) => a.id === physicalHandlingQuestion.id && !!a.value
+    );
+    const hasChildren = answers.some(
+      (a) => a.id === childrenQuestion.id && (a.value as string[])?.length > 0
+    );
+    const hasOtherPets = answers.some(
+      (a) => a.id === otherPetsQuestion.id && (a.value as string[])?.length > 0
+    );
+    const hasVisitors = answers.some(
+      (a) => a.id === visitorsQuestion.id && !!a.value
+    );
     const hasNoiseTolerance = answers.some(
       (a) => a.id === noiseToleranceQuestion.id && typeof a.value === "number"
     );
@@ -266,8 +401,11 @@ export default function QuizRunner() {
     const hasSocialBehavior = answers.some(
       (a) => a.id === socialBehaviorQuestion.id && !!a.value
     );
+    const hasPurpose = answers.some(
+      (a) => a.id === purposeQuestion.id && !!a.value
+    );
 
-    let target: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 = 1;
+    let target: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 = 1;
     if (!hasHome) {
       target = 1;
     } else if (!hasShared) {
@@ -305,28 +443,35 @@ export default function QuizRunner() {
       const isActiveType =
         activityVal === "activity_sports" || activityVal === "activity_regular";
 
+      let afterActivityTarget: 14 | 15 | 16 | 17 | 18 | 19 = 18; // Default to Purpose question
+      
       if (isActiveType) {
         if (!hasActiveImportance) {
-          target = 14;
+          afterActivityTarget = 14;
         } else if (!hasActiveDays) {
-          target = 15;
+          afterActivityTarget = 15;
         } else if (!hasWalksTime) {
-          target = 16;
+          afterActivityTarget = 16;
         } else if (!hasSocialBehavior) {
-          target = 17;
+          afterActivityTarget = 17;
+        } else if (!hasPurpose) {
+          afterActivityTarget = 18;
         } else {
-          target = 18;
+          afterActivityTarget = 19;
         }
       } else {
         // Skip 14 & 15 if not active type
         if (!hasWalksTime) {
-          target = 16;
+          afterActivityTarget = 16;
         } else if (!hasSocialBehavior) {
-          target = 17;
+          afterActivityTarget = 17;
+        } else if (!hasPurpose) {
+          afterActivityTarget = 18;
         } else {
-          target = 18;
+          afterActivityTarget = 19;
         }
       }
+      target = afterActivityTarget;
     }
 
     setStep(target);
@@ -334,22 +479,49 @@ export default function QuizRunner() {
   }, [isInitialized, hasResumed, session]);
 
   useEffect(() => {
-    if ((step === 11 || step === 18) && session?.answers && !fetchingRef.current) {
-      fetchingRef.current = true;
-      setIsLoadingInterim(true);
-      getQuizInterimBreeds(session.answers)
-        .then((result) => {
-          setInterimBreeds(result.breeds);
-        })
-        .finally(() => {
-          setIsLoadingInterim(false);
-          fetchingRef.current = false;
-        });
+    if ((step === 11 || step === 19) && session?.answers && !fetchingRef.current) {
+      // Step 11: Initial fetch
+      if (step === 11 && interimBreeds.length === 0) {
+        fetchingRef.current = true;
+        setIsLoadingInterim(true);
+        getQuizInterimBreeds(session.answers)
+          .then((result) => {
+            setInterimBreeds(result.breeds);
+          })
+          .finally(() => {
+            setIsLoadingInterim(false);
+            fetchingRef.current = false;
+          });
+      }
+      // Step 19: Refine existing interim breeds (Final Results)
+      else if (step === 19 && interimBreeds.length > 0) {
+        const refined = calculateFinalBreeds(interimBreeds, session.answers);
+        setFinalBreeds(refined);
+      }
+      // If we jumped to 19 without 11 (e.g. refresh), fetch first then refine
+      else if (step === 19 && interimBreeds.length === 0) {
+        fetchingRef.current = true;
+        setIsLoadingInterim(true);
+        getQuizInterimBreeds(session.answers)
+          .then((result) => {
+            setInterimBreeds(result.breeds);
+            const refined = calculateFinalBreeds(result.breeds, session.answers);
+            setFinalBreeds(refined);
+          })
+          .finally(() => {
+            setIsLoadingInterim(false);
+            fetchingRef.current = false;
+          });
+      }
     }
-  }, [step, session?.answers]);
+  }, [step, session?.answers, interimBreeds]);
 
-  if (!isInitialized || !pageReady) {
-    return null;
+  if (!isInitialized || !pageReady || !hasResumed) {
+    return (
+      <div className="preloader-wrapper">
+        <div className="preloader"></div>
+      </div>
+    );
   }
 
   const canContinue =
@@ -370,7 +542,8 @@ export default function QuizRunner() {
     (step === 15 && !!selectedActiveDays) ||
     (step === 16 && typeof selectedWalksTime === "number") ||
     (step === 17 && !!selectedSocialBehavior) ||
-    step === 18;
+    (step === 18 && !!selectedPurpose) ||
+    step === 19;
 
   const handleContinue = () => {
     if (step >= totalSteps) {
@@ -407,12 +580,143 @@ export default function QuizRunner() {
         | 16
         | 17
         | 18
+        | 19
     );
   };
 
   const handleStartOver = () => {
     setShowStartOverModal(true);
   };
+
+  // --- Render Final Results (Step 19) ---
+  if (step === 19) {
+    return (
+      <section className="py-5">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-12 col-lg-10">
+              <div className="text-center mb-5">
+                <Image
+                  src="/images/k9cupid-logo-final.png"
+                  alt="K9 Cupid Final Result"
+                  width={180}
+                  height={180}
+                  className="mb-4 img-fluid"
+                  style={{ objectFit: "contain" }}
+                />
+                <h1 className="display-5 fw-bold mb-3 secondary-font">Your Perfect Matches</h1>
+                
+                {/* Activity Analysis Badge */}
+                {(() => {
+                  const analysis = getActivityAnalysis(session?.answers || []);
+                  return (
+                    <div className="d-inline-block bg-white border rounded-pill px-4 py-2 mb-4 shadow-sm">
+                      <span className="fw-bold text-primary">{analysis.title}:</span> <span className="text-muted">{analysis.text}</span>
+                    </div>
+                  );
+                })()}
+
+                <p className="lead text-muted mx-auto" style={{ maxWidth: "600px" }}>
+                  Based on your lifestyle, activity level, and preferences, we&apos;ve found the top breeds that are most likely to steal your heart.
+                </p>
+              </div>
+
+              {/* Toggle View Buttons */}
+              <div className="d-flex justify-content-center gap-3 mb-5">
+                <button
+                  className={`btn ${!showShortlist ? "btn-dark" : "btn-outline-dark"} rounded-pill px-4 fw-semibold`}
+                  onClick={() => setShowShortlist(false)}
+                >
+                  Top 10 Recommendations
+                </button>
+                <button
+                  className={`btn ${showShortlist ? "btn-dark" : "btn-outline-dark"} rounded-pill px-4 fw-semibold`}
+                  onClick={() => setShowShortlist(true)}
+                >
+                  View All Candidates
+                </button>
+              </div>
+
+              {/* Results Grid */}
+              <div className="mb-5">
+                {!showShortlist ? (
+                  <QuizInterimGrid breeds={finalBreeds} />
+                ) : (
+                  <div className="bg-light rounded-4 p-4">
+                    <h3 className="h5 mb-4 text-center">All Potential Candidates</h3>
+                    <QuizInterimGrid breeds={interimBreeds} />
+                  </div>
+                )}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="text-center d-flex flex-column flex-md-row justify-content-center gap-3">
+                <button
+                  type="button"
+                  className="btn btn-outline-danger btn-lg px-5 rounded-pill text-uppercase fw-semibold"
+                  onClick={handleStartOver}
+                >
+                  Start Over
+                </button>
+                <Link href="/breeds" className="btn btn-primary btn-lg px-5 rounded-pill text-uppercase fw-semibold">
+                  Read Breed Guides
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {showStartOverModal && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{ background: "rgba(0,0,0,0.45)", zIndex: 1050 }}
+        >
+          <div
+            className="rounded-4 p-4 p-md-5 shadow-lg"
+            style={{ maxWidth: 720, width: "100%", background: "#FFF7EC" }}
+          >
+            <div className="row g-4 align-items-center mb-4">
+              <div className="col-md-4 text-center text-md-start">
+                <Image
+                  src="/Cupid with Dogs-white-puppy.png"
+                  alt="Cupid with dog illustration"
+                  width={120}
+                  height={120}
+                  className="img-fluid"
+                />
+                <h2 className="h5 mb-0 mt-3">Start from scratch?</h2>
+              </div>
+              <div className="col-md-8">
+                <p className="mb-0">
+                  Are you sure you want to start over? All your progress will be lost.
+                </p>
+              </div>
+            </div>
+            <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
+              <button
+                type="button"
+                className="btn btn-outline-secondary flex-fill"
+                onClick={() => setShowStartOverModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger flex-fill"
+                onClick={() => {
+                  clearQuizSession();
+                  window.location.reload();
+                }}
+              >
+                Yes, start over
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      </section>
+    );
+  }
 
   return (
     <>
@@ -440,9 +744,9 @@ export default function QuizRunner() {
       <section className={(step === 11 || step === 17) ? "py-3 my-2" : "py-4 my-4"}>
         <div className="container">
           <div className="row justify-content-center">
-            <div className={(step === 11 || step === 17) ? "col-12" : "col-lg-8"}>
+            <div className={(step === 11 || step === 17) ? "col-12" : "col-lg-9"}>
               <div
-                className={`rounded-4 p-4 p-md-5 d-flex flex-column${
+                className={`rounded-4 p-4 d-flex flex-column${
                   (step === 11 || step === 17) ? "" : " border"
                 }`}
               >
@@ -745,88 +1049,29 @@ export default function QuizRunner() {
                     />
                   )}
 
-                  {step === 18 && !showShortlist && (
-                    <div className="rounded-4 p-3 p-md-4 quiz-interim-card position-relative">
-                      <div className="row align-items-center">
-                        <div className="col-md-4 text-center mb-4 mb-md-0">
-                          <div className="position-relative d-inline-block">
-                            <Image
-                              src="/Cupid and Dogs-Picsart-BackgroundRemover.png"
-                              alt="Refined Results"
-                              width={320}
-                              height={320}
-                              className="quiz-interim-logo-static img-fluid"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-8">
-                          <h2 className="display-6 mb-3 secondary-font">Updated Matches</h2>
-                          <p className="lead mb-4">
-                            We&apos;ve refined your matches based on your lifestyle and activity preferences. Here are your top recommendations!
-                          </p>
-
-                          <div className="d-flex flex-column flex-md-row gap-2 quiz-interim-actions">
-                            <button
-                              type="button"
-                              className="btn btn-primary btn-lg px-5 rounded-pill text-uppercase fw-semibold"
-                              onClick={() => setShowShortlist(true)}
-                              disabled={isLoadingInterim}
-                            >
-                              {isLoadingInterim ? (
-                                <>
-                                  <span
-                                    className="spinner-border spinner-border-sm me-2"
-                                    role="status"
-                                    aria-hidden="true"
-                                  ></span>
-                                  Updating...
-                                </>
-                              ) : (
-                                "View Results"
-                              )}
-                            </button>
-                            <button
-                              type="button"
-                              className="btn btn-outline-danger text-uppercase fw-semibold"
-                              onClick={handleStartOver}
-                            >
-                              Start Over
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {step === 18 && showShortlist && (
-                    <div className="rounded-4 p-3 p-md-4" style={{ backgroundColor: "#FFF7EC" }}>
-                      <div className="d-flex justify-content-between align-items-center mb-3">
-                        <h2 className="h4 mb-0">Your Refined Matches</h2>
-                        <button
-                          type="button"
-                          className="btn btn-outline-dark px-4 fw-semibold"
-                          onClick={() => setShowShortlist(false)}
-                        >
-                          ← Back
-                        </button>
-                      </div>
-                      <QuizInterimGrid breeds={interimBreeds} />
-                    </div>
+                  {step === 18 && (
+                    <PurposeQuestion
+                      selected={selectedPurpose}
+                      onChange={(value) =>
+                        recordAnswer({
+                          id: purposeQuestion.id,
+                          value: value,
+                        })
+                      }
+                    />
                   )}
                 </div>
 
-                {step !== 18 && (
-                  <div className="mt-4 d-flex justify-content-end">
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-lg px-5 rounded-pill"
-                      onClick={handleContinue}
-                      disabled={!canContinue}
-                    >
-                      {step === 11 ? "Keep Refining" : "Continue"}
-                    </button>
-                  </div>
-                )}
+                <div className="mt-4 d-flex justify-content-end">
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-lg px-5 rounded-pill"
+                    onClick={handleContinue}
+                    disabled={!canContinue}
+                  >
+                    {step === 11 ? "Keep Refining" : "Continue"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -1002,3 +1247,5 @@ export default function QuizRunner() {
     </>
   );
 }
+
+

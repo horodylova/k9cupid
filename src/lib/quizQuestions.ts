@@ -319,12 +319,12 @@ export const workScheduleQuestion: QuizQuestion = {
     {
       id: "work_part_time",
       label: "Office or away from home for 4–6 hours a day",
-      imageSrc: "/work-home-office/work-late.jpg",
+      imageSrc: "/work-home-office/office.jpg",
     },
     {
       id: "work_full_time",
       label: "Office or away from home for 7+ hours a day",
-      imageSrc: "/work-home-office/office.jpg",
+      imageSrc: "/work-home-office/work-late.jpg",
     },
   ],
 };
@@ -337,22 +337,22 @@ export const activityLevelQuestion: QuizQuestion = {
     {
       id: "activity_sports",
       label: "My sports partner: running, hiking, long active walks",
-      imageSrc: "/images/quiz/activity_sports.jpg",
+      imageSrc: "/walks/running with dog.jpg",
     },
     {
       id: "activity_regular",
       label: "Regular walks 1–2 times a day, occasional active weekends",
-      imageSrc: "/images/quiz/activity_regular.jpg",
+      imageSrc: "/walks/long walk.jpg",
     },
     {
       id: "activity_calm_walks",
       label: "Short but stable walks, more home time together",
-      imageSrc: "/images/quiz/activity_calm_walks.jpg",
+      imageSrc: "/walks/walk with dog.jpg",
     },
     {
       id: "activity_couch",
       label: "I move little, the dog should be calm and not require much activity",
-      imageSrc: "/images/quiz/activity_couch.jpg",
+      imageSrc: "/walks/carry dog.jpg",
     },
   ],
 };
@@ -407,5 +407,19 @@ export const walksTimeQuestion: QuizScaleQuestion = {
     { value: 3, label: "45–60 minutes" },
     { value: 4, label: "60–90 minutes" },
     { value: 5, label: "More than 90 minutes" },
+  ],
+};
+
+export const purposeQuestion: QuizQuestion = {
+  id: "purpose",
+  type: "single_choice",
+  title: "What is your main goal for getting a dog?",
+  options: [
+    { id: "purpose_companion", label: "Family Companion (Play with kids, family time)" },
+    { id: "purpose_guard", label: "Home Guardian (Watchdog, protection)" },
+    { id: "purpose_active", label: "Active Partner (Sports, hiking, running)" },
+    { id: "purpose_support", label: "Emotional Support (Comfort, anxiety relief)" },
+    { id: "purpose_service", label: "Service/Work (Assistance, therapy, herding)" },
+    { id: "purpose_friend", label: "Just a Best Friend (Happy tail-wagger)" },
   ],
 };

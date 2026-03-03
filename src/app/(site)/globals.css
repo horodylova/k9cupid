@@ -1102,3 +1102,14 @@ Single Product section style start
   color: #908F8D; /* соответствует стилистике blog-paragraph */
   line-height: 1.4;
 }
+
+/* Custom Quiz Styles */
+.btn-quiz-option {
+  color: #212529; /* Dark text for readability */
+}
+
+.btn-quiz-option:hover {
+  color: #fff; /* White text on hover */
+  background-color: #6c757d;
+  border-color: #6c757d;
+}

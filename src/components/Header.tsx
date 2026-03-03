@@ -5,12 +5,19 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { useRouter } from 'next/navigation';
+import { useNavigation } from '@/context/NavigationContext';
 
 export default function Header() {
   const [loading, setLoading] = useState(true);
   const { items, totalItems, removeItem, totalPrice } = useCart();
   const router = useRouter();
+  const { attemptNavigation } = useNavigation();
   const [sizeValue, setSizeValue] = useState('');
+
+  const handleLinkClick = (e: React.MouseEvent, path: string) => {
+    e.preventDefault();
+    attemptNavigation(path);
+  };
 
   useEffect(() => {
     // Simulate preloader fade out
@@ -291,25 +298,25 @@ export default function Header() {
 
                 <ul className="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
                   <li className="nav-item">
-                    <Link href="/" className="nav-link active">Home</Link>
+                    <Link href="/" onClick={(e) => handleLinkClick(e, '/')} className="nav-link active">Home</Link>
                   </li>
                   <li className="nav-item">
-                    <Link href="/quiz" className="nav-link">Quiz</Link>
+                    <Link href="/quiz" onClick={(e) => handleLinkClick(e, '/quiz')} className="nav-link">Quiz</Link>
                   </li>
                   <li className="nav-item">
-                    <Link href="/breeds" className="nav-link">Breeds</Link>
+                    <Link href="/breeds" onClick={(e) => handleLinkClick(e, '/breeds')} className="nav-link">Breeds</Link>
                   </li>
                   <li className="nav-item">
-                    <Link href="/blog" className="nav-link">Blog</Link>
+                    <Link href="/blog" onClick={(e) => handleLinkClick(e, '/blog')} className="nav-link">Blog</Link>
                   </li>
                   <li className="nav-item">
-                    <Link href="/about" className="nav-link">About Us</Link>
+                    <Link href="/about" onClick={(e) => handleLinkClick(e, '/about')} className="nav-link">About Us</Link>
                   </li>
                   <li className="nav-item d-none">
-                    <Link href="/shop" className="nav-link">Shop</Link>
+                    <Link href="/shop" onClick={(e) => handleLinkClick(e, '/shop')} className="nav-link">Shop</Link>
                   </li>
                   <li className="nav-item">
-                    <Link href="/contact" className="nav-link">Contact</Link>
+                    <Link href="/contact" onClick={(e) => handleLinkClick(e, '/contact')} className="nav-link">Contact</Link>
                   </li>
                 </ul>
 

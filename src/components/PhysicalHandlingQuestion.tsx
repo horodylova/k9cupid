@@ -24,7 +24,7 @@ export default function PhysicalHandlingQuestion({ selected, onChange }: Props) 
           const isPrimaryChoice = index <= 1;
 
           return (
-            <div key={option.id} className="col-md-6">
+            <div key={option.id} className="col-md-4">
               <button
                 type="button"
                 className="w-100 border-0 bg-transparent p-0 text-start h-100"
