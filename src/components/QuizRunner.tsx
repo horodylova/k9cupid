@@ -221,6 +221,9 @@ export default function QuizRunner() {
     const hasVisitors = answers.some(
       (a) => a.id === visitorsQuestion.id && !!a.value
     );
+    const hasSocialBehavior = answers.some(
+      (a) => a.id === socialBehaviorQuestion.id && !!a.value
+    );
     const hasNoiseTolerance = answers.some(
       (a) => a.id === noiseToleranceQuestion.id && typeof a.value === "number"
     );
@@ -248,9 +251,6 @@ export default function QuizRunner() {
     const hasWalksTime = answers.some(
       (a) => a.id === walksTimeQuestion.id && typeof a.value === "number"
     );
-    const hasSocialBehavior = answers.some(
-      (a) => a.id === socialBehaviorQuestion.id && !!a.value
-    );
     const hasPurpose = answers.some(
       (a) => a.id === purposeQuestion.id && !!a.value
     );
@@ -268,23 +268,25 @@ export default function QuizRunner() {
       target = 5;
     } else if (!hasVisitors) {
       target = 6;
-    } else if (!hasNoiseTolerance) {
+    } else if (!hasSocialBehavior) {
       target = 7;
-    } else if (!hasHairTolerance) {
+    } else if (!hasNoiseTolerance) {
       target = 8;
-    } else if (!hasGroomingTime) {
+    } else if (!hasHairTolerance) {
       target = 9;
-    } else if (!hasDroolingTolerance) {
+    } else if (!hasGroomingTime) {
       target = 10;
-    } else if (!hasWorkSchedule) {
-      // Step 11 is Interim Results.
-      // Step 12 is Work Schedule.
-      // If user hasn't answered Work Schedule, we default to 11 (Interim Results)
-      // because that's where they land after question 10.
-      // They must click "Refine" to go to 12.
+    } else if (!hasDroolingTolerance) {
       target = 11;
+    } else if (!hasWorkSchedule) {
+      // Step 12 is Interim Results.
+      // Step 13 is Work Schedule.
+      // If user hasn't answered Work Schedule, we default to 12 (Interim Results)
+      // because that's where they land after question 11.
+      // They must click "Refine" to go to 13.
+      target = 12;
     } else if (!hasActivityLevel) {
-      target = 13;
+      target = 14;
     } else {
       // Work Schedule answered. Check Activity Level answer for branching.
       const activityVal = answers.find(
@@ -297,12 +299,10 @@ export default function QuizRunner() {
       
       if (isActiveType) {
         if (!hasActiveImportance) {
-          afterActivityTarget = 14;
-        } else if (!hasActiveDays) {
           afterActivityTarget = 15;
-        } else if (!hasWalksTime) {
+        } else if (!hasActiveDays) {
           afterActivityTarget = 16;
-        } else if (!hasSocialBehavior) {
+        } else if (!hasWalksTime) {
           afterActivityTarget = 17;
         } else if (!hasPurpose) {
           afterActivityTarget = 18;
@@ -310,10 +310,8 @@ export default function QuizRunner() {
           afterActivityTarget = 19;
         }
       } else {
-        // Skip 14 & 15 if not active type
+        // Skip 15 & 16 if not active type
         if (!hasWalksTime) {
-          afterActivityTarget = 16;
-        } else if (!hasSocialBehavior) {
           afterActivityTarget = 17;
         } else if (!hasPurpose) {
           afterActivityTarget = 18;
@@ -329,9 +327,9 @@ export default function QuizRunner() {
   }, [isInitialized, hasResumed, session]);
 
   useEffect(() => {
-    if ((step === 11 || step === 19) && session?.answers && !fetchingRef.current) {
-      // Step 11: Initial fetch
-      if (step === 11 && interimBreeds.length === 0) {
+    if ((step === 12 || step === 19) && session?.answers && !fetchingRef.current) {
+      // Step 12: Initial fetch
+      if (step === 12 && interimBreeds.length === 0) {
         fetchingRef.current = true;
         setIsLoadingInterim(true);
         getQuizInterimBreeds(session.answers)
@@ -348,7 +346,7 @@ export default function QuizRunner() {
         const refined = calculateFinalBreeds(interimBreeds, session.answers);
         setFinalBreeds(refined);
       }
-      // If we jumped to 19 without 11 (e.g. refresh), fetch first then refine
+      // If we jumped to 19 without 12 (e.g. refresh), fetch first then refine
       else if (step === 19 && interimBreeds.length === 0) {
         fetchingRef.current = true;
         setIsLoadingInterim(true);
@@ -381,17 +379,17 @@ export default function QuizRunner() {
     (step === 4 && selectedChildren.length > 0) ||
     (step === 5 && selectedOtherPets.length > 0) ||
     (step === 6 && !!selectedVisitors) ||
-    (step === 7 && typeof selectedNoiseTolerance === "number") ||
-    (step === 8 && !!selectedHairTolerance) ||
-    (step === 9 && typeof selectedGroomingTime === "number") ||
-    (step === 10 && !!selectedDroolingTolerance) ||
-    step === 11 ||
-    (step === 12 && !!selectedWorkSchedule) ||
-    (step === 13 && !!selectedActivityLevel) ||
-    (step === 14 && !!selectedActiveImportance) ||
-    (step === 15 && !!selectedActiveDays) ||
-    (step === 16 && typeof selectedWalksTime === "number") ||
-    (step === 17 && !!selectedSocialBehavior) ||
+    (step === 7 && !!selectedSocialBehavior) ||
+    (step === 8 && typeof selectedNoiseTolerance === "number") ||
+    (step === 9 && !!selectedHairTolerance) ||
+    (step === 10 && typeof selectedGroomingTime === "number") ||
+    (step === 11 && !!selectedDroolingTolerance) ||
+    step === 12 ||
+    (step === 13 && !!selectedWorkSchedule) ||
+    (step === 14 && !!selectedActivityLevel) ||
+    (step === 15 && !!selectedActiveImportance) ||
+    (step === 16 && !!selectedActiveDays) ||
+    (step === 17 && typeof selectedWalksTime === "number") ||
     (step === 18 && !!selectedPurpose) ||
     step === 19;
 
@@ -401,12 +399,12 @@ export default function QuizRunner() {
     }
 
     let nextStep = step + 1;
-    if (step === 13) {
+    if (step === 14) {
       const isLowActivity =
         selectedActivityLevel === "activity_calm_walks" ||
         selectedActivityLevel === "activity_couch";
       if (isLowActivity) {
-        nextStep = 16;
+        nextStep = 17;
       }
     }
 
@@ -473,16 +471,16 @@ export default function QuizRunner() {
         </div>
       </section>
 
-      <section className={(step === 11 || step === 17) ? "py-3 my-2" : "py-4 my-4"}>
+      <section className={(step === 12) ? "py-3 my-2" : "py-4 my-4"}>
         <div className="container">
           <div className="row justify-content-center">
-            <div className={(step === 11 || step === 17) ? "col-12" : "col-lg-9"}>
+            <div className={(step === 12) ? "col-12" : "col-lg-9"}>
               <div
                 className={`rounded-4 p-4 d-flex flex-column${
-                  (step === 11 || step === 17) ? "" : " border"
+                  (step === 12) ? "" : " border"
                 }`}
               >
-                {step !== 11 && step !== 17 && (
+                {step !== 12 && (
                   <div className="mb-4">
                     <div className="secondary-font text-uppercase text-muted mb-2">
                       Step {step} of {totalSteps}
@@ -567,6 +565,18 @@ export default function QuizRunner() {
                   )}
 
                   {step === 7 && (
+                    <SocialBehaviorQuestion
+                      selected={selectedSocialBehavior}
+                      onChange={(value) =>
+                        recordAnswer({
+                          id: socialBehaviorQuestion.id,
+                          value: value,
+                        })
+                      }
+                    />
+                  )}
+
+                  {step === 8 && (
                     <ScaleQuestion
                       title={noiseToleranceQuestion.title}
                       subtitle={noiseToleranceQuestion.description}
@@ -581,7 +591,7 @@ export default function QuizRunner() {
                     />
                   )}
 
-                  {step === 8 && (
+                  {step === 9 && (
                     <HairToleranceQuestion
                       selected={selectedHairTolerance}
                       onChange={(value) =>
@@ -593,7 +603,7 @@ export default function QuizRunner() {
                     />
                   )}
 
-                  {step === 9 && (
+                  {step === 10 && (
                     <ScaleQuestion
                       title={groomingTimeQuestion.title}
                       subtitle={groomingTimeQuestion.description}
@@ -608,7 +618,7 @@ export default function QuizRunner() {
                     />
                   )}
 
-                  {step === 10 && (
+                  {step === 11 && (
                   <DroolingToleranceQuestion
                     selected={selectedDroolingTolerance}
                     onChange={(value) =>
@@ -621,6 +631,17 @@ export default function QuizRunner() {
                 )}
 
                 {step === 12 && (
+                  <QuizInterimView
+                    showShortlist={showShortlist}
+                    setShowShortlist={setShowShortlist}
+                    interimBreeds={interimBreeds}
+                    isLoadingInterim={isLoadingInterim}
+                    onKeepRefining={() => setStep(13)}
+                    onStartOver={handleStartOver}
+                  />
+                )}
+
+                {step === 13 && (
                   <WorkScheduleQuestion
                     selected={selectedWorkSchedule}
                     onChange={(value) =>
@@ -632,18 +653,7 @@ export default function QuizRunner() {
                   />
                 )}
 
-                {step === 11 && (
-                  <QuizInterimView
-                    showShortlist={showShortlist}
-                    setShowShortlist={setShowShortlist}
-                    interimBreeds={interimBreeds}
-                    isLoadingInterim={isLoadingInterim}
-                    onKeepRefining={() => setStep(12)}
-                    onStartOver={handleStartOver}
-                  />
-                )}
-
-                {step === 13 && (
+                {step === 14 && (
                     <ActivityLevelQuestion
                       selected={selectedActivityLevel}
                       onChange={(value) =>
@@ -655,7 +665,7 @@ export default function QuizRunner() {
                     />
                   )}
 
-                  {step === 14 && (
+                  {step === 15 && (
                     <ActiveImportanceQuestion
                       selected={selectedActiveImportance}
                       onChange={(value) =>
@@ -667,7 +677,7 @@ export default function QuizRunner() {
                     />
                   )}
 
-                  {step === 15 && (
+                  {step === 16 && (
                     <ActiveDaysQuestion
                       selected={selectedActiveDays}
                       onChange={(value) =>
@@ -679,7 +689,7 @@ export default function QuizRunner() {
                     />
                   )}
 
-                  {step === 16 && (
+                  {step === 17 && (
                     <ScaleQuestion
                       title={walksTimeQuestion.title}
                       labels={walksTimeQuestion.scaleLabels}
@@ -688,18 +698,6 @@ export default function QuizRunner() {
                         recordAnswer({
                           id: walksTimeQuestion.id,
                           value: next,
-                        })
-                      }
-                    />
-                  )}
-
-                  {step === 17 && (
-                    <SocialBehaviorQuestion
-                      selected={selectedSocialBehavior}
-                      onChange={(value) =>
-                        recordAnswer({
-                          id: socialBehaviorQuestion.id,
-                          value: value,
                         })
                       }
                     />
@@ -725,7 +723,7 @@ export default function QuizRunner() {
                     onClick={handleContinue}
                     disabled={!canContinue}
                   >
-                    {step === 11 ? "Keep Refining" : "Continue"}
+                    {step === 12 ? "Keep Refining" : "Continue"}
                   </button>
                 </div>
               </div>

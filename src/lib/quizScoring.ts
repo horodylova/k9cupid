@@ -43,18 +43,33 @@ export function calculateFinalBreeds(breeds: Dog[], answers: { id: string; value
     const visitorsVal = getAnswer("visitors") as string | undefined;
     const socialVal = getAnswer("social_behavior") as string | undefined;
     
+    // Visitor Frequency Impact
     if (visitorsVal === "visitors_daily" || visitorsVal === "visitors_weekly") {
-      if (breed.good_with_strangers >= 4) score += 10;
-      else if (breed.good_with_strangers <= 2) score -= 5;
-    } else if (visitorsVal === "visitors_rarely") {
-      // Maybe prefers guard dog?
-      if (breed.protectiveness >= 4) score += 5;
+       // Frequent visitors: need a dog that isn't aggressive.
+       if (breed.good_with_strangers >= 4) score += 5; 
+       if (breed.protectiveness >= 5) score -= 5; // Too protective might be an issue with constant guests
     }
 
+    // Social Behavior Preference Impact
     if (socialVal === "social_friendly") {
-      if (breed.good_with_strangers >= 4) score += 10;
+      // User explicitly wants friendly
+      if (breed.good_with_strangers >= 4) score += 15; // Stronger bonus
+      if (breed.protectiveness >= 4) score -= 5; // Guarding traits might conflict with "loves everyone"
+      
+    } else if (socialVal === "social_polite") {
+       // Balanced: Good with strangers 3 or higher, Protectiveness balanced
+       if (breed.good_with_strangers >= 3) score += 5;
+       if (breed.protectiveness >= 3) score += 5;
+       
     } else if (socialVal === "social_guardian") {
-      if (breed.protectiveness >= 4) score += 10;
+      // User wants protection
+      if (breed.protectiveness >= 4) score += 20; // Strong bonus for guard dogs
+      if (breed.good_with_strangers >= 5) score -= 10; // Too friendly to be a serious guard?
+      
+      // If frequent visitors + guardian, trainability is key to manage the dog
+      if ((visitorsVal === "visitors_daily" || visitorsVal === "visitors_weekly") && breed.trainability < 3) {
+          score -= 10; // Hard to manage a guard dog with guests if not trainable
+      }
     }
 
     // 4. Activity Level & Energy
@@ -125,6 +140,13 @@ export function calculateFinalBreeds(breeds: Dog[], answers: { id: string; value
       else if (breed.shedding >= 4) score -= 10;
     }
 
+    // Explicit Grooming Check (from grooming_time question if available, or implied preference)
+    // Assuming "hair_prefer_minimal" also implies low grooming effort preference
+    if (hairVal === "hair_prefer_minimal") {
+       if (breed.coat_length >= 4) score -= 15; // Penalty for long coat if user wants minimal maintenance
+       if (breed.grooming >= 4) score -= 15; // Penalty for high grooming needs
+    }
+
     const droolVal = getAnswer("drooling_tolerance") as string | undefined;
     if (droolVal === "drooling_avoid") {
       if (breed.drooling <= 1) score += 10;
@@ -138,16 +160,31 @@ export function calculateFinalBreeds(breeds: Dog[], answers: { id: string; value
     // 8. Experience / Handling
     const handlingVal = getAnswer("physical_handling") as string | undefined;
     if (handlingVal === "handling_novice") {
-      // Novice needs easy trainability
+      // Prefers smaller/easier dogs
       if (breed.trainability >= 4) score += 10;
       else if (breed.trainability <= 2) score -= 10;
       
-      // Novice might struggle with very protective dogs
-      if (breed.protectiveness >= 5) score -= 5; 
+      // Avoid very protective dogs
+      if (breed.protectiveness >= 4) score -= 10;
+
+      // Prefer smaller size (Penalize large dogs > 60lbs)
+      if (breed.max_weight_male > 60) score -= 20; 
+      else if (breed.max_weight_male < 25) score += 10; 
+
+    } else if (handlingVal === "handling_comfortable") {
+      // Can handle medium, but not too powerful
+      // Sweet spot: 20-60lbs
+      if (breed.max_weight_male >= 20 && breed.max_weight_male <= 60) score += 10; 
+      // Penalize very large dogs > 80lbs
+      else if (breed.max_weight_male > 80) score -= 10; 
+
     } else if (handlingVal === "handling_experienced") {
-      // Experienced can handle difficult dogs and train them well
-      if (breed.trainability >= 4) score += 5; // They can unlock full potential
-      if (breed.protectiveness >= 4) score += 5; // Can handle guard dogs
+      // Confident with large/powerful dogs
+      if (breed.trainability >= 4) score += 5; 
+      if (breed.protectiveness >= 4) score += 5; 
+      
+      // Bonus for larger breeds (> 60lbs)
+      if (breed.max_weight_male > 60) score += 10;
     }
 
     return { breed, score };

@@ -103,6 +103,7 @@ function sanitizeDog(dog: Dog): Dog {
   const coatOverrides: Record<string, number> = {
     "Afghan Hound": 5,
     "American Hairless Terrier": 0,
+    "Barbet": 4,
     "Bearded Collie": 5,
     "Bichon Frise": 4,
     "Black Russian Terrier": 4,
@@ -123,7 +124,9 @@ function sanitizeDog(dog: Dog): Dog {
     "Poodle (Toy)": 4,
     "Portuguese Water Dog": 4,
     "Puli": 5,
+    "Schapendoes": 4,
     "Shih Tzu": 5,
+    "Slovakian Wirehaired Pointer": 4,
     "Soft Coated Wheaten Terrier": 4,
     "Spanish Water Dog": 4,
     "Yorkshire Terrier": 5
@@ -132,6 +135,19 @@ function sanitizeDog(dog: Dog): Dog {
   const override = coatOverrides[dog.name];
   if (override !== undefined) {
     dog.coat_length = override;
+  }
+
+  // Manual overrides for specific breeds (fixes for API data)
+  const breedOverrides: Record<string, Partial<Dog>> = {
+    "Bergamasco Sheepdog": { protectiveness: 5 },
+    "Bohemian Shepherd": { protectiveness: 4 },
+    "Belgian Sheepdog": { protectiveness: 4 },
+    "Australian Shepherd": { protectiveness: 4 },
+  };
+
+  const breedOverride = breedOverrides[dog.name];
+  if (breedOverride) {
+    Object.assign(dog, breedOverride);
   }
 
   return dog;

@@ -200,8 +200,8 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
 
   scoredDogs.sort((a, b) => b.score - a.score);
 
-  // Return ALL dogs, not just top 32
-  const topDogs = scoredDogs.map((item) => item.dog);
+  // Return top 50 breeds to show a refined but broad selection
+  const topDogs = scoredDogs.slice(0, 50).map((item) => item.dog);
 
   return { breeds: topDogs };
 }

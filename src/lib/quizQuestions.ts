@@ -51,19 +51,19 @@ export type QuizOptionId =
 export const socialBehaviorQuestion: QuizQuestion = {
   id: "social_behavior",
   type: "single_choice",
-  title: "How should your dog react to strangers and guests?",
+  title: "How should your dog react to new people and guests?",
   options: [
     {
       id: "social_friendly",
-      label: "Friendly to everyone (loves guests, happy to see strangers)",
+      label: "Friendly to everyone – I want them to welcome my guests",
     },
     {
       id: "social_polite",
-      label: "Polite but watchful (calm, observes first, warms up slowly)",
+      label: "Polite but watchful – they should accept guests but not be overly enthusiastic",
     },
     {
       id: "social_guardian",
-      label: "Guardian / Protective (barks at strangers, protects the home)",
+      label: "Protective / Watchdog – I want them to alert me and guard the home",
     },
   ],
 };
@@ -91,19 +91,19 @@ export const homeTypeQuestion: QuizQuestion = {
 export const physicalHandlingQuestion: QuizQuestion = {
   id: "physical_handling",
   type: "single_choice",
-  title: "How much experience do you have with dogs?",
+  title: "How confident are you in handling a large or strong dog?",
   options: [
     {
       id: "handling_novice",
-      label: "I'm a first-time owner (or close to it)",
+      label: "I prefer a smaller, easier-to-manage dog",
     },
     {
       id: "handling_comfortable",
-      label: "I've had a dog before, I'm comfortable",
+      label: "I can handle a medium-sized dog, but nothing too powerful",
     },
     {
       id: "handling_experienced",
-      label: "I'm very experienced / Professional",
+      label: "I am confident handling large, powerful dogs",
     },
   ],
 };

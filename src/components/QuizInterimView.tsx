@@ -97,15 +97,6 @@ export default function QuizInterimView({
             </button>
           </div>
           <QuizInterimGrid breeds={interimBreeds} />
-          <div className="mt-4 text-center">
-            <button 
-              type="button" 
-              className="btn btn-outline-dark text-uppercase fw-semibold"
-              onClick={onKeepRefining}
-            >
-              Keep refining
-            </button>
-          </div>
         </div>
       )}
 
