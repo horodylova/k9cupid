@@ -150,7 +150,7 @@ function sanitizeDog(dog: Dog): Dog {
     "Bergamasco Sheepdog": { protectiveness: 5 },
     "Bohemian Shepherd": { protectiveness: 4 },
     "Belgian Sheepdog": { protectiveness: 4 },
-    "Australian Shepherd": { protectiveness: 4 },
+    "Australian Shepherd": { protectiveness: 4, shedding: 4, coat_length: 4 },
   };
 
   const breedOverride = breedOverrides[dog.name];
@@ -225,7 +225,7 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
           try {
             const res = await fetch(`https://api.api-ninjas.com/v1/dogs?${p.toString()}`, {
               headers: { 'X-Api-Key': apiKey },
-              next: { revalidate: 3600 }
+              next: { revalidate: 0 }
             });
 
             if (res.ok) {
@@ -357,7 +357,7 @@ export async function getBreeds(options: BreedSearchOptions = {}): Promise<Breed
       headers: {
         'X-Api-Key': apiKey,
       },
-      next: { revalidate: 3600 }
+      next: { revalidate: 0 }
     });
 
     if (!res.ok) {
@@ -399,7 +399,7 @@ export async function getAdditionalBreedDetails(name: string): Promise<TheDogApi
   try {
     const res = await fetch(`https://api.thedogapi.com/v1/breeds/search?q=${encodeURIComponent(name)}`, {
       headers: { 'x-api-key': apiKey },
-      next: { revalidate: 3600 }
+      next: { revalidate: 0 }
     });
 
     if (!res.ok) return null;

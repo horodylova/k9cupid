@@ -164,6 +164,11 @@ export default function QuizRunner() {
   const [hasResumed, setHasResumed] = useState(false);
 
   useEffect(() => {
+    // Scroll to top whenever step changes
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [step]);
+
+  useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }

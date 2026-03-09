@@ -125,7 +125,26 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
 
       if (hairGroomingFactors > 0) {
         const avgHairGroomingScore = hairGroomingScoreSum / hairGroomingFactors;
-        totalScore += avgHairGroomingScore * 4; // Weighted highly (4x)
+        
+        // Dynamic weighting based on importance
+        let weight = 4;
+        let penalty = 0;
+        
+        if (hairToleranceAnswer) {
+          const hairLevel = getHairToleranceLevel(hairToleranceAnswer);
+          if (hairLevel) {
+            if (hairLevel >= 5) {
+               weight = 10; // Allergies -> Critical
+               if (avgHairGroomingScore <= 2) penalty = 200; // Deal breaker - strongly exclude
+            } else if (hairLevel === 4) {
+               weight = 8; // Minimal hair -> Very High importance
+               if (avgHairGroomingScore <= 2) penalty = 100; // Strong penalty to exclude high shedders
+            }
+          }
+        }
+
+        totalScore += avgHairGroomingScore * weight;
+        totalScore -= penalty;
       }
 
       // 4. Other Pets Suitability

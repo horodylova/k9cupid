@@ -529,8 +529,8 @@ export function getHairToleranceSuitability(level: number, dog: Dog): number {
   // Level 4: "I really prefer minimal hair"
   if (level === 4) {
     if (shedding <= 2) return 5; // Low shedding is perfect
-    if (shedding === 3) return 4; // Medium is okay
-    if (shedding === 4) return 2; // High shedding is bad
+    if (shedding === 3) return 3; // Medium is okay-ish
+    if (shedding >= 4) return 1; // High shedding is bad
     return 1;
   }
 
@@ -539,7 +539,7 @@ export function getHairToleranceSuitability(level: number, dog: Dog): number {
     // Strict requirement for low shedding
     if (shedding <= 1) return 5; // Very low shedding
     if (shedding === 2) return 4; // Low shedding
-    if (shedding === 3) return 2; // Medium is risky
+    if (shedding >= 3) return 1; // Medium is risky
     return 1; // High shedding is a no-go
   }
 

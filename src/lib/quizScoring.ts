@@ -153,7 +153,8 @@ export function calculateFinalBreeds(breeds: Dog[], answers: { id: string; value
       else score -= 50; // Deal breaker
     } else if (hairVal === "hair_prefer_minimal") {
       if (breed.shedding <= 2) score += 10;
-      else if (breed.shedding >= 4) score -= 10;
+      else if (breed.shedding >= 4) score -= 30;
+      else if (breed.shedding === 3) score -= 10;
     }
 
     // Explicit Grooming Check (from grooming_time question if available, or implied preference)
