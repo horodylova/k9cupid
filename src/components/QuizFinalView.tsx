@@ -24,11 +24,15 @@ export default function QuizFinalView({
     setShowModal(true);
   };
 
+  const bestMatches = finalBreeds.slice(0, 5);
+  const greatMatches = finalBreeds.slice(5, 10);
+  const goodMatches = finalBreeds.slice(10);
+
   return (
     <section className="py-5">
       <div className="container">
         <div className="row justify-content-center">
-          <div className="col-12 col-lg-10">
+          <div className="col-12 col-xl-12">
             <div className="text-center mb-5">
               <Image
                 src="/images/k9cupid-logo-final.png"
@@ -56,7 +60,7 @@ export default function QuizFinalView({
                 className={`btn ${!showShortlist ? "btn-dark" : "btn-outline-dark"} rounded-pill px-4 fw-semibold`}
                 onClick={() => setShowShortlist(false)}
               >
-                Top 10 Recommendations
+                Your Top Matches
               </button>
               <button
                 className={`btn ${showShortlist ? "btn-dark" : "btn-outline-dark"} rounded-pill px-4 fw-semibold`}
@@ -69,7 +73,35 @@ export default function QuizFinalView({
             {/* Results Grid */}
             <div className="mb-5">
               {!showShortlist ? (
-                <QuizInterimGrid breeds={finalBreeds} />
+                <div className="d-flex flex-column gap-5">
+                  {/* Best Matches */}
+                  <div className="text-center">
+                    <div className="d-inline-block bg-primary text-white rounded-pill px-4 py-2 mb-4 shadow-sm fw-bold text-uppercase tracking-wide">
+                      🏆 Best Matches
+                    </div>
+                    <QuizInterimGrid breeds={bestMatches} />
+                  </div>
+
+                  {/* Great Matches */}
+                  {greatMatches.length > 0 && (
+                    <div className="text-center border-top pt-5">
+                      <div className="d-inline-block bg-success-subtle text-success-emphasis rounded-pill px-4 py-2 mb-4 fw-bold text-uppercase tracking-wide">
+                        🌟 Great Matches
+                      </div>
+                      <QuizInterimGrid breeds={greatMatches} />
+                    </div>
+                  )}
+
+                  {/* Good Matches */}
+                  {goodMatches.length > 0 && (
+                    <div className="text-center border-top pt-5">
+                      <div className="d-inline-block bg-white border border-secondary-subtle text-secondary-emphasis rounded-pill px-4 py-2 mb-4 fw-bold text-uppercase tracking-wide shadow-sm">
+                        👍 Good Matches
+                      </div>
+                      <QuizInterimGrid breeds={goodMatches} />
+                    </div>
+                  )}
+                </div>
               ) : (
                 <div className="bg-light rounded-4 p-4">
                   <h3 className="h5 mb-4 text-center">All Potential Candidates</h3>

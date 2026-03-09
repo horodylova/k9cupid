@@ -113,6 +113,7 @@ function sanitizeDog(dog: Dog): Dog {
     "Coton de Tulear": 4,
     "German Longhaired Pointer": 4,
     "Giant Schnauzer": 4,
+    "Golden Retriever": 4,
     "Komondor": 5,
     "Leonberger": 4,
     "Maltese": 5,
@@ -129,7 +130,14 @@ function sanitizeDog(dog: Dog): Dog {
     "Slovakian Wirehaired Pointer": 4,
     "Soft Coated Wheaten Terrier": 4,
     "Spanish Water Dog": 4,
-    "Yorkshire Terrier": 5
+    "Yorkshire Terrier": 5,
+    "Cesky Terrier": 4,
+    "Irish Setter": 5,
+    "Bohemian Shepherd": 5,
+    "Wirehaired Pointing Griffon": 4,
+    "American Eskimo Dog": 5,
+    "Volpino Italiano": 5,
+    "Havanese": 5
   };
 
   const override = coatOverrides[dog.name];

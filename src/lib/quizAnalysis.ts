@@ -4,7 +4,10 @@ export function getResultAnalysis(answers: { id: string; value: unknown }[]) {
     return ans ? ans.value : undefined;
   };
 
-  const purposeVal = getAnswer("purpose") as string | undefined;
+  const rawPurpose = getAnswer("purpose");
+  // Normalize to string (take first if array)
+  const purposeVal = Array.isArray(rawPurpose) ? rawPurpose[0] : (rawPurpose as string | undefined);
+
   const activityVal = getAnswer("activity_level") as string | undefined;
   const workVal = getAnswer("work_schedule") as string | undefined;
 

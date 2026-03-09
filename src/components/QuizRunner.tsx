@@ -180,7 +180,7 @@ export default function QuizRunner() {
 
   const selectedPurpose = session?.answers.find(
     (a) => a.id === purposeQuestion.id
-  )?.value as QuizOptionId;
+  )?.value as QuizOptionId | QuizOptionId[] | undefined;
 
   const { setInterceptor, removeInterceptor } = useNavigation();
 

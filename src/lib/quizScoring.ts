@@ -101,34 +101,50 @@ export function calculateFinalBreeds(breeds: Dog[], answers: { id: string; value
     }
 
     // 5. Training / Purpose
-    const purposeVal = getAnswer("purpose") as string | undefined;
+    const purposeRaw = getAnswer("purpose");
+    const purposes = Array.isArray(purposeRaw) 
+      ? purposeRaw as string[]
+      : (typeof purposeRaw === 'string' ? [purposeRaw] : []);
     
-    if (purposeVal === "purpose_guard") {
-      // Guardian needs high protectiveness
-      if (breed.protectiveness >= 4) score += 20;
-      else if (breed.protectiveness <= 2) score -= 20; // A guardian must protect!
+    purposes.forEach((purposeVal, index) => {
+      // Weight: 1st priority = 1.0, 2nd = 0.7, 3rd = 0.5
+      const weight = index === 0 ? 1.0 : (index === 1 ? 0.7 : 0.5);
 
-      // Guardian needs to be trainable and intelligent
-      if (breed.trainability >= 4) score += 10;
-      
-      // Guardian implies physical capability (Size/Strength)
-      // Small dogs can be watchdogs, but "Guardian" implies protection.
-      if (breed.max_weight_male >= 50) score += 20; // Large/Giant bonus
-      else if (breed.max_weight_male >= 30) score += 10; // Medium bonus
-      else if (breed.max_weight_male < 20) score -= 30; // Toy/Small penalty (Unsuitable for protection)
+      if (purposeVal === "purpose_guard") {
+        // Guardian needs high protectiveness
+        if (breed.protectiveness >= 4) score += (20 * weight);
+        else if (breed.protectiveness <= 2) score -= (20 * weight);
 
-    } else if (purposeVal === "purpose_active") {
-      // Active partner needs energy and endurance
-      if (breed.energy >= 4) score += 15;
-      // Trainability helps for sports
-      if (breed.trainability >= 4) score += 5;
+        // Guardian needs to be trainable and intelligent
+        if (breed.trainability >= 4) score += (10 * weight);
+        
+        // Guardian implies physical capability (Size/Strength)
+        if (breed.max_weight_male >= 50) score += (20 * weight); 
+        else if (breed.max_weight_male >= 30) score += (10 * weight); 
+        else if (breed.max_weight_male < 20) score -= (30 * weight);
 
-    } else if (purposeVal === "purpose_service") {
-      if (breed.trainability >= 4) score += 15;
-      if (breed.good_with_strangers >= 4) score += 10; // Service dogs usually need to be social/neutral
-    } else if (purposeVal === "purpose_companion") {
-      if (breed.good_with_children >= 4 || breed.playfulness >= 4) score += 10;
-    }
+      } else if (purposeVal === "purpose_active") {
+        // Active partner needs energy and endurance
+        if (breed.energy >= 4) score += (15 * weight);
+        // Trainability helps for sports
+        if (breed.trainability >= 4) score += (5 * weight);
+
+      } else if (purposeVal === "purpose_service") {
+        if (breed.trainability >= 4) score += (15 * weight);
+        if (breed.good_with_strangers >= 4) score += (10 * weight);
+      } else if (purposeVal === "purpose_companion") {
+        if (breed.good_with_children >= 4 || breed.playfulness >= 4) score += (10 * weight);
+      } else if (purposeVal === "purpose_support") {
+        // Emotional support: needs to be affectionate (proxy: good with kids/strangers) and calm
+        if (breed.good_with_children >= 4) score += (10 * weight);
+        if (breed.good_with_strangers >= 4) score += (5 * weight);
+        if (breed.energy <= 3) score += (5 * weight);
+      } else if (purposeVal === "purpose_friend") {
+        // Just a friend: balanced traits
+        if (breed.playfulness >= 3) score += (10 * weight);
+        if (breed.good_with_other_dogs >= 3) score += (5 * weight);
+      }
+    });
 
     // 6. Maintenance (Grooming/Shedding)
     const hairVal = getAnswer("hair_tolerance") as string | undefined;
@@ -193,6 +209,6 @@ export function calculateFinalBreeds(breeds: Dog[], answers: { id: string; value
   // Sort by score desc
   scores.sort((a, b) => b.score - a.score);
 
-  // Return top 10 breeds
-  return scores.slice(0, 10).map((s) => s.breed);
+  // Return top 20 breeds (expanded for categorized results)
+  return scores.slice(0, 20).map((s) => s.breed);
 }

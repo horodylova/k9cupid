@@ -25,8 +25,8 @@ export default function QuizBreedCard({ breed }: QuizBreedCardProps) {
             onError={() => setImgSrc("/no-image-available.jpg")}
           />
         </div>
-        <div className="card-body p-3 text-center">
-          <h5 className="card-title fs-6 fw-bold mb-0 text-dark text-truncate" title={breed.name}>
+        <div className="card-body p-2 text-center">
+          <h5 className="card-title fw-bold mb-0 text-dark text-truncate" style={{ fontSize: "0.9rem" }} title={breed.name}>
             {breed.name}
           </h5>
         </div>

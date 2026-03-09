@@ -24,7 +24,7 @@ export default function QuizInterimGrid({ breeds }: QuizInterimGridProps) {
 
   return (
     <>
-      <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3 g-md-4 mt-4">
+      <div className="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 g-md-4 mt-4">
         {visibleBreeds.map((breed) => (
           <div key={breed.name} className="col">
             <QuizBreedCard breed={breed} />
