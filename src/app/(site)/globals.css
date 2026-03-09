@@ -941,13 +941,13 @@ Single Product section style start
   }
   
   .footer-menu {
-    text-align: center;
+    text-align: left;
     margin-bottom: 2.5rem;
   }
 
   .footer-brand {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     gap: 15px;
     text-align: left;
@@ -956,8 +956,9 @@ Single Product section style start
 
   .footer-brand-link {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    gap: 10px;
     flex: 0 0 auto;
     margin-bottom: 0;
   }
@@ -966,7 +967,7 @@ Single Product section style start
     width: auto;
     height: auto;
     max-height: 80px;
-    margin-bottom: 5px;
+    margin-bottom: 0;
   }
 
   .footer-site-title {
@@ -1120,4 +1121,11 @@ Single Product section style start
   color: #fff; /* White text on hover */
   background-color: #6c757d;
   border-color: #6c757d;
+}
+
+/* Responsive Utilities */
+@media (min-width: 768px) {
+  .w-md-auto {
+    width: auto !important;
+  }
 }

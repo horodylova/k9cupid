@@ -102,16 +102,16 @@ export default function QuizInterimView({
 
       {showShortlist && (
         <div className="fixed-bottom bg-white border-top py-3 shadow-lg" style={{ zIndex: 1000 }}>
-          <div className="container d-flex justify-content-between align-items-center">
+          <div className="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
             <div className="d-none d-md-block">
               <span className="fw-semibold">Want more precise matches?</span>
               <span className="text-muted ms-2">Continue to refine by activity & lifestyle.</span>
             </div>
-            <div className="d-md-none">
+            <div className="d-md-none text-center">
               <span className="fw-semibold">Want more precise matches?</span>
             </div>
             <button 
-              className="btn btn-primary px-4 rounded-pill fw-semibold"
+              className="btn btn-primary px-4 rounded-pill fw-semibold w-100 w-md-auto"
               onClick={onKeepRefining}
             >
               Continue Quiz →

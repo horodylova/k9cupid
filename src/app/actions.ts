@@ -136,9 +136,14 @@ export async function getQuizInterimBreeds(answers: { id: string; value: unknown
             if (hairLevel >= 5) {
                weight = 10; // Allergies -> Critical
                if (avgHairGroomingScore <= 2) penalty = 200; // Deal breaker - strongly exclude
+               // Strict check: if allergies, even medium shedding is too much
+               if (dog.shedding >= 3) penalty += 300; 
             } else if (hairLevel === 4) {
                weight = 8; // Minimal hair -> Very High importance
                if (avgHairGroomingScore <= 2) penalty = 100; // Strong penalty to exclude high shedders
+               // Strict check: if minimal hair preferred, high shedding is a deal breaker
+               if (dog.shedding >= 4) penalty += 200;
+               if (dog.shedding === 3) penalty += 50;
             }
           }
         }

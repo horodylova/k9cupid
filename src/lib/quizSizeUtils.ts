@@ -175,17 +175,22 @@ export function getPhysicalHandlingSuitability(
   const sizeIndex = getSizeIndex(size);
   const trainability = dog.trainability;
 
-  if (
-    answerId === "handling_experienced" ||
-    answerId === "handling_comfortable"
-  ) {
-    // If user is comfortable with large dogs, prioritize larger breeds slightly
-    // as they explicitly signaled this capability.
+  if (answerId === "handling_experienced") {
+    // Experienced handlers usually prefer larger/stronger dogs
     if (sizeIndex >= 3) {
       return 5;
     }
-    // Small dogs are still suitable, but may feel "small" for someone seeking a "large dog experience"
     return 4;
+  }
+
+  if (answerId === "handling_comfortable") {
+    // "I can handle a medium-sized dog, but nothing too powerful"
+    // Medium is ideal
+    if (sizeIndex === 3) return 5;
+    // Small is also fine
+    if (sizeIndex <= 2) return 4;
+    // Large is "too powerful" -> penalize
+    return 2;
   }
 
   let baseScore = 3;

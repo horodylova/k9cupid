@@ -181,10 +181,10 @@ export default function Header() {
             <h4 className="text-primary text-uppercase mb-3">
               Search
             </h4>
-            <div className="search-bar border rounded-2 border-dark-subtle">
+            <div className="search-bar border rounded-2 border-dark-subtle px-3">
               <form id="search-form" className="text-center d-flex align-items-center" action="" method="">
                 <input type="text" className="form-control border-0 bg-transparent" placeholder="Search for breeds, articles..." />
-                <iconify-icon icon="tabler:search" className="fs-4 me-3"></iconify-icon>
+                <iconify-icon icon="tabler:search" className="fs-4 me-2"></iconify-icon>
               </form>
             </div>
           </div>

@@ -151,6 +151,11 @@ function sanitizeDog(dog: Dog): Dog {
     "Bohemian Shepherd": { protectiveness: 4 },
     "Belgian Sheepdog": { protectiveness: 4 },
     "Australian Shepherd": { protectiveness: 4, shedding: 4, coat_length: 4 },
+    "Nova Scotia Duck Tolling Retriever": { shedding: 4, coat_length: 4 },
+    "Affenpinscher": { shedding: 3 },
+    "Nederlandse Kooikerhondje": { shedding: 4, coat_length: 4 },
+    "Japanese Chin": { shedding: 4, coat_length: 5 },
+    "English Toy Spaniel": { shedding: 4, coat_length: 5 },
   };
 
   const breedOverride = breedOverrides[dog.name];
