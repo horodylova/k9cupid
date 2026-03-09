@@ -232,11 +232,12 @@ export const noiseToleranceQuestion: QuizScaleQuestion = {
 export const hairToleranceQuestion: QuizQuestion = {
   id: "hair_tolerance",
   type: "single_choice",
-  title: "How do you feel about dog hair on clothes and furniture?",
+  title: "How do you feel about dog shedding (hair on clothes and furniture)?",
+  description: "This is about how much the dog sheds, not the length of their coat.",
   options: [
     {
       id: "hair_not_bothered",
-      label: "It does not bother me at all",
+      label: "I don't mind shedding at all",
     },
     {
       id: "hair_okay_clean",
@@ -244,15 +245,15 @@ export const hairToleranceQuestion: QuizQuestion = {
     },
     {
       id: "hair_prefer_less",
-      label: "I prefer less hair, but can accept some",
+      label: "I prefer less shedding, but can accept some",
     },
     {
       id: "hair_prefer_minimal",
-      label: "I really prefer minimal hair",
+      label: "I really prefer minimal shedding (Non-shedding breeds)",
     },
     {
       id: "hair_allergies",
-      label: "I have allergies / hair is a big problem for me",
+      label: "I have allergies / I need a hypoallergenic dog",
     },
   ],
 };

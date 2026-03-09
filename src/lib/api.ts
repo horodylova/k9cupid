@@ -111,6 +111,7 @@ function sanitizeDog(dog: Dog): Dog {
     "Briard": 5,
     "Cocker Spaniel": 4,
     "Coton de Tulear": 4,
+    "English Springer Spaniel": 4,
     "German Longhaired Pointer": 4,
     "Giant Schnauzer": 4,
     "Golden Retriever": 4,
@@ -158,6 +159,7 @@ function sanitizeDog(dog: Dog): Dog {
     "English Toy Spaniel": { shedding: 4, coat_length: 5 },
     "Irish Red and White Setter": { coat_length: 4 },
     "Australian Terrier": { coat_length: 3 },
+    "Coton de Tulear": { shedding: 1 },
   };
 
   const breedOverride = breedOverrides[dog.name];
