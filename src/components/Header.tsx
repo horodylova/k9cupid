@@ -14,8 +14,17 @@ export default function Header() {
   const { attemptNavigation } = useNavigation();
   const [sizeValue, setSizeValue] = useState('');
 
+  const closeMenu = () => {
+    const offcanvasNavbar = document.getElementById('offcanvasNavbar');
+    if (offcanvasNavbar?.classList.contains('show')) {
+      const closeBtn = offcanvasNavbar.querySelector('.btn-close') as HTMLButtonElement;
+      closeBtn?.click();
+    }
+  };
+
   const handleLinkClick = (e: React.MouseEvent, path: string) => {
     e.preventDefault();
+    closeMenu();
     attemptNavigation(path);
   };
 
@@ -285,6 +294,7 @@ export default function Header() {
                     const v = e.target.value;
                     setSizeValue(v);
                     if (v) {
+                      closeMenu();
                       router.push(`/breeds?size=${encodeURIComponent(v)}`);
                     }
                   }}
