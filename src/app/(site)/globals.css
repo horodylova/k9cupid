@@ -1142,3 +1142,13 @@ Single Product section style start
     height: 250px; /* Reduced height for mobile to match landscape aspect ratio and prevent side cropping */
   }
 }
+
+/* Custom Disabled Button Style */
+.btn-primary:disabled, 
+.btn-primary.disabled {
+  background-color: #d6d6d6 !important;
+  border-color: #d6d6d6 !important;
+  color: #888888 !important;
+  opacity: 1 !important;
+  cursor: not-allowed;
+}
