@@ -36,7 +36,7 @@ export default function BreedGallery({ image, name }: BreedGalleryProps) {
             className="mySwiper2"
           >
             <SwiperSlide>
-               <div style={{ position: 'relative', width: '100%', height: '500px' }}>
+               <div className="breed-gallery-wrapper">
                   <Image 
                     src={image || '/images/no-image.jpg'} 
                     alt={name}

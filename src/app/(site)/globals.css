@@ -1129,3 +1129,16 @@ Single Product section style start
     width: auto !important;
   }
 }
+
+/* Breed Gallery Image Responsive Fix */
+.breed-gallery-wrapper {
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+@media (max-width: 767px) {
+  .breed-gallery-wrapper {
+    height: 250px; /* Reduced height for mobile to match landscape aspect ratio and prevent side cropping */
+  }
+}
