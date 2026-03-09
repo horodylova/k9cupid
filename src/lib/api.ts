@@ -156,6 +156,8 @@ function sanitizeDog(dog: Dog): Dog {
     "Nederlandse Kooikerhondje": { shedding: 4, coat_length: 4 },
     "Japanese Chin": { shedding: 4, coat_length: 5 },
     "English Toy Spaniel": { shedding: 4, coat_length: 5 },
+    "Irish Red and White Setter": { coat_length: 4 },
+    "Australian Terrier": { coat_length: 3 },
   };
 
   const breedOverride = breedOverrides[dog.name];
