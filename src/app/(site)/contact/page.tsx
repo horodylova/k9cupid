@@ -55,48 +55,29 @@ export default function ContactPage() {
           <div className="row">
             <div className="contact-info col-lg-6 pb-3">
               <h2 className="text-dark">Contact Information</h2>
-              <p>We are here to help you and your furry friend find the best products and matches!</p>
-              <div className="page-content d-flex flex-wrap mt-5">
-                <div className="col-lg-6 col-sm-12">
-                  <div className="content-box text-dark pe-4 mb-5">
-                    <h4 className="card-title">Office</h4>
-                    <div className="contact-address pt-3">
-                      <p>123 Love Paw Ave, San Francisco, CA 94103</p>
-                    </div>
-                    <div className="contact-number">
-                      <p>
-                        <a href="tel:+18005550199">+1 (800) 555-0199</a>
-                      </p>
-                      <p>
-                        <a href="tel:+18005550200">+1 (800) 555-0200</a>
-                      </p>
-                    </div>
-                    <div className="email-address">
-                      <p>
-                        <a href="mailto:support@k9cupid.com">support@k9cupid.fit</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-sm-12">
-                  <div className="content-box">
-                    <h4 className="card-title">Management</h4>
-                    <div className="contact-address pt-3">
-                      <p>456 Barker St, New York, NY 10001</p>
-                    </div>
-                    <div className="contact-number">
-                      <p>
-                        <a href="tel:+12125550188">+1 (212) 555-0188</a>
-                      </p>
-                      <p>
-                        <a href="tel:+12125550199">+1 (212) 555-0199</a>
-                      </p>
-                    </div>
-                    <div className="email-address">
-                      <p>
-                        <a href="mailto:admin@k9cupid.com">admin@k9cupid.fit</a>
-                      </p>
-                    </div>
+              <p>Have a question about your quiz results or choosing the right breed? Send us a message and we will help you compare options and set expectations.</p>
+              <div className="page-content mt-5">
+                <div className="content-box text-dark pe-4 mb-5">
+                  <h4 className="card-title">Support</h4>
+                  <div className="pt-3">
+                    <p className="secondary-font mb-3">
+                      Email{" "}
+                      <a href="mailto:support@k9cupid.fit" className="text-decoration-underline">
+                        support@k9cupid.fit
+                      </a>{" "}
+                      or use the form. If you took the quiz, include your top matches, plus a few details about your home, schedule, and activity level.
+                    </p>
+                    <p className="secondary-font mb-0">
+                      Looking for quick answers? Check{" "}
+                      <Link href="/faqs" className="text-decoration-underline">
+                        FAQs
+                      </Link>{" "}
+                      or read our{" "}
+                      <Link href="/privacy-policy" className="text-decoration-underline">
+                        Privacy Policy
+                      </Link>
+                      .
+                    </p>
                   </div>
                 </div>
               </div>

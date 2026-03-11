@@ -71,13 +71,13 @@ export default function Footer() {
                 <h3>Help Center</h3>
                 <ul className="menu-list list-unstyled">
                   <li className="menu-item">
-                    <a href="#" className="nav-link">FAQs</a>
+                    <Link href="/faqs" className="nav-link">FAQs</Link>
                   </li>
                   <li className="menu-item">
-                    <a href="#" className="nav-link">Privacy Policy</a>
+                    <Link href="/privacy-policy" className="nav-link">Privacy Policy</Link>
                   </li>
                   <li className="menu-item">
-                    <a href="#" className="nav-link">Terms of Service</a>
+                    <Link href="/terms-of-service" className="nav-link">Terms of Service</Link>
                   </li>
                 </ul>
               </div>

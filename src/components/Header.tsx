@@ -229,7 +229,7 @@ export default function Header() {
               
               <div className="support-box text-end d-none d-xl-block">
                 <span className="fs-6 secondary-font text-muted">Email</span>
-                <h5 className="mb-0">hello@k9cupid.fit</h5>
+                <h5 className="mb-0">support@k9cupid.fit</h5>
               </div>
             </div>
           </div>
