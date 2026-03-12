@@ -195,7 +195,7 @@ export function buildNewsletterEmailHtml(posts: LatestPost[], unsubscribeUrl: st
 
 export async function sendBrevoEmail(toEmail: string, subject: string, htmlContent: string) {
   const apiKey = requireEnv("BREVO_API_KEY");
-  const senderEmail = process.env.BREVO_SENDER_EMAIL || "noreply@k9cupid.fit";
+  const senderEmail = process.env.BREVO_SENDER_EMAIL || "noreply@carcupid.fit";
   const senderName = process.env.BREVO_SENDER_NAME || "k9cupid";
 
   const res = await fetch("https://api.brevo.com/v3/smtp/email", {
