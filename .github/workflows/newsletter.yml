@@ -1,0 +1,17 @@
+name: Newsletter
+
+on:
+  schedule:
+    - cron: "0 10 * * *"
+  workflow_dispatch:
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call newsletter endpoint
+        run: |
+          curl -sS -X POST "${{ secrets.NEWSLETTER_ENDPOINT }}" \
+            -H "Content-Type: application/json" \
+            -H "x-cron-secret: ${{ secrets.NEWSLETTER_CRON_SECRET }}" \
+            --data "{}"

@@ -1,7 +1,69 @@
 import Link from "next/link";
 import Image from "next/image";
+import { client } from "@/sanity/lib/client";
+import NewsletterSubscribeForm from "@/components/NewsletterSubscribeForm";
 
-export default function Footer() {
+type LatestFooterPost = {
+  id: string;
+  title: string;
+  excerpt: string;
+  dateLabel: string;
+};
+
+type SanityFooterPost = {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  publishedAt?: string;
+  _createdAt: string;
+};
+
+function truncateText(text: string, maxLen: number) {
+  const normalized = (text || "").replace(/\s+/g, " ").trim();
+  if (normalized.length <= maxLen) return normalized;
+  return `${normalized.slice(0, maxLen - 1).trim()}…`;
+}
+
+async function getLatestFooterPosts(): Promise<LatestFooterPost[]> {
+  const query = `*[_type == "post"] | order(coalesce(publishedAt, _createdAt) desc)[0...3] {
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    publishedAt,
+    _createdAt
+  }`;
+
+  try {
+    const posts = await client.fetch<SanityFooterPost[]>(
+      query,
+      {},
+      { next: { revalidate: 3600 } }
+    );
+
+    return (posts || []).map((post) => {
+      const dateSource = post.publishedAt || post._createdAt;
+      const dateObj = new Date(dateSource);
+      const dateLabel = dateObj.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+
+      return {
+        id: post.slug,
+        title: post.title,
+        excerpt: truncateText(post.excerpt, 110),
+        dateLabel,
+      };
+    });
+  } catch {
+    return [];
+  }
+}
+
+export default async function Footer() {
+  const latestPosts = await getLatestFooterPosts();
   return (
     <>
       <footer id="footer" className="mt-5">
@@ -88,16 +150,27 @@ export default function Footer() {
                 <p className="blog-paragraph fs-6">
                   Subscribe to our newsletter to get updates about our latest breed guides and adoption tips.
                 </p>
-                <div className="search-bar border rounded-pill border-dark-subtle px-2">
-                  <form className="text-center d-flex align-items-center" action="" method="">
-                    <input
-                      type="text"
-                      className="form-control border-0 bg-transparent"
-                      placeholder="Enter your email here"
-                    />
-                    <iconify-icon className="send-icon" icon="tabler:location-filled"></iconify-icon>
-                  </form>
-                </div>
+                {latestPosts.length > 0 && (
+                  <div className="mt-3">
+                    <div className="secondary-font text-uppercase text-muted mb-2" style={{ letterSpacing: "0.06em" }}>
+                      Latest posts
+                    </div>
+                    <ul className="list-unstyled m-0">
+                      {latestPosts.map((post) => (
+                        <li key={post.id} className="mb-3">
+                          <div className="secondary-font text-muted" style={{ fontSize: "0.9rem" }}>
+                            {post.dateLabel}
+                          </div>
+                          <Link href={`/blog/${post.id}`} className="nav-link p-0">
+                            <strong>{post.title}</strong>
+                          </Link>
+                          <div className="blog-paragraph fs-6 mb-0">{post.excerpt}</div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <NewsletterSubscribeForm />
               </div>
             </div>
           </div>
