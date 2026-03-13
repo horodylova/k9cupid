@@ -190,7 +190,20 @@ export default function NewsletterSubscribeForm({
                 Subscribe
               </button>
             ) : (
-              <button type="submit" className="btn p-0 border-0 bg-transparent" disabled={submitting} aria-label="Subscribe">
+              <button
+                type="submit"
+                className="btn p-0 border-0 bg-transparent"
+                disabled={submitting}
+                aria-label="Subscribe"
+                style={{
+                  paddingLeft: 10,
+                  paddingRight: 14,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "100%",
+                }}
+              >
                 <iconify-icon className="send-icon" icon="tabler:location-filled"></iconify-icon>
               </button>
             )}

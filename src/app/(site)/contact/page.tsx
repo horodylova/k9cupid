@@ -1,9 +1,9 @@
-// File: ContactPage component
 'use client'
 import Link from "next/link";
 import { useState } from "react";
 import { submitForm } from "@/utils/submitForm";
 import Image from "next/image";
+import NewsletterSubscribeForm from "@/components/NewsletterSubscribeForm";
 
 export default function ContactPage() {
   const [submitting, setSubmitting] = useState(false);
@@ -52,8 +52,8 @@ export default function ContactPage() {
 
       <section className="contact-us">
         <div className="container py-5 my-5">
-          <div className="row">
-            <div className="contact-info col-lg-6 pb-3">
+          <div className="row align-items-stretch">
+            <div className="contact-info col-lg-6 pb-3 d-flex flex-column">
               <h2 className="text-dark">Contact Information</h2>
               <p>Have a question about your quiz results or choosing the right breed? Send us a message and we will help you compare options and set expectations.</p>
               <div className="page-content mt-5">
@@ -81,9 +81,21 @@ export default function ContactPage() {
                   </div>
                 </div>
               </div>
+              <div className="card border-0 shadow-sm rounded-4 overflow-hidden mt-auto" style={{ background: "#F9F3EC" }}>
+                <div className="card-body p-3 p-lg-3">
+                  <div className="text-uppercase text-muted fw-semibold mb-2">Newsletter</div>
+                  <h3 className="h5 fw-normal mb-2">Get the best dog guides, weekly</h3>
+                  <NewsletterSubscribeForm
+                    source="contact_left"
+                    variant="icon"
+                    placeholder="Email address"
+                    successBehavior="inline"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="inquiry-item col-lg-6">
-              <div className="rounded-5">
+            <div className="inquiry-item col-lg-6 d-flex">
+              <div className="rounded-5 h-100 w-100 d-flex flex-column">
                 <h2 className="text-dark">Get in Touch</h2>
                 <p>Use the form below to get in touch with us.</p>
                 <form id="form" className="form-group flex-wrap" onSubmit={handleSubmit} noValidate>
