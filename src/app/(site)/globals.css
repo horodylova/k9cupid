@@ -1072,13 +1072,13 @@ Single Product section style start
 }
 
 .custom-alert--success {
-  border-color: rgba(31, 136, 61, 0.3); /* мягкий зеленый бордер */
-  background: #F0FFF4; /* пастельно-зеленый фон */
+  border-color: rgba(31, 136, 61, 0.3);
+  background: #F0FFF4;
 }
 
 .custom-alert--error {
-  border-color: rgba(185, 28, 28, 0.3); /* мягкий красный бордер */
-  background: #FFF5F5; /* пастельно-красный фон */
+  border-color: rgba(185, 28, 28, 0.3);
+  background: #FFF5F5;
 }
 
 .custom-alert__media {
@@ -1108,17 +1108,17 @@ Single Product section style start
 
 .custom-alert__text {
   margin: 0;
-  color: #908F8D; /* соответствует стилистике blog-paragraph */
+  color: #908F8D;
   line-height: 1.4;
 }
 
 /* Custom Quiz Styles */
 .btn-quiz-option {
-  color: #212529; /* Dark text for readability */
+  color: #212529;
 }
 
 .btn-quiz-option:hover {
-  color: #fff; /* White text on hover */
+  color: #fff;
   background-color: #6c757d;
   border-color: #6c757d;
 }

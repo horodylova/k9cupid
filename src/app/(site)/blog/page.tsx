@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
+import NewsletterSubscribeForm from "@/components/NewsletterSubscribeForm";
+import { Fragment } from "react";
 
 interface BlogPost {
   id: string;
@@ -120,6 +122,9 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
   const startIndex = (page - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
   const currentGridPosts = allGridPosts.slice(startIndex, endIndex);
+  const inlineSubscribeInsertIndex = 3;
+  const showInlineSubscribe = page === 1;
+  const shouldAppendInlineSubscribe = showInlineSubscribe && currentGridPosts.length <= inlineSubscribeInsertIndex;
 
   return (
     <>
@@ -182,35 +187,137 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
             </div>
           )}
           <div className="row entry-container">
-            {currentGridPosts.map((post) => (
-              <div className="entry-item col-md-4 my-4" key={post.id}>
-                <div className="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
-                  <h3 className="secondary-font text-primary m-0">{post.date}</h3>
-                  <p className="secondary-font fs-6 m-0">{post.month}</p>
-                </div>
-                <div className="card position-relative">
-                  <Link href={`/blog/${post.id}`}>
-                    <Image
-                      src={post.image}
-                      className="img-fluid rounded-4"
-                      alt={post.title}
-                      width={800}
-                      height={600}
-                      style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                    />
-                  </Link>
-                  <div className="card-body p-0">
+            {currentGridPosts.map((post, index) => (
+              <Fragment key={post.id}>
+                {showInlineSubscribe && index === inlineSubscribeInsertIndex && (
+                  <div className="entry-item col-12 my-4">
+                    <div className="card border-0 shadow-sm rounded-4 overflow-hidden" style={{ background: "#F9F3EC" }}>
+                      <div className="card-body p-4 p-lg-5">
+                        <div className="row g-4 align-items-center">
+                          <div className="col-lg-7">
+                            <div className="text-uppercase text-muted fw-semibold mb-2">Newsletter</div>
+                            <h3 className="display-6 fw-normal mb-3">Get the best dog guides, weekly</h3>
+                            <p className="blog-paragraph fs-6 mb-4">
+                              New breed guides, adoption tips, and stories. One email a week, unsubscribe anytime.
+                            </p>
+                            <div className="d-flex flex-wrap gap-2">
+                              <span className="badge rounded-pill text-bg-light text-dark border">Once a week</span>
+                              <span className="badge rounded-pill text-bg-light text-dark border">New articles</span>
+                              <span className="badge rounded-pill text-bg-light text-dark border">No spam</span>
+                            </div>
+                          </div>
+                          <div className="col-lg-5">
+                            <div className="bg-white rounded-4 shadow-sm p-4">
+                              <div className="d-flex align-items-center gap-3 mb-3">
+                                <Image
+                                  src="/Cupid and Dogs-Picsart-BackgroundRemover.png"
+                                  alt="k9cupid"
+                                  width={56}
+                                  height={56}
+                                  style={{ width: "56px", height: "56px", objectFit: "contain" }}
+                                />
+                                <div>
+                                  <h5 className="mb-0">Subscribe</h5>
+                                  <div className="text-muted">Get the next update in your inbox.</div>
+                                </div>
+                              </div>
+                              <NewsletterSubscribeForm
+                                source="blog_grid"
+                                variant="button"
+                                placeholder="Email address"
+                                successBehavior="inline"
+                              />
+                              <div className="text-muted mt-3" style={{ fontSize: 12, lineHeight: "18px" }}>
+                                By subscribing you agree to receive emails from k9cupid.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="entry-item col-md-4 my-4">
+                  <div className="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
+                    <h3 className="secondary-font text-primary m-0">{post.date}</h3>
+                    <p className="secondary-font fs-6 m-0">{post.month}</p>
+                  </div>
+                  <div className="card position-relative">
                     <Link href={`/blog/${post.id}`}>
-                      <h3 className="card-title pt-4 pb-3 m-0">{post.title}</h3>
+                      <Image
+                        src={post.image}
+                        className="img-fluid rounded-4"
+                        alt={post.title}
+                        width={800}
+                        height={600}
+                        style={{ width: "100%", height: "auto", objectFit: "cover" }}
+                      />
                     </Link>
-                    <div className="card-text">
-                      <p className="blog-paragraph fs-6">{post.excerpt}</p>
-                      <Link href={`/blog/${post.id}`} className="blog-read">read more</Link>
+                    <div className="card-body p-0">
+                      <Link href={`/blog/${post.id}`}>
+                        <h3 className="card-title pt-4 pb-3 m-0">{post.title}</h3>
+                      </Link>
+                      <div className="card-text">
+                        <p className="blog-paragraph fs-6">{post.excerpt}</p>
+                        <Link href={`/blog/${post.id}`} className="blog-read">
+                          read more
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Fragment>
+            ))}
+
+            {shouldAppendInlineSubscribe && (
+              <div className="entry-item col-12 my-4">
+                <div className="card border-0 shadow-sm rounded-4 overflow-hidden" style={{ background: "#F9F3EC" }}>
+                  <div className="card-body p-4 p-lg-5">
+                    <div className="row g-4 align-items-center">
+                      <div className="col-lg-7">
+                        <div className="text-uppercase text-muted fw-semibold mb-2">Newsletter</div>
+                        <h3 className="display-6 fw-normal mb-3">Get the best dog guides, weekly</h3>
+                        <p className="blog-paragraph fs-6 mb-4">
+                          New breed guides, adoption tips, and stories. One email a week, unsubscribe anytime.
+                        </p>
+                        <div className="d-flex flex-wrap gap-2">
+                          <span className="badge rounded-pill text-bg-light text-dark border">Once a week</span>
+                          <span className="badge rounded-pill text-bg-light text-dark border">New articles</span>
+                          <span className="badge rounded-pill text-bg-light text-dark border">No spam</span>
+                        </div>
+                      </div>
+                      <div className="col-lg-5">
+                        <div className="bg-white rounded-4 shadow-sm p-4">
+                          <div className="d-flex align-items-center gap-3 mb-3">
+                            <Image
+                              src="/Cupid and Dogs-Picsart-BackgroundRemover.png"
+                              alt="k9cupid"
+                              width={56}
+                              height={56}
+                              style={{ width: "56px", height: "56px", objectFit: "contain" }}
+                            />
+                            <div>
+                              <h5 className="mb-0">Subscribe</h5>
+                              <div className="text-muted">Get the next update in your inbox.</div>
+                            </div>
+                          </div>
+                          <NewsletterSubscribeForm
+                            source="blog_grid"
+                            variant="button"
+                            placeholder="Email address"
+                            successBehavior="inline"
+                          />
+                          <div className="text-muted mt-3" style={{ fontSize: 12, lineHeight: "18px" }}>
+                            By subscribing you agree to receive emails from k9cupid.
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
+            )}
           </div>
           
           {/* Pagination Controls */}

@@ -60,6 +60,15 @@ export async function POST(request: Request) {
 
     const db = getPool();
 
+    const existing = await db.query<{ status: string }>(
+      `SELECT status FROM newsletter_subscribers WHERE email = $1`,
+      [email]
+    );
+
+    if (existing.rows[0]?.status === "active") {
+      return NextResponse.json({ ok: true, state: "already_subscribed" }, { status: 200 });
+    }
+
     await db.query(
       `
         INSERT INTO newsletter_subscribers (email, status, unsubscribe_token_hash, source, unsubscribed_at, updated_at)
@@ -92,7 +101,10 @@ export async function POST(request: Request) {
       null;
     }
 
-    return NextResponse.json({ ok: true }, { status: 200 });
+    return NextResponse.json(
+      { ok: true, state: existing.rows.length > 0 ? "resubscribed" : "subscribed" },
+      { status: 200 }
+    );
   } catch (e) {
     return NextResponse.json(
       { ok: false, error: "Subscription failed." },
