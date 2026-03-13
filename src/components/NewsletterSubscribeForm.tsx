@@ -141,9 +141,14 @@ export default function NewsletterSubscribeForm({
       ) : (
         <div
           className="search-bar border rounded-pill border-dark-subtle px-2"
-          style={{ overflow: "hidden", background: "#fff" }}
+          style={{ overflow: "hidden", background: "#fff", padding: 4 }}
         >
-          <form className="text-center d-flex align-items-center" onSubmit={handleSubscribe} noValidate>
+          <form
+            className="text-center d-flex align-items-center"
+            onSubmit={handleSubscribe}
+            noValidate
+            style={{ width: "100%", position: "relative" }}
+          >
             <input
               type="email"
               className="form-control border-0 bg-transparent"
@@ -154,16 +159,34 @@ export default function NewsletterSubscribeForm({
               aria-label="Email address"
               data-newsletter-email="true"
               style={{
+                flex: 1,
                 borderRadius: 9999,
                 outline: "none",
                 boxShadow: "none",
                 backgroundColor: "#fff",
                 padding: "0.75rem 1rem",
                 height: "auto",
+                paddingRight: variant === "button" ? "10.5rem" : "1rem",
               }}
             />
             {variant === "button" ? (
-              <button type="submit" className="btn btn-dark rounded-pill px-4 py-2" disabled={submitting}>
+              <button
+                type="submit"
+                className="btn btn-dark rounded-pill px-4 py-2"
+                disabled={submitting}
+                style={{
+                  position: "absolute",
+                  right: 4,
+                  top: 4,
+                  bottom: 4,
+                  height: "auto",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 9999,
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Subscribe
               </button>
             ) : (
