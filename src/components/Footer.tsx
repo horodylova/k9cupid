@@ -176,35 +176,11 @@ export default function Footer() {
             </div>
             <div className="col-md-3">
               <div className="footer-menu">
-                <div className="d-none d-md-block">
-                  <h3>Our Newsletter</h3>
-                  <p className="blog-paragraph fs-6">
-                    Subscribe to our newsletter to get updates about our latest breed guides and adoption tips.
-                  </p>
-                  <NewsletterSubscribeForm />
-                </div>
-
-                <div className="d-md-none">
-                  <button
-                    type="button"
-                    className="btn p-0 border-0 bg-transparent w-100 text-start"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#footer-newsletter"
-                    aria-expanded="false"
-                    aria-controls="footer-newsletter"
-                  >
-                    <h3 className="mb-0 d-flex align-items-center justify-content-between">
-                      <span>Our Newsletter</span>
-                      <iconify-icon icon="ri:arrow-down-s-line" className="fs-4"></iconify-icon>
-                    </h3>
-                  </button>
-                  <div className="collapse mt-3" id="footer-newsletter">
-                    <p className="blog-paragraph fs-6">
-                      Subscribe to our newsletter to get updates about our latest breed guides and adoption tips.
-                    </p>
-                    <NewsletterSubscribeForm />
-                  </div>
-                </div>
+                <h3>Our Newsletter</h3>
+                <p className="blog-paragraph fs-6">
+                  Subscribe to our newsletter to get updates about our latest breed guides and adoption tips.
+                </p>
+                <NewsletterSubscribeForm />
               </div>
             </div>
           </div>
