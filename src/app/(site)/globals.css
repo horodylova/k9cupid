@@ -945,6 +945,73 @@ Single Product section style start
     margin-bottom: 2.5rem;
   }
 
+  .footer-accordion {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+
+  .footer-accordion__summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+    padding: 0.25rem 0;
+  }
+
+  .footer-accordion__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .footer-accordion__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #000;
+  }
+
+  .footer-accordion__icons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-accordion__icon {
+    font-size: 22px;
+    color: #000;
+    line-height: 1;
+  }
+
+  .footer-accordion__icon--open {
+    display: none;
+  }
+
+  .footer-accordion[open] .footer-accordion__icon--open {
+    display: inline-block;
+  }
+
+  .footer-accordion[open] .footer-accordion__icon--closed {
+    display: none;
+  }
+
+  .footer-accordion__content {
+    padding-top: 0.75rem;
+    padding-bottom: 0.25rem;
+    animation: footerAccordionIn 160ms ease-out;
+  }
+
+  @keyframes footerAccordionIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .footer-brand {
     display: flex;
     flex-direction: column;

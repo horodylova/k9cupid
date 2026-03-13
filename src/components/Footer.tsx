@@ -64,52 +64,126 @@ export default function Footer() {
             </div>
             <div className="col-md-3">
               <div className="footer-menu">
-                <h3>Quick Links</h3>
-                <ul className="menu-list list-unstyled">
-                  <li className="menu-item">
-                    <Link href="/" className="nav-link">Home</Link>
-                  </li>
-                  <li className="menu-item">
-                    <Link href="/quiz" className="nav-link">Quiz</Link>
-                  </li>
-                  <li className="menu-item">
-                    <Link href="/breeds" className="nav-link">Breeds</Link>
-                  </li>
-                  <li className="menu-item">
-                    <Link href="/blog" className="nav-link">Blog</Link>
-                  </li>
-                  <li className="menu-item">
-                    <Link href="/about" className="nav-link">About Us</Link>
-                  </li>
-                  <li className="menu-item">
-                    <Link href="/contact" className="nav-link">Contact</Link>
-                  </li>
-                </ul>
+                <div className="d-none d-md-block">
+                  <h3>Quick Links</h3>
+                  <ul className="menu-list list-unstyled">
+                    <li className="menu-item">
+                      <Link href="/" className="nav-link">Home</Link>
+                    </li>
+                    <li className="menu-item">
+                      <Link href="/quiz" className="nav-link">Quiz</Link>
+                    </li>
+                    <li className="menu-item">
+                      <Link href="/breeds" className="nav-link">Breeds</Link>
+                    </li>
+                    <li className="menu-item">
+                      <Link href="/blog" className="nav-link">Blog</Link>
+                    </li>
+                    <li className="menu-item">
+                      <Link href="/about" className="nav-link">About Us</Link>
+                    </li>
+                    <li className="menu-item">
+                      <Link href="/contact" className="nav-link">Contact</Link>
+                    </li>
+                  </ul>
+                </div>
+                <details className="footer-accordion d-md-none">
+                  <summary className="footer-accordion__summary">
+                    <span className="footer-accordion__title">Quick Links</span>
+                    <span className="footer-accordion__icons" aria-hidden="true">
+                      <iconify-icon className="footer-accordion__icon footer-accordion__icon--closed" icon="ri:add-line"></iconify-icon>
+                      <iconify-icon className="footer-accordion__icon footer-accordion__icon--open" icon="ri:subtract-line"></iconify-icon>
+                    </span>
+                  </summary>
+                  <div className="footer-accordion__content">
+                    <ul className="menu-list list-unstyled">
+                      <li className="menu-item">
+                        <Link href="/" className="nav-link">Home</Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link href="/quiz" className="nav-link">Quiz</Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link href="/breeds" className="nav-link">Breeds</Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link href="/blog" className="nav-link">Blog</Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link href="/about" className="nav-link">About Us</Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link href="/contact" className="nav-link">Contact</Link>
+                      </li>
+                    </ul>
+                  </div>
+                </details>
               </div>
             </div>
             <div className="col-md-3">
               <div className="footer-menu">
-                <h3>Help Center</h3>
-                <ul className="menu-list list-unstyled">
-                  <li className="menu-item">
-                    <Link href="/faqs" className="nav-link">FAQs</Link>
-                  </li>
-                  <li className="menu-item">
-                    <Link href="/privacy-policy" className="nav-link">Privacy Policy</Link>
-                  </li>
-                  <li className="menu-item">
-                    <Link href="/terms-of-service" className="nav-link">Terms of Service</Link>
-                  </li>
-                </ul>
+                <div className="d-none d-md-block">
+                  <h3>Help Center</h3>
+                  <ul className="menu-list list-unstyled">
+                    <li className="menu-item">
+                      <Link href="/faqs" className="nav-link">FAQs</Link>
+                    </li>
+                    <li className="menu-item">
+                      <Link href="/privacy-policy" className="nav-link">Privacy Policy</Link>
+                    </li>
+                    <li className="menu-item">
+                      <Link href="/terms-of-service" className="nav-link">Terms of Service</Link>
+                    </li>
+                  </ul>
+                </div>
+                <details className="footer-accordion d-md-none">
+                  <summary className="footer-accordion__summary">
+                    <span className="footer-accordion__title">Help Center</span>
+                    <span className="footer-accordion__icons" aria-hidden="true">
+                      <iconify-icon className="footer-accordion__icon footer-accordion__icon--closed" icon="ri:add-line"></iconify-icon>
+                      <iconify-icon className="footer-accordion__icon footer-accordion__icon--open" icon="ri:subtract-line"></iconify-icon>
+                    </span>
+                  </summary>
+                  <div className="footer-accordion__content">
+                    <ul className="menu-list list-unstyled">
+                      <li className="menu-item">
+                        <Link href="/faqs" className="nav-link">FAQs</Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link href="/privacy-policy" className="nav-link">Privacy Policy</Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link href="/terms-of-service" className="nav-link">Terms of Service</Link>
+                      </li>
+                    </ul>
+                  </div>
+                </details>
               </div>
             </div>
             <div className="col-md-3">
               <div className="footer-menu">
-                <h3>Our Newsletter</h3>
-                <p className="blog-paragraph fs-6">
-                  Subscribe to our newsletter to get updates about our latest breed guides and adoption tips.
-                </p>
-                <NewsletterSubscribeForm />
+                <div className="d-none d-md-block">
+                  <h3>Our Newsletter</h3>
+                  <p className="blog-paragraph fs-6">
+                    Subscribe to our newsletter to get updates about our latest breed guides and adoption tips.
+                  </p>
+                  <NewsletterSubscribeForm />
+                </div>
+                <details className="footer-accordion d-md-none">
+                  <summary className="footer-accordion__summary">
+                    <span className="footer-accordion__title">Our Newsletter</span>
+                    <span className="footer-accordion__icons" aria-hidden="true">
+                      <iconify-icon className="footer-accordion__icon footer-accordion__icon--closed" icon="ri:add-line"></iconify-icon>
+                      <iconify-icon className="footer-accordion__icon footer-accordion__icon--open" icon="ri:subtract-line"></iconify-icon>
+                    </span>
+                  </summary>
+                  <div className="footer-accordion__content">
+                    <p className="blog-paragraph fs-6">
+                      Subscribe to our newsletter to get updates about our latest breed guides and adoption tips.
+                    </p>
+                    <NewsletterSubscribeForm />
+                  </div>
+                </details>
               </div>
             </div>
           </div>
