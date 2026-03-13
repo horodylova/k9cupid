@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Pool } from "pg";
 import {
-  buildNewsletterEmailHtml,
+  buildWeeklyNewsletterEmailHtml,
   buildUnsubscribeToken,
   getLatestPosts,
   getSiteUrl,
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
       try {
         const token = buildUnsubscribeToken(email);
         const unsubscribeUrl = `${siteUrl}/api/newsletter/unsubscribe?token=${encodeURIComponent(token)}`;
-        const html = buildNewsletterEmailHtml(posts, unsubscribeUrl);
+        const html = buildWeeklyNewsletterEmailHtml(posts, unsubscribeUrl);
         await sendBrevoEmail(email, subject, html);
         await db.query(
           `UPDATE newsletter_subscribers SET last_sent_at = now(), updated_at = now() WHERE email = $1`,

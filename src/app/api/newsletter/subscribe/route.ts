@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { Pool } from "pg";
 import crypto from "crypto";
 import {
-  buildNewsletterEmailHtml,
+  buildWelcomeEmailHtml,
   buildUnsubscribeToken,
   getLatestPosts,
   getSiteUrl,
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
       const posts = await getLatestPosts(3);
       if (posts.length > 0) {
         const subject = "Welcome to k9cupid";
-        const html = buildNewsletterEmailHtml(posts, unsubscribeUrl);
+        const html = buildWelcomeEmailHtml(posts, unsubscribeUrl);
         await sendBrevoEmail(email, subject, html);
         await db.query(
           `UPDATE newsletter_subscribers SET last_sent_at = now(), updated_at = now() WHERE email = $1`,

@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 
 function requireEnv(name: string) {
   const v = process.env[name];
@@ -33,6 +34,7 @@ type SanityPost = {
   _id: string;
   title: string;
   slug: string;
+  mainImage?: unknown;
   excerpt: string;
   publishedAt?: string;
   _createdAt: string;
@@ -44,6 +46,7 @@ export type LatestPost = {
   excerpt: string;
   dateLabel: string;
   url: string;
+  imageUrl?: string;
 };
 
 function truncateText(text: string, maxLen: number) {
@@ -60,6 +63,7 @@ export async function getLatestPosts(limit = 3): Promise<LatestPost[]> {
     _id,
     title,
     "slug": slug.current,
+    mainImage,
     excerpt,
     publishedAt,
     _createdAt
@@ -75,6 +79,9 @@ export async function getLatestPosts(limit = 3): Promise<LatestPost[]> {
       month: "short",
       day: "numeric",
     });
+    const imageUrl = post.mainImage
+      ? urlFor(post.mainImage).width(1120).height(700).url()
+      : undefined;
 
     return {
       id: post.slug,
@@ -82,6 +89,7 @@ export async function getLatestPosts(limit = 3): Promise<LatestPost[]> {
       excerpt: truncateText(post.excerpt, 160),
       dateLabel,
       url: `${siteUrl}/blog/${post.slug}`,
+      imageUrl,
     };
   });
 }
@@ -95,11 +103,8 @@ function escapeHtml(input: string) {
     .replace(/'/g, "&#039;");
 }
 
-export function buildNewsletterEmailHtml(posts: LatestPost[], unsubscribeUrl: string) {
-  const siteUrl = getSiteUrl();
-  const logoUrl = `${siteUrl}/${encodeURI("Cupid and Dogs-Picsart-BackgroundRemover.png")}`;
-
-  const postsHtml = posts
+function buildPostsHtmlTextOnly(posts: LatestPost[]) {
+  return posts
     .map((p) => {
       const title = escapeHtml(p.title);
       const excerpt = escapeHtml(p.excerpt);
@@ -121,6 +126,64 @@ export function buildNewsletterEmailHtml(posts: LatestPost[], unsubscribeUrl: st
       `;
     })
     .join("");
+}
+
+function buildPostsHtmlWithImages(posts: LatestPost[]) {
+  return posts
+    .map((p) => {
+      const title = escapeHtml(p.title);
+      const excerpt = escapeHtml(p.excerpt);
+      const url = p.url;
+      const date = escapeHtml(p.dateLabel);
+      const img = p.imageUrl ? escapeHtml(p.imageUrl) : "";
+
+      return `
+        <tr>
+          <td style="padding: 16px 0;">
+            ${
+              img
+                ? `<a href="${url}" style="text-decoration:none;">
+                     <img src="${img}" alt="${title}" width="552" style="display:block;width:100%;max-width:552px;height:auto;border-radius:12px;border:0;outline:none;text-decoration:none;background:#f3f4f6;" />
+                   </a>
+                   <div style="height:10px;line-height:10px;font-size:10px;">&nbsp;</div>`
+                : ""
+            }
+            <div style="font-size:12px;line-height:18px;color:#6b7280;">${date}</div>
+            <div style="font-size:18px;line-height:24px;font-weight:800;margin:4px 0 6px;">
+              <a href="${url}" style="color:#111827;text-decoration:none;">${title}</a>
+            </div>
+            <div style="font-size:14px;line-height:20px;color:#374151;margin:0 0 10px;">${excerpt}</div>
+            <a href="${url}" style="display:inline-block;font-size:14px;line-height:20px;color:#111827;text-decoration:underline;">Read more</a>
+          </td>
+        </tr>
+        <tr><td style="height:1px;background:rgba(17,24,39,0.08);"></td></tr>
+      `;
+    })
+    .join("");
+}
+
+function buildEmailShell({
+  preheader,
+  headline,
+  intro,
+  postsHtml,
+  primaryCtaLabel,
+  primaryCtaUrl,
+  footerText,
+  unsubscribeUrl,
+}: {
+  preheader?: string;
+  headline: string;
+  intro: string;
+  postsHtml: string;
+  primaryCtaLabel: string;
+  primaryCtaUrl: string;
+  footerText: string;
+  unsubscribeUrl: string;
+}) {
+  const siteUrl = getSiteUrl();
+  const logoUrl = `${siteUrl}/${encodeURI("Cupid and Dogs-Picsart-BackgroundRemover.png")}`;
+  const safePreheader = preheader ? escapeHtml(preheader) : "";
 
   return `<!doctype html>
 <html lang="en">
@@ -130,6 +193,11 @@ export function buildNewsletterEmailHtml(posts: LatestPost[], unsubscribeUrl: st
     <title>k9cupid Newsletter</title>
   </head>
   <body style="margin:0;background:#f9f3ec;">
+    ${
+      safePreheader
+        ? `<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;line-height:0;font-size:0;">${safePreheader}</div>`
+        : ""
+    }
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f9f3ec;padding:24px 0;">
       <tr>
         <td align="center">
@@ -147,10 +215,10 @@ export function buildNewsletterEmailHtml(posts: LatestPost[], unsubscribeUrl: st
                   </tr>
                 </table>
                 <div style="font-size:22px;line-height:28px;font-weight:800;color:#111827;margin:18px 0 6px;">
-                  This week on k9cupid
+                  ${escapeHtml(headline)}
                 </div>
                 <div style="font-size:14px;line-height:20px;color:#374151;margin:0 0 12px;">
-                  Breed guides, adoption tips, and stories to help you find the right match.
+                  ${escapeHtml(intro)}
                 </div>
               </td>
             </tr>
@@ -167,10 +235,10 @@ export function buildNewsletterEmailHtml(posts: LatestPost[], unsubscribeUrl: st
                   <tr>
                     <td>
                       <div style="font-size:14px;line-height:20px;color:#374151;margin:0 0 14px;">
-                        Soon we’ll also share shelter updates and adoption leads in this newsletter—we’re already working on it.
+                        ${escapeHtml(footerText)}
                       </div>
-                      <a href="${siteUrl}" style="display:inline-block;background:#111827;color:#ffffff;text-decoration:none;padding:12px 16px;border-radius:9999px;font-size:14px;line-height:20px;font-weight:700;">
-                        Explore more on k9cupid
+                      <a href="${primaryCtaUrl}" style="display:inline-block;background:#111827;color:#ffffff;text-decoration:none;padding:12px 16px;border-radius:9999px;font-size:14px;line-height:20px;font-weight:700;">
+                        ${escapeHtml(primaryCtaLabel)}
                       </a>
                     </td>
                   </tr>
@@ -191,6 +259,41 @@ export function buildNewsletterEmailHtml(posts: LatestPost[], unsubscribeUrl: st
     </table>
   </body>
 </html>`;
+}
+
+export function buildWelcomeEmailHtml(posts: LatestPost[], unsubscribeUrl: string) {
+  const siteUrl = getSiteUrl();
+  const postsHtml = buildPostsHtmlTextOnly(posts);
+
+  return buildEmailShell({
+    preheader: "Welcome to k9cupid — latest articles inside.",
+    headline: "Welcome to k9cupid",
+    intro:
+      "Thanks for joining. Here’s what you’ll get: the latest blog posts, quick links, and new updates as we ship them. We’ll email no more than once a week, and you can unsubscribe anytime.",
+    postsHtml,
+    primaryCtaLabel: "Start exploring",
+    primaryCtaUrl: `${siteUrl}/blog`,
+    footerText:
+      "Coming soon: shelter highlights and adoption leads in this newsletter—we’re already working on it.",
+    unsubscribeUrl,
+  });
+}
+
+export function buildWeeklyNewsletterEmailHtml(posts: LatestPost[], unsubscribeUrl: string) {
+  const siteUrl = getSiteUrl();
+  const postsHtml = buildPostsHtmlWithImages(posts);
+
+  return buildEmailShell({
+    preheader: "Your weekly k9cupid updates — new articles inside.",
+    headline: "This week on k9cupid",
+    intro: "Latest breed guides, adoption tips, and stories to help you find the right match.",
+    postsHtml,
+    primaryCtaLabel: "Explore more on k9cupid",
+    primaryCtaUrl: siteUrl,
+    footerText:
+      "Soon we’ll also share shelter updates and adoption leads in this newsletter—we’re already working on it.",
+    unsubscribeUrl,
+  });
 }
 
 export async function sendBrevoEmail(toEmail: string, subject: string, htmlContent: string) {
