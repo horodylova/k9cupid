@@ -28,13 +28,33 @@ export default function Footer() {
                   <div className="social-links">
                     <ul className="d-flex list-unstyled gap-3">
                       <li className="social">
-                        <a href="#">
+                        <a
+                          href="https://www.facebook.com/K9Cupid.fit"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Facebook"
+                        >
                           <iconify-icon className="social-icon" icon="ri:facebook-fill"></iconify-icon>
                         </a>
                       </li>
                       <li className="social">
-                        <a href="#">
+                        <a
+                          href="https://www.instagram.com/k9cupid.fit/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Instagram"
+                        >
                           <iconify-icon className="social-icon" icon="ri:instagram-fill"></iconify-icon>
+                        </a>
+                      </li>
+                      <li className="social">
+                        <a
+                          href="https://www.linkedin.com/company/k9cupid-fit/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="LinkedIn"
+                        >
+                          <iconify-icon className="social-icon" icon="ri:linkedin-fill"></iconify-icon>
                         </a>
                       </li>
                     </ul>
