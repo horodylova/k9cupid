@@ -1,6 +1,7 @@
 import ReadAlso from '@/components/ReadAlso';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Metadata } from "next";
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
@@ -25,7 +26,149 @@ interface TextWithIllustration {
   imagePosition?: 'left' | 'right';
 }
 
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const siteUrl = (process.env.SITE_URL || "https://k9cupid.fit").replace(/\/+$/, "");
+  const canonicalUrl = `${siteUrl}/blog/${params.id}`;
+
+  const query = `*[_type == "post" && slug.current == $slug][0] {
+    title,
+    excerpt,
+    mainImage
+  }`;
+
+  let post: { title?: string; excerpt?: string; mainImage?: unknown } | null = null;
+
+  try {
+    post = await client.fetch(query, { slug: params.id }, { next: { revalidate: 0 } });
+  } catch {
+    post = null;
+  }
+
+  const fallbackTitle = "k9cupid - Find Your Perfect Dog Match";
+  const fallbackDescription = "Discover the dog breed that fits your lifestyle with k9cupid.";
+
+  const title = post?.title ? `${post.title} | k9cupid` : fallbackTitle;
+  const description = (post?.excerpt || "").trim() || fallbackDescription;
+  const ogTitle = post?.title || fallbackTitle;
+
+  const imageUrl = post?.mainImage
+    ? urlFor(post.mainImage).width(1200).height(630).url()
+    : `${siteUrl}/icon.svg`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: canonicalUrl },
+    openGraph: {
+      type: "article",
+      title: ogTitle,
+      description,
+      url: canonicalUrl,
+      siteName: "k9cupid",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: ogTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ogTitle,
+      description,
+      images: [imageUrl],
+    },
+  };
+}
+
+function ShareBar({ canonicalUrl, title }: { canonicalUrl: string; title: string }) {
+  const shareTitle = title.trim() || "k9cupid";
+  const encodedUrl = encodeURIComponent(canonicalUrl);
+  const encodedTitle = encodeURIComponent(shareTitle);
+
+  return (
+    <div className="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-5">
+      <Link href="/" className="d-inline-flex align-items-center text-decoration-none">
+        <Image
+          src="/images/k9cupid-logo-final.png"
+          alt="k9cupid"
+          width={72}
+          height={72}
+          style={{ width: 72, height: 72, objectFit: "contain" }}
+        />
+      </Link>
+      <div
+        className="secondary-font text-uppercase text-muted fw-semibold"
+        style={{ letterSpacing: "0.08em", lineHeight: "1", display: "flex", alignItems: "center" }}
+      >
+        Share:
+      </div>
+      <ul className="d-flex flex-wrap justify-content-center align-items-center list-unstyled gap-3 mb-0" style={{ rowGap: 12 }}>
+        <li className="social">
+          <a
+            href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on Facebook"
+            className="sharebar-social-link"
+          >
+            <iconify-icon className="sharebar-social-icon" icon="ri:facebook-fill"></iconify-icon>
+          </a>
+        </li>
+        <li className="social">
+          <a
+            href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on X"
+            className="sharebar-social-link"
+          >
+            <iconify-icon className="sharebar-social-icon" icon="ri:twitter-x-fill"></iconify-icon>
+          </a>
+        </li>
+        <li className="social">
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on LinkedIn"
+            className="sharebar-social-link"
+          >
+            <iconify-icon className="sharebar-social-icon" icon="ri:linkedin-fill"></iconify-icon>
+          </a>
+        </li>
+        <li className="social">
+          <a
+            href={`https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on Telegram"
+            className="sharebar-social-link"
+          >
+            <iconify-icon className="sharebar-social-icon" icon="ri:telegram-fill"></iconify-icon>
+          </a>
+        </li>
+        <li className="social">
+          <a
+            href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareTitle} ${canonicalUrl}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on WhatsApp"
+            className="sharebar-social-link"
+          >
+            <iconify-icon className="sharebar-social-icon" icon="ri:whatsapp-fill"></iconify-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
 export default async function BlogPostPage({ params }: { params: { id: string } }) {
+  const siteUrl = (process.env.SITE_URL || "https://k9cupid.fit").replace(/\/+$/, "");
+  const canonicalUrl = `${siteUrl}/blog/${params.id}`;
   const query = `*[_type == "post" && slug.current == $slug][0] {
     title,
     mainImage,
@@ -41,7 +184,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
   let post = null;
 
   try {
-    post = await client.fetch(query, { slug: params.id });
+    post = await client.fetch(query, { slug: params.id }, { next: { revalidate: 0 } });
   } catch (error) {
     console.error("Sanity fetch failed:", error);
   }
@@ -88,7 +231,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                       <div className="row">
                         <article className="post-item">
                           <div className="post-content">
-                            <div className="post-thumbnail mb-5">
+                            <div className="post-thumbnail mb-3">
                               <Image 
                                 src="/images/blog-large.jpg" 
                                 alt="single-post" 
@@ -98,6 +241,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                                 style={{ width: '100%', height: 'auto' }}
                               />
                             </div>
+                            <ShareBar canonicalUrl={canonicalUrl} title="10 Reasons to be helpful towards any animals" />
                             <div className="post-description py-4">
                               <p className="blog-paragraph">
                                 <strong>Lorem ipsum dolor sit amet... (Static Content)</strong>
@@ -192,6 +336,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
 
   const dateObj = new Date(post.publishedAt || post._createdAt);
   const dateStr = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const shareTitle = post.title || "k9cupid";
 
   return (
     <>
@@ -240,7 +385,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                 <article className="post-item">
                   <div className="post-content">
                     {post.mainImage && (
-                      <div className="post-thumbnail mb-5">
+                      <div className="post-thumbnail mb-3">
                         <Image 
                           src={urlFor(post.mainImage).width(1200).height(800).url()} 
                           alt={post.title} 
@@ -251,6 +396,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                         />
                       </div>
                     )}
+                    <ShareBar canonicalUrl={canonicalUrl} title={shareTitle} />
                     <div className="post-description py-4 clearfix">
                       <PortableText value={post.body} components={components} />
                     </div>
