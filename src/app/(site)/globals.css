@@ -856,6 +856,11 @@ iconify-icon.send-icon {
   flex: 1 1 220px;
 }
 
+.account-profile-note {
+  color: rgba(65, 64, 62, 0.92) !important;
+  font-weight: 500 !important;
+}
+
 @media (min-width: 768px) {
   .wishlist-action-link {
     flex: 0 0 auto;
