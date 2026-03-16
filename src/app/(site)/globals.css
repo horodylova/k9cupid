@@ -773,6 +773,125 @@ iconify-icon.send-icon {
   background: #DEAD6F;
 }
 
+.wishlist-heart-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(65, 64, 62, 0.15);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0px 8px 18px 0px rgba(0, 0, 0, 0.10);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.wishlist-heart-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0px 10px 22px 0px rgba(0, 0, 0, 0.12);
+}
+
+.wishlist-heart-button:active {
+  transform: translateY(0px) scale(0.98);
+}
+
+.wishlist-heart-button:focus-visible {
+  outline: 2px solid rgba(222, 173, 111, 0.6);
+  outline-offset: 2px;
+}
+
+.wishlist-heart-icon {
+  font-size: 1.15rem;
+  color: rgba(65, 64, 62, 0.70);
+  line-height: 1;
+}
+
+.wishlist-heart-button.is-active {
+  border-color: rgba(222, 173, 111, 0.6);
+  background: rgba(249, 243, 236, 0.95);
+}
+
+.wishlist-heart-button.is-active .wishlist-heart-icon {
+  color: #DEAD6F;
+}
+
+.wishlist-remove-button {
+  color: rgba(65, 64, 62, 0.92);
+}
+
+.wishlist-remove-button:hover {
+  color: #DC3545;
+}
+
+.wishlist-remove-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.wishlist-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.wishlist-table {
+  width: 100%;
+}
+
+.wishlist-table {
+  border-top: 0;
+}
+
+.wishlist-table tbody tr:first-child td {
+  border-top: 0 !important;
+}
+
+.wishlist-action-link {
+  flex: 1 1 220px;
+}
+
+@media (min-width: 768px) {
+  .wishlist-action-link {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .wishlist-table thead {
+    display: none;
+  }
+
+  .wishlist-table tbody,
+  .wishlist-table tbody tr,
+  .wishlist-table tbody td {
+    display: block;
+    width: 100%;
+  }
+
+  .wishlist-table tbody tr {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 14px;
+    background: #FFF;
+  }
+
+  .wishlist-table tbody td {
+    border: 0;
+    padding: 0 !important;
+  }
+
+  .wishlist-table tbody td + td {
+    margin-top: 14px;
+  }
+}
+
 
 @media screen and (max-width: 991px) {
 

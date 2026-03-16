@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Dog } from "@/lib/api";
+import WishlistHeartButton from "@/components/WishlistHeartButton";
 
 type QuizBreedCardProps = {
   breed: Dog;
@@ -11,10 +12,12 @@ type QuizBreedCardProps = {
 
 export default function QuizBreedCard({ breed }: QuizBreedCardProps) {
   const [imgSrc, setImgSrc] = useState(breed.image_link || "/no-image-available.jpg");
+  const href = `/breeds/${encodeURIComponent(breed.name)}`;
 
   return (
-    <Link href={`/breeds/${encodeURIComponent(breed.name)}`} target="_blank" className="text-decoration-none">
-      <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+    <Link href={href} target="_blank" className="text-decoration-none">
+      <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white position-relative">
+        <WishlistHeartButton name={breed.name} href={href} imageSrc={breed.image_link || undefined} />
         <div className="position-relative" style={{ paddingTop: "75%" }}>
           <Image
             src={imgSrc}

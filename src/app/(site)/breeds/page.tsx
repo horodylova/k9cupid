@@ -4,6 +4,7 @@ import { getBreeds, Dog } from "@/lib/api";
 import BreedSearchBar from "@/components/BreedSearchBar";
 import BreedSorter from "@/components/BreedSorter";
 import BreedImage from "@/components/BreedImage";
+import WishlistHeartButton from "@/components/WishlistHeartButton";
 import { Suspense } from "react";
 
 function getTemperamentTags(breed: Dog) {
@@ -160,6 +161,11 @@ export default async function BreedsPage({ searchParams }: Props) {
                 {breeds.map((breed) => (
                   <div key={breed.name} className="col-md-4 my-4">
                     <div className="card position-relative h-100">
+                      <WishlistHeartButton
+                        name={breed.name}
+                        href={`/breeds/${encodeURIComponent(breed.name)}`}
+                        imageSrc={breed.image_link}
+                      />
                       <Link href={`/breeds/${encodeURIComponent(breed.name)}`}>
                         <BreedImage 
                           src={breed.image_link}
