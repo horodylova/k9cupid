@@ -6,21 +6,20 @@ import { ChangeEvent } from 'react';
 export default function BreedSorter() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentSort = searchParams.get('sort') || 'name';
+  const currentSort = searchParams?.get('sort') ?? 'name';
 
   const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const newSort = e.target.value;
-    const params = new URLSearchParams(searchParams.toString());
-    
+    const params = new URLSearchParams(searchParams?.toString() ?? '');
+
     if (newSort === 'name') {
       params.delete('sort');
     } else {
       params.set('sort', newSort);
     }
-    
-    // Reset offset when sorting changes
+
     params.delete('offset');
-    
+
     router.push(`/breeds?${params.toString()}`);
   };
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function NotFound() {
+export default function Custom404() {
   return (
     <main style={{ minHeight: "60vh", display: "grid", placeItems: "center" }}>
       <section style={{ textAlign: "center", padding: 24 }}>
@@ -15,3 +15,4 @@ export default function NotFound() {
     </main>
   );
 }
+

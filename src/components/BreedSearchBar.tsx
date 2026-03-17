@@ -6,13 +6,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 export default function BreedSearchBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState(searchParams.get('name') || '');
+  const [query, setQuery] = useState(searchParams?.get('name') ?? '');
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Close dropdown when clicking outside
     function handleClickOutside(event: MouseEvent) {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
         setIsOpen(false);
@@ -48,13 +47,12 @@ export default function BreedSearchBar() {
   const handleSearch = (term: string) => {
     setQuery(term);
     setIsOpen(false);
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams?.toString() ?? '');
     if (term) {
       params.set('name', term);
     } else {
       params.delete('name');
     }
-    // Reset page when searching
     params.delete('offset');
     router.push(`/breeds?${params.toString()}`);
   };
