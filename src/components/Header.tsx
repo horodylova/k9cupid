@@ -4,15 +4,14 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
-import { useRouter } from 'next/navigation';
 import { useNavigation } from '@/context/NavigationContext';
 
 export default function Header() {
   const [loading, setLoading] = useState(true);
   const { items, totalItems, removeItem, totalPrice } = useCart();
-  const router = useRouter();
   const { attemptNavigation } = useNavigation();
   const [sizeValue, setSizeValue] = useState('');
+  const [isSizeOpen, setIsSizeOpen] = useState(false);
 
   const closeMenu = () => {
     const offcanvasNavbar = document.getElementById('offcanvasNavbar');
@@ -28,6 +27,17 @@ export default function Header() {
     attemptNavigation(path);
   };
 
+  const sizeOptions = [
+    { id: 'toy', label: 'Toy Breeds' },
+    { id: 'small', label: 'Small Breeds' },
+    { id: 'medium', label: 'Medium Breeds' },
+    { id: 'large', label: 'Large Breeds' },
+  ];
+
+  const activeSizeLabel = sizeValue
+    ? sizeOptions.find((opt) => opt.id === sizeValue)?.label ?? 'Browse by Size'
+    : 'Browse by Size';
+
   useEffect(() => {
     // Simulate preloader fade out
     const timer = setTimeout(() => {
@@ -36,6 +46,20 @@ export default function Header() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!isSizeOpen) return;
+
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+      if (target.closest('[data-size-dropdown="true"]')) return;
+      setIsSizeOpen(false);
+    };
+
+    window.addEventListener('pointerdown', onPointerDown);
+    return () => window.removeEventListener('pointerdown', onPointerDown);
+  }, [isSizeOpen]);
 
   if (loading) {
      // Optional: Render preloader here or return null if handled by CSS/Layout
@@ -287,24 +311,66 @@ export default function Header() {
               </div>
 
               <div className="offcanvas-body justify-content-between">
-                <select
-                  className="filter-categories border-0 mb-0 me-5"
-                  value={sizeValue}
-                  onChange={(e) => {
-                    const v = e.target.value;
-                    setSizeValue(v);
-                    if (v) {
-                      closeMenu();
-                      router.push(`/breeds?size=${encodeURIComponent(v)}`);
-                    }
-                  }}
-                >
-                  <option value="">Browse by Size</option>
-                  <option value="toy">Toy Breeds</option>
-                  <option value="small">Small Breeds</option>
-                  <option value="medium">Medium Breeds</option>
-                  <option value="large">Large Breeds</option>
-                </select>
+                <div className="position-relative mb-0 me-5" data-size-dropdown="true">
+                  <button
+                    type="button"
+                    className="filter-categories border-0 mb-0 d-inline-flex align-items-center gap-2 bg-transparent py-2 px-3 rounded"
+                    aria-haspopup="listbox"
+                    aria-expanded={isSizeOpen}
+                    onClick={() => setIsSizeOpen((v) => !v)}
+                  >
+                    <span>{activeSizeLabel}</span>
+                    <iconify-icon icon="ri:arrow-down-s-line" className="fs-5"></iconify-icon>
+                  </button>
+                  {isSizeOpen && (
+                    <div
+                      className="position-absolute start-0 mt-2 bg-white border rounded shadow-sm"
+                      style={{ minWidth: 220, zIndex: 1060 }}
+                      role="listbox"
+                    >
+                      <button
+                        type="button"
+                        className="dropdown-item py-2 px-3 w-100 text-start"
+                        style={{ transition: 'background-color 120ms ease, color 120ms ease' }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = '#F9F3EC';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = '';
+                        }}
+                        onClick={() => {
+                          setSizeValue('');
+                          setIsSizeOpen(false);
+                        }}
+                      >
+                        Browse by Size
+                      </button>
+                      {sizeOptions.map((opt) => (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          className="dropdown-item py-2 px-3 w-100 text-start"
+                          style={{ transition: 'background-color 120ms ease, color 120ms ease' }}
+                          aria-pressed={sizeValue === opt.id}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = '#F9F3EC';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = '';
+                          }}
+                          onClick={() => {
+                            setSizeValue(opt.id);
+                            setIsSizeOpen(false);
+                            closeMenu();
+                            attemptNavigation(`/breeds?size=${encodeURIComponent(opt.id)}`);
+                          }}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
                 <ul className="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
                   <li className="nav-item">

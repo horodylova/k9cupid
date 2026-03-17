@@ -1,7 +1,6 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface NavigationContextType {
   attemptNavigation: (path: string) => void;
@@ -13,7 +12,6 @@ const NavigationContext = createContext<NavigationContextType | undefined>(undef
 
 export function NavigationProvider({ children }: { children: ReactNode }) {
   const [interceptor, setInterceptorState] = useState<((path: string) => void) | null>(null);
-  const router = useRouter();
 
   const setInterceptor = useCallback((callback: (path: string) => void) => {
     setInterceptorState(() => callback);
@@ -27,9 +25,11 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
     if (interceptor) {
       interceptor(path);
     } else {
-      router.push(path);
+      if (typeof window !== 'undefined') {
+        window.location.assign(path);
+      }
     }
-  }, [interceptor, router]);
+  }, [interceptor]);
 
   return (
     <NavigationContext.Provider

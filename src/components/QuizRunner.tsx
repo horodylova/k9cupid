@@ -23,6 +23,7 @@ import {
   QuizOptionId,
 } from "@/lib/quizQuestions";
 import { useQuizSession } from "@/hooks/useQuizSession";
+import { saveQuizFinalResults } from "@/lib/quizStorage";
 
 import SharedSpacesQuestion from "@/components/SharedSpacesQuestion";
 import ChildrenQuestion from "@/components/ChildrenQuestion";
@@ -49,7 +50,7 @@ import QuizFinalView from "@/components/QuizFinalView";
 import { QuizStartOverModal, QuizLeaveModal } from "@/components/QuizModals";
 
 export default function QuizRunner() {
-  const { session, recordAnswer, isInitialized } = useQuizSession();
+  const { session, recordAnswer, isInitialized, setStatus } = useQuizSession();
 
   const [showStartOverModal, setShowStartOverModal] = useState(false);
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19>(1);
@@ -61,6 +62,7 @@ export default function QuizRunner() {
   const [showLeaveModal, setShowLeaveModal] = useState(false);
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const fetchingRef = useRef(false);
+  const savedFinalRef = useRef(false);
 
   const totalSteps = 19;
 
@@ -368,6 +370,22 @@ export default function QuizRunner() {
       }
     }
   }, [step, session?.answers, interimBreeds]);
+
+  useEffect(() => {
+    if (step !== 19) {
+      savedFinalRef.current = false;
+      return;
+    }
+    if (!session?.answers || finalBreeds.length === 0 || savedFinalRef.current) {
+      return;
+    }
+    const analysis = getResultAnalysis(session.answers);
+    saveQuizFinalResults({ analysis, finalBreeds });
+    if (session.status !== "completed") {
+      setStatus("completed");
+    }
+    savedFinalRef.current = true;
+  }, [step, session?.answers, session?.status, finalBreeds, setStatus]);
 
   if (!isInitialized || !pageReady || !hasResumed) {
     return (
@@ -765,5 +783,4 @@ export default function QuizRunner() {
     </>
   );
 }
-
 

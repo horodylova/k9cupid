@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Script from "next/script";
 
+export const dynamic = "force-dynamic";
+
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="d-flex flex-column min-vh-100">

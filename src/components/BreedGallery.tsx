@@ -3,6 +3,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import Image from 'next/image';
+import { useMemo, useState } from 'react';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -16,10 +17,16 @@ interface BreedGalleryProps {
 }
 
 export default function BreedGallery({ image, name }: BreedGalleryProps) {
-  // Since we only have one image from the API, we'll use it.
-  // We can't really do a thumbnail gallery with one image, but we'll keep the structure
-  // compliant with the request to follow the template.
-  
+  const fallbackSrc = '/no-image-available.jpg';
+  const initialSrc = useMemo(() => {
+    const value = (image || '').trim();
+    if (!value || value === 'N/A' || value === 'null' || value === 'undefined') {
+      return fallbackSrc;
+    }
+    return value;
+  }, [image]);
+  const [imgSrc, setImgSrc] = useState(initialSrc);
+
   return (
     <div className="row">
       <div className="col-md-12">
@@ -38,12 +45,13 @@ export default function BreedGallery({ image, name }: BreedGalleryProps) {
             <SwiperSlide>
                <div className="breed-gallery-wrapper">
                   <Image 
-                    src={image || '/images/no-image.jpg'} 
+                    src={imgSrc} 
                     alt={name}
                     fill
                     style={{ objectFit: 'cover' }}
                     className="img-fluid rounded-4"
                     unoptimized // API images might be external
+                    onError={() => setImgSrc(fallbackSrc)}
                   />
                </div>
             </SwiperSlide>
@@ -52,26 +60,6 @@ export default function BreedGallery({ image, name }: BreedGalleryProps) {
         </div>
       </div>
       
-      {/* Thumbnail slider - optional since we only have one image */}
-      {/* 
-      <div className="col-md-12 mt-2">
-        <div className="swiper product-thumbnail-slider">
-             <Swiper
-                onSwiper={setThumbsSwiper}
-                spaceBetween={10}
-                slidesPerView={4}
-                freeMode={true}
-                watchSlidesProgress={true}
-                modules={[FreeMode, Navigation, Thumbs]}
-                className="mySwiper"
-              >
-                <SwiperSlide>
-                  <img src={image} className="img-fluid" />
-                </SwiperSlide>
-              </Swiper>
-        </div>
-      </div> 
-      */}
     </div>
   );
 }

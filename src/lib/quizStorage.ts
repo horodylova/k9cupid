@@ -1,3 +1,5 @@
+import type { Dog } from "@/lib/api";
+
 export type QuizStatus = "in_progress" | "completed";
 
 export type QuizAnswer = {
@@ -14,11 +16,18 @@ export type QuizSession = {
 };
 
 const STORAGE_KEY = "k9cupid_quiz_session";
+const FINAL_RESULTS_KEY = "k9cupid_quiz_final_results";
 const TTL_MS = 24 * 60 * 60 * 1000;
 
 function isBrowser() {
   return typeof window !== "undefined";
 }
+
+export type QuizFinalResults = {
+  savedAt: number;
+  analysis: { title: string; text: string };
+  finalBreeds: Dog[];
+};
 
 export function loadQuizSession(): QuizSession | null {
   if (!isBrowser()) {
@@ -72,6 +81,52 @@ export function clearQuizSession() {
 
   try {
     window.localStorage.removeItem(STORAGE_KEY);
+    window.localStorage.removeItem(FINAL_RESULTS_KEY);
+  } catch {
+    return;
+  }
+}
+
+export function loadQuizFinalResults(): QuizFinalResults | null {
+  if (!isBrowser()) {
+    return null;
+  }
+
+  try {
+    const raw = window.localStorage.getItem(FINAL_RESULTS_KEY);
+    if (!raw) {
+      return null;
+    }
+
+    const parsed = JSON.parse(raw) as QuizFinalResults;
+    if (!parsed || typeof parsed.savedAt !== "number") {
+      window.localStorage.removeItem(FINAL_RESULTS_KEY);
+      return null;
+    }
+
+    const now = Date.now();
+    if (now - parsed.savedAt > TTL_MS) {
+      window.localStorage.removeItem(FINAL_RESULTS_KEY);
+      return null;
+    }
+
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+export function saveQuizFinalResults(results: Omit<QuizFinalResults, "savedAt">) {
+  if (!isBrowser()) {
+    return;
+  }
+
+  try {
+    const payload: QuizFinalResults = {
+      ...results,
+      savedAt: Date.now(),
+    };
+    window.localStorage.setItem(FINAL_RESULTS_KEY, JSON.stringify(payload));
   } catch {
     return;
   }
@@ -113,4 +168,3 @@ export function upsertAnswer(
     answers: updatedAnswers,
   };
 }
-
