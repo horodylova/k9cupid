@@ -8,9 +8,16 @@ type WishlistHeartButtonProps = {
   href: string;
   imageSrc?: string;
   className?: string;
+  variant?: "card" | "inline";
 };
 
-export default function WishlistHeartButton({ name, href, imageSrc, className }: WishlistHeartButtonProps) {
+export default function WishlistHeartButton({
+  name,
+  href,
+  imageSrc,
+  className,
+  variant = "card",
+}: WishlistHeartButtonProps) {
   const [active, setActive] = useState(false);
 
   const payload = useMemo(() => ({ name, href, imageSrc }), [name, href, imageSrc]);
@@ -30,7 +37,7 @@ export default function WishlistHeartButton({ name, href, imageSrc, className }:
   return (
     <button
       type="button"
-      className={`wishlist-heart-button${active ? " is-active" : ""}${className ? ` ${className}` : ""}`}
+      className={`wishlist-heart-button${active ? " is-active" : ""}${variant === "inline" ? " is-inline" : ""}${className ? ` ${className}` : ""}`}
       aria-label={label}
       onClick={(e) => {
         e.preventDefault();

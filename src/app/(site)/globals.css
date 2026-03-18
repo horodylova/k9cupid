@@ -791,6 +791,34 @@ iconify-icon.send-icon {
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
 
+.wishlist-heart-button.is-inline {
+  position: static;
+  top: auto;
+  right: auto;
+  width: auto;
+  height: auto;
+  border-radius: 0.375rem;
+  padding: 1rem 1.5rem;
+  background: transparent;
+  box-shadow: none;
+  border: 1px solid rgba(65, 64, 62, 0.35);
+  z-index: auto;
+}
+
+.wishlist-heart-button.is-inline:hover {
+  transform: none;
+  box-shadow: none;
+  background: rgba(249, 243, 236, 0.55);
+}
+
+.wishlist-heart-button.is-inline:active {
+  transform: none;
+}
+
+.wishlist-heart-button.is-inline .wishlist-heart-icon {
+  font-size: 1.25rem;
+}
+
 .wishlist-heart-button:hover {
   transform: translateY(-1px);
   box-shadow: 0px 10px 22px 0px rgba(0, 0, 0, 0.12);

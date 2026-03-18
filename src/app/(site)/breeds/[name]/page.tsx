@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getBreeds, Dog, getAdditionalBreedDetails } from "@/lib/api";
 import BreedGallery from "@/components/BreedGallery";
+import WishlistHeartButton from "@/components/WishlistHeartButton";
 import { notFound } from "next/navigation";
 
 function getTemperamentTags(breed: Dog) {
@@ -45,6 +47,7 @@ export default async function BreedPage({ params }: { params: { name: string } }
     }
     return `${coatLength}/5`;
   };
+  const href = `/breeds/${encodeURIComponent(breed.name)}`;
 
   return (
     <>
@@ -98,12 +101,25 @@ export default async function BreedPage({ params }: { params: { name: string } }
                   <div className="product-quantity pt-2">
                     <div className="stock-button-wrap">
                       <div className="d-flex flex-wrap pt-4">
-                        <Link href="#" className="btn btn-primary me-3 px-4 pt-3 pb-3">
+                        <button type="button" className="btn btn-primary me-3 px-4 pt-3 pb-3" disabled aria-disabled="true">
                           <h5 className="text-uppercase m-0">Find a Puppy</h5>
-                        </Link>
-                        <button className="btn btn-outline-secondary px-4 pt-3 pb-3">
-                          <iconify-icon icon="fluent:heart-28-filled" className="fs-5"></iconify-icon>
                         </button>
+                        <WishlistHeartButton name={breed.name} href={href} imageSrc={breed.image_link || undefined} variant="inline" />
+                      </div>
+                      <div className="mt-3 p-3 border rounded-4 bg-white d-flex align-items-center gap-3">
+                        <Image
+                          src="/Cupid%20with%20beagle.png"
+                          alt="k9cupid"
+                          width={72}
+                          height={72}
+                          style={{ objectFit: "contain" }}
+                        />
+                        <div>
+                          <div className="fw-semibold">Coming soon: Find a Puppy</div>
+                          <div className="text-muted" style={{ fontSize: 14 }}>
+                            We’re building this feature so you’ll be able to browse available puppies right here.
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
