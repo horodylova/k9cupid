@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { useNavigation } from '@/context/NavigationContext';
+import GlobalSearchBar from '@/components/GlobalSearchBar';
 
 export default function Header() {
   const [loading, setLoading] = useState(true);
@@ -205,12 +206,11 @@ export default function Header() {
             <h4 className="text-primary text-uppercase mb-3">
               Search
             </h4>
-            <div className="search-bar border rounded-2 border-dark-subtle px-3">
-              <form id="search-form" className="text-center d-flex align-items-center" action="" method="">
-                <input type="text" className="form-control border-0 bg-transparent" placeholder="Search for breeds, articles..." />
-                <iconify-icon icon="tabler:search" className="fs-4 me-2"></iconify-icon>
-              </form>
-            </div>
+            <GlobalSearchBar
+              className="search-bar border rounded-2 border-dark-subtle px-3 position-relative"
+              inputClassName="form-control border-0 bg-transparent"
+              icon={<iconify-icon icon="tabler:search" className="fs-4 me-2"></iconify-icon>}
+            />
           </div>
         </div>
       </div>
@@ -236,16 +236,10 @@ export default function Header() {
             </div>
 
             <div className="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
-              <div className="search-bar border rounded-2 px-3 border-dark-subtle">
-                <form id="search-form" className="text-center d-flex align-items-center" action="" method="">
-                  <input type="text" className="form-control border-0 bg-transparent"
-                    placeholder="Search for breeds, articles..." />
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                      d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
-                  </svg>
-                </form>
-              </div>
+              <GlobalSearchBar
+                className="search-bar border rounded-2 px-3 border-dark-subtle position-relative"
+                inputClassName="form-control border-0 bg-transparent"
+              />
             </div>
 
             <div
