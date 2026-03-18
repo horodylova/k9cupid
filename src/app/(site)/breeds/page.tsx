@@ -122,6 +122,80 @@ export default async function BreedsPage({ searchParams }: Props) {
      paginationRange.push(totalPages);
   }
 
+  const renderFilters = () => (
+    <>
+      <div className="widget-product-categories pt-0 pt-md-5">
+        <div className="d-flex align-items-center mb-4">
+          <Image
+            src="/Cupid%20with%20Dogs-white-puppy.png"
+            alt="Cupid Matchmaker"
+            width={70}
+            height={70}
+            className="me-3"
+            style={{ objectFit: "contain" }}
+          />
+          <h4 className="widget-title m-0">Find Your Match</h4>
+        </div>
+        <ul className="product-categories sidebar-list list-unstyled row">
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?good_with_children=5" className="nav-link">Good with Children</Link>
+          </li>
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?good_with_other_dogs=5" className="nav-link">Good with Other Dogs</Link>
+          </li>
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?good_with_strangers=5" className="nav-link">Good with Strangers</Link>
+          </li>
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?energy=5" className="nav-link">High Energy</Link>
+          </li>
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?trainability=5" className="nav-link">Easy to Train</Link>
+          </li>
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?shedding=1" className="nav-link">Low Shedding</Link>
+          </li>
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?grooming=4" className="nav-link">High Grooming</Link>
+          </li>
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?playfulness=5" className="nav-link">Very Playful</Link>
+          </li>
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?drooling=1" className="nav-link">Low Drooling</Link>
+          </li>
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?barking=1" className="nav-link">Quiet</Link>
+          </li>
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?protectiveness=5" className="nav-link">Protective</Link>
+          </li>
+          <li className="cat-item col-6 col-md-12 mb-2">
+            <Link href="/breeds?max_life_expectancy=17" className="nav-link">Long-Lived</Link>
+          </li>
+        </ul>
+      </div>
+
+      <div className="widget-product-categories pt-4">
+        <h4 className="widget-title mb-3">Size</h4>
+        <ul className="product-categories sidebar-list list-unstyled">
+          <li className="cat-item mb-2">
+            <Link href="/breeds?size=toy" className="nav-link">Toy Breeds</Link>
+          </li>
+          <li className="cat-item mb-2">
+            <Link href="/breeds?size=small" className="nav-link">Small Breeds</Link>
+          </li>
+          <li className="cat-item mb-2">
+            <Link href="/breeds?size=medium" className="nav-link">Medium Breeds</Link>
+          </li>
+          <li className="cat-item mb-2">
+            <Link href="/breeds?size=large" className="nav-link">Large Breeds</Link>
+          </li>
+        </ul>
+      </div>
+    </>
+  );
+
   return (
     <>
       <section id="banner" className="py-3" style={{ background: '#F9F3EC' }}>
@@ -143,9 +217,21 @@ export default async function BreedsPage({ searchParams }: Props) {
 
       <div className="shopify-grid">
         <div className="container py-5 my-5">
-          <div className="row flex-column-reverse flex-md-row-reverse g-md-5 mb-5">
+          <div className="row flex-column flex-md-row-reverse g-md-5 mb-5">
 
-            <main className="col-md-9">
+            <main className="col-12 col-md-9">
+              <details className="d-md-none mb-4 border rounded-4" style={{ background: "#F9F3EC", boxShadow: "0 10px 24px rgba(0,0,0,0.08)" }}>
+                <summary
+                  className="px-3 py-3 d-flex justify-content-between align-items-center fw-semibold text-uppercase"
+                  style={{ cursor: "pointer", letterSpacing: 0.8 }}
+                >
+                  <span>Filters</span>
+                  <iconify-icon icon="ri:arrow-down-s-line" className="fs-5"></iconify-icon>
+                </summary>
+                <div className="px-3 pb-3">
+                  {renderFilters()}
+                </div>
+              </details>
               <div className="filter-shop d-md-flex justify-content-between align-items-center">
                 <div className="showing-product">
                   <p className="m-0">Showing {start}–{end} of {total} breeds</p>
@@ -232,83 +318,14 @@ export default async function BreedsPage({ searchParams }: Props) {
               )}
             </main>
 
-            <aside className="col-md-3 mt-4 mt-md-5 mb-5 mb-md-0">
+            <aside className="d-none d-md-block col-md-3 mt-4 mt-md-5 mb-5 mb-md-0">
               <div className="sidebar">
                 <div className="widget-menu">
                   <div className="widget-search-bar">
                     {/* <BreedSearchBar /> */}
                   </div>
                 </div>
-
-                <div className="widget-product-categories pt-0 pt-md-5">
-                  <div className="d-flex align-items-center mb-4">
-                    <Image 
-                      src="/Cupid%20with%20Dogs-white-puppy.png"
-                      alt="Cupid Matchmaker"
-                      width={70}
-                      height={70}
-                      className="me-3"
-                      style={{ objectFit: "contain" }}
-                    />
-                    <h4 className="widget-title m-0">Find Your Match</h4>
-                  </div>
-                  <ul className="product-categories sidebar-list list-unstyled row">
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?good_with_children=5" className="nav-link">Good with Children</Link>
-                    </li>
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?good_with_other_dogs=5" className="nav-link">Good with Other Dogs</Link>
-                    </li>
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?good_with_strangers=5" className="nav-link">Good with Strangers</Link>
-                    </li>
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?energy=5" className="nav-link">High Energy</Link>
-                    </li>
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?trainability=5" className="nav-link">Easy to Train</Link>
-                    </li>
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?shedding=1" className="nav-link">Low Shedding</Link>
-                    </li>
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?grooming=4" className="nav-link">High Grooming</Link>
-                    </li>
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?playfulness=5" className="nav-link">Very Playful</Link>
-                    </li>
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?drooling=1" className="nav-link">Low Drooling</Link>
-                    </li>
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?barking=1" className="nav-link">Quiet</Link>
-                    </li>
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?protectiveness=5" className="nav-link">Protective</Link>
-                    </li>
-                    <li className="cat-item col-6 col-md-12 mb-2">
-                      <Link href="/breeds?max_life_expectancy=17" className="nav-link">Long-Lived</Link>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="widget-product-categories pt-4">
-                  <h4 className="widget-title mb-3">Size</h4>
-                  <ul className="product-categories sidebar-list list-unstyled">
-                    <li className="cat-item mb-2">
-                      <Link href="/breeds?size=toy" className="nav-link">Toy Breeds</Link>
-                    </li>
-                    <li className="cat-item mb-2">
-                      <Link href="/breeds?size=small" className="nav-link">Small Breeds</Link>
-                    </li>
-                    <li className="cat-item mb-2">
-                      <Link href="/breeds?size=medium" className="nav-link">Medium Breeds</Link>
-                    </li>
-                    <li className="cat-item mb-2">
-                      <Link href="/breeds?size=large" className="nav-link">Large Breeds</Link>
-                    </li>
-                  </ul>
-                </div>
+                {renderFilters()}
               </div>
             </aside>
           </div>
