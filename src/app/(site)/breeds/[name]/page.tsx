@@ -74,17 +74,6 @@ export default async function BreedPage({ params }: { params: { name: string } }
               <div className="product-info">
                 <div className="element-header">
                   <h2 className="display-6">{breed.name}</h2>
-                  <div className="rating-container d-flex gap-0 align-items-center">
-                    {/* Placeholder rating since we don't have it */}
-                    <span className="rating secondary-font">
-                       <iconify-icon icon="clarity:star-solid" className="text-primary"></iconify-icon>
-                       <iconify-icon icon="clarity:star-solid" className="text-primary"></iconify-icon>
-                       <iconify-icon icon="clarity:star-solid" className="text-primary"></iconify-icon>
-                       <iconify-icon icon="clarity:star-solid" className="text-primary"></iconify-icon>
-                       <iconify-icon icon="clarity:star-solid" className="text-primary"></iconify-icon>
-                       5.0
-                    </span>
-                  </div>
                 </div>
                 <div className="product-price pt-3 pb-3">
                   <strong className="text-primary display-6 fw-bold">
