@@ -37,7 +37,7 @@ export default async function ReadAlso({ currentDate }: ReadAlsoProps) {
   if (!posts || posts.length === 0) return null;
 
   return (
-    <div className="read-also-section mt-5 pt-4 border-top">
+    <div className="read-also-section mt-5 pt-4">
       <h3 className="text-center mb-4">Read Also</h3>
       <div className="row g-4">
         {posts.map((post) => (

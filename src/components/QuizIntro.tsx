@@ -35,7 +35,7 @@ export default function QuizIntro() {
         </div>
       </section>
 
-      <section className="py-4 my-4">
+      <section className="pt-5 pb-4 mt-5 mb-4">
         <div className="container">
           <div className="row align-items-center g-md-5">
             <div className="col-lg-7">
@@ -85,7 +85,9 @@ export default function QuizIntro() {
             </div>
             <div className="col-lg-5 mt-5 mt-lg-0">
               <div className="p-4 p-md-5 border rounded-4 bg-light">
-                <h3 className="h4 mb-3">What you can expect</h3>
+                <h3 className="h4 mb-3" style={{ scrollMarginTop: 120 }}>
+                  What you can expect
+                </h3>
                 <ul className="list-unstyled mb-0">
                   <li className="mb-2">Questions about your daily routine</li>
                   <li className="mb-2">Your preferences and boundaries</li>

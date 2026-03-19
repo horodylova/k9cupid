@@ -413,26 +413,28 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                     
                     <ReadAlso currentDate={post.publishedAt || post._createdAt} />
                     
-                    <div className="post-navigation border-top border-bottom py-4 mt-5">
-                      <div className="row align-items-center">
-                        <div className="col-md-6 mb-3 mb-md-0 text-start">
-                          {post.prev && (
-                            <Link href={`/blog/${post.prev.slug}`} className="text-decoration-none">
-                              <div className="text-muted text-uppercase small mb-1">Previous</div>
-                              <h5 className="h5 m-0 text-dark">{post.prev.title}</h5>
-                            </Link>
-                          )}
-                        </div>
-                        <div className="col-md-6 text-start text-md-end">
-                          {post.next && (
-                            <Link href={`/blog/${post.next.slug}`} className="text-decoration-none">
-                              <div className="text-muted text-uppercase small mb-1">Next</div>
-                              <h5 className="h5 m-0 text-dark">{post.next.title}</h5>
-                            </Link>
-                          )}
+                    {(post.prev || post.next) && (
+                      <div className="post-navigation py-4 mt-5">
+                        <div className="row align-items-center">
+                          <div className="col-md-6 mb-3 mb-md-0 text-start">
+                            {post.prev && (
+                              <Link href={`/blog/${post.prev.slug}`} className="text-decoration-none">
+                                <div className="text-muted text-uppercase small mb-1">Previous</div>
+                                <h5 className="h5 m-0 text-dark">{post.prev.title}</h5>
+                              </Link>
+                            )}
+                          </div>
+                          <div className="col-md-6 text-start text-md-end">
+                            {post.next && (
+                              <Link href={`/blog/${post.next.slug}`} className="text-decoration-none">
+                                <div className="text-muted text-uppercase small mb-1">Next</div>
+                                <h5 className="h5 m-0 text-dark">{post.next.title}</h5>
+                              </Link>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </article>
               </div>
