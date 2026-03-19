@@ -109,13 +109,8 @@ export default function GlobalSearchBar({
   const submit = () => {
     const q = query.trim();
     if (!q) return;
-
-    if (flatResults.length > 0) {
-      navigateTo(flatResults[0]);
-      return;
-    }
-
-    router.push(`/breeds?name=${encodeURIComponent(q)}`);
+    setIsOpen(false);
+    router.push(`/search/${encodeURIComponent(q)}`);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
