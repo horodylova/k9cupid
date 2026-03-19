@@ -17,6 +17,7 @@ export default function SharedSpacesQuestion({
       options={sharedSpacesQuestion.options}
       selected={selected}
       onChange={onChange}
+      exclusiveOptionId="shared_floor"
     />
   );
 }

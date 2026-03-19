@@ -8,6 +8,7 @@ type PhotoMultiChoiceQuestionProps = {
   options: QuizOption[];
   selected: QuizOptionId[];
   onChange: (next: QuizOptionId[]) => void;
+  exclusiveOptionId?: QuizOptionId;
 };
 
 export default function PhotoMultiChoiceQuestion({
@@ -16,13 +17,26 @@ export default function PhotoMultiChoiceQuestion({
   options,
   selected,
   onChange,
+  exclusiveOptionId,
 }: PhotoMultiChoiceQuestionProps) {
   const toggleOption = (id: QuizOptionId) => {
-    if (selected.includes(id)) {
-      onChange(selected.filter((value) => value !== id));
-    } else {
-      onChange([...selected, id]);
+    const isExclusive = exclusiveOptionId && id === exclusiveOptionId;
+
+    if (isExclusive) {
+      onChange(selected.includes(id) ? [] : [id]);
+      return;
     }
+
+    const withoutExclusive = exclusiveOptionId
+      ? selected.filter((value) => value !== exclusiveOptionId)
+      : selected;
+
+    if (withoutExclusive.includes(id)) {
+      onChange(withoutExclusive.filter((value) => value !== id));
+      return;
+    }
+
+    onChange([...withoutExclusive, id]);
   };
 
   return (
@@ -85,4 +99,3 @@ export default function PhotoMultiChoiceQuestion({
     </div>
   );
 }
-

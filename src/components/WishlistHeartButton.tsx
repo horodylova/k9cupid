@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { isWishlisted, removeWishlistItem, subscribeWishlist, upsertWishlistItem } from "@/lib/wishlistStorage";
+import { isWishlisted, normalizeWishlistHref, removeWishlistItem, subscribeWishlist, upsertWishlistItem } from "@/lib/wishlistStorage";
 
 type WishlistHeartButtonProps = {
   name: string;
@@ -20,16 +20,21 @@ export default function WishlistHeartButton({
 }: WishlistHeartButtonProps) {
   const [active, setActive] = useState(false);
 
-  const payload = useMemo(() => ({ name, href, imageSrc }), [name, href, imageSrc]);
+  const normalizedHref = useMemo(() => normalizeWishlistHref(href), [href]);
+  const normalizedName = useMemo(() => name.trim().replace(/\s+/g, " "), [name]);
+  const payload = useMemo(
+    () => ({ name: normalizedName, href: normalizedHref, imageSrc }),
+    [normalizedName, normalizedHref, imageSrc]
+  );
 
   useEffect(() => {
-    const initialActive = isWishlisted(href);
+    const initialActive = isWishlisted(normalizedHref);
     setActive(initialActive);
     if (initialActive && imageSrc) {
       upsertWishlistItem(payload);
     }
-    return subscribeWishlist((items) => setActive(items.some((i) => i.href === href)));
-  }, [href, imageSrc, payload]);
+    return subscribeWishlist((items) => setActive(items.some((i) => i.href === normalizedHref)));
+  }, [normalizedHref, imageSrc, payload]);
 
   const label = active ? "Remove from wishlist" : "Add to wishlist";
   const icon = active ? "mdi:heart" : "mdi:heart-outline";
@@ -43,7 +48,7 @@ export default function WishlistHeartButton({
         e.preventDefault();
         e.stopPropagation();
         if (active) {
-          removeWishlistItem(href);
+          removeWishlistItem(normalizedHref);
           return;
         }
         upsertWishlistItem(payload);
