@@ -106,7 +106,6 @@ export default async function SearchResultsPage({
         <div className="container">
           <div className="mb-4">
             <h1 className="h3 mb-1">Results for “{query}”</h1>
-            <div className="text-muted">Breeds and articles that match your search.</div>
           </div>
 
           <SearchResultsClient
