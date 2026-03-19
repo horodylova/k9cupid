@@ -244,36 +244,83 @@ export default async function BreedsPage({ searchParams }: Props) {
               </div>
 
               <div className="product-grid row">
-                {breeds.map((breed) => (
-                  <div key={breed.name} className="col-md-4 my-4">
-                    <div className="card position-relative h-100">
-                      <WishlistHeartButton
-                        name={breed.name}
-                        href={`/breeds/${encodeURIComponent(breed.name)}`}
-                        imageSrc={breed.image_link}
-                      />
-                      <Link href={`/breeds/${encodeURIComponent(breed.name)}`}>
-                        <BreedImage 
-                          src={breed.image_link}
-                          alt={breed.name}
+                {breeds.flatMap((breed, index) => {
+                  const elements: Array<JSX.Element> = [
+                    <div key={breed.name} className="col-md-4 my-4">
+                      <div className="card position-relative h-100">
+                        <WishlistHeartButton
+                          name={breed.name}
+                          href={`/breeds/${encodeURIComponent(breed.name)}`}
+                          imageSrc={breed.image_link}
                         />
-                      </Link>
-                      <div className="card-body p-0 pt-4 d-flex flex-column">
                         <Link href={`/breeds/${encodeURIComponent(breed.name)}`}>
-                          <h3 className="card-title m-0">{breed.name}</h3>
+                          <BreedImage src={breed.image_link} alt={breed.name} />
                         </Link>
-                        
-                        <div className="d-flex flex-wrap gap-2 mt-3 mt-auto">
-                          {getTemperamentTags(breed).map((temp) => (
-                             <span key={temp} className="badge rounded-pill text-bg-light text-dark border">
-                               {temp}
-                             </span>
-                          ))}
+                        <div className="card-body p-0 pt-4 d-flex flex-column">
+                          <Link href={`/breeds/${encodeURIComponent(breed.name)}`}>
+                            <h3 className="card-title m-0">{breed.name}</h3>
+                          </Link>
+
+                          <div className="d-flex flex-wrap gap-2 mt-3 mt-auto">
+                            {getTemperamentTags(breed).map((temp) => (
+                              <span key={temp} className="badge rounded-pill text-bg-light text-dark border">
+                                {temp}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    </div>,
+                  ];
+
+                  if (index === 5 && breeds.length > 6) {
+                    elements.push(
+                      <div key="carcupid-banner" className="col-12 my-4">
+                        <div className="card border-0 shadow-sm rounded-4 overflow-hidden" style={{ background: "#F9F3EC" }}>
+                          <div className="card-body p-4">
+                            <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-4">
+                              <div className="d-flex align-items-center gap-3">
+                                <Image
+                                  src="/logo%20CarCupid.png"
+                                  alt="CarCupid"
+                                  width={56}
+                                  height={56}
+                                  style={{ objectFit: "contain" }}
+                                />
+                                <div>
+                                  <div
+                                    className="text-uppercase text-muted fw-semibold"
+                                    style={{ fontSize: 12, letterSpacing: 0.6 }}
+                                  >
+                                    Car Match Quiz
+                                  </div>
+                                  <div className="h4 mb-0">CarCupid</div>
+                                </div>
+                              </div>
+                              <div className="flex-grow-1" style={{ fontSize: 16, lineHeight: 1.5 }}>
+                                If you love a good match, we also built a car quiz. Answer a few unexpected questions and get a
+                                shortlist of cars that fit your lifestyle and instincts.
+                              </div>
+                              <a
+                                href="https://carcupid.fit/"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 px-4 w-100 w-md-auto"
+                              >
+                                Try CarCupid
+                                <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1 ms-2">
+                                  <use xlinkHref="#arrow-right"></use>
+                                </svg>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return elements;
+                })}
               </div>
 
               {breeds.length === 0 && (
