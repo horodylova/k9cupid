@@ -91,6 +91,8 @@ const BlogPreview = async () => {
   const secondaryPosts = blogPosts.filter((post) => post.id !== featuredPost?.id);
   const belowFeaturedPost = secondaryPosts[0];
   const sidePosts = secondaryPosts.slice(1, 3);
+  const firstSidePost = sidePosts[0];
+  const secondSidePost = sidePosts[1];
 
   return (
     <section id="latest-blog" className="my-5">
@@ -165,14 +167,14 @@ const BlogPreview = async () => {
             </div>
             <div className="col-lg-5">
               <div className="row g-4">
-                {sidePosts.map((post) => (
-                  <div key={post.id} className="col-12">
+                {firstSidePost && (
+                  <div className="col-12">
                     <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
-                      <Link href={`/blog/${post.id}`}>
+                      <Link href={`/blog/${firstSidePost.id}`}>
                         <Image
-                          src={post.image}
+                          src={firstSidePost.image}
                           className="img-fluid"
-                          alt={post.title}
+                          alt={firstSidePost.title}
                           width={520}
                           height={360}
                           style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
@@ -180,16 +182,72 @@ const BlogPreview = async () => {
                       </Link>
                       <div className="card-body p-4">
                         <div className="text-uppercase text-muted fw-semibold mb-2">
-                          {post.month} {post.date}
+                          {firstSidePost.month} {firstSidePost.date}
                         </div>
-                        <Link href={`/blog/${post.id}`}>
-                          <h4 className="card-title mb-2">{post.title}</h4>
+                        <Link href={`/blog/${firstSidePost.id}`}>
+                          <h4 className="card-title mb-2">{firstSidePost.title}</h4>
                         </Link>
-                        <p className="blog-paragraph fs-6 mb-0">{post.excerpt}</p>
+                        <p className="blog-paragraph fs-6 mb-0">{firstSidePost.excerpt}</p>
                       </div>
                     </div>
                   </div>
-                ))}
+                )}
+
+                <div className="col-12">
+                  <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden" style={{ background: "#F9F3EC" }}>
+                    <div className="card-body p-4">
+                      <div className="d-flex align-items-center gap-3 mb-3">
+                        <Image
+                          src="/logo%20CarCupid.png"
+                          alt="CarCupid"
+                          width={56}
+                          height={56}
+                          style={{ objectFit: "contain" }}
+                        />
+                        <div>
+                          <div className="text-uppercase text-muted fw-semibold" style={{ fontSize: 12, letterSpacing: 0.6 }}>
+                            Car Match Quiz
+                          </div>
+                          <h4 className="card-title mb-0">CarCupid</h4>
+                        </div>
+                      </div>
+                      <p className="blog-paragraph fs-6 mb-3">
+                        Unexpected questions + real automotive data. Get a shortlist of cars that match your lifestyle and instincts.
+                      </p>
+                      <div className="pt-1 ps-1">
+                        <a href="https://carcupid.fit/" target="_blank" rel="noreferrer" className="blog-read">
+                          take the car quiz
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {secondSidePost && (
+                  <div className="col-12">
+                    <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+                      <Link href={`/blog/${secondSidePost.id}`}>
+                        <Image
+                          src={secondSidePost.image}
+                          className="img-fluid"
+                          alt={secondSidePost.title}
+                          width={520}
+                          height={360}
+                          style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                        />
+                      </Link>
+                      <div className="card-body p-4">
+                        <div className="text-uppercase text-muted fw-semibold mb-2">
+                          {secondSidePost.month} {secondSidePost.date}
+                        </div>
+                        <Link href={`/blog/${secondSidePost.id}`}>
+                          <h4 className="card-title mb-2">{secondSidePost.title}</h4>
+                        </Link>
+                        <p className="blog-paragraph fs-6 mb-0">{secondSidePost.excerpt}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

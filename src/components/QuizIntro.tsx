@@ -1,6 +1,7 @@
  "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { loadQuizSession, clearQuizSession } from "@/lib/quizStorage";
 
@@ -92,6 +93,50 @@ export default function QuizIntro() {
                   <li className="mb-2">Suggestions of breeds to explore</li>
                   <li className="mb-2">Focus on comfort and long-term happiness</li>
                 </ul>
+              </div>
+
+              <div
+                className="mt-4 p-4 border rounded-4"
+                style={{ background: "#F9F3EC", boxShadow: "0 10px 24px rgba(0,0,0,0.08)" }}
+              >
+                <div className="d-flex align-items-center gap-3 mb-3">
+                  <Image
+                    src="/logo%20CarCupid.png"
+                    alt="CarCupid"
+                    width={64}
+                    height={64}
+                    style={{ objectFit: "contain" }}
+                  />
+                  <div>
+                    <div className="fw-semibold" style={{ fontSize: 18 }}>
+                      CarCupid
+                    </div>
+                    <div className="text-muted" style={{ fontSize: 14 }}>
+                      Find your top 10 cars from 10,000+ options
+                    </div>
+                  </div>
+                </div>
+                <div className="text-muted" style={{ fontSize: 15, lineHeight: 1.45 }}>
+                  We know you are choosing a dog and we do not want to distract you. If you are curious, we also built a
+                  car quiz that matches your lifestyle and preferences. The results are surprisingly accurate.
+                </div>
+                <ul className="mt-3 mb-3 ps-3" style={{ fontSize: 15, lineHeight: 1.45 }}>
+                  <li>Lifestyle-based questions</li>
+                  <li>Your top 10 picks, tailored to you</li>
+                </ul>
+                <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2">
+                  <a
+                    href="https://carcupid.fit/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-outline-dark btn-sm text-uppercase fs-6 rounded-1 px-4 py-2"
+                  >
+                    Try CarCupid
+                  </a>
+                  <div className="text-muted align-self-center" style={{ fontSize: 13 }}>
+                    Come back anytime to continue your dog quiz
+                  </div>
+                </div>
               </div>
             </div>
           </div>

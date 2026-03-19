@@ -35,6 +35,25 @@ export default function AboutPage() {
                   <use xlinkHref="#arrow-right"></use>
                 </svg>
               </Link>
+              <div className="mt-4">
+                <h3 className="h5 mb-2">Also: CarCupid</h3>
+                <p className="mb-3">
+                  We have also created a car matching quiz called CarCupid. It uses unexpected questions, behavioral
+                  insights, and real automotive data to suggest a shortlist of cars that fits your lifestyle and
+                  preferences.
+                </p>
+                <a
+                  href="https://carcupid.fit/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-outline-dark text-uppercase fs-6 rounded-1 py-2 px-4"
+                >
+                  Try CarCupid
+                  <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1 ms-2">
+                    <use xlinkHref="#arrow-right"></use>
+                  </svg>
+                </a>
+              </div>
             </div>
             <div className="col-md-6 my-4">
               <h2 className="">Our Mission</h2>
