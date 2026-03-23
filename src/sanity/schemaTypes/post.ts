@@ -105,6 +105,24 @@ export const post = defineType({
                 isHighlighted: true
               },
               initialValue: 'center'
+        },
+        {
+          name: 'linkUrl',
+          type: 'url',
+          title: 'Link URL',
+          description: 'Optional: make the image clickable',
+          options: {
+            isHighlighted: true
+          }
+        },
+        {
+          name: 'openInNewTab',
+          type: 'boolean',
+          title: 'Open in new tab',
+          initialValue: true,
+          options: {
+            isHighlighted: true
+          }
             }
           ]
         },

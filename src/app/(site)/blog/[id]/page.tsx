@@ -17,6 +17,8 @@ interface SanityImageValue {
   };
   alt?: string;
   position?: 'right' | 'center' | 'left';
+  linkUrl?: string;
+  openInNewTab?: boolean;
 }
 
 interface TextWithIllustration {
@@ -282,16 +284,33 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
           height = 300;
         }
 
+        const img = (
+          <Image
+            src={urlFor(value).width(width).url()}
+            alt={value.alt || 'Blog Image'}
+            width={width}
+            height={height}
+            className={imageClass}
+            style={{ width: '100%', height: 'auto' }}
+          />
+        );
+
+        const content =
+          value.linkUrl
+            ? (
+              <a
+                href={value.linkUrl}
+                target={value.openInNewTab ? '_blank' : undefined}
+                rel={value.openInNewTab ? 'noopener noreferrer' : undefined}
+              >
+                {img}
+              </a>
+            )
+            : img;
+
         return (
           <div className={containerClass} style={position !== 'center' ? { maxWidth: '300px', width: '100%' } : {}}>
-            <Image
-              src={urlFor(value).width(width).url()}
-              alt={value.alt || 'Blog Image'}
-              width={width}
-              height={height}
-              className={imageClass}
-              style={{ width: '100%', height: 'auto' }}
-            />
+            {content}
           </div>
         );
       },
