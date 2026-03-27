@@ -65,10 +65,10 @@ export default function NewsletterSubscribeForm({
       const data = (await res.json()) as { ok?: boolean; error?: string; state?: string };
       if (res.ok && data.ok) {
         const isAlready = data.state === "already_subscribed";
-        const title = isAlready ? "You’re already subscribed" : "You’re subscribed!";
+        const title = isAlready ? "Мы заметили, что вы уже подписаны" : "Вы подписаны!";
         const message = isAlready
-          ? "You’re already on the list. Weekly updates will land in your inbox."
-          : "Weekly updates will land in your inbox.";
+          ? "Ждите письма, мы вам скоро напишем."
+          : "Еженедельные обновления будут приходить на вашу почту.";
 
         setToast({ type: "success", title, message });
         setToastVisible(true);
