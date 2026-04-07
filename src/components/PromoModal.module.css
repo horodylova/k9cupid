@@ -127,8 +127,26 @@
     width: 95vw;
   }
 
+  .videoContainer {
+    aspect-ratio: 9 / 16;
+  }
+
+  .replayOverlay {
+    align-items: flex-end;
+    padding-bottom: 14px;
+  }
+
+  .ctaColumn {
+    padding: 12px;
+    gap: 10px;
+  }
+
   .replayButton,
   .subscribeForm {
     width: min(360px, 90%);
+  }
+
+  .replayButton {
+    justify-content: center;
   }
 }
