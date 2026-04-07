@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Script from "next/script";
+import PromoModal from "@/components/PromoModal";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +12,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="d-flex flex-column min-vh-100">
         <Header />
+        <PromoModal />
         <main style={{ flex: 1 }}>
           {children}
         </main>

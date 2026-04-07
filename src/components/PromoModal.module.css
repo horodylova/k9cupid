@@ -1,0 +1,134 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  padding: 16px;
+  opacity: 0;
+  transition: opacity 220ms ease;
+  backdrop-filter: blur(4px);
+}
+
+.overlayVisible {
+  opacity: 1;
+}
+
+.modal {
+  position: relative;
+  background-color: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  width: min(900px, 92vw);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transform: scale(0.97);
+  transition: transform 220ms ease;
+}
+
+.modalVisible {
+  transform: scale(1);
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 160ms ease;
+}
+
+.closeButton:hover {
+  background: rgba(229, 72, 63, 0.8);
+}
+
+.videoContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.replayOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+
+.replayOverlayVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ctaColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  width: 100%;
+}
+
+.subscribeForm {
+  width: min(520px, 92%);
+}
+
+.replayButton {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(4px);
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.replayButton:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .modal {
+    width: 95vw;
+  }
+
+  .replayButton,
+  .subscribeForm {
+    width: min(360px, 90%);
+  }
+}
