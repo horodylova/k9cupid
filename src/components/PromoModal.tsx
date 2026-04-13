@@ -7,29 +7,16 @@ import NewsletterSubscribeForm from "@/components/NewsletterSubscribeForm";
 const TIMEOUT_MS = 60000;
 const STORAGE_KEY = "k9PromoVideoLastSeen";
 const SHOW_AGAIN_MS = 7 * 24 * 60 * 60 * 1000;
-const VIDEO_SRC_DESKTOP = "/Every%20dog.mp4";
-const VIDEO_SRC_MOBILE = "/Every%20dog-mobile.mp4";
+const VIDEO_SRC = "/Every%20dog.mp4";
 const ANIMATION_MS = 220;
-const MOBILE_QUERY = "(max-width: 600px)";
 
 export default function PromoModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [showReplay, setShowReplay] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [videoSrc, setVideoSrc] = useState(VIDEO_SRC_DESKTOP);
   const videoRef = useRef<HTMLVideoElement>(null);
   const timeoutRef = useRef<number | null>(null);
   const scheduledRef = useRef(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia(MOBILE_QUERY);
-    const apply = () => setVideoSrc(mq.matches ? VIDEO_SRC_MOBILE : VIDEO_SRC_DESKTOP);
-    apply();
-
-    const onChange = () => apply();
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
 
   useEffect(() => {
     const schedule = () => {
@@ -91,7 +78,7 @@ export default function PromoModal() {
     if (!v) return;
     v.currentTime = 0;
     v.play().catch(() => setShowReplay(true));
-  }, [isOpen, videoSrc]);
+  }, [isOpen]);
 
   const close = () => {
     setIsVisible(false);
@@ -133,7 +120,7 @@ export default function PromoModal() {
           <video
             ref={videoRef}
             className={styles.video}
-            src={videoSrc}
+            src={VIDEO_SRC}
             playsInline
             muted
             onEnded={() => setShowReplay(true)}
