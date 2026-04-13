@@ -1,0 +1,402 @@
+import Link from "next/link";
+import Image from "next/image";
+
+export const revalidate = 0;
+
+type RescueMeta = {
+  count: number;
+  countReturned: number;
+  pageReturned: number;
+  limit: number;
+  pages: number;
+  transactionId?: string;
+};
+
+type RescueRelationship = { data: Array<{ type: string; id: string }> | { type: string; id: string } | null };
+
+type RescueAnimal = {
+  type: "animals";
+  id: string;
+  attributes?: {
+    name?: string;
+    breedString?: string;
+    sex?: string;
+    ageGroup?: string;
+    ageString?: string;
+    sizeGroup?: string;
+    url?: string;
+    pictureThumbnailUrl?: string;
+    descriptionText?: string;
+  };
+  relationships?: Record<string, RescueRelationship>;
+};
+
+type RescueIncluded = {
+  type: string;
+  id: string;
+  attributes?: Record<string, unknown>;
+};
+
+type RescueResponse = {
+  meta?: RescueMeta;
+  data?: RescueAnimal[];
+  included?: RescueIncluded[];
+};
+
+function parseIntParam(value: unknown, fallback: number) {
+  const raw = Array.isArray(value) ? value[0] : value;
+  const n = typeof raw === "string" ? Number(raw) : NaN;
+  if (!Number.isFinite(n) || n < 1) return fallback;
+  return Math.floor(n);
+}
+
+function truncateText(text: string, maxLen: number) {
+  const normalized = (text || "").replace(/\s+/g, " ").trim();
+  if (normalized.length <= maxLen) return normalized;
+  return `${normalized.slice(0, maxLen - 1).trim()}…`;
+}
+
+function isRelArray(rel: RescueRelationship | undefined): rel is { data: Array<{ type: string; id: string }> } {
+  return Array.isArray(rel?.data);
+}
+
+function getFirstRelatedId(item: RescueAnimal, relName: string): string | null {
+  const rel = item.relationships?.[relName];
+  if (!rel?.data) return null;
+  if (Array.isArray(rel.data)) return rel.data[0]?.id || null;
+  return rel.data.id || null;
+}
+
+function getIncluded(included: RescueIncluded[], type: string, id: string | null) {
+  if (!id) return null;
+  return included.find((x) => x.type === type && x.id === id) || null;
+}
+
+function upgradeRescuegroupsWidth(url: string, width: number) {
+  try {
+    const u = new URL(url);
+    if (u.hostname !== "cdn.rescuegroups.org") return url;
+    u.searchParams.set("width", String(width));
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
+function getImage(animal: RescueAnimal, included: RescueIncluded[]) {
+  const thumb = animal.attributes?.pictureThumbnailUrl || null;
+
+  const rel = animal.relationships?.pictures;
+  if (isRelArray(rel)) {
+    for (const ref of rel.data) {
+      const pic = getIncluded(included, "pictures", ref.id);
+      const attrs = (pic?.attributes || {}) as Record<string, unknown>;
+      const order = typeof attrs.order === "number" ? attrs.order : null;
+      const original = typeof attrs.original === "string" ? attrs.original : null;
+      const large = typeof attrs.large === "string" ? attrs.large : null;
+      const small = typeof attrs.small === "string" ? attrs.small : null;
+      if (order === 1 && (large || original || small)) {
+        return {
+          src: large || original || small || "",
+          src2x: original || large || null,
+        };
+      }
+    }
+
+    const firstRef = rel.data[0];
+    if (firstRef) {
+      const pic = getIncluded(included, "pictures", firstRef.id);
+      const attrs = (pic?.attributes || {}) as Record<string, unknown>;
+      const original = typeof attrs.original === "string" ? attrs.original : null;
+      const large = typeof attrs.large === "string" ? attrs.large : null;
+      const small = typeof attrs.small === "string" ? attrs.small : null;
+      if (large || original || small) {
+        return {
+          src: large || original || small || "",
+          src2x: original || large || null,
+        };
+      }
+    }
+  }
+
+  if (thumb) {
+    const src = upgradeRescuegroupsWidth(thumb, 900);
+    const src2x = upgradeRescuegroupsWidth(thumb, 1400);
+    return { src, src2x };
+  }
+
+  return null;
+}
+
+async function getDogs({
+  page,
+  limit,
+}: {
+  page: number;
+  limit: number;
+}): Promise<{ meta: RescueMeta; dogs: RescueAnimal[]; included: RescueIncluded[] }> {
+  const apiKey = (process.env.RESCUEGROUPS_API_KEY || "").trim();
+  if (!apiKey) {
+    return {
+      meta: { count: 0, countReturned: 0, pageReturned: page, limit, pages: 1 },
+      dogs: [],
+      included: [],
+    };
+  }
+
+  const upstream = new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");
+  upstream.searchParams.set("limit", String(limit));
+  upstream.searchParams.set("page", String(page));
+  upstream.searchParams.set("include", "pictures,orgs,locations");
+  upstream.searchParams.set(
+    "fields[animals]",
+    "name,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText"
+  );
+  upstream.searchParams.set("fields[pictures]", "small,large,original,order");
+  upstream.searchParams.set("fields[orgs]", "name,url,citystate,websiteUrl");
+  upstream.searchParams.set("fields[locations]", "citystate,postalcode,state,country,lat,lon,coordinates");
+
+  const res = await fetch(upstream, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/vnd.api+json",
+      Accept: "application/vnd.api+json",
+      Authorization: apiKey,
+    },
+    cache: "no-store",
+  });
+
+  const json = (await res.json()) as RescueResponse;
+  const meta = json.meta || { count: 0, countReturned: 0, pageReturned: page, limit, pages: 1 };
+  const dogs = Array.isArray(json.data) ? json.data : [];
+  const included = Array.isArray(json.included) ? json.included : [];
+
+  return { meta, dogs, included };
+}
+
+export default async function SheltersPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const page = parseIntParam(searchParams?.page, 1);
+  const limit = 18;
+  const { meta, dogs, included } = await getDogs({ page, limit });
+  const total = meta.count || 0;
+  const totalPages = Math.max(1, meta.pages || 1);
+  const start = dogs.length > 0 ? (page - 1) * limit + 1 : 0;
+  const end = (page - 1) * limit + dogs.length;
+  const hasPrevPage = page > 1;
+  const hasNextPage = page < totalPages;
+
+  const getPageLink = (p: number) => {
+    const params = new URLSearchParams();
+    if (p > 1) params.set("page", String(p));
+    return `/shelters${params.toString() ? `?${params.toString()}` : ""}`;
+  };
+
+  const paginationRange: Array<number | string> = [];
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i += 1) paginationRange.push(i);
+  } else {
+    paginationRange.push(1);
+    if (page > 3) paginationRange.push("...");
+    const rangeStart = Math.max(2, page - 1);
+    const rangeEnd = Math.min(totalPages - 1, page + 1);
+    for (let i = rangeStart; i <= rangeEnd; i += 1) paginationRange.push(i);
+    if (page < totalPages - 2) paginationRange.push("...");
+    paginationRange.push(totalPages);
+  }
+
+  const renderFilters = () => (
+    <>
+      <div className="widget-product-categories pt-0 pt-md-5">
+        <h4 className="widget-title m-0 mb-3">Filters</h4>
+        <div className="d-grid gap-3">
+          <div>
+            <label className="form-label mb-1">ZIP code</label>
+            <input className="form-control" placeholder="Coming soon" disabled />
+          </div>
+          <div>
+            <label className="form-label mb-1">Radius (miles)</label>
+            <select className="form-select" disabled>
+              <option>Coming soon</option>
+            </select>
+          </div>
+          <div>
+            <label className="form-label mb-1">Breed</label>
+            <input className="form-control" placeholder="Coming soon" disabled />
+          </div>
+          <div>
+            <label className="form-label mb-1">Age</label>
+            <select className="form-select" disabled>
+              <option>Coming soon</option>
+            </select>
+          </div>
+          <div>
+            <label className="form-label mb-1">Size</label>
+            <select className="form-select" disabled>
+              <option>Coming soon</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+  return (
+    <>
+      <section id="banner" className="py-3" style={{ background: "#F9F3EC" }}>
+        <div className="container">
+          <div className="hero-content py-5 my-3">
+            <h2 className="display-1 mt-3 mb-0">Shelters</h2>
+            <nav className="breadcrumb">
+              <Link className="breadcrumb-item nav-link" href="/">
+                Home
+              </Link>
+              <span className="breadcrumb-item active" aria-current="page">
+                Shelters
+              </span>
+            </nav>
+          </div>
+        </div>
+      </section>
+
+      <div className="shopify-grid">
+        <div className="container py-5 my-5">
+          <div className="row flex-column flex-md-row-reverse g-md-5 mb-5">
+            <main className="col-12 col-md-9">
+              <details className="d-md-none mb-4 border rounded-4" style={{ background: "#F9F3EC", boxShadow: "0 10px 24px rgba(0,0,0,0.08)" }}>
+                <summary
+                  className="px-3 py-3 d-flex justify-content-between align-items-center fw-semibold text-uppercase"
+                  style={{ cursor: "pointer", letterSpacing: 0.8 }}
+                >
+                  <span>Filters</span>
+                  <iconify-icon icon="ri:arrow-down-s-line" className="fs-5"></iconify-icon>
+                </summary>
+                <div className="px-3 pb-3">{renderFilters()}</div>
+              </details>
+
+              <div className="filter-shop d-md-flex justify-content-between align-items-center">
+                <div className="showing-product">
+                  <p className="m-0">Showing {start}–{end} of {total} dogs</p>
+                </div>
+                <div className="sort-by">
+                  <span className="text-muted">Sort: Coming soon</span>
+                </div>
+              </div>
+
+              <div className="product-grid row">
+                {dogs.map((dog) => {
+                  const name = dog.attributes?.name || "Dog";
+                  const breed = dog.attributes?.breedString || "";
+                  const age = dog.attributes?.ageString || dog.attributes?.ageGroup || "";
+                  const sex = dog.attributes?.sex || "";
+                  const size = dog.attributes?.sizeGroup || "";
+                  const detailsHref = `/shelters/dogs/${encodeURIComponent(dog.id)}`;
+                  const orgId = getFirstRelatedId(dog, "orgs");
+                  const org = getIncluded(included, "orgs", orgId);
+                  const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
+                  const citystate = typeof orgAttrs.citystate === "string" ? orgAttrs.citystate : "";
+                  const img = getImage(dog, included);
+                  const description = dog.attributes?.descriptionText ? truncateText(dog.attributes.descriptionText, 140) : "";
+
+                  return (
+                    <div key={dog.id} className="col-md-4 my-4">
+                      <div className="card position-relative h-100 overflow-hidden">
+                        {img?.src ? (
+                          <Link href={detailsHref}>
+                            <div className="position-relative" style={{ width: "100%", height: 220, background: "#F9F3EC" }}>
+                              <Image
+                                src={img.src}
+                                alt={name}
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                style={{ objectFit: "cover" }}
+                              />
+                            </div>
+                          </Link>
+                        ) : (
+                          <div style={{ width: "100%", height: 220, background: "#F9F3EC" }} />
+                        )}
+
+                        <div className="card-body p-0 pt-4 d-flex flex-column">
+                          <div className="px-3">
+                            <Link href={detailsHref}>
+                              <h3 className="card-title m-0">{name}</h3>
+                            </Link>
+                            <div className="text-muted mt-2" style={{ fontSize: 14, lineHeight: 1.4 }}>
+                              {[breed, age, sex, size].filter(Boolean).join(" • ")}
+                            </div>
+                            {citystate && (
+                              <div className="text-muted mt-1" style={{ fontSize: 13 }}>
+                                {citystate}
+                              </div>
+                            )}
+                            {description && (
+                              <div className="text-muted mt-3" style={{ fontSize: 14, lineHeight: 1.5 }}>
+                                {description}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="mt-auto px-3 pb-3 pt-3">
+                            <Link href={detailsHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1 w-100">
+                              Details
+                              <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1 ms-2">
+                                <use xlinkHref="#arrow-right"></use>
+                              </svg>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {dogs.length === 0 && (
+                <div className="text-center py-5">
+                  <p className="fs-4">No dogs found.</p>
+                </div>
+              )}
+
+              {totalPages > 1 && (
+                <nav className="navigation paging-navigation text-center mt-5" role="navigation">
+                  <div className="pagination loop-pagination d-flex justify-content-center align-items-center">
+                    {hasPrevPage && (
+                      <Link href={getPageLink(page - 1)} className="pagination-arrow d-flex align-items-center mx-3">
+                        <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
+                      </Link>
+                    )}
+
+                    {paginationRange.map((p, idx) => {
+                      if (p === "...") return <span key={`dots-${idx}`} className="page-numbers mt-2 fs-3 mx-3">...</span>;
+                      const isCurrent = p === page;
+                      if (isCurrent) return <span key={p} aria-current="page" className="page-numbers mt-2 fs-3 mx-3 current">{p}</span>;
+                      return (
+                        <Link key={p} className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(p as number)}>
+                          {p}
+                        </Link>
+                      );
+                    })}
+
+                    {hasNextPage && (
+                      <Link href={getPageLink(page + 1)} className="pagination-arrow d-flex align-items-center mx-3">
+                        <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
+                      </Link>
+                    )}
+                  </div>
+                </nav>
+              )}
+            </main>
+
+            <aside className="d-none d-md-block col-md-3 mt-4 mt-md-5 mb-5 mb-md-0">
+              <div className="sidebar">{renderFilters()}</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
