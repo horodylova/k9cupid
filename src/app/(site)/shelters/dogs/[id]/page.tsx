@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 
 export const revalidate = 0;
 
@@ -127,7 +128,22 @@ async function getDogById(id: string) {
   return { dog, included };
 }
 
-export default async function ShelterDogPage({ params }: { params: { id: string } }) {
+function parseIntParam(value: unknown, fallback: number) {
+  const raw = Array.isArray(value) ? value[0] : value;
+  const n = typeof raw === "string" ? Number(raw) : NaN;
+  if (!Number.isFinite(n) || n < 1) return fallback;
+  return Math.floor(n);
+}
+
+export default async function ShelterDogPage({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const fromPage = parseIntParam(searchParams?.page, 1);
+  const backHref = fromPage > 1 ? `/shelters?page=${fromPage}` : "/shelters";
   const result = await getDogById(params.id);
 
   if (!result) {
@@ -141,7 +157,7 @@ export default async function ShelterDogPage({ params }: { params: { id: string 
                 <Link className="breadcrumb-item nav-link" href="/">
                   Home
                 </Link>
-                <Link className="breadcrumb-item nav-link" href="/shelters">
+                <Link className="breadcrumb-item nav-link" href={backHref}>
                   Shelters
                 </Link>
                 <span className="breadcrumb-item active" aria-current="page">
@@ -158,7 +174,7 @@ export default async function ShelterDogPage({ params }: { params: { id: string 
               <h1 className="h4 mb-2">Dog not found</h1>
               <div className="text-muted">This listing may have been removed or is unavailable.</div>
               <div className="mt-4">
-                <Link href="/shelters" className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
+                <Link href={backHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
                   Back to Shelters
                 </Link>
               </div>
@@ -179,8 +195,52 @@ export default async function ShelterDogPage({ params }: { params: { id: string 
   const description = dog.attributes?.descriptionText || "";
   const citystate = getOrgCityState(dog, included);
   const pictures = getPictures(dog, included);
+  const isBlocked = isExcludedRescuegroupsAnimalId(dog.id) || isRescuegroupsInfoEntryName(dog.attributes?.name);
 
-  const heroImage = pictures[0]?.src || dog.attributes?.pictureThumbnailUrl || "";
+  const hasRealHero = pictures.length > 0 || Boolean(dog.attributes?.pictureThumbnailUrl);
+  const heroImage = pictures[0]?.src || dog.attributes?.pictureThumbnailUrl || "/No%20photo%20yet.jpg";
+  const heroAlt = hasRealHero ? name : "No photo yet";
+
+  if (isBlocked) {
+    return (
+      <>
+        <section id="banner" className="py-3" style={{ background: "#F9F3EC" }}>
+          <div className="container">
+            <div className="hero-content py-5 my-3">
+              <h2 className="display-1 mt-3 mb-0">Shelters</h2>
+              <nav className="breadcrumb">
+                <Link className="breadcrumb-item nav-link" href="/">
+                  Home
+                </Link>
+                <Link className="breadcrumb-item nav-link" href={backHref}>
+                  Shelters
+                </Link>
+                <span className="breadcrumb-item active" aria-current="page">
+                  Entry
+                </span>
+              </nav>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-5 my-5">
+          <div className="container">
+            <div className="bg-white border rounded-4 p-4">
+              <h1 className="h4 mb-2">Not a dog listing</h1>
+              <div className="text-muted">
+                This entry is informational (for example, pre-approval or application details) and is not an adoptable dog profile.
+              </div>
+              <div className="mt-4">
+                <Link href={backHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
+                  Back to Shelters
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
 
   return (
     <>
@@ -192,7 +252,7 @@ export default async function ShelterDogPage({ params }: { params: { id: string 
               <Link className="breadcrumb-item nav-link" href="/">
                 Home
               </Link>
-              <Link className="breadcrumb-item nav-link" href="/shelters">
+              <Link className="breadcrumb-item nav-link" href={backHref}>
                 Shelters
               </Link>
               <span className="breadcrumb-item active" aria-current="page">
@@ -207,21 +267,17 @@ export default async function ShelterDogPage({ params }: { params: { id: string 
         <div className="container">
           <div className="row g-5">
             <div className="col-12 col-lg-6">
-              <div className="card border-0 shadow-sm rounded-4 overflow-hidden" style={{ background: "#F9F3EC" }}>
-                {heroImage ? (
-                  <div className="position-relative" style={{ width: "100%", aspectRatio: "4 / 3" }}>
-                    <Image
-                      src={upgradeRescuegroupsWidth(heroImage, 1400)}
-                      alt={name}
-                      fill
-                      priority
-                      sizes="(max-width: 992px) 100vw, 50vw"
-                      style={{ objectFit: "cover" }}
-                    />
-                  </div>
-                ) : (
-                  <div style={{ width: "100%", paddingTop: "56.25%" }} />
-                )}
+              <div className="card border-0 shadow-sm rounded-4 overflow-hidden" style={{ background: hasRealHero ? "#F9F3EC" : "transparent" }}>
+                <div className="position-relative" style={{ width: "100%", aspectRatio: "4 / 3" }}>
+                  <Image
+                    src={heroImage.startsWith("http") ? upgradeRescuegroupsWidth(heroImage, 1400) : heroImage}
+                    alt={heroAlt}
+                    fill
+                    priority
+                    sizes="(max-width: 992px) 100vw, 50vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
               </div>
 
               {pictures.length > 1 && (
@@ -263,7 +319,7 @@ export default async function ShelterDogPage({ params }: { params: { id: string 
                 )}
 
                 <div className="d-flex flex-column flex-sm-row gap-3 mt-4">
-                  <Link href="/shelters" className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
+                  <Link href={backHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
                     Back
                   </Link>
                   {externalUrl && (

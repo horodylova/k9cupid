@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import styles from "./shelters.module.css";
+import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 
 export const revalidate = 0;
 
@@ -180,12 +182,38 @@ export default async function SheltersPage({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   const page = parseIntParam(searchParams?.page, 1);
-  const limit = 18;
-  const { meta, dogs, included } = await getDogs({ page, limit });
+  const pageSize = 18;
+  const maxScanPages = 8;
+
+  const includedByKey = new Map<string, RescueIncluded>();
+  const displayedDogs: RescueAnimal[] = [];
+  let meta: RescueMeta = { count: 0, countReturned: 0, pageReturned: page, limit: pageSize, pages: 1 };
+
+  let scanPage = page;
+  for (let scan = 0; scan < maxScanPages && displayedDogs.length < pageSize; scan += 1) {
+    const res = await getDogs({ page: scanPage, limit: pageSize });
+    if (scan === 0) meta = res.meta;
+
+    for (const inc of res.included) {
+      includedByKey.set(`${inc.type}:${inc.id}`, inc);
+    }
+
+    for (const dog of res.dogs) {
+      if (isExcludedRescuegroupsAnimalId(dog.id)) continue;
+      if (isRescuegroupsInfoEntryName(dog.attributes?.name)) continue;
+      displayedDogs.push(dog);
+      if (displayedDogs.length >= pageSize) break;
+    }
+
+    if (scanPage >= (res.meta.pages || 1)) break;
+    scanPage += 1;
+  }
+
+  const included = Array.from(includedByKey.values());
   const total = meta.count || 0;
   const totalPages = Math.max(1, meta.pages || 1);
-  const start = dogs.length > 0 ? (page - 1) * limit + 1 : 0;
-  const end = (page - 1) * limit + dogs.length;
+  const start = displayedDogs.length > 0 ? (page - 1) * pageSize + 1 : 0;
+  const end = (page - 1) * pageSize + displayedDogs.length;
   const hasPrevPage = page > 1;
   const hasNextPage = page < totalPages;
 
@@ -279,46 +307,52 @@ export default async function SheltersPage({
 
               <div className="filter-shop d-md-flex justify-content-between align-items-center">
                 <div className="showing-product">
-                  <p className="m-0">Showing {start}–{end} of {total} dogs</p>
+                  <p className="m-0">
+                    Showing {start}–{end} of {total} dogs
+                  </p>
                 </div>
                 <div className="sort-by">
                   <span className="text-muted">Sort: Coming soon</span>
                 </div>
               </div>
 
-              <div className="product-grid row">
-                {dogs.map((dog) => {
+              <div className="product-grid row g-4">
+                {displayedDogs.map((dog) => {
                   const name = dog.attributes?.name || "Dog";
                   const breed = dog.attributes?.breedString || "";
                   const age = dog.attributes?.ageString || dog.attributes?.ageGroup || "";
                   const sex = dog.attributes?.sex || "";
                   const size = dog.attributes?.sizeGroup || "";
-                  const detailsHref = `/shelters/dogs/${encodeURIComponent(dog.id)}`;
+                  const detailsHref = page > 1 ? `/shelters/dogs/${encodeURIComponent(dog.id)}?page=${page}` : `/shelters/dogs/${encodeURIComponent(dog.id)}`;
                   const orgId = getFirstRelatedId(dog, "orgs");
                   const org = getIncluded(included, "orgs", orgId);
                   const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
                   const citystate = typeof orgAttrs.citystate === "string" ? orgAttrs.citystate : "";
                   const img = getImage(dog, included);
                   const description = dog.attributes?.descriptionText ? truncateText(dog.attributes.descriptionText, 140) : "";
+                  const cardImgSrc = img?.src || "/No%20photo%20yet.jpg";
+                  const cardImgAlt = img?.src ? name : "No photo yet";
+                  const isPlaceholder = !img?.src;
 
                   return (
-                    <div key={dog.id} className="col-md-4 my-4">
+                    <div key={dog.id} className="col-12 col-sm-6 col-lg-4">
                       <div className="card position-relative h-100 overflow-hidden">
-                        {img?.src ? (
-                          <Link href={detailsHref}>
-                            <div className="position-relative" style={{ width: "100%", height: 220, background: "#F9F3EC" }}>
-                              <Image
-                                src={img.src}
-                                alt={name}
-                                fill
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                style={{ objectFit: "cover" }}
-                              />
-                            </div>
-                          </Link>
-                        ) : (
-                          <div style={{ width: "100%", height: 220, background: "#F9F3EC" }} />
-                        )}
+                        <Link href={detailsHref}>
+                          <div
+                            className={`position-relative ${styles.cardImage}`}
+                            style={{
+                              background: isPlaceholder ? "transparent" : "#F9F3EC",
+                            }}
+                          >
+                            <Image
+                              src={cardImgSrc}
+                              alt={cardImgAlt}
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              style={{ objectFit: isPlaceholder ? "cover" : "contain", padding: isPlaceholder ? 0 : 10 }}
+                            />
+                          </div>
+                        </Link>
 
                         <div className="card-body p-0 pt-4 d-flex flex-column">
                           <div className="px-3">
@@ -355,7 +389,7 @@ export default async function SheltersPage({
                 })}
               </div>
 
-              {dogs.length === 0 && (
+              {displayedDogs.length === 0 && (
                 <div className="text-center py-5">
                   <p className="fs-4">No dogs found.</p>
                 </div>
