@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./shelters.module.css";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
+import { normalizeHtmlText } from "@/lib/htmlText";
 
 export const revalidate = 0;
 
@@ -329,7 +330,9 @@ export default async function SheltersPage({
                   const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
                   const citystate = typeof orgAttrs.citystate === "string" ? orgAttrs.citystate : "";
                   const img = getImage(dog, included);
-                  const description = dog.attributes?.descriptionText ? truncateText(dog.attributes.descriptionText, 140) : "";
+                  const description = dog.attributes?.descriptionText
+                    ? truncateText(normalizeHtmlText(dog.attributes.descriptionText), 140)
+                    : "";
                   const cardImgSrc = img?.src || "/No%20photo%20yet.jpg";
                   const cardImgAlt = img?.src ? name : "No photo yet";
                   const isPlaceholder = !img?.src;

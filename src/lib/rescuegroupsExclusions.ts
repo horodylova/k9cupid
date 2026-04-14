@@ -1,4 +1,19 @@
-const EXCLUDED_IDS = new Set<string>(["10919820", "11013605"]);
+const EXCLUDED_IDS = new Set<string>([
+  "10919820",
+  "11013605",
+  "121598",
+  "12645754",
+  "12726786",
+  "13960944",
+  "13961272",
+  "14745370",
+  "15317294",
+  "15501414",
+  "15653335",
+  "16461226",
+  "16769302",
+  "16870523",
+]);
 
 export function isExcludedRescuegroupsAnimalId(id: string) {
   return EXCLUDED_IDS.has(id);

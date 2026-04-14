@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
+import { normalizeHtmlText } from "@/lib/htmlText";
 
 export const revalidate = 0;
 
@@ -192,7 +193,7 @@ export default async function ShelterDogPage({
   const sex = dog.attributes?.sex || "";
   const size = dog.attributes?.sizeGroup || "";
   const externalUrl = dog.attributes?.url || "";
-  const description = dog.attributes?.descriptionText || "";
+  const description = normalizeHtmlText(dog.attributes?.descriptionText || "");
   const citystate = getOrgCityState(dog, included);
   const pictures = getPictures(dog, included);
   const isBlocked = isExcludedRescuegroupsAnimalId(dog.id) || isRescuegroupsInfoEntryName(dog.attributes?.name);
@@ -313,7 +314,7 @@ export default async function ShelterDogPage({
                 )}
 
                 {description && (
-                  <div className="mt-4" style={{ fontSize: 16, lineHeight: 1.7 }}>
+                  <div className="mt-4" style={{ fontSize: 16, lineHeight: 1.7, whiteSpace: "pre-line" }}>
                     {description}
                   </div>
                 )}
