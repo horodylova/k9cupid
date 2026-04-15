@@ -25,6 +25,7 @@ type RescueAnimal = {
   id: string;
   attributes?: {
     name?: string;
+    species?: string;
     breedString?: string;
     sex?: string;
     ageGroup?: string;
@@ -160,7 +161,7 @@ async function getDogs({
   upstream.searchParams.set("include", "pictures,orgs,locations");
   upstream.searchParams.set(
     "fields[animals]",
-    "name,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText"
+    "name,species,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText"
   );
   upstream.searchParams.set("fields[pictures]", "small,large,original,order");
   upstream.searchParams.set("fields[orgs]", "name,url,citystate,websiteUrl");
@@ -215,6 +216,8 @@ export default async function SheltersPage({
     for (const dog of res.dogs) {
       if (isExcludedRescuegroupsAnimalId(dog.id)) continue;
       if (isRescuegroupsInfoEntryName(dog.attributes?.name)) continue;
+      const species = (dog.attributes?.species || "").trim().toLowerCase();
+      if (species && species !== "dog") continue;
       const orgId = getFirstRelatedId(dog, "orgs");
       const org = orgId ? includedByKey.get(`orgs:${orgId}`) : null;
       const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;

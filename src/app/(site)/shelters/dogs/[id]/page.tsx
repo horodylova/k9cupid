@@ -24,6 +24,7 @@ type RescueAnimal = {
   id: string;
   attributes?: {
     name?: string;
+    species?: string;
     breedString?: string;
     sex?: string;
     ageGroup?: string;
@@ -120,7 +121,7 @@ async function getDogById(id: string) {
   upstream.searchParams.set("include", "pictures,orgs,locations");
   upstream.searchParams.set(
     "fields[animals]",
-    "name,breedString,sex,ageGroup,ageString,sizeGroup,isHousetrained,isKidsOk,isDogsOk,isCatsOk,isSpecialNeeds,energyLevel,activityLevel,url,rescueId,pictureThumbnailUrl,descriptionText"
+    "name,species,breedString,sex,ageGroup,ageString,sizeGroup,isHousetrained,isKidsOk,isDogsOk,isCatsOk,isSpecialNeeds,energyLevel,activityLevel,url,rescueId,pictureThumbnailUrl,descriptionText"
   );
   upstream.searchParams.set("fields[pictures]", "small,large,original,order");
   upstream.searchParams.set("fields[orgs]", "name,url,citystate,websiteUrl");
@@ -229,6 +230,7 @@ export default async function ShelterDogPage({
 
   const { dog, included } = result;
   const name = dog.attributes?.name || "Dog";
+  const species = (dog.attributes?.species || "").trim().toLowerCase();
   const breed = dog.attributes?.breedString || "";
   const age = dog.attributes?.ageString || dog.attributes?.ageGroup || "";
   const sex = dog.attributes?.sex || "";
@@ -239,7 +241,9 @@ export default async function ShelterDogPage({
   const description = normalizeHtmlText(dog.attributes?.descriptionText || "");
   const orgInfo = getOrgInfo(dog, included);
   const pictures = getPictures(dog, included);
-  const isBlocked = isExcludedRescuegroupsAnimalId(dog.id) || isRescuegroupsInfoEntryName(dog.attributes?.name);
+  const isNotDog = Boolean(species) && species !== "dog";
+  const isBlocked =
+    isExcludedRescuegroupsAnimalId(dog.id) || isRescuegroupsInfoEntryName(dog.attributes?.name) || isNotDog;
 
   const hasRealHero = pictures.length > 0 || Boolean(dog.attributes?.pictureThumbnailUrl);
   const heroImage = pictures[0]?.src || dog.attributes?.pictureThumbnailUrl || PLACEHOLDER_SRC;
@@ -281,9 +285,11 @@ export default async function ShelterDogPage({
         <section className="py-5 my-5">
           <div className="container">
             <div className="bg-white border rounded-4 p-4">
-              <h1 className="h4 mb-2">Not a dog listing</h1>
+              <h1 className="h4 mb-2">{isNotDog ? "Not a dog listing" : "Not a dog listing"}</h1>
               <div className="text-muted">
-                This entry is informational (for example, pre-approval or application details) and is not an adoptable dog profile.
+                {isNotDog
+                  ? "This listing is not a dog profile."
+                  : "This entry is informational (for example, pre-approval or application details) and is not an adoptable dog profile."}
               </div>
               <div className="mt-4">
                 <Link href={backHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
