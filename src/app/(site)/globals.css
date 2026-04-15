@@ -1056,6 +1056,51 @@ iconify-icon.pagination-arrow:hover {
   }
 }
 
+@media (min-width: 768px) {
+  .shopify-grid .row > * {
+    min-width: 0;
+  }
+
+  .shopify-grid .sidebar {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .shopify-grid .sidebar .form-control,
+  .shopify-grid .sidebar .form-select {
+    max-width: 100%;
+  }
+
+  .shopify-grid .sidebar .shelter-filter-button {
+    border-color: rgba(65, 64, 62, 0.35);
+    padding-right: 44px;
+    position: relative;
+    height: auto;
+    min-height: 44px;
+  }
+
+  .shopify-grid .sidebar .shelter-filter-button:focus {
+    border-color: rgba(222, 173, 111, 0.8);
+    box-shadow: 0 0 0 0.25rem rgba(222, 173, 111, 0.18);
+  }
+
+  .shopify-grid .sidebar .shelter-filter-value {
+    min-width: 0;
+    white-space: normal;
+    line-height: 1.25;
+    overflow: hidden;
+    max-height: 2.6em;
+  }
+
+  .shopify-grid .sidebar .shelter-filter-chevron {
+    flex: 0 0 auto;
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
 
 /*--------------------------------------------------------------
 Single Product section style start

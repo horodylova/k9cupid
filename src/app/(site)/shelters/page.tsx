@@ -5,6 +5,7 @@ import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/l
 import { normalizeHtmlText } from "@/lib/htmlText";
 import { createWindowedDeduper, makeRescuegroupsDogDedupKey } from "@/utils/rescuegroupsDedup";
 import ShelterDogWishlistHeartButton from "@/components/ShelterDogWishlistHeartButton";
+import ShelterFilterSelect from "@/components/ShelterFilterSelect";
 
 export const revalidate = 0;
 
@@ -136,9 +137,11 @@ function getImage(animal: RescueAnimal, included: RescueIncluded[]) {
 async function getDogs({
   page,
   limit,
+  shelterId,
 }: {
   page: number;
   limit: number;
+  shelterId?: string;
 }): Promise<{ meta: RescueMeta; dogs: RescueAnimal[]; included: RescueIncluded[] }> {
   const apiKey = (process.env.RESCUEGROUPS_API_KEY || "").trim();
   if (!apiKey) {
@@ -149,7 +152,9 @@ async function getDogs({
     };
   }
 
-  const upstream = new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");
+  const upstream = shelterId
+    ? new URL(`https://api.rescuegroups.org/v5/public/orgs/${encodeURIComponent(shelterId)}/animals/search/available/dogs`)
+    : new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");
   upstream.searchParams.set("limit", String(limit));
   upstream.searchParams.set("page", String(page));
   upstream.searchParams.set("include", "pictures,orgs,locations");
@@ -185,6 +190,11 @@ export default async function SheltersPage({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   const page = parseIntParam(searchParams?.page, 1);
+  const selectedShelterIdRaw = Array.isArray(searchParams?.shelter) ? searchParams?.shelter[0] : searchParams?.shelter;
+  const selectedShelterNameRaw = Array.isArray(searchParams?.shelterName) ? searchParams?.shelterName[0] : searchParams?.shelterName;
+  const selectedShelterId = (selectedShelterIdRaw || "").trim();
+  const selectedShelterName = (selectedShelterNameRaw || "").trim();
+  const bannerTitle = selectedShelterName || "Shelters";
   const pageSize = 18;
   const maxScanPages = 8;
 
@@ -195,7 +205,7 @@ export default async function SheltersPage({
 
   let scanPage = page;
   for (let scan = 0; scan < maxScanPages && displayedDogs.length < pageSize; scan += 1) {
-    const res = await getDogs({ page: scanPage, limit: pageSize });
+    const res = await getDogs({ page: scanPage, limit: pageSize, shelterId: selectedShelterId || undefined });
     if (scan === 0) meta = res.meta;
 
     for (const inc of res.included) {
@@ -220,6 +230,24 @@ export default async function SheltersPage({
   }
 
   const included = Array.from(includedByKey.values());
+  const shelterQuickOptions = included
+    .filter((x) => x.type === "orgs")
+    .map((o) => {
+      const attrs = (o.attributes || {}) as Record<string, unknown>;
+      const name = typeof attrs.name === "string" ? attrs.name : "";
+      const city = typeof attrs.city === "string" ? attrs.city : "";
+      const state = typeof attrs.state === "string" ? attrs.state : "";
+      const citystate = [city, state].filter(Boolean).join(", ");
+      return { id: o.id, name, citystate };
+    })
+    .filter((x) => x.name)
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .slice(0, 40);
+
+  if (selectedShelterId && selectedShelterName && !shelterQuickOptions.some((x) => x.id === selectedShelterId)) {
+    shelterQuickOptions.unshift({ id: selectedShelterId, name: selectedShelterName, citystate: "" });
+  }
+
   const total = meta.count || 0;
   const totalPages = Math.max(1, meta.pages || 1);
   const start = displayedDogs.length > 0 ? (page - 1) * pageSize + 1 : 0;
@@ -281,6 +309,13 @@ export default async function SheltersPage({
             <input className="form-control" placeholder="Coming soon" disabled />
           </div>
           <div>
+            <ShelterFilterSelect
+              selectedId={selectedShelterId}
+              selectedName={selectedShelterName}
+              quickOptions={shelterQuickOptions}
+            />
+          </div>
+          <div>
             <label className="form-label mb-1">Radius (miles)</label>
             <select className="form-select" disabled>
               <option>Coming soon</option>
@@ -312,14 +347,23 @@ export default async function SheltersPage({
       <section id="banner" className="py-3" style={{ background: "#F9F3EC" }}>
         <div className="container">
           <div className="hero-content py-5 my-3">
-            <h2 className="display-1 mt-3 mb-0">Shelters</h2>
+            <h2 className="display-1 mt-3 mb-0">{bannerTitle}</h2>
             <nav className="breadcrumb">
               <Link className="breadcrumb-item nav-link" href="/">
                 Home
               </Link>
-              <span className="breadcrumb-item active" aria-current="page">
+              <Link className="breadcrumb-item nav-link" href="/shelters">
                 Shelters
-              </span>
+              </Link>
+              {selectedShelterName ? (
+                <span className="breadcrumb-item active" aria-current="page">
+                  {selectedShelterName}
+                </span>
+              ) : (
+                <span className="breadcrumb-item active" aria-current="page">
+                  Shelters
+                </span>
+              )}
             </nav>
           </div>
         </div>

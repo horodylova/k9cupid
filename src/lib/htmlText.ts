@@ -5,6 +5,19 @@ const NAMED_ENTITIES: Record<string, string> = {
   apos: "'",
   lt: "<",
   gt: ">",
+  rsquo: "’",
+  lsquo: "‘",
+  rdquo: "”",
+  ldquo: "“",
+  hellip: "…",
+  ndash: "–",
+  mdash: "—",
+  middot: "·",
+  bull: "•",
+  trade: "™",
+  copy: "©",
+  reg: "®",
+  deg: "°",
 };
 
 function decodeEntity(entity: string) {
@@ -41,4 +54,3 @@ export function normalizeHtmlText(input: string) {
 
   return text.trim();
 }
-

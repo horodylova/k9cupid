@@ -151,17 +151,29 @@ function parseIntParam(value: unknown, fallback: number) {
   return Math.floor(n);
 }
 
-function normalizeRescuegroupsListingUrl(url: string) {
-  if (!url) return "";
+function normalizeExternalUrl(url: string) {
+  const trimmed = (url || "").trim();
+  if (!trimmed) return "";
+
+  let candidate = trimmed;
+  if (candidate.startsWith("//")) candidate = `https:${candidate}`;
+
+  if (!/^https?:\/\//i.test(candidate)) {
+    const looksLikeDomain = /^[a-z0-9.-]+\.[a-z]{2,}([/?:#]|$)/i.test(candidate);
+    if (!looksLikeDomain) return "";
+    candidate = `https://${candidate}`;
+  }
+
   try {
-    const u = new URL(url);
+    const u = new URL(candidate);
+    if (u.protocol !== "http:" && u.protocol !== "https:") return "";
     const host = u.hostname.toLowerCase();
     if (host.endsWith(".rescuegroups.org") && host !== "rescuegroups.org" && host !== "www.rescuegroups.org") {
       u.hostname = "rescuegroups.org";
     }
     return u.toString();
   } catch {
-    return url;
+    return "";
   }
 }
 
@@ -222,7 +234,7 @@ export default async function ShelterDogPage({
   const sex = dog.attributes?.sex || "";
   const size = dog.attributes?.sizeGroup || "";
   const externalUrl = dog.attributes?.url || "";
-  const listingUrl = normalizeRescuegroupsListingUrl(externalUrl);
+  const listingUrl = normalizeExternalUrl(externalUrl);
   const rescueId = dog.attributes?.rescueId || "";
   const description = normalizeHtmlText(dog.attributes?.descriptionText || "");
   const orgInfo = getOrgInfo(dog, included);
@@ -359,7 +371,7 @@ export default async function ShelterDogPage({
                   <div className="mt-2" style={{ fontSize: 14 }}>
                     <span className="text-muted">Shelter: </span>
                     {(() => {
-                      const href = orgInfo.websiteUrl || normalizeRescuegroupsListingUrl(orgInfo.orgUrl);
+                      const href = normalizeExternalUrl(orgInfo.websiteUrl) || normalizeExternalUrl(orgInfo.orgUrl);
                       if (href) {
                         return (
                           <a href={href} target="_blank" rel="noreferrer">
