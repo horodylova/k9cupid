@@ -3,6 +3,8 @@ import Image from "next/image";
 import styles from "./shelters.module.css";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 import { normalizeHtmlText } from "@/lib/htmlText";
+import { createWindowedDeduper, makeRescuegroupsDogDedupKey } from "@/utils/rescuegroupsDedup";
+import ShelterDogWishlistHeartButton from "@/components/ShelterDogWishlistHeartButton";
 
 export const revalidate = 0;
 
@@ -189,6 +191,7 @@ export default async function SheltersPage({
   const includedByKey = new Map<string, RescueIncluded>();
   const displayedDogs: RescueAnimal[] = [];
   let meta: RescueMeta = { count: 0, countReturned: 0, pageReturned: page, limit: pageSize, pages: 1 };
+  const deduper = createWindowedDeduper(40);
 
   let scanPage = page;
   for (let scan = 0; scan < maxScanPages && displayedDogs.length < pageSize; scan += 1) {
@@ -202,6 +205,12 @@ export default async function SheltersPage({
     for (const dog of res.dogs) {
       if (isExcludedRescuegroupsAnimalId(dog.id)) continue;
       if (isRescuegroupsInfoEntryName(dog.attributes?.name)) continue;
+      const orgId = getFirstRelatedId(dog, "orgs");
+      const org = orgId ? includedByKey.get(`orgs:${orgId}`) : null;
+      const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
+      const orgName = typeof orgAttrs.name === "string" ? orgAttrs.name : "";
+      const dedupKey = makeRescuegroupsDogDedupKey({ name: dog.attributes?.name, orgName, orgId });
+      if (deduper.isDuplicate(dedupKey)) continue;
       displayedDogs.push(dog);
       if (displayedDogs.length >= pageSize) break;
     }
@@ -224,18 +233,43 @@ export default async function SheltersPage({
     return `/shelters${params.toString() ? `?${params.toString()}` : ""}`;
   };
 
-  const paginationRange: Array<number | string> = [];
-  if (totalPages <= 7) {
-    for (let i = 1; i <= totalPages; i += 1) paginationRange.push(i);
-  } else {
-    paginationRange.push(1);
-    if (page > 3) paginationRange.push("...");
-    const rangeStart = Math.max(2, page - 1);
-    const rangeEnd = Math.min(totalPages - 1, page + 1);
-    for (let i = rangeStart; i <= rangeEnd; i += 1) paginationRange.push(i);
-    if (page < totalPages - 2) paginationRange.push("...");
-    paginationRange.push(totalPages);
-  }
+  const paginationRange = (() => {
+    const range: Array<number | string> = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i += 1) range.push(i);
+      return range;
+    }
+
+    const candidates = new Set<number>();
+    const add = (p: number) => {
+      if (p < 1 || p > totalPages) return;
+      candidates.add(p);
+    };
+
+    add(1);
+    add(2);
+    add(3);
+    add(totalPages);
+    add(totalPages - 1);
+    add(totalPages - 2);
+
+    add(page - 1);
+    add(page);
+    add(page + 1);
+
+    // Keep desktop pagination compact while still allowing big jumps.
+    add(page - 100);
+    add(page + 100);
+
+    const sorted = Array.from(candidates).sort((a, b) => a - b);
+    let prev = 0;
+    for (const p of sorted) {
+      if (prev && p - prev > 1) range.push("...");
+      range.push(p);
+      prev = p;
+    }
+    return range;
+  })();
 
   const renderFilters = () => (
     <>
@@ -328,6 +362,7 @@ export default async function SheltersPage({
                   const orgId = getFirstRelatedId(dog, "orgs");
                   const org = getIncluded(included, "orgs", orgId);
                   const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
+                  const orgName = typeof orgAttrs.name === "string" ? orgAttrs.name : "";
                   const citystate = typeof orgAttrs.citystate === "string" ? orgAttrs.citystate : "";
                   const img = getImage(dog, included);
                   const description = dog.attributes?.descriptionText
@@ -340,6 +375,14 @@ export default async function SheltersPage({
                   return (
                     <div key={dog.id} className="col-12 col-sm-6 col-lg-4">
                       <div className="card position-relative h-100 overflow-hidden">
+                        <ShelterDogWishlistHeartButton
+                          id={dog.id}
+                          name={name}
+                          href={`/shelters/dogs/${encodeURIComponent(dog.id)}`}
+                          imageSrc={cardImgSrc}
+                          orgName={orgName}
+                          citystate={citystate}
+                        />
                         <Link href={detailsHref}>
                           <div
                             className={`position-relative ${styles.cardImage}`}

@@ -2,8 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 import { normalizeHtmlText } from "@/lib/htmlText";
+import ShelterDogWishlistHeartButton from "@/components/ShelterDogWishlistHeartButton";
 
 export const revalidate = 0;
+
+const PLACEHOLDER_SRC = "/No%20photo%20yet.jpg";
 
 type RescueMeta = {
   count: number;
@@ -26,7 +29,15 @@ type RescueAnimal = {
     ageGroup?: string;
     ageString?: string;
     sizeGroup?: string;
+    isHousetrained?: boolean;
+    isKidsOk?: boolean;
+    isDogsOk?: boolean;
+    isCatsOk?: boolean;
+    isSpecialNeeds?: boolean;
+    energyLevel?: string;
+    activityLevel?: string;
     url?: string;
+    rescueId?: string;
     pictureThumbnailUrl?: string;
     descriptionText?: string;
   };
@@ -90,11 +101,15 @@ function getPictures(animal: RescueAnimal, included: RescueIncluded[]) {
   return pics;
 }
 
-function getOrgCityState(animal: RescueAnimal, included: RescueIncluded[]) {
+function getOrgInfo(animal: RescueAnimal, included: RescueIncluded[]) {
   const orgId = getRelatedIds(animal, "orgs")[0] || null;
   const org = getIncluded(included, "orgs", orgId);
   const attrs = (org?.attributes || {}) as Record<string, unknown>;
-  return typeof attrs.citystate === "string" ? attrs.citystate : "";
+  const name = typeof attrs.name === "string" ? attrs.name : "";
+  const citystate = typeof attrs.citystate === "string" ? attrs.citystate : "";
+  const websiteUrl = typeof attrs.websiteUrl === "string" ? attrs.websiteUrl : "";
+  const orgUrl = typeof attrs.url === "string" ? attrs.url : "";
+  return { name, citystate, websiteUrl, orgUrl };
 }
 
 async function getDogById(id: string) {
@@ -105,7 +120,7 @@ async function getDogById(id: string) {
   upstream.searchParams.set("include", "pictures,orgs,locations");
   upstream.searchParams.set(
     "fields[animals]",
-    "name,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText"
+    "name,breedString,sex,ageGroup,ageString,sizeGroup,isHousetrained,isKidsOk,isDogsOk,isCatsOk,isSpecialNeeds,energyLevel,activityLevel,url,rescueId,pictureThumbnailUrl,descriptionText"
   );
   upstream.searchParams.set("fields[pictures]", "small,large,original,order");
   upstream.searchParams.set("fields[orgs]", "name,url,citystate,websiteUrl");
@@ -134,6 +149,20 @@ function parseIntParam(value: unknown, fallback: number) {
   const n = typeof raw === "string" ? Number(raw) : NaN;
   if (!Number.isFinite(n) || n < 1) return fallback;
   return Math.floor(n);
+}
+
+function normalizeRescuegroupsListingUrl(url: string) {
+  if (!url) return "";
+  try {
+    const u = new URL(url);
+    const host = u.hostname.toLowerCase();
+    if (host.endsWith(".rescuegroups.org") && host !== "rescuegroups.org" && host !== "www.rescuegroups.org") {
+      u.hostname = "rescuegroups.org";
+    }
+    return u.toString();
+  } catch {
+    return url;
+  }
 }
 
 export default async function ShelterDogPage({
@@ -193,14 +222,27 @@ export default async function ShelterDogPage({
   const sex = dog.attributes?.sex || "";
   const size = dog.attributes?.sizeGroup || "";
   const externalUrl = dog.attributes?.url || "";
+  const listingUrl = normalizeRescuegroupsListingUrl(externalUrl);
+  const rescueId = dog.attributes?.rescueId || "";
   const description = normalizeHtmlText(dog.attributes?.descriptionText || "");
-  const citystate = getOrgCityState(dog, included);
+  const orgInfo = getOrgInfo(dog, included);
   const pictures = getPictures(dog, included);
   const isBlocked = isExcludedRescuegroupsAnimalId(dog.id) || isRescuegroupsInfoEntryName(dog.attributes?.name);
 
   const hasRealHero = pictures.length > 0 || Boolean(dog.attributes?.pictureThumbnailUrl);
-  const heroImage = pictures[0]?.src || dog.attributes?.pictureThumbnailUrl || "/No%20photo%20yet.jpg";
+  const heroImage = pictures[0]?.src || dog.attributes?.pictureThumbnailUrl || PLACEHOLDER_SRC;
+  const isPlaceholder = heroImage === PLACEHOLDER_SRC;
   const heroAlt = hasRealHero ? name : "No photo yet";
+  const morePictures = pictures.slice(1);
+
+  const infoBadges: string[] = [];
+  if (dog.attributes?.energyLevel) infoBadges.push(`Energy: ${dog.attributes.energyLevel}`);
+  if (dog.attributes?.activityLevel) infoBadges.push(`Activity: ${dog.attributes.activityLevel}`);
+  if (dog.attributes?.isHousetrained === true) infoBadges.push("House trained");
+  if (dog.attributes?.isSpecialNeeds === true) infoBadges.push("Special needs");
+  if (dog.attributes?.isKidsOk === true) infoBadges.push("Kids OK");
+  if (dog.attributes?.isDogsOk === true) infoBadges.push("Dogs OK");
+  if (dog.attributes?.isCatsOk === true) infoBadges.push("Cats OK");
 
   if (isBlocked) {
     return (
@@ -268,7 +310,10 @@ export default async function ShelterDogPage({
         <div className="container">
           <div className="row g-5">
             <div className="col-12 col-lg-6">
-              <div className="card border-0 shadow-sm rounded-4 overflow-hidden" style={{ background: hasRealHero ? "#F9F3EC" : "transparent" }}>
+              <div
+                className="card border-0 shadow-sm rounded-4 overflow-hidden"
+                style={{ background: isPlaceholder ? "transparent" : "#F9F3EC" }}
+              >
                 <div className="position-relative" style={{ width: "100%", aspectRatio: "4 / 3" }}>
                   <Image
                     src={heroImage.startsWith("http") ? upgradeRescuegroupsWidth(heroImage, 1400) : heroImage}
@@ -276,17 +321,20 @@ export default async function ShelterDogPage({
                     fill
                     priority
                     sizes="(max-width: 992px) 100vw, 50vw"
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: isPlaceholder ? "cover" : "contain", padding: isPlaceholder ? 0 : 12 }}
                   />
                 </div>
               </div>
 
-              {pictures.length > 1 && (
+              {morePictures.length > 0 && (
                 <div className="row g-3 mt-3">
-                  {pictures.slice(0, 9).map((p) => (
+                  {morePictures.slice(0, 9).map((p) => (
                     <div key={p.id} className="col-4">
                       <a href={p.src2x || p.src} target="_blank" rel="noreferrer">
-                        <div className="position-relative rounded-3 overflow-hidden" style={{ width: "100%", height: 120, background: "#F9F3EC" }}>
+                        <div
+                          className="position-relative rounded-3 overflow-hidden"
+                          style={{ width: "100%", height: 120, background: "#F9F3EC" }}
+                        >
                           <Image
                             src={upgradeRescuegroupsWidth(p.src, 600)}
                             alt={name}
@@ -307,9 +355,39 @@ export default async function ShelterDogPage({
                 <div className="text-muted" style={{ fontSize: 14 }}>
                   {[breed, age, sex, size].filter(Boolean).join(" • ")}
                 </div>
-                {citystate && (
+                {(orgInfo.name || orgInfo.websiteUrl) && (
+                  <div className="mt-2" style={{ fontSize: 14 }}>
+                    <span className="text-muted">Shelter: </span>
+                    {(() => {
+                      const href = orgInfo.websiteUrl || normalizeRescuegroupsListingUrl(orgInfo.orgUrl);
+                      if (href) {
+                        return (
+                          <a href={href} target="_blank" rel="noreferrer">
+                            {orgInfo.name || href}
+                          </a>
+                        );
+                      }
+                      return <span>{orgInfo.name}</span>;
+                    })()}
+                  </div>
+                )}
+                {orgInfo.citystate && (
                   <div className="text-muted mt-1" style={{ fontSize: 14 }}>
-                    {citystate}
+                    {orgInfo.citystate}
+                  </div>
+                )}
+                {rescueId && (
+                  <div className="text-muted mt-1" style={{ fontSize: 12 }}>
+                    Rescue ID: {rescueId}
+                  </div>
+                )}
+                {infoBadges.length > 0 && (
+                  <div className="d-flex flex-wrap gap-2 mt-3">
+                    {infoBadges.map((item) => (
+                      <span key={item} className="badge text-bg-light border">
+                        {item}
+                      </span>
+                    ))}
                   </div>
                 )}
 
@@ -323,9 +401,18 @@ export default async function ShelterDogPage({
                   <Link href={backHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
                     Back
                   </Link>
-                  {externalUrl && (
+                  <ShelterDogWishlistHeartButton
+                    id={dog.id}
+                    name={name}
+                    href={`/shelters/dogs/${encodeURIComponent(dog.id)}`}
+                    imageSrc={heroImage}
+                    orgName={orgInfo.name}
+                    citystate={orgInfo.citystate}
+                    variant="inline"
+                  />
+                  {listingUrl && (
                     <a
-                      href={externalUrl}
+                      href={listingUrl}
                       target="_blank"
                       rel="noreferrer"
                       className="btn btn-dark btn-md text-uppercase fs-6 rounded-1"
