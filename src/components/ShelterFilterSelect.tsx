@@ -1,19 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import sheltersData from "@/data/rescuegroupsShelters.json";
 
 type ShelterOption = {
   id: string;
   name: string;
-  citystate?: string;
+  city?: string;
+  state?: string;
 };
-
-type IndexResponse = {
-  data?: ShelterOption[];
-};
-
-const STORAGE_KEY = "k9cupid_rescuegroups_orgs_index_v2";
 
 function normalizeToken(input: string) {
   return input
@@ -28,10 +24,16 @@ export default function ShelterFilterSelect({
   selectedId,
   selectedName,
   quickOptions,
+  filterState,
+  filterCity,
+  onSelect,
 }: {
   selectedId: string;
   selectedName: string;
   quickOptions: ShelterOption[];
+  filterState?: string;
+  filterCity?: string;
+  onSelect?: (option: ShelterOption | null) => void;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -41,80 +43,43 @@ export default function ShelterFilterSelect({
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [allShelters, setAllShelters] = useState<ShelterOption[]>([]);
 
   const title = selectedName || quickOptions.find((x) => x.id === selectedId)?.name || "All shelters";
 
   const visibleQuick = useMemo(() => quickOptions.slice(0, 8), [quickOptions]);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    const run = async () => {
-      if (allShelters.length > 0) return;
+  const allShelters = sheltersData as ShelterOption[];
+  const normalizedFilterState = (filterState || "").trim().toUpperCase();
+  const normalizedFilterCity = (filterCity || "").trim().toLowerCase();
+  const scopedShelters = useMemo(() => {
+    return allShelters.filter((s) => {
+      if (normalizedFilterState && (s.state || "").trim().toUpperCase() !== normalizedFilterState) return false;
+      if (normalizedFilterCity && (s.city || "").trim().toLowerCase() !== normalizedFilterCity) return false;
+      return true;
+    });
+  }, [allShelters, normalizedFilterState, normalizedFilterCity]);
 
-      setLoading(true);
-      try {
-        try {
-          const cached = window.localStorage.getItem(STORAGE_KEY);
-          if (cached) {
-            const parsed = JSON.parse(cached) as unknown;
-            if (Array.isArray(parsed)) {
-              const fromStorage = parsed
-                .map((x) => {
-                  const o = x as Partial<ShelterOption>;
-                  return {
-                    id: typeof o.id === "string" ? o.id : "",
-                    name: typeof o.name === "string" ? o.name : "",
-                    citystate: typeof o.citystate === "string" ? o.citystate : "",
-                  };
-                })
-                .filter((x) => x.id && x.name);
-              if (fromStorage.length > 0) {
-                setAllShelters(fromStorage);
-                return;
-              }
-            }
-          }
-        } catch {
-          return;
-        }
-
-        const res = await fetch("/api/rescuegroups/orgs-index");
-        if (!res.ok) return;
-        const json = (await res.json()) as IndexResponse;
-        const rows = Array.isArray(json.data) ? json.data : [];
-        const normalized = rows
-          .map((o) => ({
-            id: String(o.id || "").trim(),
-            name: String(o.name || "").trim(),
-            citystate: String(o.citystate || "").trim(),
-          }))
-          .filter((o) => o.id && o.name);
-        setAllShelters(normalized);
-        try {
-          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
-        } catch {
-          return;
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    run();
-  }, [isOpen, allShelters.length]);
+  const formatCityState = (opt: ShelterOption) => {
+    const parts = [opt.city, opt.state].filter(Boolean);
+    return parts.join(", ");
+  };
 
   const filtered = useMemo(() => {
     const q = normalizeToken(query);
-    if (!q) return allShelters;
-    return allShelters.filter((s) => normalizeToken(s.name).includes(q));
-  }, [allShelters, query]);
+    if (!q) return scopedShelters;
+    return scopedShelters.filter((s) => normalizeToken(s.name).includes(q));
+  }, [scopedShelters, query]);
 
   const pageSize = 30;
   const resultPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const pagedResults = useMemo(() => filtered.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize), [filtered, page]);
 
   const applySelection = (option: ShelterOption | null) => {
+    if (onSelect) {
+      onSelect(option);
+      setIsOpen(false);
+      return;
+    }
     const next = new URLSearchParams(searchParams?.toString() || "");
     next.delete("page");
     if (!option) {
@@ -160,7 +125,7 @@ export default function ShelterFilterSelect({
             background: "rgba(0,0,0,0.35)",
             zIndex: 1060,
             display: "flex",
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "center",
             padding: 16,
           }}
@@ -168,7 +133,14 @@ export default function ShelterFilterSelect({
         >
           <div
             className="bg-white rounded-4 border"
-            style={{ width: "min(760px, 100%)", maxHeight: "85vh", overflow: "hidden" }}
+            style={{
+              width: "min(760px, 100%)",
+              maxHeight: "calc(100vh - 32px)",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: "column",
+              marginTop: 8,
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-3 border-bottom d-flex justify-content-between align-items-center">
@@ -189,7 +161,7 @@ export default function ShelterFilterSelect({
               />
             </div>
 
-            <div className="p-3" style={{ maxHeight: "52vh", overflow: "auto" }}>
+            <div className="p-3" style={{ overflow: "auto", flex: "1 1 auto" }}>
               {!query && visibleQuick.length > 0 && (
                 <div className="mb-3">
                   <div className="text-muted mb-2" style={{ fontSize: 12 }}>
@@ -205,9 +177,7 @@ export default function ShelterFilterSelect({
                 </div>
               )}
 
-              {loading ? (
-                <div className="text-muted">Loading...</div>
-              ) : pagedResults.length === 0 ? (
+              {pagedResults.length === 0 ? (
                 <div className="text-muted">No shelters found.</div>
               ) : (
                 <div className="list-group">
@@ -219,9 +189,9 @@ export default function ShelterFilterSelect({
                       onClick={() => applySelection(opt)}
                     >
                       <span>{opt.name}</span>
-                      {opt.citystate ? (
+                      {formatCityState(opt) ? (
                         <span className="text-muted" style={{ fontSize: 12 }}>
-                          {opt.citystate}
+                          {formatCityState(opt)}
                         </span>
                       ) : null}
                     </button>

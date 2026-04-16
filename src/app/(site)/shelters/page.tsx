@@ -5,7 +5,9 @@ import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/l
 import { normalizeHtmlText } from "@/lib/htmlText";
 import { createWindowedDeduper, makeRescuegroupsDogDedupKey } from "@/utils/rescuegroupsDedup";
 import ShelterDogWishlistHeartButton from "@/components/ShelterDogWishlistHeartButton";
-import ShelterFilterSelect from "@/components/ShelterFilterSelect";
+import SheltersDesktopFilters from "@/components/SheltersDesktopFilters";
+import SheltersMobileFilters from "@/components/SheltersMobileFilters";
+import sheltersData from "@/data/rescuegroupsShelters.json";
 
 export const revalidate = 0;
 
@@ -61,6 +63,78 @@ function truncateText(text: string, maxLen: number) {
   const normalized = (text || "").replace(/\s+/g, " ").trim();
   if (normalized.length <= maxLen) return normalized;
   return `${normalized.slice(0, maxLen - 1).trim()}…`;
+}
+
+function isLikelyDog(attrs: RescueAnimal["attributes"]) {
+  const species = (attrs?.species || "").trim().toLowerCase();
+  if (species) return species === "dog" || species === "canine";
+
+  const breed = (attrs?.breedString || "").trim().toLowerCase();
+  if (!breed) return false;
+
+  const nonDogMarkers = [
+    "cat",
+    "cats",
+    "kitten",
+    "feline",
+    "tabby",
+    "domestic short hair",
+    "domestic long hair",
+    "mouse",
+    "mice",
+    "rat",
+    "hamster",
+    "guinea pig",
+    "rabbit",
+    "bunny",
+    "turtle",
+    "tortoise",
+    "snake",
+    "lizard",
+    "gecko",
+    "bird",
+    "parrot",
+    "fish",
+    "ferret",
+  ];
+  if (nonDogMarkers.some((m) => breed.includes(m))) return false;
+
+  return true;
+}
+
+function getOrgLocation(attrs: Record<string, unknown>): { city: string; state: string } {
+  const cityRaw = typeof attrs.city === "string" ? attrs.city.trim() : "";
+  const stateRaw = typeof attrs.state === "string" ? attrs.state.trim().toUpperCase() : "";
+  if (cityRaw || stateRaw) return { city: cityRaw, state: stateRaw };
+
+  const citystate = typeof attrs.citystate === "string" ? attrs.citystate.trim() : "";
+  if (!citystate) return { city: "", state: "" };
+
+  const parts = citystate.split(",").map((p) => p.trim()).filter(Boolean);
+  if (parts.length >= 2) {
+    const state = parts[parts.length - 1].toUpperCase();
+    const city = parts.slice(0, parts.length - 1).join(", ").trim();
+    return { city, state };
+  }
+
+  return { city: citystate, state: "" };
+}
+
+function getAnimalLocation(item: RescueAnimal, includedByKey: Map<string, RescueIncluded>) {
+  const locId = getFirstRelatedId(item, "locations");
+  const loc = locId ? includedByKey.get(`locations:${locId}`) : null;
+  const attrs = (loc?.attributes || {}) as Record<string, unknown>;
+  const locCity = typeof attrs.city === "string" ? attrs.city.trim() : "";
+  const locState = typeof attrs.state === "string" ? attrs.state.trim().toUpperCase() : "";
+  if (locCity || locState) return { city: locCity, state: locState };
+
+  const citystate = typeof attrs.citystate === "string" ? attrs.citystate.trim() : "";
+  if (citystate) return getOrgLocation({ citystate });
+
+  const orgId = getFirstRelatedId(item, "orgs");
+  const org = orgId ? includedByKey.get(`orgs:${orgId}`) : null;
+  const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
+  return getOrgLocation(orgAttrs);
 }
 
 function isRelArray(rel: RescueRelationship | undefined): rel is { data: Array<{ type: string; id: string }> } {
@@ -153,21 +227,7 @@ async function getDogs({
     };
   }
 
-  const upstream = shelterId
-    ? new URL(`https://api.rescuegroups.org/v5/public/orgs/${encodeURIComponent(shelterId)}/animals/search/available/dogs`)
-    : new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");
-  upstream.searchParams.set("limit", String(limit));
-  upstream.searchParams.set("page", String(page));
-  upstream.searchParams.set("include", "pictures,orgs,locations");
-  upstream.searchParams.set(
-    "fields[animals]",
-    "name,species,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText"
-  );
-  upstream.searchParams.set("fields[pictures]", "small,large,original,order");
-  upstream.searchParams.set("fields[orgs]", "name,url,citystate,websiteUrl");
-  upstream.searchParams.set("fields[locations]", "citystate,postalcode,state,country,lat,lon,coordinates");
-
-  const res = await fetch(upstream, {
+  const runFetch = async (upstream: URL) => fetch(upstream, {
     method: "GET",
     headers: {
       "Content-Type": "application/vnd.api+json",
@@ -177,10 +237,40 @@ async function getDogs({
     cache: "no-store",
   });
 
-  const json = (await res.json()) as RescueResponse;
-  const meta = json.meta || { count: 0, countReturned: 0, pageReturned: page, limit, pages: 1 };
-  const dogs = Array.isArray(json.data) ? json.data : [];
-  const included = Array.isArray(json.included) ? json.included : [];
+  const makeUpstream = (dogsOnlyPath: boolean) => {
+    const upstream = shelterId
+      ? new URL(
+          dogsOnlyPath
+            ? `https://api.rescuegroups.org/v5/public/orgs/${encodeURIComponent(shelterId)}/animals/search/available/dogs`
+            : `https://api.rescuegroups.org/v5/public/orgs/${encodeURIComponent(shelterId)}/animals/search/available`
+        )
+      : new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");
+    upstream.searchParams.set("limit", String(limit));
+    upstream.searchParams.set("page", String(page));
+    upstream.searchParams.set("include", "pictures,orgs,locations");
+    upstream.searchParams.set(
+      "fields[animals]",
+      "name,species,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText"
+    );
+    upstream.searchParams.set("fields[pictures]", "small,large,original,order");
+  upstream.searchParams.set("fields[orgs]", "name,url,citystate,city,state,websiteUrl");
+    upstream.searchParams.set("fields[locations]", "citystate,postalcode,state,country,lat,lon,coordinates");
+    return upstream;
+  };
+
+  const firstRes = await runFetch(makeUpstream(true));
+  const firstJson = (await firstRes.json()) as RescueResponse;
+  let meta = firstJson.meta || { count: 0, countReturned: 0, pageReturned: page, limit, pages: 1 };
+  let dogs = Array.isArray(firstJson.data) ? firstJson.data : [];
+  let included = Array.isArray(firstJson.included) ? firstJson.included : [];
+
+  if (shelterId && dogs.length === 0 && (meta.count || 0) === 0) {
+    const fallbackRes = await runFetch(makeUpstream(false));
+    const fallbackJson = (await fallbackRes.json()) as RescueResponse;
+    meta = fallbackJson.meta || meta;
+    dogs = Array.isArray(fallbackJson.data) ? fallbackJson.data : [];
+    included = Array.isArray(fallbackJson.included) ? fallbackJson.included : [];
+  }
 
   return { meta, dogs, included };
 }
@@ -193,43 +283,121 @@ export default async function SheltersPage({
   const page = parseIntParam(searchParams?.page, 1);
   const selectedShelterIdRaw = Array.isArray(searchParams?.shelter) ? searchParams?.shelter[0] : searchParams?.shelter;
   const selectedShelterNameRaw = Array.isArray(searchParams?.shelterName) ? searchParams?.shelterName[0] : searchParams?.shelterName;
-  const selectedShelterId = (selectedShelterIdRaw || "").trim();
-  const selectedShelterName = (selectedShelterNameRaw || "").trim();
+  const selectedStateRaw = Array.isArray(searchParams?.state) ? searchParams?.state[0] : searchParams?.state;
+  const selectedCityRaw = Array.isArray(searchParams?.city) ? searchParams?.city[0] : searchParams?.city;
+  let selectedShelterId = (selectedShelterIdRaw || "").trim();
+  let selectedShelterName = (selectedShelterNameRaw || "").trim();
+  const selectedState = (selectedStateRaw || "").trim().toUpperCase();
+  const selectedCity = (selectedCityRaw || "").trim();
+
+  if (selectedShelterName && (!selectedShelterId || !Array.isArray(sheltersData) || !sheltersData.some((s) => s.id === selectedShelterId))) {
+    const normalized = selectedShelterName.toLowerCase().trim();
+    const matched = Array.isArray(sheltersData)
+      ? sheltersData.find((s) => (s.name || "").toLowerCase().trim() === normalized)
+      : null;
+    if (matched?.id) {
+      selectedShelterId = matched.id;
+      selectedShelterName = matched.name || selectedShelterName;
+    }
+  }
   const bannerTitle = selectedShelterName || "Shelters";
   const pageSize = 18;
   const maxScanPages = 8;
+  const hasLocationFilter = !selectedShelterId && Boolean(selectedState || selectedCity);
 
   const includedByKey = new Map<string, RescueIncluded>();
-  const displayedDogs: RescueAnimal[] = [];
+  let displayedDogs: RescueAnimal[] = [];
   let meta: RescueMeta = { count: 0, countReturned: 0, pageReturned: page, limit: pageSize, pages: 1 };
+  let totalKnown = true;
   const deduper = createWindowedDeduper(40);
 
-  let scanPage = page;
-  for (let scan = 0; scan < maxScanPages && displayedDogs.length < pageSize; scan += 1) {
-    const res = await getDogs({ page: scanPage, limit: pageSize, shelterId: selectedShelterId || undefined });
-    if (scan === 0) meta = res.meta;
+  let hasNextPage = false;
+  let hasPrevPage = page > 1;
 
-    for (const inc of res.included) {
-      includedByKey.set(`${inc.type}:${inc.id}`, inc);
+  if (hasLocationFilter) {
+    totalKnown = false;
+    const offset = (page - 1) * pageSize;
+    const probe = page * pageSize + 1;
+    const matches: RescueAnimal[] = [];
+
+    let scanPage = 1;
+    let upstreamPages = 1;
+
+    while (scanPage <= upstreamPages && matches.length < probe) {
+      const res = await getDogs({ page: scanPage, limit: 250, shelterId: undefined });
+      if (scanPage === 1) upstreamPages = res.meta.pages || 1;
+
+      for (const inc of res.included) {
+        includedByKey.set(`${inc.type}:${inc.id}`, inc);
+      }
+
+      for (const dog of res.dogs) {
+        if (isExcludedRescuegroupsAnimalId(dog.id)) continue;
+        if (isRescuegroupsInfoEntryName(dog.attributes?.name)) continue;
+        if (!isLikelyDog(dog.attributes)) continue;
+
+        const orgId = getFirstRelatedId(dog, "orgs");
+        const org = orgId ? includedByKey.get(`orgs:${orgId}`) : null;
+        const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
+        const orgName = typeof orgAttrs.name === "string" ? orgAttrs.name : "";
+        const { city, state } = getAnimalLocation(dog, includedByKey);
+        if (selectedState && (!state || state !== selectedState)) continue;
+        if (selectedCity && (!city || city.toLowerCase() !== selectedCity.toLowerCase())) continue;
+
+        const dedupKey = makeRescuegroupsDogDedupKey({ name: dog.attributes?.name, orgName, orgId });
+        if (deduper.isDuplicate(dedupKey)) continue;
+        matches.push(dog);
+        if (matches.length >= probe) break;
+      }
+
+      scanPage += 1;
+      if (scanPage > 500) break;
     }
 
-    for (const dog of res.dogs) {
-      if (isExcludedRescuegroupsAnimalId(dog.id)) continue;
-      if (isRescuegroupsInfoEntryName(dog.attributes?.name)) continue;
-      const species = (dog.attributes?.species || "").trim().toLowerCase();
-      if (species && species !== "dog") continue;
-      const orgId = getFirstRelatedId(dog, "orgs");
-      const org = orgId ? includedByKey.get(`orgs:${orgId}`) : null;
-      const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
-      const orgName = typeof orgAttrs.name === "string" ? orgAttrs.name : "";
-      const dedupKey = makeRescuegroupsDogDedupKey({ name: dog.attributes?.name, orgName, orgId });
-      if (deduper.isDuplicate(dedupKey)) continue;
-      displayedDogs.push(dog);
-      if (displayedDogs.length >= pageSize) break;
+    hasNextPage = matches.length > page * pageSize;
+    displayedDogs = matches.slice(offset, offset + pageSize);
+    meta = {
+      count: 0,
+      countReturned: displayedDogs.length,
+      pageReturned: page,
+      limit: pageSize,
+      pages: hasNextPage ? page + 1 : page,
+    };
+  } else {
+    let scanPage = page;
+    for (let scan = 0; scan < maxScanPages && displayedDogs.length < pageSize; scan += 1) {
+      const res = await getDogs({ page: scanPage, limit: pageSize, shelterId: selectedShelterId || undefined });
+      if (scan === 0) meta = res.meta;
+
+      for (const inc of res.included) {
+        includedByKey.set(`${inc.type}:${inc.id}`, inc);
+      }
+
+      for (const dog of res.dogs) {
+        if (isExcludedRescuegroupsAnimalId(dog.id)) continue;
+        if (isRescuegroupsInfoEntryName(dog.attributes?.name)) continue;
+        if (!isLikelyDog(dog.attributes)) continue;
+        const orgId = getFirstRelatedId(dog, "orgs");
+        const org = orgId ? includedByKey.get(`orgs:${orgId}`) : null;
+        const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
+        const orgName = typeof orgAttrs.name === "string" ? orgAttrs.name : "";
+        const { city: orgCity, state: orgState } = getAnimalLocation(dog, includedByKey);
+        if (!selectedShelterId) {
+          if (selectedState && (!orgState || orgState !== selectedState)) continue;
+          if (selectedCity && (!orgCity || orgCity.toLowerCase() !== selectedCity.toLowerCase())) continue;
+        }
+        const dedupKey = makeRescuegroupsDogDedupKey({ name: dog.attributes?.name, orgName, orgId });
+        if (deduper.isDuplicate(dedupKey)) continue;
+        displayedDogs.push(dog);
+        if (displayedDogs.length >= pageSize) break;
+      }
+
+      if (scanPage >= (res.meta.pages || 1)) break;
+      scanPage += 1;
     }
 
-    if (scanPage >= (res.meta.pages || 1)) break;
-    scanPage += 1;
+    const totalPages = Math.max(1, meta.pages || 1);
+    hasNextPage = page < totalPages;
   }
 
   const included = Array.from(includedByKey.values());
@@ -240,26 +408,28 @@ export default async function SheltersPage({
       const name = typeof attrs.name === "string" ? attrs.name : "";
       const city = typeof attrs.city === "string" ? attrs.city : "";
       const state = typeof attrs.state === "string" ? attrs.state : "";
-      const citystate = [city, state].filter(Boolean).join(", ");
-      return { id: o.id, name, citystate };
+      return { id: o.id, name, city, state };
     })
     .filter((x) => x.name)
     .sort((a, b) => a.name.localeCompare(b.name))
     .slice(0, 40);
 
   if (selectedShelterId && selectedShelterName && !shelterQuickOptions.some((x) => x.id === selectedShelterId)) {
-    shelterQuickOptions.unshift({ id: selectedShelterId, name: selectedShelterName, citystate: "" });
+    shelterQuickOptions.unshift({ id: selectedShelterId, name: selectedShelterName, city: "", state: "" });
   }
 
   const total = meta.count || 0;
   const totalPages = Math.max(1, meta.pages || 1);
   const start = displayedDogs.length > 0 ? (page - 1) * pageSize + 1 : 0;
   const end = (page - 1) * pageSize + displayedDogs.length;
-  const hasPrevPage = page > 1;
-  const hasNextPage = page < totalPages;
+  hasPrevPage = page > 1;
 
   const getPageLink = (p: number) => {
     const params = new URLSearchParams();
+    if (selectedShelterId) params.set("shelter", selectedShelterId);
+    if (selectedShelterName) params.set("shelterName", selectedShelterName);
+    if (selectedState) params.set("state", selectedState);
+    if (selectedCity) params.set("city", selectedCity);
     if (p > 1) params.set("page", String(p));
     return `/shelters${params.toString() ? `?${params.toString()}` : ""}`;
   };
@@ -302,49 +472,6 @@ export default async function SheltersPage({
     return range;
   })();
 
-  const renderFilters = () => (
-    <>
-      <div className="widget-product-categories pt-0 pt-md-5">
-        <h4 className="widget-title m-0 mb-3">Filters</h4>
-        <div className="d-grid gap-3">
-          <div>
-            <label className="form-label mb-1">ZIP code</label>
-            <input className="form-control" placeholder="Coming soon" disabled />
-          </div>
-          <div>
-            <ShelterFilterSelect
-              selectedId={selectedShelterId}
-              selectedName={selectedShelterName}
-              quickOptions={shelterQuickOptions}
-            />
-          </div>
-          <div>
-            <label className="form-label mb-1">Radius (miles)</label>
-            <select className="form-select" disabled>
-              <option>Coming soon</option>
-            </select>
-          </div>
-          <div>
-            <label className="form-label mb-1">Breed</label>
-            <input className="form-control" placeholder="Coming soon" disabled />
-          </div>
-          <div>
-            <label className="form-label mb-1">Age</label>
-            <select className="form-select" disabled>
-              <option>Coming soon</option>
-            </select>
-          </div>
-          <div>
-            <label className="form-label mb-1">Size</label>
-            <select className="form-select" disabled>
-              <option>Coming soon</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-
   return (
     <>
       <section id="banner" className="py-3" style={{ background: "#F9F3EC" }}>
@@ -376,21 +503,22 @@ export default async function SheltersPage({
         <div className="container py-5 my-5">
           <div className="row flex-column flex-md-row-reverse g-md-5 mb-5">
             <main className="col-12 col-md-9">
-              <details className="d-md-none mb-4 border rounded-4" style={{ background: "#F9F3EC", boxShadow: "0 10px 24px rgba(0,0,0,0.08)" }}>
-                <summary
-                  className="px-3 py-3 d-flex justify-content-between align-items-center fw-semibold text-uppercase"
-                  style={{ cursor: "pointer", letterSpacing: 0.8 }}
-                >
-                  <span>Filters</span>
-                  <iconify-icon icon="ri:arrow-down-s-line" className="fs-5"></iconify-icon>
-                </summary>
-                <div className="px-3 pb-3">{renderFilters()}</div>
-              </details>
+              <SheltersMobileFilters
+                quickOptions={shelterQuickOptions}
+                initialSelectedState={selectedState}
+                initialSelectedCity={selectedCity}
+                initialSelectedShelterId={selectedShelterId}
+                initialSelectedShelterName={selectedShelterName}
+              />
 
               <div className="filter-shop d-md-flex justify-content-between align-items-center">
                 <div className="showing-product">
                   <p className="m-0">
-                    Showing {start}–{end} of {total} dogs
+                    {totalKnown ? (
+                      <>Showing {start}–{end} of {total} dogs</>
+                    ) : (
+                      <>Showing {start}–{end} dogs</>
+                    )}
                   </p>
                 </div>
                 <div className="sort-by">
@@ -519,7 +647,15 @@ export default async function SheltersPage({
             </main>
 
             <aside className="d-none d-md-block col-md-3 mt-4 mt-md-5 mb-5 mb-md-0">
-              <div className="sidebar">{renderFilters()}</div>
+              <div className="sidebar">
+                <SheltersDesktopFilters
+                  selectedState={selectedState}
+                  selectedCity={selectedCity}
+                  selectedShelterId={selectedShelterId}
+                  selectedShelterName={selectedShelterName}
+                  quickShelters={shelterQuickOptions}
+                />
+              </div>
             </aside>
           </div>
         </div>

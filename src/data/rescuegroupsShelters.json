@@ -1,0 +1,8206 @@
+[
+  {
+    "id": "4389",
+    "name": "2nd Chance 4 Life",
+    "city": "Elizabethtown",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "3886",
+    "name": "2nd Chance Dog Rescue",
+    "city": "Queen Creek",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "5802",
+    "name": "3 Hearts 4 Paws Animal Rescue",
+    "city": "Morganville",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "11424",
+    "name": "4 Dogs Farm Rescue",
+    "city": "Castro Valley",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8009",
+    "name": "4 Lucky Dogs Pet Rescue, Inc.",
+    "city": "Valrico",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "3829",
+    "name": "4 Luv of Dog Rescue",
+    "city": "Fargo",
+    "state": "ND",
+    "hasDogs": true
+  },
+  {
+    "id": "5304",
+    "name": "4 Paws 4 Life Rescue",
+    "city": "Sedalia",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "7022",
+    "name": "4 Paws 4 Rescue",
+    "city": "Fenton",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "6582",
+    "name": "4 Paws Dog Rescue",
+    "city": "Newfield",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "11711",
+    "name": "4ever Yours Rescue Inc",
+    "city": "GeorgeTown",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "503",
+    "name": "A Caring Place - All Breed Dog Rescue",
+    "city": "Westmont",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "7929",
+    "name": "A Doggie 4 You",
+    "city": "Pipe Creek",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "6420",
+    "name": "A Forever Home Rescue Foundation",
+    "city": "Chantilly",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "11642",
+    "name": "A Friend In Need Rescue",
+    "city": "Pittsburgh",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "11275",
+    "name": "A Home of Their Own Animal Rescue",
+    "city": "Silver Spring",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "1006",
+    "name": "A Passion for Paws Rescue, Inc.",
+    "city": "Romoland",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1550",
+    "name": "A Second Chance Puppies and Kittens Rescue",
+    "city": "Royal Palm Beach",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "7912",
+    "name": "A Welcome Home Animal Rescue",
+    "city": "Atlanta",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "3974",
+    "name": "A.A.R.F. - All About Rescue and Fixin' Inc.",
+    "city": "Cookeville",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "6135",
+    "name": "Across America Boxer Rescue",
+    "city": "Burnsville",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "11605",
+    "name": "Adam's Folly",
+    "city": "Bolivia",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "1900",
+    "name": "Adams County Animal Shelter",
+    "city": "Brighton",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "9261",
+    "name": "Adopt A Dog Rescue",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "5597",
+    "name": "Adopt A Homeless Animal Rescue",
+    "city": "Baltimore",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "8751",
+    "name": "Adopt A Pit Rescue Inc",
+    "city": "Germantown",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "8898",
+    "name": "Adopt An Angel",
+    "city": "Wilmington",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "6885",
+    "name": "Adopt Citrus County Animal Shelter Pets",
+    "city": "Inverness",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "5422",
+    "name": "Adopt-a-Kitty.org",
+    "city": "Mobile",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "4362",
+    "name": "Adopt-A-Stray",
+    "city": "Alexander",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "8089",
+    "name": "Advocates 4 Animals Pet Food Pantry",
+    "city": "Hillsboro",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "8252",
+    "name": "AJ's Search & Rescue",
+    "city": "FAIRLAWN",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "197",
+    "name": "Akita Rescue MidAtlantic Coast, Inc.",
+    "city": "Manassas",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "6816",
+    "name": "Alachua County Animal Services",
+    "city": "Gainesville",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "7989",
+    "name": "Alaskan Animal Rescue Friends",
+    "city": "Anchorage",
+    "state": "AK",
+    "hasDogs": true
+  },
+  {
+    "id": "4433",
+    "name": "Albuquerque Animal Services - Eastside",
+    "city": "Albuquerque",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "4432",
+    "name": "Albuquerque Animal Services - Westside",
+    "city": "Albuquerque",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "773",
+    "name": "All American Dachshund Rescue",
+    "city": "Shelbyville",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "11121",
+    "name": "All Beings Cooperative animal rescue and sanctuary",
+    "city": "Lafayette",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6123",
+    "name": "All For One Pet Rescue, Inc.",
+    "city": "Royal Palm Beach",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "5640",
+    "name": "All Mutts Matter Foundation",
+    "city": "Wilmington",
+    "state": "DE",
+    "hasDogs": true
+  },
+  {
+    "id": "11627",
+    "name": "All Mutts Matter Rescue",
+    "city": "Berlin",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "4203",
+    "name": "All Paws Rescue, Inc.",
+    "city": "O Fallon",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "4468",
+    "name": "All Shepherd Rescue",
+    "city": "Baltimore",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "2740",
+    "name": "Alleghany Humane Society",
+    "city": "Low Moor",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "7137",
+    "name": "Allie's Haven Animal Rescue",
+    "city": "Fort Worth",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "4470",
+    "name": "Allies for Greyhounds of West Michigan",
+    "city": "Grandville",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "2456",
+    "name": "Almost Home Animal Rescue",
+    "city": "Maryville",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "5933",
+    "name": "Almost Home Dog Rescue",
+    "city": "Doylestown",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "1191",
+    "name": "Almost Home Dog Rescue of Ohio",
+    "city": "Dublin",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "1532",
+    "name": "Almost Home NM",
+    "city": "Peralta",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "6310",
+    "name": "Almost Home Pet Rescue",
+    "city": "Katy",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "1913",
+    "name": "Amador County Animal Control",
+    "city": "Jackson",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2786",
+    "name": "Amarillo SPCA",
+    "city": "Amarillo",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "7009",
+    "name": "Amazing Grace Bully Rescue",
+    "city": "Milton",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "8864",
+    "name": "American Belgian Malinois Rescue, Inc",
+    "city": "Amherst Junction",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "7611",
+    "name": "American Boston Terrier Rescue",
+    "city": "Little Elm",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "6939",
+    "name": "American Bulldog Rescue",
+    "city": "Newtown",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "6870",
+    "name": "Ames Animal Services",
+    "city": "Ames",
+    "state": "IA",
+    "hasDogs": true
+  },
+  {
+    "id": "10566",
+    "name": "Ana's Safe Haven Rescue",
+    "city": "Harlingen",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "8993",
+    "name": "Anchor Paws Rescue",
+    "city": "Coventry",
+    "state": "RI",
+    "hasDogs": true
+  },
+  {
+    "id": "5431",
+    "name": "Anchorage Animal Care and Control",
+    "city": "Anchorage",
+    "state": "AK",
+    "hasDogs": true
+  },
+  {
+    "id": "8099",
+    "name": "Angels Among Us Pet Rescue",
+    "city": "Alpharetta",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "1914",
+    "name": "Angels for Animals, Inc.",
+    "city": "Canfield",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "4615",
+    "name": "Angels n Paws",
+    "city": "Alta Loma",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "10849",
+    "name": "Angels4Paws Animal Rescue",
+    "city": "Huntington Beach",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8578",
+    "name": "Angie's Friends",
+    "city": "Dallas",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "3365",
+    "name": "Animal Advocates",
+    "city": "Pittsburgh",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "7663",
+    "name": "Animal Advocates FL",
+    "city": "Sanford",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "6376",
+    "name": "Animal Aid for Vermilion Area",
+    "city": "Abbeville",
+    "state": "LA",
+    "hasDogs": true
+  },
+  {
+    "id": "2741",
+    "name": "Animal Aid, Inc.",
+    "city": "Oakland Park",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "4519",
+    "name": "Animal Allies Florida",
+    "city": "Pensacola",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "6650",
+    "name": "Animal Care & Control, Charlotte-Mecklenburg Police Department",
+    "city": "Charlotte",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "11513",
+    "name": "Animal Care Sanctuary",
+    "city": "East Smithfield",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "5233",
+    "name": "Animal Control and Welfare Project, Inc",
+    "city": "Hinton",
+    "state": "WV",
+    "hasDogs": true
+  },
+  {
+    "id": "2573",
+    "name": "Animal Education and Rescue",
+    "city": "Libertyville",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "8351",
+    "name": "Animal Help Alliance",
+    "city": "Las Vegas",
+    "state": "NV",
+    "hasDogs": true
+  },
+  {
+    "id": "10968",
+    "name": "Animal House Project dba SafeHaven Animal Rescue Team",
+    "city": "Pottstown",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "6329",
+    "name": "Animal House Shelter, Inc.",
+    "city": "Huntley",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "4228",
+    "name": "Animal Protection League/SASF",
+    "city": "Stockton",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9234",
+    "name": "Animal Protection Society of Durham",
+    "city": "Durham",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "7013",
+    "name": "Animal Protection Society of Person County",
+    "city": "Roxboro",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "1915",
+    "name": "Animal Protective Association of Missouri",
+    "city": "St. Louis",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "540",
+    "name": "Animal Refuge Center",
+    "city": "North Fort Myers",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "16",
+    "name": "Animal Relief Fund",
+    "city": "Lexington Park",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "4205",
+    "name": "Animal Rescue Carolina, Inc.",
+    "city": "Columbia",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "624",
+    "name": "Animal Rescue Foundation (ARF-IL)",
+    "city": "Wheaton",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "4651",
+    "name": "Animal Rescue Foundation of Louisiana, Inc.",
+    "city": "Lafayette",
+    "state": "LA",
+    "hasDogs": true
+  },
+  {
+    "id": "6002",
+    "name": "Animal Rescue Friends Ltd",
+    "city": "Mesa",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "8552",
+    "name": "Animal Rescue Fund of MS",
+    "city": "Jackson",
+    "state": "MS",
+    "hasDogs": true
+  },
+  {
+    "id": "1976",
+    "name": "Animal Rescue League of Boston - Cape Cod Branch",
+    "city": "Brewster",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "1975",
+    "name": "Animal Rescue League of Boston - Headquarters",
+    "city": "Boston",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "1977",
+    "name": "Animal Rescue League of Boston - Pine Ridge Animal Shelter",
+    "city": "Dedham",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "1409",
+    "name": "Animal Rescue of the Rockies",
+    "city": "Aurora",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "2148",
+    "name": "Animal Rescuers Without Borders",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11615",
+    "name": "Animal Saints Rescue Society",
+    "city": "Fort Montgomery",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "4121",
+    "name": "Animal Sanctuary Society Inc.",
+    "city": "Mt. Laurel",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "403",
+    "name": "Animal Shelter Inc. of Sterling MA",
+    "city": "Sterling",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "7261",
+    "name": "Animal Shelter Volunteers of Texas",
+    "city": "Montgomery",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "4428",
+    "name": "Animal Welfare League of Illinois - Chicago Ridge",
+    "city": "Chicago Ridge",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "6230",
+    "name": "Animal Welfare League of Kosciusko County",
+    "city": "Pierceton",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "5792",
+    "name": "Animalert Pet Adoption Inc.",
+    "city": "London",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "1997",
+    "name": "Animals Rule Placement Foundation",
+    "city": "San Pedro",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5772",
+    "name": "Anne Arundel County Animal Control",
+    "city": "Millersville",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "11184",
+    "name": "Another Chance Rescue Rehab & Sanctuary",
+    "city": "Lakemont",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "4953",
+    "name": "Antioch Animal Shelter",
+    "city": "Antioch",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11109",
+    "name": "Arcadia Animal Rescue",
+    "city": "columbia",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "8154",
+    "name": "Arctic Rescue Southwest",
+    "city": "Randleman",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "5066",
+    "name": "Arizona Boston Terrier Rescue",
+    "city": "Scottsdale",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "4965",
+    "name": "Arizona Golden Rescue",
+    "city": "Glendale",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "1918",
+    "name": "Arizona Humane Society - Campus for Compassion",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "1919",
+    "name": "Arizona Humane Society - Sunnyslope",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "7955",
+    "name": "ArkanPaws Animal Rescue",
+    "city": "Conway",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "10445",
+    "name": "As Sweet As A Peach Animal Rescue Inc",
+    "city": "FRAMINGHAM",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "9746",
+    "name": "ASPCA Behavioral Rehabilitation Center",
+    "city": "Weaverville",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "8722",
+    "name": "Atascosa Animal Allies",
+    "city": "Pleasanton",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "2063",
+    "name": "Atlanta Beagle Rescue, Inc.",
+    "city": "Atlanta",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "70",
+    "name": "Atlantic Rottweiler Rescue Foundation",
+    "city": "Mooresville",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "6763",
+    "name": "Augusta Animal Services",
+    "city": "Augusta",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "5751",
+    "name": "Aurora Animal Care",
+    "city": "Aurora",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "11266",
+    "name": "Aurora Animal Care and Control",
+    "city": "Aurora",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "9697",
+    "name": "Austin Boxer Rescue",
+    "city": "Austin",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "1951",
+    "name": "Austin Town Lake Animal Center",
+    "city": "Austin",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "7792",
+    "name": "Australian Cattle Dog Rescue Association",
+    "city": "Garden City",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "10000",
+    "name": "Ayla's Acres No-Kill Animal Rescue",
+    "city": "St. Augustine",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "9593",
+    "name": "Az Hidden Jem Rescue",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "7053",
+    "name": "Azrael's Place NFP",
+    "city": "Lyons",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "8755",
+    "name": "Back The Blue Pet Rescue",
+    "city": "Queen Creek",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "2828",
+    "name": "Baja Animal Sanctuary",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4716",
+    "name": "Baja Dog Rescue",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "10182",
+    "name": "Bakersfield Animal Care Center",
+    "city": "Bakersfield",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "10047",
+    "name": "BARCs Rescue",
+    "city": "Calgary",
+    "state": "AB",
+    "hasDogs": true
+  },
+  {
+    "id": "5613",
+    "name": "Barkie's Legacy",
+    "city": "Ocoee",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "9662",
+    "name": "Barking Dog Farm Rescue",
+    "city": "Croydon",
+    "state": "NH",
+    "hasDogs": true
+  },
+  {
+    "id": "1972",
+    "name": "BARKS (Byram Animal Rescue Kindness Squad",
+    "city": "Stanhope",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "4403",
+    "name": "Barktown Rescue",
+    "city": "Boston",
+    "state": "KY",
+    "hasDogs": true
+  },
+  {
+    "id": "4695",
+    "name": "Basset Rescue Across Texas, Inc.",
+    "city": "Carrollton",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9560",
+    "name": "Bay Area Pet Adoptions/SPCA",
+    "city": "San Leon",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "3785",
+    "name": "Bay County Animal Control",
+    "city": "Panama City",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "9752",
+    "name": "Baytown Animal Care and Control",
+    "city": "Baytown",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "1689",
+    "name": "Beagles and Buddies",
+    "city": "Apple Valley",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9016",
+    "name": "Beagles and Friends Forever Rescue and Sanctuary",
+    "city": "Crescent City",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "8470",
+    "name": "Beagles to the Rescue",
+    "city": "Chesapeake",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "1362",
+    "name": "Beartooth Humane Alliance",
+    "city": "Red Lodge",
+    "state": "MT",
+    "hasDogs": true
+  },
+  {
+    "id": "6990",
+    "name": "Beaver County Humane Society",
+    "city": "Center Township",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "9207",
+    "name": "Bell's Promise Animal Rescue, Inc",
+    "city": "Lakeland",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "9339",
+    "name": "Bella's Promise Pet Rescue, Inc.",
+    "city": "BOCA RATON",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "105",
+    "name": "Benevolent Animal Rescue Committee, Inc",
+    "city": "Cherry Valley",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11599",
+    "name": "Benewah Humane Society",
+    "city": "St. Maries",
+    "state": "ID",
+    "hasDogs": true
+  },
+  {
+    "id": "10455",
+    "name": "Berkeley Animal Care Services",
+    "city": "Berkeley",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2203",
+    "name": "Berkeley County Humane Society",
+    "city": "Martinsburg",
+    "state": "WV",
+    "hasDogs": true
+  },
+  {
+    "id": "10419",
+    "name": "Berkeley-East Bay Humane Society",
+    "city": "Berkeley",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11267",
+    "name": "Best Friend Dog and Animal Adoption Inc",
+    "city": "Cranford",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "5299",
+    "name": "Best Friend Pet Adoption",
+    "city": "Cary",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "6685",
+    "name": "Best Friends Animal Society",
+    "city": "Kanab",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "8965",
+    "name": "Best Friends Animal Society - Houston",
+    "city": "Houston",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "8514",
+    "name": "Best Friends Animal Society New York",
+    "city": "New York City",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "9385",
+    "name": "Best Friends Animal Society North West Arkansas",
+    "city": "Bentonville",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "8515",
+    "name": "Best Friends Animal Society Utah",
+    "city": "Salt Lake City",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "8835",
+    "name": "Best Friends Animal Society West LA",
+    "city": "Los Angeles",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8851",
+    "name": "Best Friends in Atlanta",
+    "city": "Atlanta",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "7760",
+    "name": "Better Days, Inc.",
+    "city": "Scottsdale",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "8873",
+    "name": "Beyond Rescue, Inc.",
+    "city": "San Francisco",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "3906",
+    "name": "Bichon and Little Buddies Rescue",
+    "city": "Mukwonago",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "6060",
+    "name": "Bichon FurKids",
+    "city": "Carlsbad",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6918",
+    "name": "Bichon Rescue of Orange County",
+    "city": "Placentia",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9587",
+    "name": "Big Bear Animal Shelter",
+    "city": "Big Bear City",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11713",
+    "name": "Big Hearts for Big Breeds",
+    "city": "Mesa",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "5988",
+    "name": "Black Tie Boston Rescue, Inc",
+    "city": "Little River",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "7171",
+    "name": "Bloomingdale Regional Animal Shelter Socety, Inc.",
+    "city": "Bloomingdale",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "8995",
+    "name": "Blue Moon Shepherd Rescue, Inc.",
+    "city": "Rocky Point",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "7948",
+    "name": "Bluebonnet Animal Rescue Network",
+    "city": "Whitewright",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "7959",
+    "name": "Bobbie's Pit Bull Rescue & Sanctuary",
+    "city": "Spotsylvania",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "4891",
+    "name": "Bond County Humane Society",
+    "city": "Greenville",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "6637",
+    "name": "Boston Buddies, Inc.",
+    "city": "Huntington Beach",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4095",
+    "name": "Boston Terrier Rescue of North Texas",
+    "city": "Plano",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "4065",
+    "name": "Breeder Release Adoption Service",
+    "city": "Bon Carbo",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "6523",
+    "name": "Brookes Legacy Animal Rescue Inc.",
+    "city": "Naples",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "2116",
+    "name": "Brookline Labrador Retriever Rescue",
+    "city": "Warrington",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "2420",
+    "name": "Brooklyn Bridge Animal Welfare Coalition, Inc.",
+    "city": "Brooklyn",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "2096",
+    "name": "Broward County Animal Care & Regulation - Ft. Lauderdale",
+    "city": "Fort Lauderdale",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "2684",
+    "name": "Brunswick County Animal Services",
+    "city": "Supply",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "816",
+    "name": "Bryant Animal Control & Adoption Center",
+    "city": "Bryant",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "8150",
+    "name": "Buckeye Basset Hound Rescue",
+    "city": "Columbus",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "9199",
+    "name": "Buckeye Samoyed Rescue",
+    "city": "Northfield",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "6277",
+    "name": "Buffalo C.A.R.E.S. Animal Rescue",
+    "city": "Tonawanda",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "11242",
+    "name": "Bullies-N-Beyond ResQ Inc",
+    "city": "Omaha",
+    "state": "NE",
+    "hasDogs": true
+  },
+  {
+    "id": "5829",
+    "name": "Bully Rescue & Advocacy Group, Inc.",
+    "city": "Chester",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "2782",
+    "name": "Burbank Animal Shelter",
+    "city": "Burbank",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4305",
+    "name": "Burlington Adoption Center",
+    "city": "Haw River",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "2350",
+    "name": "Burlington County Animal Alliance",
+    "city": "Willingboro",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "8682",
+    "name": "Calaveras County Animal Services",
+    "city": "San Andreas",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2340",
+    "name": "Calhoun County Humane Society, Inc.",
+    "city": "Anniston",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "5604",
+    "name": "California Labradors Retrievers and More Rescue",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5538",
+    "name": "California Pitbull Rescue",
+    "city": "Berkeley",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7947",
+    "name": "Camp Chaos Puppy Rescue",
+    "city": "Imperial",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "6140",
+    "name": "Camp Cocker Rescue",
+    "city": "Sherman Oaks",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6105",
+    "name": "camp merry sunshine",
+    "city": "Waldron,",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "4415",
+    "name": "Camp Papillon Adoption & Rescue Inc",
+    "city": "Stroudsburg",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "878",
+    "name": "Canine Adoption and Rescue League",
+    "city": "Ventura",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "3238",
+    "name": "Canine Castaways, Inc.",
+    "city": "Arcadia",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "6798",
+    "name": "Canine CellMates--Fulton County's Jail Dog Program",
+    "city": "Atlanta",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "6172",
+    "name": "Canine Companions Rescue Center",
+    "city": "Clarkston",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "1820",
+    "name": "Canine Rescue Coalition",
+    "city": "Goodyear",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "2323",
+    "name": "Caring Hearts Rescue",
+    "city": "springfield",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "770",
+    "name": "Carolina Animal Rescue And Adoption",
+    "city": "Sanford",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "1576",
+    "name": "Carolina Poodle Rescue",
+    "city": "Pacolet",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "1261",
+    "name": "Carroll County Animal Shelter",
+    "city": "Carrollton",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "1991",
+    "name": "Casper Metro Animal Control and Welfare",
+    "city": "Casper",
+    "state": "WY",
+    "hasDogs": true
+  },
+  {
+    "id": "11459",
+    "name": "Cass County Animal Rescue",
+    "city": "Beardstown",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "11606",
+    "name": "Castaway Animal Rescue Society",
+    "city": "Edmonton",
+    "state": "AB",
+    "hasDogs": true
+  },
+  {
+    "id": "30",
+    "name": "Castaway Critters, the James A. Hueholt Memorial Foundation",
+    "city": "Harrisburg",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "5480",
+    "name": "Castle of Dreams Animal Rescue",
+    "city": "Cliffwood",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "1193",
+    "name": "Catawba County Animal Care and Control",
+    "city": "Newton",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "2235",
+    "name": "Cats for Life, Inc.",
+    "city": "Houston",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "6743",
+    "name": "Cause for SB Paws",
+    "city": "San Bernardino",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8049",
+    "name": "Cedar Valley Pit Bull Rescue",
+    "city": "Waterloo",
+    "state": "IA",
+    "hasDogs": true
+  },
+  {
+    "id": "4808",
+    "name": "Central Arizona Animal Rescue",
+    "city": "San Tan Valley",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "5007",
+    "name": "Central Coast Herding Dog Rescue",
+    "city": "Paso Robles",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8413",
+    "name": "Central Illinois Sheltie Rescue",
+    "city": "Towanda",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "9147",
+    "name": "Central Ohio Sheltie Rescue Inc.",
+    "city": "Columbus",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "5227",
+    "name": "Central Texas Dachshund Rescue",
+    "city": "Humble",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "159",
+    "name": "Central Valley Rescue Railroad",
+    "city": "Lindsay",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7975",
+    "name": "Central Virginia Regional Rescue",
+    "city": "Forest",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "7831",
+    "name": "Chama Valley Humane Society",
+    "city": "Chama",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "10891",
+    "name": "Chapmans Dachshund Rescue",
+    "city": "York",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "11142",
+    "name": "Charlie Little Dog House",
+    "city": "Vancouver",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "2917",
+    "name": "Charlyne's Pound Puppies",
+    "city": "Thorndale",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9196",
+    "name": "Chatham Animal Rescue & Education",
+    "city": "Pittsboro",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "7967",
+    "name": "Chelsea's Hope Boxer Rescue",
+    "city": "Monticello",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "8332",
+    "name": "Chi Town Rescue",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "3652",
+    "name": "Chouteau Pound Pals",
+    "city": "Chouteau",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "8846",
+    "name": "Chula Vista Animal Care Facility",
+    "city": "Chula Vista",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4568",
+    "name": "City of Corpus Christi Animal Care",
+    "city": "Corpus Christi",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "2031",
+    "name": "City of Edmond Animal Welfare",
+    "city": "Edmond",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "9519",
+    "name": "City of Elk Grove Animal Services",
+    "city": "Elk Grove",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "3025",
+    "name": "City of Houston, Bureau of Animal Regulation and Care",
+    "city": "Houston",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "1928",
+    "name": "City of Jacksonville - Animal Care and Control Center",
+    "city": "Jacksonville",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "11287",
+    "name": "City of Las Vegas Animal Care Center",
+    "city": "Las Vegas",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "11521",
+    "name": "City of Newman Animal Services",
+    "city": "Newman",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4710",
+    "name": "City of Norco Animal Control Division",
+    "city": "Norco",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1309",
+    "name": "City of Oakdale Animal Shelter",
+    "city": "Oakdale",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "568",
+    "name": "City of Rancho Cucamonga Animal Shelter",
+    "city": "Rancho Cucamonga",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1936",
+    "name": "City of Sacramento Animal Care Services",
+    "city": "Sacramento",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11506",
+    "name": "City of Talladega Animal Control",
+    "city": "Talladega",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "614",
+    "name": "City of Temple,TX.Animal Shelter",
+    "city": "Temple",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "1943",
+    "name": "City of Toronto Animal Services East Region",
+    "city": "Toronto",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "1942",
+    "name": "City of Toronto Animal Services North Region",
+    "city": "Toronto",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "1941",
+    "name": "City of Toronto Animal Services West Region",
+    "city": "Toronto",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "9600",
+    "name": "City of Tracy Animal Services",
+    "city": "Tracy",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4052",
+    "name": "City of Tulsa Animal Welfare",
+    "city": "Tulsa",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "2671",
+    "name": "Clay County Animal Care and Control",
+    "city": "Green Cove Springs",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "1953",
+    "name": "Coastal Animal Services Authority",
+    "city": "San Clemente",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4775",
+    "name": "Coastal K9 German Shepherd Rescue",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "407",
+    "name": "Cocker Nation Rescue of Michigan",
+    "city": "South lyon",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "2636",
+    "name": "Cocker Rescue of Florida",
+    "city": "ft lauderdale",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "5366",
+    "name": "Cocker Spaniel Adoption Center",
+    "city": "Westminster",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "11638",
+    "name": "Cocker Spaniel Rescue of Austin",
+    "city": "Austin",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9177",
+    "name": "Code Red K9 Crew",
+    "city": "Redlands",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6551",
+    "name": "Collar of Hope",
+    "city": "Olalla",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "208",
+    "name": "Collie Rescue, Inc",
+    "city": "Chantilly",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "2081",
+    "name": "Collier County Domestic Animal Services",
+    "city": "Naples",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "6976",
+    "name": "Collin County Animal Services",
+    "city": "McKinney",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "5113",
+    "name": "Colony Cats (& dogs)",
+    "city": "Dublin",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "9570",
+    "name": "Colorado Corgis and Friends",
+    "city": "Denver",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "3024",
+    "name": "Columbia County Animal Care & Control",
+    "city": "Grovetown",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "4191",
+    "name": "Columbia Humane Society",
+    "city": "St Helens",
+    "state": "OR",
+    "hasDogs": true
+  },
+  {
+    "id": "2529",
+    "name": "Come Bye Border Collie Rescue",
+    "city": "Highland",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "5913",
+    "name": "Community Animal Rescue Effort",
+    "city": "Skokie",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "151",
+    "name": "Community Animal Rescue Effort (CARE)",
+    "city": "Columbus",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "243",
+    "name": "Community Animal Welfare Society",
+    "city": "Salt Lake City",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "9375",
+    "name": "Community Paws",
+    "city": "Buckeye",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "4012",
+    "name": "CompAnimals Pet Rescue Inc",
+    "city": "Landenberg",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "5450",
+    "name": "Compassionate Animal Rescue for Medical Aid",
+    "city": "Mission Viejo",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4054",
+    "name": "Contra Costa Animal Services",
+    "city": "Martinez",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9075",
+    "name": "Cool Cats Rescue",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "2989",
+    "name": "Cooper's Chance Animal Rescue",
+    "city": "Chandler",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "6334",
+    "name": "Coppers Dream",
+    "city": "Sunnyvale",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8214",
+    "name": "Corona Animal Services",
+    "city": "Corona",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1677",
+    "name": "Country Acres Rescue",
+    "city": "Manchester",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "11643",
+    "name": "Country Paws Rescue Of Utah",
+    "city": "SALT LAKE CITY",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "8629",
+    "name": "Cowboy Capital Pet Assistance League",
+    "city": "Bandera",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "10673",
+    "name": "CrisisDogsNC",
+    "city": "Spring Lake",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "1839",
+    "name": "Critter Cavalry Rescue",
+    "city": "Franklin",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "5674",
+    "name": "Critter Companion Rescue",
+    "city": "Sussex",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "11144",
+    "name": "Crops and Flops Rescue, Inc.",
+    "city": "Westminster",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "9468",
+    "name": "Crossed Paws Animal Shelter",
+    "city": "Woodsfield",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "5281",
+    "name": "Crossing Paths Animal Rescue",
+    "city": "Yardley",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "627",
+    "name": "Cullen's Archangel RescuE, Inc.",
+    "city": "Lexington",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "4761",
+    "name": "Cumberland County Animal Control",
+    "city": "Fayetteville",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "11490",
+    "name": "Cuz i Matter Animal Rescue",
+    "city": "Pflugerville",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "823",
+    "name": "Dachshund Paws",
+    "city": "Hesperia",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6761",
+    "name": "Dachshund Rescue of Los Angeles",
+    "city": "Los Angeles",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5550",
+    "name": "Dachshund Rescue South Florida",
+    "city": "Weston",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "1615",
+    "name": "Dakota Dachshund Rescue",
+    "city": "Sioux Falls",
+    "state": "SD",
+    "hasDogs": true
+  },
+  {
+    "id": "3966",
+    "name": "Dallas Animal Services",
+    "city": "Dallas",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "3575",
+    "name": "Dallas Australian Shepherd and Herding Dog Rescue",
+    "city": "Dallas",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "5353",
+    "name": "Dallas Pets Alive",
+    "city": "Dallas",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "5506",
+    "name": "Dalmatian Rescue of Colorado",
+    "city": "Fort Collins",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "8741",
+    "name": "Danielle's Animal Safe Haven",
+    "city": "Ashville",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "9044",
+    "name": "Davis County Animal Services",
+    "city": "Fruit Heights",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "35",
+    "name": "Delaware Puppy Rescue",
+    "city": "West Grove",
+    "state": "DE",
+    "hasDogs": true
+  },
+  {
+    "id": "1964",
+    "name": "Denver Animal Shelter",
+    "city": "Denver",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "4367",
+    "name": "Desert Paws Inc. Animal Rescue",
+    "city": "Pena Blanca",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "5194",
+    "name": "Desoto Animal Rescue Society",
+    "city": "Horn Lake",
+    "state": "MS",
+    "hasDogs": true
+  },
+  {
+    "id": "8883",
+    "name": "Detroit Animal Care and Control",
+    "city": "Detroit",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "9559",
+    "name": "Devore Animal Shelter",
+    "city": "San Bernardino",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4598",
+    "name": "DFW Rescue Me",
+    "city": "Denton",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "3964",
+    "name": "Diamond Dachshund Rescue of Texas",
+    "city": "San Antonio",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "8414",
+    "name": "Diamond Dogs, LLC.",
+    "city": "Glen Haven",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "5209",
+    "name": "Diamonds in the Ruff Animal Rescue",
+    "city": "Lockport",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "6416",
+    "name": "Diane's Pet Rescue",
+    "city": "Pottstown",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "4666",
+    "name": "Doberman Rescue Alliance of Wisconsin, Inc.",
+    "city": "Volunteers Statewide",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "8006",
+    "name": "Doberman Rescue Minnesota",
+    "city": "Minneaoplis",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "706",
+    "name": "Doberman Rescue of Nebraska",
+    "city": "Omaha",
+    "state": "NE",
+    "hasDogs": true
+  },
+  {
+    "id": "7835",
+    "name": "Doberman Underground",
+    "city": "Aurora",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "8383",
+    "name": "Dog Gone Seattle Rescue",
+    "city": "Seattle",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "1962",
+    "name": "Dog Rescue Around Washington",
+    "city": "Tacoma",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "6042",
+    "name": "Dog Star Rescue",
+    "city": "Canton",
+    "state": "CT",
+    "hasDogs": true
+  },
+  {
+    "id": "8832",
+    "name": "Doggie Bonez Inc",
+    "city": "San Juan Capistrano",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4774",
+    "name": "Doggie Harmony",
+    "city": "Atlanta",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "2594",
+    "name": "Doggie Protective Services",
+    "city": "Romoland",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1782",
+    "name": "Dogs 2nd Chance",
+    "city": "Munford",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "6720",
+    "name": "Dogs are Deserving",
+    "city": "Crete",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "1406",
+    "name": "Dogz In Need",
+    "city": "Fallbrook",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5660",
+    "name": "Domino Effect Animal Rescue",
+    "city": "Temecula",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8264",
+    "name": "Don't Bully Us Rescue",
+    "city": "Wenonah",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "5497",
+    "name": "Duck Team 6 Street Dog Rescue",
+    "city": "Dallas",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "7003",
+    "name": "Dumb Friends League",
+    "city": "Denver",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "4115",
+    "name": "EASEL Animal Rescue League",
+    "city": "Lawrenceville",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "6861",
+    "name": "East Coast Adoption Agency",
+    "city": "SHERBURNE",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "8210",
+    "name": "East Coast Canine Rescue",
+    "city": "LEBANON",
+    "state": "CT",
+    "hasDogs": true
+  },
+  {
+    "id": "5010",
+    "name": "East Coast Humane Society Inc.",
+    "city": "Cumming",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "2009",
+    "name": "East Valley Animal Care and Control Center",
+    "city": "Van Nuys",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9825",
+    "name": "Easy's Dog Shelter",
+    "city": "Tracy City",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "5214",
+    "name": "Echo Dogs White Shepherd Rescue",
+    "city": "Hoffman Estates",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "8582",
+    "name": "Edgecombe County Animal Shelter",
+    "city": "Tarboro",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "1992",
+    "name": "El Dorado County Animal Services - Placerville",
+    "city": "Placerville",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1993",
+    "name": "El Dorado County Animal Services - South Lake Tahoe",
+    "city": "South Lake Tahoe",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "956",
+    "name": "Eleventh Hour Rescue",
+    "city": "Rockaway",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "5934",
+    "name": "Emmet County Animal Shelter",
+    "city": "Estherville",
+    "state": "IA",
+    "hasDogs": true
+  },
+  {
+    "id": "9357",
+    "name": "English Springer Rescue America",
+    "city": "Woodstock",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "152",
+    "name": "Eskie Rescuers United, American Eskimo Dog Rescue, Inc.",
+    "city": "Pikesville",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "10418",
+    "name": "Esperanza's Sanctuary",
+    "city": "Sky Valley",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6362",
+    "name": "Everglades Angels Dog Rescue",
+    "city": "Pompano Beach",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "5380",
+    "name": "Evergreen Animal Protective League",
+    "city": "Evergreen",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "8465",
+    "name": "Every Pet's Dream",
+    "city": "Santa Clara",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5510",
+    "name": "Ewenity Farm Border Collie Haven, Inc.",
+    "city": "Bradenton",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "2816",
+    "name": "Fairbanks North Start Borough Animal Control",
+    "city": "Fairbanks",
+    "state": "AK",
+    "hasDogs": true
+  },
+  {
+    "id": "829",
+    "name": "Fairy Dogmother Rescue and Rehab, Inc.",
+    "city": "Baileyton",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "10088",
+    "name": "Fairy Tails Rescue, Inc.",
+    "city": "Forest Hill",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "8441",
+    "name": "Faithful Friends Inc",
+    "city": "Wilmington",
+    "state": "DE",
+    "hasDogs": true
+  },
+  {
+    "id": "4147",
+    "name": "Faithful Hearts Animal Shelter, Inc",
+    "city": "Eastman",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "1703",
+    "name": "Fancy Cats Rescue Team",
+    "city": "Herndon",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "4920",
+    "name": "Fauquier SPCA, Inc.",
+    "city": "Warrenton",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "10731",
+    "name": "Fetching Hearts Rescue Corporation",
+    "city": "Enfield",
+    "state": "CT",
+    "hasDogs": true
+  },
+  {
+    "id": "9050",
+    "name": "Fierce Love Rescue",
+    "city": "Stephens City",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "10220",
+    "name": "Fila 911 Rescue and Rehab",
+    "city": "Jasper",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "9473",
+    "name": "Florida Poodle Rescue",
+    "city": "St Petersburg",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "11576",
+    "name": "Fluffy Butts Rescue INC",
+    "city": "Mooresville",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "11641",
+    "name": "For Pet's Sake Rescue",
+    "city": "Long Beach",
+    "state": "MS",
+    "hasDogs": true
+  },
+  {
+    "id": "7602",
+    "name": "For the Love of Dog - Rottweiler Rescue",
+    "city": "Hillsboro",
+    "state": "NH",
+    "hasDogs": true
+  },
+  {
+    "id": "618",
+    "name": "For the Luv of Paws II, Inc.",
+    "city": "Golden Valley",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "9210",
+    "name": "Forever Friends Foundation",
+    "city": "Northfield",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "9698",
+    "name": "Forever Friends Humane Society",
+    "city": "phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "2366",
+    "name": "Forever Home Rescue",
+    "city": "Parker Ford",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "6552",
+    "name": "Forever Love Rescue Inc",
+    "city": "Gettysburg",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "8305",
+    "name": "Forget Me Not Animal Rescue",
+    "city": "Strongsville",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "8186",
+    "name": "Fort Bend County Animal Services",
+    "city": "Rosenberg",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "1923",
+    "name": "Fort Wayne Animal Care and Control",
+    "city": "Fort Wayne",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "4450",
+    "name": "Forte Animal Rescue",
+    "city": "Marina del Rey",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1302",
+    "name": "Fortunate Pooches and Lab Rescue",
+    "city": "Palatine/Kildeer/Buffalo grove",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "6385",
+    "name": "Four the Paws Inc.",
+    "city": "Yardley",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "4637",
+    "name": "Frankies Furry Friends Rescue, Inc",
+    "city": "Alexandria",
+    "state": "KY",
+    "hasDogs": true
+  },
+  {
+    "id": "11636",
+    "name": "Freedom Bridge Animal Rescue NC",
+    "city": "Wilmington",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "9101",
+    "name": "Freedom German Shepherd Rescue",
+    "city": "La Grange",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "2032",
+    "name": "Fremont (Tricity) Animal Shelter",
+    "city": "Fremont",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2822",
+    "name": "Friends for Animals Adoption Shelter",
+    "city": "Granbury",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "1211",
+    "name": "Friends For Life Animal Haven",
+    "city": "Canal Winchester",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "10464",
+    "name": "Friends for Life Animal Rescue",
+    "city": "Paramus",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "2922",
+    "name": "Friends For Life Animal Society",
+    "city": "Clinton",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "7037",
+    "name": "Friends Of Bedford County Animal Shelter",
+    "city": "Bedford",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "7721",
+    "name": "Friends of Campbell County Animal Control",
+    "city": "Rustburg",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "11571",
+    "name": "Friends of Chicago Animal Care and Control",
+    "city": "CHICAGO",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "1059",
+    "name": "Friends of Homeless Animals, Inc.",
+    "city": "Saunderstown",
+    "state": "RI",
+    "hasDogs": true
+  },
+  {
+    "id": "11325",
+    "name": "Friends of Macon County Missouri Animals",
+    "city": "Macon",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "633",
+    "name": "Friends of Orange County's Homeless Pets",
+    "city": "Menifee",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6452",
+    "name": "Friends of Rescue Animals",
+    "city": "Rowlett",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "8547",
+    "name": "Friends of Rocky Mount Animals",
+    "city": "Rocky Mount",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "2204",
+    "name": "Friends of the Alameda Animal Shelter",
+    "city": "Alameda",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7932",
+    "name": "Friends of the Animal Community",
+    "city": "Sonora",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5166",
+    "name": "Friends of the Seal Beach Animal Care Center",
+    "city": "Seal Beach",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1588",
+    "name": "Front Range German Shepherd Dog Rescue",
+    "city": "Denver",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "939",
+    "name": "Fulton County Animal Services",
+    "city": "Atlanta",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "8320",
+    "name": "Fur-Ever Paws Dog Rescue",
+    "city": "Newark",
+    "state": "DE",
+    "hasDogs": true
+  },
+  {
+    "id": "9472",
+    "name": "FurEver Home Rescue Inc",
+    "city": "Sarasota",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "1206",
+    "name": "Furry Feet Rescue Inc.",
+    "city": "Walnutport",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "3362",
+    "name": "Furry Friends Rescue",
+    "city": "Fremont",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "287",
+    "name": "Furry Kids Refuge",
+    "city": "Lee's Summit",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "1228",
+    "name": "G.R.A.S.P., Inc.",
+    "city": "Rochester",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "7757",
+    "name": "Galveston County Animal Shelter",
+    "city": "Texas City",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "2082",
+    "name": "Garland Animal Services",
+    "city": "Garland",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "1707",
+    "name": "German Shepherd Rescue and Adoption",
+    "city": "Durham",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "11637",
+    "name": "German Shepherd Rescue INC",
+    "city": "SKOKIE",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "10272",
+    "name": "German Shepherd Rescue of Northern California",
+    "city": "Cupertino",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9316",
+    "name": "Get A Life Pet Rescue",
+    "city": "Plantation",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "8486",
+    "name": "Ghost Town Dog Rescue",
+    "city": "Mesa",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "5918",
+    "name": "Giant Paw Prints Inc.",
+    "city": "Valparaiso",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "5611",
+    "name": "Gila County Rabies Control",
+    "city": "Globe",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "5922",
+    "name": "Ginger's pet rescue",
+    "city": "Federal Way",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "4660",
+    "name": "Give a Dog a Home Rescue",
+    "city": "Sebec",
+    "state": "ME",
+    "hasDogs": true
+  },
+  {
+    "id": "11653",
+    "name": "God's Dogs Rescue",
+    "city": "Von Ormy",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9528",
+    "name": "Golden Belt Humane Society",
+    "city": "Great Bend",
+    "state": "KS",
+    "hasDogs": true
+  },
+  {
+    "id": "1791",
+    "name": "Golden Gate Basset Rescue",
+    "city": "Petaluma",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4104",
+    "name": "Golden Retriever Rescue of Southwest Florida, Inc.",
+    "city": "Bonita Springs",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "3304",
+    "name": "Good Dog Rescue",
+    "city": "Enfield",
+    "state": "CT",
+    "hasDogs": true
+  },
+  {
+    "id": "2563",
+    "name": "Good Karma Rescue Inc.",
+    "city": "Middlesex",
+    "state": "VT",
+    "hasDogs": true
+  },
+  {
+    "id": "7093",
+    "name": "Good Old Tails Senior Animal Rescue",
+    "city": "Seven Valleys",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "3468",
+    "name": "Grainger County Humane Society",
+    "city": "Rutledge",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "6706",
+    "name": "Gram Rescue Ranch",
+    "city": "Winston Salem",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "5705",
+    "name": "Grand Prairie Animal Services",
+    "city": "Grand Prairie",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "8057",
+    "name": "Grand Strand Golden Retriever Rescue, Inc.",
+    "city": "Murrells Inlet",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "11585",
+    "name": "Grandmas Barn Rescue and Sanctuary",
+    "city": "Sparks",
+    "state": "NV",
+    "hasDogs": true
+  },
+  {
+    "id": "8857",
+    "name": "Grateful Dogs Rescue",
+    "city": "San Francisco",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "289",
+    "name": "Grateful Paws Dog & Cat Rescue",
+    "city": "Eustis",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "11693",
+    "name": "Grayson's Rescue",
+    "city": "San Antonio",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "3773",
+    "name": "Great Dane Friends of Ruff Love",
+    "city": "Huntersville",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "10492",
+    "name": "Great Dane Rescue of South Florida",
+    "city": "Palm Beach",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "733",
+    "name": "Great Plains Mastiff Rescue Foundation",
+    "city": "Edmond",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "2241",
+    "name": "Great Plains Pointer Rescue",
+    "city": "Omaha",
+    "state": "NE",
+    "hasDogs": true
+  },
+  {
+    "id": "9675",
+    "name": "Great Pyrenees Advocates of Texas, Inc.",
+    "city": "Houston",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "10997",
+    "name": "Great Pyrenees Rescue Resources Utah Montana",
+    "city": "Bountiful",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "707",
+    "name": "Great Pyrenees Rescue Society",
+    "city": "Spring",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9491",
+    "name": "Great Pyrs & Paws Rescue",
+    "city": "Bend",
+    "state": "OR",
+    "hasDogs": true
+  },
+  {
+    "id": "6065",
+    "name": "Great River Rescue",
+    "city": "Bemidji",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "10213",
+    "name": "Greater California German Shepherd Rescue",
+    "city": "Modesto",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8424",
+    "name": "Greater Charlotte SPCA",
+    "city": "Charlotte",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "9111",
+    "name": "Greater Derry Humane Society, Inc.",
+    "city": "East Derry",
+    "state": "NH",
+    "hasDogs": true
+  },
+  {
+    "id": "6704",
+    "name": "Greenbrier Humane Society",
+    "city": "Lewisburg",
+    "state": "WV",
+    "hasDogs": true
+  },
+  {
+    "id": "6047",
+    "name": "GreenDog Foundation",
+    "city": "Lake Elsinore",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9489",
+    "name": "Greene County Humane Society Inc",
+    "city": "Linton",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "7889",
+    "name": "Grey Face Rescue & Retirement",
+    "city": "St. Cloud",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "86",
+    "name": "Greyhound Friends of NJ, Inc.",
+    "city": "Millsboro DELAWARE",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "5903",
+    "name": "Greyhound Pets of America Minnesota",
+    "city": "Minneapolis",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "868",
+    "name": "Greyhound Pets, Inc.",
+    "city": "Woodinville",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "3680",
+    "name": "Guardian Angel Dog Rescue",
+    "city": "Tampa",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "11530",
+    "name": "Guardians for the Guardians",
+    "city": "SENECA",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "6831",
+    "name": "Guardians of the Green Mile Inc",
+    "city": "Portage",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "9168",
+    "name": "Guilford County Animal Services",
+    "city": "Greensbo",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "5410",
+    "name": "Habersham County Animal Care and Control",
+    "city": "Clarkesville",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "9578",
+    "name": "Hank's Haven Rescue Foundation",
+    "city": "Oro Medonte",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "7921",
+    "name": "Happy Days Dog and Cat Rescue",
+    "city": "Livonia",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "6046",
+    "name": "Happy Dog Rescue",
+    "city": "Germanton",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "619",
+    "name": "Happy Hills Animal Foundation",
+    "city": "Staley",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "2010",
+    "name": "Harbor Animal Care and Control Center",
+    "city": "San Pedro",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2083",
+    "name": "Harris County Pets",
+    "city": "Houston",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "8999",
+    "name": "Hart-2-Heart Rescue, Inc.",
+    "city": "Greensboro",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "5990",
+    "name": "Hartman's Hounds",
+    "city": "Amherst",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "11158",
+    "name": "Haven Animal Rescue Nebraska",
+    "city": "Omaha",
+    "state": "NE",
+    "hasDogs": true
+  },
+  {
+    "id": "3694",
+    "name": "Haven to Home Canine Rescue",
+    "city": "Berwick",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "4698",
+    "name": "Hayward Animal Services Bureau",
+    "city": "Hayward",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1728",
+    "name": "Haywood County Animal Shelter",
+    "city": "Clyde",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "2360",
+    "name": "Headin' Home Pet Rescue Inc.",
+    "city": "Holland",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "9730",
+    "name": "Heart of the Foothills Animal Rescue",
+    "city": "Rutherfordton",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "7140",
+    "name": "Heartland German Shepherd Rescue",
+    "city": "Gretna",
+    "state": "NE",
+    "hasDogs": true
+  },
+  {
+    "id": "8918",
+    "name": "Hearts for Rescue",
+    "city": "Poplar Bluff",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "9531",
+    "name": "Heer to Rescue, Inc.",
+    "city": "Lake Elsinore",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "528",
+    "name": "Heidi's Legacy Dog Rescue",
+    "city": "Tampa",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "4394",
+    "name": "Helen Woodward Animal Center",
+    "city": "Rancho Santa Fe",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9872",
+    "name": "HELLA DAM BITCHES N QUEENS RESCUE INC",
+    "city": "Pacifica",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6910",
+    "name": "Help A Dog Smile",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "4751",
+    "name": "Help the Animals Inc.",
+    "city": "Richmond",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "6711",
+    "name": "Helping Overpopulation of Pets End",
+    "city": "Melbourne",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "1617",
+    "name": "Helping Shepherds of Every Color",
+    "city": "Montgomery",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "4600",
+    "name": "Henderson Animal Care and Control",
+    "city": "Henderson",
+    "state": "NV",
+    "hasDogs": true
+  },
+  {
+    "id": "7790",
+    "name": "Henrico Police Animal Shelter",
+    "city": "Glen Allen",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "9139",
+    "name": "Henry County Humane Society - Kewanee Chapter",
+    "city": "Kewanee",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "9358",
+    "name": "Hero's Haven Animal Rescue",
+    "city": "Coralville",
+    "state": "IA",
+    "hasDogs": true
+  },
+  {
+    "id": "8680",
+    "name": "HESPERIA ANIMAL SHELTER",
+    "city": "HESPERIA",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2705",
+    "name": "High Plateau Humane Society",
+    "city": "Alturas",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8174",
+    "name": "Highland County Humane Society Inc",
+    "city": "Monterey",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "6328",
+    "name": "Hilton Head Humane Association",
+    "city": "Hilton Head",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "10805",
+    "name": "Home At Last Animal Haven",
+    "city": "Godley",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "5569",
+    "name": "Home At Last Sanctuary, Inc",
+    "city": "Rockville",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "6272",
+    "name": "HOMELESS & ORPHANED PETS ENDEAVOR",
+    "city": "HOUSTON",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "5502",
+    "name": "Homeless Animals' Lifeline Organization H.A.L.O.",
+    "city": "Antioch",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9211",
+    "name": "HOMEWARD BOUND ADOPTIONS CT, INC.",
+    "city": "Chester",
+    "state": "CT",
+    "hasDogs": true
+  },
+  {
+    "id": "666",
+    "name": "Homeward Bound Animal Rescue",
+    "city": "Mechanicsburg",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "2865",
+    "name": "Homeward Bound Pet Rescue Inc. of Gilmer County",
+    "city": "Ellijay",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "5171",
+    "name": "Homeward Bound Rescue",
+    "city": "Brights Grove",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "5936",
+    "name": "Hoof Woof Meow Animal Rescue",
+    "city": "Elgin",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "5998",
+    "name": "Hoovers Hause All Dog Rescue",
+    "city": "Genesee",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "7060",
+    "name": "Hope Animal Rescue of Iowa",
+    "city": "West Des Moines",
+    "state": "IA",
+    "hasDogs": true
+  },
+  {
+    "id": "805",
+    "name": "Hope Animal Rescues",
+    "city": "Godfrey",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "230",
+    "name": "HOPE FOR ANIMALS (formerly CCCARL; Clear Creek County Animal Rescue League)",
+    "city": "Georgetown",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "11058",
+    "name": "Hope For China Dogs Rescue",
+    "city": "West Hollywood",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9006",
+    "name": "House Of Hounds Rescue",
+    "city": "Clinton",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "2305",
+    "name": "Houston Boxer Rescue",
+    "city": "Katy",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "2718",
+    "name": "HSV Animal Welfare League",
+    "city": "Hot Springs Village",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "11458",
+    "name": "Hudson Paws Dog Rescue",
+    "city": "Hudson",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "11644",
+    "name": "Humane Association of CNY",
+    "city": "Liverpool",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "1940",
+    "name": "Humane Society for Tacoma & Pierce County",
+    "city": "Tacoma",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "3112",
+    "name": "Humane Society of Broward County",
+    "city": "Ft Lauderdale",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "2570",
+    "name": "Humane Society of Burnett County",
+    "city": "Webster",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "7190",
+    "name": "Humane Society of Carroll County, Inc.",
+    "city": "Westminster",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "7832",
+    "name": "Humane Society of Central Texas/City of Waco Animal Shelter",
+    "city": "Waco",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "8403",
+    "name": "Humane Society of Imperial Valley",
+    "city": "El Centro",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5880",
+    "name": "Humane Society of Jefferson County",
+    "city": "Jefferson",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "6371",
+    "name": "Humane Society of Kent County Maryland Inc.",
+    "city": "Chestertown",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "2034",
+    "name": "Humane Society of Missouri",
+    "city": "St Louis",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "2035",
+    "name": "Humane Society of Missouri - Maryland Heights",
+    "city": "Maryland",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "7150",
+    "name": "Humane Society of North Central Arkansas",
+    "city": "Mountain Home",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "10693",
+    "name": "Humane Society of Ottawa County",
+    "city": "Port Clinton",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "2154",
+    "name": "Humane Society of the Pikes Peak Region — Pueblo",
+    "city": "Pueblo",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "3275",
+    "name": "Humane Society of Ventura County",
+    "city": "Ojai",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7007",
+    "name": "Humane Society of Vero Beach and Indian River County",
+    "city": "Vero Beach",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "6966",
+    "name": "Humane Society of Warren County",
+    "city": "Front Royal",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "9487",
+    "name": "Humble Hounds MN",
+    "city": "Cottage Grove",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "5218",
+    "name": "Humboldt County Sheriff's Animal Shelter",
+    "city": "McKinleyville",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9609",
+    "name": "Hunter's Village Rescue",
+    "city": "Orlando",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "8785",
+    "name": "Husky Education And Rescue Team, Inc.",
+    "city": "Severn",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "6062",
+    "name": "Husky House",
+    "city": "Matawan",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "6817",
+    "name": "I Have a Dream Rescue Organization",
+    "city": "Blacklick",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "11578",
+    "name": "I Wanna Go Home Rescue",
+    "city": "Dyer",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "4494",
+    "name": "I.C.A.R.E. Dog Rescue",
+    "city": "Corona",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11694",
+    "name": "iHeart Animal Rescue",
+    "city": "SW Ranches",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "3788",
+    "name": "Iredell County Animal Services and Control Department",
+    "city": "Statesville",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "5167",
+    "name": "Iroquois County Animal Rescue",
+    "city": "Iroquois",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "2273",
+    "name": "Irvine Animal Care Center",
+    "city": "Irvine",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11271",
+    "name": "Island Dog Adoption Network",
+    "city": "Virginia Beach",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "9845",
+    "name": "It Takes A Village No-Kill Rescue",
+    "city": "Evansville",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "1034",
+    "name": "It's The Pits",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2464",
+    "name": "Jackson County Humane Society",
+    "city": "Maquoketa",
+    "state": "IA",
+    "hasDogs": true
+  },
+  {
+    "id": "11186",
+    "name": "JBs Pet Rescue",
+    "city": "Crandall",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "2087",
+    "name": "Jersey Shore Animal Center",
+    "city": "Brick",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "6198",
+    "name": "Jesse's Place Rescue INC",
+    "city": "Lake Wylie",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "6663",
+    "name": "Joyful Pets Animal Rescue",
+    "city": "Amherst",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "3050",
+    "name": "Joyful Rescues, Inc.",
+    "city": "Cuba",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "8980",
+    "name": "Justice for Samson Animal Rescue",
+    "city": "Orange Grove",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "5275",
+    "name": "Justin Bartlett Animal Rescue",
+    "city": "Royal Palm Beach",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "293",
+    "name": "K-9 Homefinders & Rescue, Inc",
+    "city": "Albany",
+    "state": "OR",
+    "hasDogs": true
+  },
+  {
+    "id": "2866",
+    "name": "K-9 Lifesavers",
+    "city": "Stafford",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "3398",
+    "name": "K9 Kindness Rescue",
+    "city": "Bettendorf",
+    "state": "IA",
+    "hasDogs": true
+  },
+  {
+    "id": "6051",
+    "name": "K9 Paw Print Rescue",
+    "city": "Oakley",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "940",
+    "name": "K9 Resque",
+    "city": "Palatka",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "9640",
+    "name": "K9 Up Project Free",
+    "city": "Kankakee",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "9756",
+    "name": "Kane County Animal Control",
+    "city": "Geneva",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "2860",
+    "name": "Kankakee County Animal Control & Adoption Center",
+    "city": "Bourbonnais",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "3554",
+    "name": "Kansas City Retired Greyhounds as Pets",
+    "city": "Kansas City",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "8283",
+    "name": "Kansas City Sheltie Rescue",
+    "city": "Mission",
+    "state": "KS",
+    "hasDogs": true
+  },
+  {
+    "id": "10980",
+    "name": "Kat & Kritters Foundation",
+    "city": "Hinckley",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "10112",
+    "name": "Kate's Furreka Rescue",
+    "city": "Turlock",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "10254",
+    "name": "Kathryn's Precious Paw Rescue, Inc.",
+    "city": "Banning",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8721",
+    "name": "Kentuckiana Pug Rescue",
+    "city": "Indianapolis",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "9504",
+    "name": "Kentucky Kitty Cats, Inc.",
+    "city": "Cromwell",
+    "state": "KY",
+    "hasDogs": true
+  },
+  {
+    "id": "2903",
+    "name": "Kern Co Animal Control Dept - Bakersfield",
+    "city": "Bakersfield",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2913",
+    "name": "Kern County Animal Control - Mojave Shelter",
+    "city": "Mojave",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2914",
+    "name": "Kern River Valley Shelter",
+    "city": "Lake Isabella",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8790",
+    "name": "Key to Lion's Heart Rescue",
+    "city": "Derwood",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "2284",
+    "name": "Killeen Animal Control",
+    "city": "Killeen",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9250",
+    "name": "Kindness Matters Rescue Inc",
+    "city": "Berlin",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "6363",
+    "name": "King George Animal Rescue League",
+    "city": "Dahlgren",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "2861",
+    "name": "Kings County Animal Services",
+    "city": "Hanford",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5444",
+    "name": "Kurth Memorial Animal Shelter",
+    "city": "Lufkin",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "6698",
+    "name": "L&S Dog Diggity Rescue",
+    "city": "San Antonio",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "6869",
+    "name": "La Porte County Small Animal Shelter",
+    "city": "La Porte",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "4714",
+    "name": "Labrador Retriever Rescue of Fresno",
+    "city": "Clovis",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "3111",
+    "name": "Labradors and Friends Dog Rescue Group",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4391",
+    "name": "Lady Luck Animal Rescue, Inc.",
+    "city": "Lighthouse Point",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "6974",
+    "name": "Lake County Animal Services",
+    "city": "Tavares",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "10969",
+    "name": "Lamancha Animal Rescue",
+    "city": "Unionville",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "8160",
+    "name": "Laramie Animal Welfare Society",
+    "city": "Laramie",
+    "state": "WY",
+    "hasDogs": true
+  },
+  {
+    "id": "1929",
+    "name": "Larimer Humane Society",
+    "city": "Fort Collins",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "3433",
+    "name": "Last Chance Animal Rescue",
+    "city": "Holbrook",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "4868",
+    "name": "Last Chance Pet Rescue, Inc",
+    "city": "White Bluff",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "3182",
+    "name": "Last Day Dog Rescue",
+    "city": "Livonia",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "6690",
+    "name": "Last Hope Animal Rescue",
+    "city": "Cedar Rapids",
+    "state": "IA",
+    "hasDogs": true
+  },
+  {
+    "id": "6260",
+    "name": "Last Hope K9 Rescue",
+    "city": "Boston",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "1930",
+    "name": "Lathrop Animal Services",
+    "city": "Lathrop",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7092",
+    "name": "Lawrence Humane Society",
+    "city": "Lawrence",
+    "state": "KS",
+    "hasDogs": true
+  },
+  {
+    "id": "3254",
+    "name": "Lee County Domestic Animal Services",
+    "city": "Fort Myers",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "1952",
+    "name": "Lee's Summit Animal Control",
+    "city": "Lee's Summit",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "2107",
+    "name": "Legacy Humane Society",
+    "city": "McKinney",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "11714",
+    "name": "LEGACY PAWS RESCUE",
+    "city": "CATAWABA",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "9406",
+    "name": "Libby and Mace's Place",
+    "city": "Mcclellanville",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "1883",
+    "name": "LIFE Animal Rescue",
+    "city": "Agoura Hills",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4779",
+    "name": "Life Savers Animal Rescue",
+    "city": "Polson",
+    "state": "MT",
+    "hasDogs": true
+  },
+  {
+    "id": "8140",
+    "name": "Lifeline Oro Valley Animal Rescue",
+    "city": "Oro Valley",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "8761",
+    "name": "Lil Rascals Dog Rescue",
+    "city": "Osteen",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "11096",
+    "name": "Lily's Legacy Senior Dog Sanctuary",
+    "city": "Petaluma",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8935",
+    "name": "Lincoln County Animal Services",
+    "city": "Palmetto",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "4324",
+    "name": "Little Orphan's Animal Rescue, Inc.",
+    "city": "Montello",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "5798",
+    "name": "Little Paws Dachshund Rescue",
+    "city": "Brookfield",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "11089",
+    "name": "Little Paws Doggie Rescue",
+    "city": "Sacramento",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1955",
+    "name": "Live Oak Animal Care and Control",
+    "city": "Live Oak",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "8644",
+    "name": "Living The Dream Rescue",
+    "city": "No Physical Shelter",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "8683",
+    "name": "Lodi Animal Services",
+    "city": "Lodi",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7073",
+    "name": "London Animal Care Centre",
+    "city": "London",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "7017",
+    "name": "Long Beach Animal Care Services",
+    "city": "Long Beach",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7951",
+    "name": "Looking Glass Animal Rescue, Inc.",
+    "city": "Ridgefield",
+    "state": "CT",
+    "hasDogs": true
+  },
+  {
+    "id": "4484",
+    "name": "Los Angeles County Animal Control - Agoura",
+    "city": "Agoura",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4481",
+    "name": "Los Angeles County Animal Control - Baldwin Park",
+    "city": "Baldwin Park",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4480",
+    "name": "Los Angeles County Animal Control - Carson",
+    "city": "Gardena",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4483",
+    "name": "Los Angeles County Animal Control - Castaic",
+    "city": "Castaic",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4479",
+    "name": "Los Angeles County Animal Control - Downey",
+    "city": "Downey",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4482",
+    "name": "Los Angeles County Animal Control - Lancaster",
+    "city": "Lancaster",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "586",
+    "name": "Lost Angels Animal Rescue, Inc.",
+    "city": "Tampa",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "6150",
+    "name": "Lost Dogs Run",
+    "city": "Murphy",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "24",
+    "name": "Lost Fantasy Rescue",
+    "city": "Ceres",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "3455",
+    "name": "Lost Paws Rescue of Texas",
+    "city": "Carrollton",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "2195",
+    "name": "Loudoun County Animal Care & Control",
+    "city": "Waterford",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "11698",
+    "name": "LOUIE BLUE RESCUE",
+    "city": "MORAVIAN FALLS",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "2220",
+    "name": "Louisville Metro Animal Services",
+    "city": "Louisville",
+    "state": "KY",
+    "hasDogs": true
+  },
+  {
+    "id": "6911",
+    "name": "Love & Second Chances",
+    "city": "San Ramon",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "637",
+    "name": "Love All Animals",
+    "city": "Dana Point",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "53",
+    "name": "Love of Animals, Inc.",
+    "city": "Visalia",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9453",
+    "name": "Loved at Last Dog Rescue Society",
+    "city": "LANGLEY",
+    "state": "BC",
+    "hasDogs": true
+  },
+  {
+    "id": "9227",
+    "name": "LOVEPAWS",
+    "city": "Rockville",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "1538",
+    "name": "LOYAL Rescue",
+    "city": "Pickering",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "11651",
+    "name": "Lucies Project Dog Rescue",
+    "city": "Sheridan",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "3152",
+    "name": "Lucky Dog Animal Rescue",
+    "city": "Washington",
+    "state": "DC",
+    "hasDogs": true
+  },
+  {
+    "id": "8284",
+    "name": "Lucky Pup Rescue SC",
+    "city": "Greenville",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "11654",
+    "name": "Lucky Tales Rescue",
+    "city": "Ft. Thomas",
+    "state": "KY",
+    "hasDogs": true
+  },
+  {
+    "id": "562",
+    "name": "LUV A DOG Rescues and Adoptions",
+    "city": "Morgantown",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "8344",
+    "name": "Luvn Pupz LLC",
+    "city": "Wyoming",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "5470",
+    "name": "LUVUMALL ANIMAL RESCUE",
+    "city": "Marine City",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "6514",
+    "name": "M'Shoogy's Famous Emergency Animal Rescue",
+    "city": "Savannah",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "2033",
+    "name": "Macomb County Animal Shelter and Animal Control",
+    "city": "Clinton Township",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "4156",
+    "name": "Macon County Animal Control and Care Center",
+    "city": "Decatur",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "5438",
+    "name": "Macon-Bibb County Animal Welfare",
+    "city": "Macon",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "10141",
+    "name": "MACS Friends Animal Rescue Inc",
+    "city": "Auburn",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "615",
+    "name": "Magnificent Mutts Rescue",
+    "city": "Hillside",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "9540",
+    "name": "Magpie & Daisy's Pet Rescue",
+    "city": "Carrollton",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "9517",
+    "name": "Malinois and Dutch Shepherd Rescue, Inc.",
+    "city": "Imlay City",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "8932",
+    "name": "Manatee County Animal Services",
+    "city": "Palmetto",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "2005",
+    "name": "Maricopa County Animal Care & Control - East Valley Animal Care Center",
+    "city": "Mesa",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "1726",
+    "name": "Maricopa County Animal Care & Control - West Valley Animal Care Center",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "5920",
+    "name": "Marion County Animal Services",
+    "city": "Ocala",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "4268",
+    "name": "Marion County Humane Society",
+    "city": "Knoxville",
+    "state": "IA",
+    "hasDogs": true
+  },
+  {
+    "id": "1470",
+    "name": "Marshall County Humane Society",
+    "city": "Holly Springs",
+    "state": "MS",
+    "hasDogs": true
+  },
+  {
+    "id": "3360",
+    "name": "Marshmallow Foundation",
+    "city": "Detroit Lakes",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "6194",
+    "name": "Mary Ann Morris Animal Society",
+    "city": "Bamberg",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "9551",
+    "name": "Maryville Alcoa Animal Rescue Center",
+    "city": "Maryville",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "1767",
+    "name": "Mastiff Rescue Oregon",
+    "city": "McMinnville",
+    "state": "OR",
+    "hasDogs": true
+  },
+  {
+    "id": "2150",
+    "name": "Mastiffs to Mutts Rescue",
+    "city": "Chambersburg",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "8957",
+    "name": "Mastino Rescue, Inc.",
+    "city": "St. Charles",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "5109",
+    "name": "Matanuska-Susitna Borough Animal Care and Regulation",
+    "city": "Palmer",
+    "state": "AK",
+    "hasDogs": true
+  },
+  {
+    "id": "8987",
+    "name": "Matty's Heart & Soul Animal Rescue",
+    "city": "Robbinsdale",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "8616",
+    "name": "Maude Schiffley Chapter S.P.C.A.",
+    "city": "Orangeburg",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "9189",
+    "name": "McLean County Animal Control Center",
+    "city": "Bloomington",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "5672",
+    "name": "Medical Animals In Need",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "10207",
+    "name": "Melita's Dream Animal Rescue",
+    "city": "Woodland Hills",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5959",
+    "name": "Mending Spirits Animal Rescue",
+    "city": "Mankato",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "269",
+    "name": "Mendocino Animal Control - Ukiah",
+    "city": "Ukiah",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "899",
+    "name": "Menifee County Animal Shelter",
+    "city": "Frenchburg",
+    "state": "KY",
+    "hasDogs": true
+  },
+  {
+    "id": "6503",
+    "name": "Mercy Rescue Haven",
+    "city": "Blacksburg",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "1087",
+    "name": "Merlin's Hope Chow Pei Rescue",
+    "city": "Prescott",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "2944",
+    "name": "Metairie Humane (rescue & adoptions)",
+    "city": "Metairie",
+    "state": "LA",
+    "hasDogs": true
+  },
+  {
+    "id": "1931",
+    "name": "Miami Dade Animal Services",
+    "city": "Miami",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "2643",
+    "name": "Mid-Atlantic German Shepherd Rescue",
+    "city": "Mt. Airy",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "993",
+    "name": "Midwest Animal Rescue & Services",
+    "city": "Brooklyn Park",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "156",
+    "name": "Midwest Doberman Rescue of St. Louis",
+    "city": "St. Charles",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "988",
+    "name": "Midwest Dog Rescue Network",
+    "city": "Belleuve",
+    "state": "NE",
+    "hasDogs": true
+  },
+  {
+    "id": "6019",
+    "name": "Midwest Pet Refuge",
+    "city": "Portland",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "3993",
+    "name": "Mile High Labrador Retriever Mission",
+    "city": "Broomfield",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "5905",
+    "name": "Minneapolis Animal Care and Control",
+    "city": "Minneapolis",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "3625",
+    "name": "Minnesota Boxer Rescue",
+    "city": "Woodbury",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "5387",
+    "name": "Minnesota Pit Bull Rescue",
+    "city": "Andover",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "5152",
+    "name": "Misfits, Mutts and Meows, Inc.",
+    "city": "Crescent",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "7578",
+    "name": "Miss Maggie May's Rescue",
+    "city": "Tucson",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "5794",
+    "name": "Missaukee Humane Society",
+    "city": "Lake City",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "2152",
+    "name": "Missouri German Shepherd Rescue",
+    "city": "Kansas City",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "957",
+    "name": "Mitchell Mill Animal Hospital Rescue Inc",
+    "city": "Raleigh",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "2151",
+    "name": "Mobile County Animal Shelter",
+    "city": "Mobile",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "8875",
+    "name": "Mobile County Humane Society Inc. /dba Krewe de Rescue",
+    "city": "Mobile",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "9529",
+    "name": "Molly's Place Rescue",
+    "city": "Mechanicsburg",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "2099",
+    "name": "Monterey County Animal Services",
+    "city": "Salinas",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2051",
+    "name": "Montgomery County Animal Service Center",
+    "city": "Conroe",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "10251",
+    "name": "Montgomery County Animal Services and Adoption Center",
+    "city": "Derwood",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "6240",
+    "name": "Moreno Valley Animal Shelter",
+    "city": "Moreno Valley",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11539",
+    "name": "Morgan County Humane Society",
+    "city": "Hartselle",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "342",
+    "name": "Morrow County Dog Shelter",
+    "city": "Mt. Gilead",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "1226",
+    "name": "Mostly Mutts Animal Rescue & Adoption, Inc.",
+    "city": "Kennesaw",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "11148",
+    "name": "Mountain Mama Pyrs and Pups",
+    "city": "MIDWAY",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "5154",
+    "name": "Mountain Pet Rescue",
+    "city": "Winter Park",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "8733",
+    "name": "Mountain Pet Rescue Asheville",
+    "city": "Candler",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "11569",
+    "name": "Mountainair Animal Control Shelter",
+    "city": "Mountainair",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "9226",
+    "name": "Mower County Humane Society",
+    "city": "AUSTIN",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "2836",
+    "name": "MSPCA - Boston Animal Care and Adoption Center",
+    "city": "Boston",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "9828",
+    "name": "MSPCA - Cape Cod Animal Care and Adoption Center",
+    "city": "Centerville",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "6701",
+    "name": "Murray County Humane Society",
+    "city": "Crandall",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "9786",
+    "name": "MustLuvBoxers Rescue",
+    "city": "Stanwood",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "4466",
+    "name": "Mutt Love Rescue",
+    "city": "Fairfax",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "4669",
+    "name": "Mutts & Meows Animal Rescue",
+    "city": "Missouri City",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "2103",
+    "name": "Mutts in Need",
+    "city": "Newport Beach",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "900",
+    "name": "My Young & Old Fur Babies Rescue",
+    "city": "Woodsfield",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "10477",
+    "name": "My Zouy Rescue",
+    "city": "Corning",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "7027",
+    "name": "NAIA's Pet Rescue",
+    "city": "west Palm Beach",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "3910",
+    "name": "Naked K9 & Small Dog Rescue",
+    "city": "Erie",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "5592",
+    "name": "National Anatolian Shepherd Rescue Network",
+    "city": "Higley",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "4938",
+    "name": "National Brittany Rescue and Adoption Network",
+    "city": "Curwensville",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "1502",
+    "name": "National Great Pyrenees Rescue",
+    "city": "Beacon",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "184",
+    "name": "NE Ohio Greyhound Rescue",
+    "city": "Geneva",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "6733",
+    "name": "Needy Paws Rescue",
+    "city": "St. Louis",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "1851",
+    "name": "New Beginnings for Animals",
+    "city": "Mission Viejo",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1380",
+    "name": "New Beginnings Shepherd Rescue",
+    "city": "Holly Hill",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "4208",
+    "name": "New Hanover County Sheriff's Office Animal Services Unit",
+    "city": "Wilmington",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "4968",
+    "name": "New Rattitude, Inc.",
+    "city": "Atlanta",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "9151",
+    "name": "New York City Cat Coalition",
+    "city": "Bronx",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "11591",
+    "name": "Newcastle Animal Shelter",
+    "city": "Newcastle",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "5392",
+    "name": "Ninna's Road to Rescue",
+    "city": "Benton",
+    "state": "LA",
+    "hasDogs": true
+  },
+  {
+    "id": "10903",
+    "name": "Nirvana Animal Rescue",
+    "city": "Shermans Dale",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "8942",
+    "name": "NJ South Hills Pet Rescue, Inc",
+    "city": "Chester",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "10957",
+    "name": "No Collar Queens Animal Rescue",
+    "city": "Jacksonville",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "4909",
+    "name": "No Dog Left Behind",
+    "city": "Brooklyn Center",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "9313",
+    "name": "No Paw Left Behind Animal Rescue",
+    "city": "Jackson Township",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "4490",
+    "name": "No Stray Left Behind",
+    "city": "Victorville",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6141",
+    "name": "No Time to Spare Animal Rescue and Sanctuary",
+    "city": "Warrenton",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "10584",
+    "name": "Noah Project",
+    "city": "Muskegon",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "8498",
+    "name": "Noah's Ark Rescue Project and Sanctuary",
+    "city": "Uwchlan",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "8640",
+    "name": "nOkill Network",
+    "city": "Post Falls",
+    "state": "ID",
+    "hasDogs": true
+  },
+  {
+    "id": "9023",
+    "name": "NorCal German Shepherd Rescue dba ShepHeroes",
+    "city": "West Sacramento",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "780",
+    "name": "NorCal German Shorthaired Pointer Rescue",
+    "city": "Menlo Park",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4034",
+    "name": "Norfolk Animal Care Center",
+    "city": "Norfolk",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "5485",
+    "name": "Norman Animal Welfare",
+    "city": "Norman",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "3325",
+    "name": "North Bay Canine Rescue and Placement",
+    "city": "Petaluma",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2014",
+    "name": "North Central Animal Care and Control",
+    "city": "Los Angeles",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "73",
+    "name": "North Texas Basset Hound Rescue, Inc.",
+    "city": "Grapevine",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "1077",
+    "name": "Northern California Sled Dog Rescue",
+    "city": "Walnut Creek",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8561",
+    "name": "Northern Chesapeake Sheltie Rescue",
+    "city": "Abingdon",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "9245",
+    "name": "Northern Ocean County Animal Facility",
+    "city": "Jackson",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "8444",
+    "name": "Northstar Pet Rescue",
+    "city": "Boonton",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "5292",
+    "name": "Northwest Boxer Rescue",
+    "city": "Mcminnville",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "5305",
+    "name": "Northwest SPCA",
+    "city": "Oroville",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "10024",
+    "name": "OAIC, Inc.(Ohio American Indian Council, Inc.)  Indian Summers Border Collie RezQ",
+    "city": "Minerva",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "5970",
+    "name": "Oakland Animal Services",
+    "city": "Oakland",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5504",
+    "name": "Ohio Basset Hound Rescue. Inc",
+    "city": "Brookville",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "4697",
+    "name": "Ohio Fuzzy Pawz Shih Tzu Rescue, Inc.",
+    "city": "Pataskala",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "268",
+    "name": "Ok Save A Dog",
+    "city": "Prague",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "11008",
+    "name": "Okie Pet Rescue",
+    "city": "Claremore",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "2950",
+    "name": "Oklahoma City Animal Welfare Division",
+    "city": "Oklahoma City",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "10804",
+    "name": "Oklahome Animal Rescue, Inc.",
+    "city": "OKLAHOMA CITY",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "1994",
+    "name": "Olathe Animal Control Unit",
+    "city": "Olathe",
+    "state": "KS",
+    "hasDogs": true
+  },
+  {
+    "id": "4707",
+    "name": "Oldies But Goodies Cocker Rescue, Inc",
+    "city": "Arlington",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "27",
+    "name": "Olive Branch Animal Rescue & Refuge, Inc.",
+    "city": "Sistersville",
+    "state": "WV",
+    "hasDogs": true
+  },
+  {
+    "id": "7865",
+    "name": "One Dog at a Time ODAAT",
+    "city": "Lewistown",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "8575",
+    "name": "One Love Animal Rescue",
+    "city": "Mount Laurel",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "6331",
+    "name": "One Planet Rescue",
+    "city": "San Jose",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4853",
+    "name": "Operation Pets Alive",
+    "city": "The Woodlands",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "1872",
+    "name": "Operation Roger... Truckers Pet Transport",
+    "city": "Joshua",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "2221",
+    "name": "Orange County Animal Care Center",
+    "city": "Orange",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2016",
+    "name": "Orange County Animal Services",
+    "city": "Chapel Hill",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "2098",
+    "name": "Orange County Animal Services",
+    "city": "Orlando",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "8388",
+    "name": "Osceola County Animal Services",
+    "city": "St. Cloud",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "5810",
+    "name": "Our Last Hope Animal Rescue",
+    "city": "Princeton",
+    "state": "BC",
+    "hasDogs": true
+  },
+  {
+    "id": "546",
+    "name": "Our Lil' Bit of Heaven Animal Rescue and Sanctuary",
+    "city": "Poland",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "9807",
+    "name": "Our Pack Animal Rescue, Inc.",
+    "city": "New London",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "9691",
+    "name": "Our Underdog Rescue Squad",
+    "city": "La Verne",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8197",
+    "name": "Outcast Rescue",
+    "city": "Catasauqua",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "1725",
+    "name": "Ozark Haven Rescue, LLC a Not for Profit Organization",
+    "city": "Cabool",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "4126",
+    "name": "Ozark Homeward Bound",
+    "city": "Harrison",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "10185",
+    "name": "Ozzie and Friends Rescue Inc",
+    "city": "Inglewood",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6862",
+    "name": "PA Caring for K-9's",
+    "city": "New Oxford",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "9664",
+    "name": "PA Pit Stop",
+    "city": "Shillington",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "10308",
+    "name": "Pack Lyfe rescue inc",
+    "city": "Hayward",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8744",
+    "name": "PacoCorp Rescue",
+    "city": "Euless",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "10410",
+    "name": "Pal's Place Foundation",
+    "city": "Chicago",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "7049",
+    "name": "Palo Alto Animal Services",
+    "city": "Palo Alto",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1177",
+    "name": "Panhandle Animal Welfare Society",
+    "city": "Fort Walton Beach",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "4082",
+    "name": "Paradise Animal Control/Shelter",
+    "city": "Paradise",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "3459",
+    "name": "Pardon... Me Inc.",
+    "city": "Chino Hills",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8784",
+    "name": "Partnership for Animal Welfare",
+    "city": "Greenbelt",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "10262",
+    "name": "Pasadena Humane",
+    "city": "Pasadena",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7028",
+    "name": "Passion 4 Paws",
+    "city": "Shelburne",
+    "state": "VT",
+    "hasDogs": true
+  },
+  {
+    "id": "7840",
+    "name": "Pathways Home Animal Rescue",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "9925",
+    "name": "Paw Angel's Inc.",
+    "city": "Calhoun",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "10043",
+    "name": "PAW Estate Rescue and Shelter Inc",
+    "city": "Visalia",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9854",
+    "name": "Paw Pact Rescue",
+    "city": "Houston",
+    "state": "T",
+    "hasDogs": true
+  },
+  {
+    "id": "4506",
+    "name": "Paw Parent",
+    "city": "Lancaster",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8439",
+    "name": "Paw Placement Animal Rescue",
+    "city": "Scottsdale",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "7170",
+    "name": "Paw-Affection Dachshund Rescue, Inc.",
+    "city": "Taunton",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "11408",
+    "name": "pAwareness Foundation Inc",
+    "city": "Margate",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "898",
+    "name": "Pawfect Match Rescue",
+    "city": "Holly Springs",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "7755",
+    "name": "PawPrints Animal Rescue Inc",
+    "city": "Florence",
+    "state": "KY",
+    "hasDogs": true
+  },
+  {
+    "id": "8727",
+    "name": "PAWS  pound Animals worth saving",
+    "city": "Mesa",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "6492",
+    "name": "Paws 4 A Cause Rescue",
+    "city": "San Bernardino",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4141",
+    "name": "Paws 4 You Rescue",
+    "city": "Miami",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "11282",
+    "name": "Paws Across Pittsburgh",
+    "city": "Springdale",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "5517",
+    "name": "Paws and Claws Animal Adoption and Care Center Inc.",
+    "city": "Diamondville",
+    "state": "WY",
+    "hasDogs": true
+  },
+  {
+    "id": "2924",
+    "name": "Paws and Prayers",
+    "city": "Cuyahoga Falls",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "124",
+    "name": "Paws Animal Rescue, Inc.",
+    "city": "Alvin",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "7701",
+    "name": "Paws Crossed Animal Rescue Inc.",
+    "city": "Elmsford",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "743",
+    "name": "PAWS of Hertford County",
+    "city": "Murfreesboro",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "7132",
+    "name": "Paws of Love Animal Rescue",
+    "city": "Dallas",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "11217",
+    "name": "Paws of Love, Inc.",
+    "city": "Monticello",
+    "state": "MS",
+    "hasDogs": true
+  },
+  {
+    "id": "8343",
+    "name": "Paws on the Ground Colorado",
+    "city": "Littleton",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "9056",
+    "name": "PAWS UP PET RESCUE INC",
+    "city": "Sheboygan",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "11075",
+    "name": "Pawsitive Connections Inc",
+    "city": "Fresno",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7160",
+    "name": "PawsLikeMe",
+    "city": "Orlando",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "10932",
+    "name": "Payton's Promise Sanctuary",
+    "city": "Marathon",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "5948",
+    "name": "Peace 4 Paws Inc.",
+    "city": "Westwood",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "9626",
+    "name": "Peace Love and Poms Rescue",
+    "city": "Lebanon",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "8927",
+    "name": "Peace, Love, & Paws, Inc",
+    "city": "Myrtle Beach",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "2801",
+    "name": "Peanut's Place Bully Rescue",
+    "city": "Yoder",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "2663",
+    "name": "Pearland Animal Control and Adoption Center",
+    "city": "Pearland",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "2017",
+    "name": "Peggy Adams Animal Rescue League of the Palm Beaches, Inc.",
+    "city": "West Palm Beach",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "5762",
+    "name": "Pei People Shar Pei Rescue, Inc",
+    "city": "Tucson",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "1776",
+    "name": "Peninsula Humane Society & SPCA",
+    "city": "Burlingame",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9606",
+    "name": "Pennington County Humane Society",
+    "city": "Thief River Falls",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "1932",
+    "name": "Peoria Animal Welfare Shelter",
+    "city": "Peoria",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "460",
+    "name": "Perfect Paws Pet Rescue, Inc.",
+    "city": "Fort Wayne",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "9619",
+    "name": "Perfectly Imperfect Pups",
+    "city": "Raleigh",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "9999",
+    "name": "Perry County Humane Society of Illinois",
+    "city": "DuQuoin",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "7698",
+    "name": "Perth Amboy Animal Shelter",
+    "city": "Perth Amboy",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "8046",
+    "name": "Pet Adoption League of Gem County",
+    "city": "Emmett",
+    "state": "ID",
+    "hasDogs": true
+  },
+  {
+    "id": "1636",
+    "name": "Pet Adoption Services, Inc",
+    "city": "Kenner",
+    "state": "LA",
+    "hasDogs": true
+  },
+  {
+    "id": "7133",
+    "name": "Pet Haven Inc. of MN",
+    "city": "St. Paul",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "3004",
+    "name": "Pet Helpers, Inc",
+    "city": "Fairmont",
+    "state": "WV",
+    "hasDogs": true
+  },
+  {
+    "id": "5878",
+    "name": "Pet Pantry of Lancaster County, Inc.",
+    "city": "Lancaster",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "11015",
+    "name": "Pet Refuge",
+    "city": "South Bend",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "1073",
+    "name": "Pet Rescue & Adoption Center, Inc.",
+    "city": "Boca Raton",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "1023",
+    "name": "Pet Rescue By Judy",
+    "city": "Sanford",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "136",
+    "name": "Pet Rescue of Maryland",
+    "city": "Monkton",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "4561",
+    "name": "Pet ResQ Inc.",
+    "city": "Tenafly",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "4520",
+    "name": "Pet-a-Bulls",
+    "city": "Albuquerque",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "9454",
+    "name": "Petey and Furends",
+    "city": "Rockville",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "9434",
+    "name": "Pets Are Worth Saving Inc",
+    "city": "Chinook",
+    "state": "MT",
+    "hasDogs": true
+  },
+  {
+    "id": "11381",
+    "name": "Pets In Need",
+    "city": "Redwood City",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8073",
+    "name": "Pets Return Home",
+    "city": "Cottonwood",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "5451",
+    "name": "Pibbles & More Animal Rescue",
+    "city": "Binghamton",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "8685",
+    "name": "Piedmont Animal Rescue",
+    "city": "Mooresville",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "8349",
+    "name": "Piedmont Pound Paws, Inc.",
+    "city": "Piedmont",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "8159",
+    "name": "PittieLove Rescue, Inc.",
+    "city": "Framingham",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "3159",
+    "name": "Pixie Mamas Rescue",
+    "city": "Buffalo",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "9946",
+    "name": "PJ's Rescue",
+    "city": "Duluth",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "6640",
+    "name": "Plano Animal Shelter",
+    "city": "Plano",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "8093",
+    "name": "Plenty of Pit Bulls",
+    "city": "Gainesville",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "2883",
+    "name": "Polk County Animal Control",
+    "city": "Winter Haven",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "10998",
+    "name": "Polk County Humane Society",
+    "city": "Bolivar",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "8502",
+    "name": "Polka Dogz Pet REscue, INc.",
+    "city": "oakland",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "2701",
+    "name": "Pound Puppies N Kittens, Inc.",
+    "city": "Social Circle",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "11676",
+    "name": "Powell Animal Welfare Society (PAWS)",
+    "city": "Powell",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "4252",
+    "name": "Prattville Autauga Humane Society",
+    "city": "Prattville",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "2569",
+    "name": "Pregnant Dog And All Breed Rescue",
+    "city": "Newfoundland",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "1933",
+    "name": "Prince Georges County Animal Management Division",
+    "city": "Forestville",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "10006",
+    "name": "Project Hope Animal",
+    "city": "Gilberts",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "6454",
+    "name": "Project Hope Animal Rescue",
+    "city": "Coldwater",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "2736",
+    "name": "Proverbs 12:10 Animal Rescue",
+    "city": "Nashville",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "6175",
+    "name": "Providing Animals With Support",
+    "city": "St. George",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "4106",
+    "name": "Pug Rescue of New England",
+    "city": "Somerville",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "2972",
+    "name": "Pug Rescue of North Carolina, Inc.",
+    "city": "Elizabeth City",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "1420",
+    "name": "Puppy Pleasers Rescue",
+    "city": "Orlando",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "3568",
+    "name": "Pupz N Palz",
+    "city": "Modesto",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9201",
+    "name": "Purrfect Pound Pals",
+    "city": "BISMARCK",
+    "state": "ND",
+    "hasDogs": true
+  },
+  {
+    "id": "142",
+    "name": "Rainbow Animal Rescue, Inc",
+    "city": "Norfolk",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "11183",
+    "name": "Rainbow Bridge Hospice Rescue inc",
+    "city": "Middlesex",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "6076",
+    "name": "Randolph County Humane Society",
+    "city": "Elkins",
+    "state": "WV",
+    "hasDogs": true
+  },
+  {
+    "id": "4749",
+    "name": "Randolph County Humane Society",
+    "city": "Steeleville",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "4264",
+    "name": "Reach Out Rescue & Resources",
+    "city": "Westminster",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "8754",
+    "name": "REACH Rescue, Inc",
+    "city": "Mundelein",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "8537",
+    "name": "Rebels Rescue Inc.",
+    "city": "Tampa",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "11070",
+    "name": "Recate Fenix aka Rescue Fenix",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6895",
+    "name": "Recycled Pets NorCal",
+    "city": "Fair Oaks",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6069",
+    "name": "Recycled Pomeranians and Schipperkes",
+    "city": "Garland",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9136",
+    "name": "Red Rock Rescue Inc.",
+    "city": "Walnutport",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "8122",
+    "name": "Redemption Road Rescue",
+    "city": "Crystal",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "7187",
+    "name": "Redemption Road Rescue Rehab Inc.",
+    "city": "Wauconda",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "5904",
+    "name": "Redlands Animal Shelter",
+    "city": "Redlands",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8585",
+    "name": "Regional SPCA",
+    "city": "Gloversville",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "9264",
+    "name": "Rejection Collection Boxer Rescue",
+    "city": "Owatonna",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "5667",
+    "name": "Releashed Rescue",
+    "city": "Roswell",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "6440",
+    "name": "Rescue Adoption Inc.",
+    "city": "Fort Pierce",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "9427",
+    "name": "Rescue City",
+    "city": "Brooklyn",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "7015",
+    "name": "Rescue Dogs Rock, Inc",
+    "city": "New York",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "5750",
+    "name": "Rescue Haven Foundation",
+    "city": "Caldwell",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "7970",
+    "name": "Rescue K-911",
+    "city": "Paola",
+    "state": "KS",
+    "hasDogs": true
+  },
+  {
+    "id": "9428",
+    "name": "Rescue Pets Serving Vets, Inc",
+    "city": "Benton",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "1817",
+    "name": "Rescue Ranch",
+    "city": "Yreka",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7647",
+    "name": "Rescue Ridge",
+    "city": "Spring Lake",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "5801",
+    "name": "Rescue Rovers Dog Adoptions",
+    "city": "Sandy",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "9461",
+    "name": "Rescue Tails Animal Welfare",
+    "city": "Lincolnwood",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "5174",
+    "name": "Rescue Ur Forever Friend",
+    "city": "Garner",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "8969",
+    "name": "Rescue Well Incorporated",
+    "city": "Columbia",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "9711",
+    "name": "Rescue1atatime",
+    "city": "Barrie",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "4946",
+    "name": "Rescued Tails Animal Sanctuary",
+    "city": "Shell Lake",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "5586",
+    "name": "Rescues On The Runway",
+    "city": "Santa Clarita",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1453",
+    "name": "Rescuing Unwanted Friendly Fidos",
+    "city": "Brooksville",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "9460",
+    "name": "ResQpaws",
+    "city": "Yuba City",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4858",
+    "name": "Richardson Rescue",
+    "city": "York",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "1858",
+    "name": "Ring Dog Rescue",
+    "city": "Richmond",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "11238",
+    "name": "Ripley County Humane Society",
+    "city": "Osgood",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "5708",
+    "name": "Riverside County Animal Control - Blythe Shelter",
+    "city": "Thousand Palms",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5707",
+    "name": "Riverside County Animal Control - Coachella Shelter",
+    "city": "Thousand Palms",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5706",
+    "name": "Riverside County Animal Control - Riverside Shelter",
+    "city": "Riverside",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9047",
+    "name": "Riverview Rescue",
+    "city": "Leavenworth",
+    "state": "KS",
+    "hasDogs": true
+  },
+  {
+    "id": "1203",
+    "name": "Robin Hood Animal Rescue",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "9080",
+    "name": "Rocket Rescue",
+    "city": "Bow",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "4586",
+    "name": "Rockin G Animal Shelter",
+    "city": "Pryor",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "5416",
+    "name": "Rockwall Animal Adoption Center",
+    "city": "Rockwall",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "7880",
+    "name": "Rocky Mountain Collie and Sheltie Rescue, Inc.",
+    "city": "Pueblo West",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "1189",
+    "name": "Rocky Mountain Great Dane Rescue",
+    "city": "Lakewood",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "4461",
+    "name": "Rogers Animal Shelter",
+    "city": "Rogers",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "3251",
+    "name": "Rohnert Park Animal Shelter",
+    "city": "Rohnert Park",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6874",
+    "name": "Rompin Paws Rescue",
+    "city": "Arlington",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "8711",
+    "name": "Rose Acres Rescue",
+    "city": "Attalka",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "4002",
+    "name": "Rose's Rescue",
+    "city": "Rootstown",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "9819",
+    "name": "Rotten Rottie Rescue",
+    "city": "Gilbert",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "7957",
+    "name": "Rowan County Animal Control",
+    "city": "Salisbury",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "5563",
+    "name": "Roxy's K-9 Rescue",
+    "city": "San Antonio",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "6940",
+    "name": "Ruff Love Foster Care and Dog Rescue",
+    "city": "Thomasville",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "9140",
+    "name": "Ruff Redemption Rescue, Inc",
+    "city": "Woodstock",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "4092",
+    "name": "Ruff Start Rescue",
+    "city": "Princeton",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "1273",
+    "name": "Rugby Creek Animal Rescue, Inc",
+    "city": "Mouth Of Wilson",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "372",
+    "name": "Russell Rescue, Inc.",
+    "city": "Columbia",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "10038",
+    "name": "Rusty's Rescue Ranch",
+    "city": "garner",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "1738",
+    "name": "Rutherford County Humane Society",
+    "city": "Rutherfordton",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "1934",
+    "name": "Rutherford County PAWS",
+    "city": "Murfreesboro",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "8579",
+    "name": "S&L Animal Rescue, Inc.",
+    "city": "Pittstown",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "1978",
+    "name": "Sacramento County Animal Care and Regulation",
+    "city": "Sacramento",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5716",
+    "name": "Sadie's Safe Harbor Canine Rescue",
+    "city": "Hamburg",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "1074",
+    "name": "Safe Haven Animal Shelter",
+    "city": "Loxley, AL",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "982",
+    "name": "Safe Haven of Iowa County",
+    "city": "Williamsburg",
+    "state": "IA",
+    "hasDogs": true
+  },
+  {
+    "id": "10803",
+    "name": "Safe Pet Project Inc",
+    "city": "Blairsville",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "9155",
+    "name": "Saginaw County Animal Care & Control",
+    "city": "Saginaw",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "5985",
+    "name": "Sammy's Hope, Inc",
+    "city": "Sayreville, NJ",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "3055",
+    "name": "San Antonio Animal Care Services",
+    "city": "San Antonio",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "5826",
+    "name": "San Antonio Doberman Advocacy and Rescue",
+    "city": "Devine",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "2312",
+    "name": "San Antonio Great Dane Rescue",
+    "city": "PIPE CREEK",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "5277",
+    "name": "San Bernardino City Animal Control",
+    "city": "San Bernardino",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2019",
+    "name": "San Diego County Department of Animal Services - North Shelter",
+    "city": "Carlsbad",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2020",
+    "name": "San Diego County Department of Animal Services - South Shelter",
+    "city": "Bonita",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5025",
+    "name": "San Francisco Animal Care & Control",
+    "city": "San Francisco",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1938",
+    "name": "San Jose Animal Care Center",
+    "city": "San Jose",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8886",
+    "name": "San Nicola Dog Rescue",
+    "city": "westminster",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "9128",
+    "name": "Sandy Paws Rescue inc.",
+    "city": "Oak Bluffs",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "11429",
+    "name": "Sanilac Scoopers DBA Making Miracles Animal Rescue",
+    "city": "Utica",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "8420",
+    "name": "Santa Barbara County Animal Services - Lompoc",
+    "city": "Lompoc",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8331",
+    "name": "Santa Barbara County Animal Services - Santa Barbara",
+    "city": "Santa Barbara",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8421",
+    "name": "Santa Barbara County Animal Services - Santa Maria",
+    "city": "Santa Maria",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1935",
+    "name": "Santa Clara County Animal Care & Control",
+    "city": "San Martin",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5220",
+    "name": "Santa Cruz County Animal Shelter",
+    "city": "Santa Cruz",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5221",
+    "name": "Santa Cruz County Animal Shelter",
+    "city": "Watsonville",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5024",
+    "name": "Santa Fe Animal Shelter and Humane Society",
+    "city": "Santa Fe",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "4202",
+    "name": "Saskatoon Society for the Prevention of Cruelty to Animals",
+    "city": "Grasswood",
+    "state": "SK",
+    "hasDogs": true
+  },
+  {
+    "id": "9062",
+    "name": "Save A Dog Rescue",
+    "city": "Grovertown",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "11052",
+    "name": "Save A Friend P.R.",
+    "city": "Luquillo",
+    "state": "PR",
+    "hasDogs": true
+  },
+  {
+    "id": "5181",
+    "name": "Save a Stray",
+    "city": "Mobile",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "135",
+    "name": "Save A Yorkie Rescue, Inc.",
+    "city": "Allentown,",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "6520",
+    "name": "Save One Soul Animal Rescue League",
+    "city": "Wakefield",
+    "state": "RI",
+    "hasDogs": true
+  },
+  {
+    "id": "10580",
+    "name": "Save The Satos",
+    "city": "Jefferson",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "1837",
+    "name": "Save the Strays Animal Rescue",
+    "city": "Camden",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "9012",
+    "name": "Saved By Grace Animal Rescue",
+    "city": "Shreveport",
+    "state": "LA",
+    "hasDogs": true
+  },
+  {
+    "id": "6646",
+    "name": "Saving Death Row Dogs",
+    "city": "Topeka",
+    "state": "KS",
+    "hasDogs": true
+  },
+  {
+    "id": "7873",
+    "name": "Saving Dobermankind Animal Rescue",
+    "city": "Fountain",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "10585",
+    "name": "Saving Grace Animal Rescue",
+    "city": "Winter",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "5558",
+    "name": "Saving Great Animals",
+    "city": "Bellevue",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "8195",
+    "name": "Saving Our Companion Animals - Fort Bend County",
+    "city": "Rosenberg",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "5165",
+    "name": "Saving Pets One at a Time",
+    "city": "Oceanside",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6961",
+    "name": "Saving Pets One at a Time Inc, the Morgan County Humane Society",
+    "city": "Stockport",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "806",
+    "name": "Saving Pyrs In Need",
+    "city": "Dallas",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "7933",
+    "name": "Saving Shepherds of Minnesota",
+    "city": "Roseville",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "11257",
+    "name": "Saving Shepherds Rescue Inc",
+    "city": "Saegertown",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "6843",
+    "name": "Saving Tails Animal Rescue",
+    "city": "Frankenmuth",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "6316",
+    "name": "Schnauzer Rescue of the Carolinas, Inc.",
+    "city": "Lenoir",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "9762",
+    "name": "Scott County Animal Care and Control",
+    "city": "Georgetown",
+    "state": "KY",
+    "hasDogs": true
+  },
+  {
+    "id": "7197",
+    "name": "Scott County Humane Society",
+    "city": "Georgetown",
+    "state": "KY",
+    "hasDogs": true
+  },
+  {
+    "id": "494",
+    "name": "Scottie Kingdom Rescue, Inc.",
+    "city": "Dallas",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "2426",
+    "name": "Scout's Honor Rescue",
+    "city": "Houston",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "592",
+    "name": "Second Chance Animal Center",
+    "city": "Arlington",
+    "state": "VT",
+    "hasDogs": true
+  },
+  {
+    "id": "9011",
+    "name": "Second Chance Animal Rescue",
+    "city": "Gates Mills",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "10482",
+    "name": "Second Chance Animal Sanctuaries",
+    "city": "Tioga",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "5187",
+    "name": "Second Chance Companions",
+    "city": "Battle Ground",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "2802",
+    "name": "Second Chance Dog Rescue",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "266",
+    "name": "Second Chance for Homeless Pets",
+    "city": "Salt Lake City",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "4332",
+    "name": "Second Chance Pets",
+    "city": "League City",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "6296",
+    "name": "Second Chance Rescue NYC",
+    "city": "Whitestone",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "11487",
+    "name": "Second Chances Red Listers",
+    "city": "Roseville",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "10073",
+    "name": "Second Leash on Life",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6780",
+    "name": "Sedona Shepherd Sanctuary",
+    "city": "Millburn",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "5741",
+    "name": "Seminole County Animal Services",
+    "city": "Sanford",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "10984",
+    "name": "Semper Fi Legacy Rescue, Inc.",
+    "city": "Ball Ground",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "8836",
+    "name": "Shamrock Rescue Foundation",
+    "city": "Santa Ana",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "3936",
+    "name": "Shelter Animals Rescue Group",
+    "city": "Oak Ridge",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "7021",
+    "name": "Shelter to Home",
+    "city": "Wyandotte",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "4245",
+    "name": "Sheltie Shack Rescue, Shell Knob, Missouri",
+    "city": "Shell Knob",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "8591",
+    "name": "Shenandoah Shepherd Rescue Inc",
+    "city": "Stephens City",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "8457",
+    "name": "Shepherd Help and Rescue Effort, Inc.",
+    "city": "Plantation",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "11700",
+    "name": "Shiba Saviors, Inc",
+    "city": "Plant City",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "3241",
+    "name": "Shih Tzu Rescue, Inc.",
+    "city": "Weston",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "9129",
+    "name": "Siberian Husky Rescue of New Mexico, Inc.",
+    "city": "Cedar Crest",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "11343",
+    "name": "Sierra County Humane Society",
+    "city": "Williamsburg",
+    "state": "NM",
+    "hasDogs": true
+  },
+  {
+    "id": "8763",
+    "name": "Sierra's K9 Rescue and Rehab",
+    "city": "Pipe Creek",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "6880",
+    "name": "Silicon Valley Pet Project",
+    "city": "San Jose",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6865",
+    "name": "Sioux Falls Canine Rescue",
+    "city": "Brandon",
+    "state": "SD",
+    "hasDogs": true
+  },
+  {
+    "id": "8866",
+    "name": "Small Dog Rescue of New England, Inc",
+    "city": "Cranston",
+    "state": "RI",
+    "hasDogs": true
+  },
+  {
+    "id": "9766",
+    "name": "SNARR Northeast Animal Rescue",
+    "city": "Brewster",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "11632",
+    "name": "Sno Valley Pet Services",
+    "city": "SNOQUALMIE",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "9213",
+    "name": "Solano County Sheriff's Office Animal Care Division",
+    "city": "Fairfield",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4563",
+    "name": "Sonoma County Animal Care and Control",
+    "city": "Santa Rosa",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11534",
+    "name": "Soulshine Dog Rescue",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "514",
+    "name": "South Jersey Rescue",
+    "city": "Gibbstown",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "2013",
+    "name": "South Los Angeles Animal Care and Control Center",
+    "city": "Los Angeles",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8143",
+    "name": "SOUTH OF THE BULLY RESCUE",
+    "city": "Wesley Chapel",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "4573",
+    "name": "SouthEast Beagle Rescue Inc.",
+    "city": "Dunnellon",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "4187",
+    "name": "Southeast German Shepherd Rescue",
+    "city": "New Hill",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "8774",
+    "name": "Southern Animal Volunteer Effort",
+    "city": "Decatur",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "4864",
+    "name": "Southern Arizona Beagle Rescue",
+    "city": "Tucson",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "2712",
+    "name": "Southern Comfort Animal Rescue",
+    "city": "Tarrytown",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "2465",
+    "name": "Southern Comfort Maltese Rescue",
+    "city": "Chattanooga",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "5183",
+    "name": "Southern Crescent Canine Rescue",
+    "city": "Milner",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "5131",
+    "name": "Southern Nevada Beagle Rescue Foundation",
+    "city": "Las Vegas",
+    "state": "NV",
+    "hasDogs": true
+  },
+  {
+    "id": "9253",
+    "name": "Southern Ocean County Animal Facility",
+    "city": "Manahawkin",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "5952",
+    "name": "Southern States Rescued Rottweilers",
+    "city": "White Hall",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "7871",
+    "name": "Southwest English Setter Rescue",
+    "city": "Boerne",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9186",
+    "name": "Southwest Oasis Labrador Rescue",
+    "city": "Tucson",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "2902",
+    "name": "SPCA of Northern Virginia",
+    "city": "Arlington",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "2364",
+    "name": "SPCA of Wake County",
+    "city": "Raleigh",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "3313",
+    "name": "SPCA PETS SNAP of Montgomery County",
+    "city": "Conroe",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "4877",
+    "name": "Speaking of Dogs Rescue",
+    "city": "Toronto",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "11678",
+    "name": "Spoil Em Rotten Foundation",
+    "city": "Cincinnati",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "7625",
+    "name": "SRGDRR Inc aka Save Rocky the Great Dane Rescue and Rehab",
+    "city": "Bullard",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "3085",
+    "name": "St Charles County Humane Services",
+    "city": "St Peters",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "5059",
+    "name": "St. Animal Pet Adoptions",
+    "city": "St. Ann",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "2707",
+    "name": "St. Clair County Animal Adoption Center",
+    "city": "Belleville",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "9362",
+    "name": "St. Furever Freedom Animal Rescue",
+    "city": "Rural Hall",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "7029",
+    "name": "St. Mary's Animal Welfare League",
+    "city": "Leonardtown",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "7734",
+    "name": "St. Tammany Parish Department of Animal Services",
+    "city": "Lacombe",
+    "state": "LA",
+    "hasDogs": true
+  },
+  {
+    "id": "8897",
+    "name": "Stamford Animal Control and Care",
+    "city": "stamford",
+    "state": "CT",
+    "hasDogs": true
+  },
+  {
+    "id": "5996",
+    "name": "Standard Poodles in Need, Rescue & Re-home",
+    "city": "Whitby",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "1939",
+    "name": "Stanislaus County Animal Services",
+    "city": "Modesto",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2780",
+    "name": "Stanly County Humane Society, Inc",
+    "city": "Albemarle",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "8605",
+    "name": "Starfish Animal Rescue",
+    "city": "Plainfield",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "2688",
+    "name": "Starpaws Rescue",
+    "city": "Marina Del Rey",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5196",
+    "name": "Stephen Memorial Animal Shelter",
+    "city": "Oskaloosa",
+    "state": "IA",
+    "hasDogs": true
+  },
+  {
+    "id": "8379",
+    "name": "Stone County Humane Society Inc.",
+    "city": "Mountain View",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "8255",
+    "name": "Stover Animal Rescue, Inc.",
+    "city": "Stover",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "8956",
+    "name": "Stray Haven Inc",
+    "city": "Aurora",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "9219",
+    "name": "Stray Love Foundation, Inc.",
+    "city": "Magnolia Springs",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "10683",
+    "name": "Stray No More",
+    "city": "Los Angeles",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8121",
+    "name": "STRAY PAWS RESCUE",
+    "city": "St. Peters",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "9263",
+    "name": "Straydog Inc",
+    "city": "Gun Barrel City",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "8570",
+    "name": "Street Paws",
+    "city": "Locust Grove",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "5204",
+    "name": "Sugar Land Animal Serices",
+    "city": "Sugar Land",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9993",
+    "name": "Summit County Animal Control",
+    "city": "Akron",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "4773",
+    "name": "Summit County Animal Control",
+    "city": "Frisco",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "8946",
+    "name": "Sunshine Dog Rescue",
+    "city": "Cave Creek",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "3323",
+    "name": "Surry Animal Rescue",
+    "city": "Mount Airy",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "8050",
+    "name": "Swamp Haven Rescue, Inc.",
+    "city": "Saint Augustine",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "7809",
+    "name": "Sweet Dream House Rescue",
+    "city": "Batavia",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "1488",
+    "name": "Tail Waggers 911",
+    "city": "Grafton",
+    "state": "WI",
+    "hasDogs": true
+  },
+  {
+    "id": "8659",
+    "name": "Tailchaser Rescue",
+    "city": "San Jose",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5452",
+    "name": "Tails of Love Animal Rescue, Inc.",
+    "city": "Staten Island",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "4527",
+    "name": "Tails of the City Animal Rescue",
+    "city": "Los Angeles",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9421",
+    "name": "Tails of the Unwanted",
+    "city": "Greensboro",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "8699",
+    "name": "Take Paws Rescue",
+    "city": "New Orleans",
+    "state": "LA",
+    "hasDogs": true
+  },
+  {
+    "id": "1954",
+    "name": "Talbot Humane",
+    "city": "Easton",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "1903",
+    "name": "Tallahassee-Leon Community Animal Service Center",
+    "city": "Tallahassee",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "44",
+    "name": "Tampa Bay Beagle Rescue, Inc.",
+    "city": "Tampa",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "479",
+    "name": "Tampabay German Shepherd Rescue",
+    "city": "Palm Harbor",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "163",
+    "name": "Tanya's Adoption Network 4 Young Animals, Inc. (T.A.N.Y.A.'s, Inc.)",
+    "city": "Phelan",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "3952",
+    "name": "Tara's House Animal Rescue, Inc.",
+    "city": "Sykesville",
+    "state": "MD",
+    "hasDogs": true
+  },
+  {
+    "id": "4463",
+    "name": "Taysia Blue Siberian Husky Rescue",
+    "city": "Omaha",
+    "state": "NE",
+    "hasDogs": true
+  },
+  {
+    "id": "838",
+    "name": "Tejas Rescued Pet Adoptions",
+    "city": "San Antonio",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "222",
+    "name": "Tennessee Pekingese Rescue",
+    "city": "Oakdale",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "3075",
+    "name": "Texarkana Animal League",
+    "city": "Texarkana",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9801",
+    "name": "Texas All Creatures Rescue",
+    "city": "Lillian",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "3427",
+    "name": "Texas Husky Rescue, Inc.",
+    "city": "Carrollton",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "5374",
+    "name": "Texas Sporting Breed Rescue, Inc.",
+    "city": "Denton",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "10873",
+    "name": "The Alternative Humane Society of Whatcom County",
+    "city": "Bellingham",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "3100",
+    "name": "The Animal Foundation - Las Vegas",
+    "city": "Las Vegas",
+    "state": "NV",
+    "hasDogs": true
+  },
+  {
+    "id": "1850",
+    "name": "The Animal Rescue Alliance",
+    "city": "Raytown",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "3781",
+    "name": "The Barking Lot",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9387",
+    "name": "The Big Mutt Network",
+    "city": "Vail",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "8182",
+    "name": "The Brittany Foundation Animal Sanctuary",
+    "city": "Acton",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1445",
+    "name": "The Buster Foundation Pit Bull Education and Rescue",
+    "city": "Belleville",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "6402",
+    "name": "The Cat House on the Kings",
+    "city": "Parlier",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2088",
+    "name": "The City of Calgary Animal & Bylaw Services",
+    "city": "Calgary",
+    "state": "AB",
+    "hasDogs": true
+  },
+  {
+    "id": "4715",
+    "name": "The City of Pasadena, Texas",
+    "city": "Pasadena",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9595",
+    "name": "The Furever Project",
+    "city": "Spotsylvania",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "10074",
+    "name": "The Heroic Tail",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "859",
+    "name": "The Humane Society of Elmore County",
+    "city": "Wetumpka",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "9928",
+    "name": "The Humane Society of McCormick County, Inc.",
+    "city": "McCormick",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "5966",
+    "name": "The Humane Society of Morgan County",
+    "city": "Berkeley Springs",
+    "state": "WV",
+    "hasDogs": true
+  },
+  {
+    "id": "6365",
+    "name": "The Humane Society of North Myrtle Beach, INC",
+    "city": "North Myrtle Beach",
+    "state": "SC",
+    "hasDogs": true
+  },
+  {
+    "id": "3454",
+    "name": "The Humane Society of Sullivan County",
+    "city": "Sullivan",
+    "state": "IN",
+    "hasDogs": true
+  },
+  {
+    "id": "6768",
+    "name": "The Humane Society of the Southeast",
+    "city": "Newnan",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "9242",
+    "name": "The Life of Fostering Furbabies Animal Rescue",
+    "city": "Burton",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "8334",
+    "name": "The Little Guild of St. Francis",
+    "city": "West Cornwall",
+    "state": "CT",
+    "hasDogs": true
+  },
+  {
+    "id": "5136",
+    "name": "The Little Red Dog, Inc",
+    "city": "Lake Forest",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8412",
+    "name": "The London Sanctuary",
+    "city": "Glen St Mary",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "11278",
+    "name": "The Milk Drunk Foundation",
+    "city": "Oakland Park",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "7062",
+    "name": "The Misfits Dog Rescue",
+    "city": "Colorado Springs",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "5184",
+    "name": "The Perfect Dog",
+    "city": "Milpitas",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11611",
+    "name": "The Promised Land Dachshund Sanctuary Inc.",
+    "city": "Gardendale",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "8660",
+    "name": "The Rescue Crew, Inc",
+    "city": "Andover",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "10900",
+    "name": "THE ROAD HOME ANIMAL PROJECT",
+    "city": "St Clairsville",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "5657",
+    "name": "The SPCA for Monterey County",
+    "city": "Salinas",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11397",
+    "name": "The Xena Project NTX",
+    "city": "Bangs",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "10427",
+    "name": "Third Coast Pets Alive",
+    "city": "WILLIS",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "1080",
+    "name": "Thistle Hill Rescue",
+    "city": "Mountain View",
+    "state": "MO",
+    "hasDogs": true
+  },
+  {
+    "id": "1899",
+    "name": "Thomas J. O'Connor Animal Control and Adoption Center",
+    "city": "Springfield",
+    "state": "MA",
+    "hasDogs": true
+  },
+  {
+    "id": "11696",
+    "name": "Three Eye Blind Animal Rescue",
+    "city": "ROSEVILLE",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "11268",
+    "name": "Tilly's Senior Dog Sanctuary Inc",
+    "city": "Stratham",
+    "state": "NH",
+    "hasDogs": true
+  },
+  {
+    "id": "6951",
+    "name": "TLC Animal Rescue",
+    "city": "Cape May",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "9486",
+    "name": "TLC K9 Rescue",
+    "city": "Escondido",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "10212",
+    "name": "To Love a Canine Rescue, Inc.",
+    "city": "Kimberton",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "11690",
+    "name": "To The Rescue Inc.",
+    "city": "Springfield",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "9638",
+    "name": "Toby's Critter Cove Rescue",
+    "city": "Cuyahoga Falls",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "2070",
+    "name": "Tonya Griffith's Animal Rescue, Inc.",
+    "city": "Frankston",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "11274",
+    "name": "Traveling Tails & Ragamuffin Rescue",
+    "city": "Utica",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "5173",
+    "name": "Tri-State Basset Hound Rescue",
+    "city": "Milmay",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "3799",
+    "name": "Trinity GAP Club",
+    "city": "Euless",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "3144",
+    "name": "Tucson Cold Wet Noses",
+    "city": "Tucson",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "1414",
+    "name": "Tulare County Animal Control",
+    "city": "Visalia",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6466",
+    "name": "Twenty Paws Rescue",
+    "city": "Brooklyn",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "3020",
+    "name": "Two Paws Up NC Shelter Rescue",
+    "city": "Raleigh",
+    "state": "NC",
+    "hasDogs": true
+  },
+  {
+    "id": "10396",
+    "name": "Tyson's Place Animal Rescue",
+    "city": "Holland",
+    "state": "MI",
+    "hasDogs": true
+  },
+  {
+    "id": "9665",
+    "name": "UFAR Animals Rescue",
+    "city": "Margate",
+    "state": "FL",
+    "hasDogs": true
+  },
+  {
+    "id": "4558",
+    "name": "Umbrella of Hope",
+    "city": "Pittsburg",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4301",
+    "name": "Unconditional Love Pet Rescue",
+    "city": "Green Forest",
+    "state": "AR",
+    "hasDogs": true
+  },
+  {
+    "id": "6100",
+    "name": "Underdog Rescue MN",
+    "city": "St. Louis Park",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "5371",
+    "name": "Underdog Rescue of Arizona, LLC",
+    "city": "Chandler",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "6979",
+    "name": "Underdogs Rock! Rescue",
+    "city": "Milwaukie",
+    "state": "OR",
+    "hasDogs": true
+  },
+  {
+    "id": "9088",
+    "name": "Underhound Railroad",
+    "city": "Greenville",
+    "state": "ME",
+    "hasDogs": true
+  },
+  {
+    "id": "11347",
+    "name": "Union Humane Society",
+    "city": "Farmerville",
+    "state": "LA",
+    "hasDogs": true
+  },
+  {
+    "id": "8319",
+    "name": "United Doberman Rescue",
+    "city": "Buffalo",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "6653",
+    "name": "United Hope for Animals",
+    "city": "Pasadena",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9278",
+    "name": "Until They're Home",
+    "city": "Fort Collins",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "3697",
+    "name": "Upland Animal Shelter",
+    "city": "Upland",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "9591",
+    "name": "Upper Rio Grande Animal Society",
+    "city": "Monte Vista",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "10320",
+    "name": "Valley Humane Society",
+    "city": "Pleasanton",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7898",
+    "name": "Vaughan Animal Services",
+    "city": "Vaughan",
+    "state": "ON",
+    "hasDogs": true
+  },
+  {
+    "id": "2004",
+    "name": "Ventura County Animal Regulation",
+    "city": "Camarillo",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6538",
+    "name": "Vindicated Pit Bull Rescue",
+    "city": "Alexandria",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "6114",
+    "name": "Volunteers for Animals",
+    "city": "Batavia",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "282",
+    "name": "Wag On Inn Rescue",
+    "city": "Oakhurst",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "10354",
+    "name": "Wagmor Pets",
+    "city": "Studio City",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "10971",
+    "name": "Wags and Whiskers Animal Rescue League",
+    "city": "Mobile",
+    "state": "AL",
+    "hasDogs": true
+  },
+  {
+    "id": "5544",
+    "name": "Wags and Whiskers Animal Rescue of MN",
+    "city": "Farmington",
+    "state": "MN",
+    "hasDogs": true
+  },
+  {
+    "id": "7937",
+    "name": "Wags and Whiskers Pet Rescue",
+    "city": "Chico",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "8409",
+    "name": "Wags and Wiggles Rescue",
+    "city": "NEWPORT NH",
+    "state": "NH",
+    "hasDogs": true
+  },
+  {
+    "id": "11659",
+    "name": "Waiting Under The Willow Foundation",
+    "city": "Houston",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "9152",
+    "name": "Washington Alaskan Malamute Adoption League",
+    "city": "Seattle",
+    "state": "WA",
+    "hasDogs": true
+  },
+  {
+    "id": "9564",
+    "name": "Wayne County Humane Society",
+    "city": "Fairfield",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "5513",
+    "name": "We Are Rescue",
+    "city": "Woodstock",
+    "state": "GA",
+    "hasDogs": true
+  },
+  {
+    "id": "10884",
+    "name": "Weatherford Wags",
+    "city": "Weatherford",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "5773",
+    "name": "Weber County Animal Services",
+    "city": "Ogden",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "11705",
+    "name": "Weird Rescue",
+    "city": "Studio City",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2012",
+    "name": "West Los Angeles Animal Care and Control Center",
+    "city": "Los Angeles",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2015",
+    "name": "West Valley Animal Care and Control Center",
+    "city": "Chatsworth",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "2901",
+    "name": "West Valley Animal Services",
+    "city": "West Valley",
+    "state": "UT",
+    "hasDogs": true
+  },
+  {
+    "id": "9572",
+    "name": "Whimpers to Wags Rescue, Inc.",
+    "city": "Colorado Springs",
+    "state": "CO",
+    "hasDogs": true
+  },
+  {
+    "id": "41",
+    "name": "Whimsical Animal Rescue, Inc.  of Sussex County Animal Association",
+    "city": "Seaford",
+    "state": "DE",
+    "hasDogs": true
+  },
+  {
+    "id": "3197",
+    "name": "Whiskers, Tails and Ferals",
+    "city": "danville",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "5179",
+    "name": "White County Animal Shelter",
+    "city": "Sparta",
+    "state": "TN",
+    "hasDogs": true
+  },
+  {
+    "id": "3603",
+    "name": "White German Shepherd Rescue",
+    "city": "Phoenix",
+    "state": "AZ",
+    "hasDogs": true
+  },
+  {
+    "id": "8243",
+    "name": "Whitey's Only Wish Rescue Inc",
+    "city": "Coventry",
+    "state": "CT",
+    "hasDogs": true
+  },
+  {
+    "id": "11672",
+    "name": "Wilber's Rescue Foundation",
+    "city": "Colcord",
+    "state": "OK",
+    "hasDogs": true
+  },
+  {
+    "id": "1158",
+    "name": "Wilma's Orphans, Inc.",
+    "city": "Jackson",
+    "state": "NJ",
+    "hasDogs": true
+  },
+  {
+    "id": "1966",
+    "name": "Winnebago County Animal Services",
+    "city": "Rockford",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "2869",
+    "name": "Wish Bone Canine Rescue",
+    "city": "Normal",
+    "state": "IL",
+    "hasDogs": true
+  },
+  {
+    "id": "9305",
+    "name": "With Grace",
+    "city": "Las Vegas",
+    "state": "NV",
+    "hasDogs": true
+  },
+  {
+    "id": "737",
+    "name": "Wood County Humane Society",
+    "city": "Bowling Green",
+    "state": "OH",
+    "hasDogs": true
+  },
+  {
+    "id": "6621",
+    "name": "WoofDenRescue",
+    "city": "San Juan Bautista",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "6477",
+    "name": "Woofs and Wags Dog Rescue",
+    "city": "San Diego",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "4475",
+    "name": "Worthy Dog Rescue",
+    "city": "Arlington",
+    "state": "VA",
+    "hasDogs": true
+  },
+  {
+    "id": "2666",
+    "name": "Worthy Tails Animal Rescue",
+    "city": "MECHANICSBURG",
+    "state": "PA",
+    "hasDogs": true
+  },
+  {
+    "id": "5424",
+    "name": "Wylie Animal Rescue Foundation",
+    "city": "Incline Village",
+    "state": "NV",
+    "hasDogs": true
+  },
+  {
+    "id": "5423",
+    "name": "Yolo County Animal Services Shelter",
+    "city": "Woodland",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "1742",
+    "name": "Yolo County SPCA",
+    "city": "Davis",
+    "state": "CA",
+    "hasDogs": true
+  },
+  {
+    "id": "7852",
+    "name": "Yorkie Rescue Houston",
+    "city": "Spring",
+    "state": "TX",
+    "hasDogs": true
+  },
+  {
+    "id": "4255",
+    "name": "Yorkie911 Rescue, Inc.",
+    "city": "North Babylon",
+    "state": "NY",
+    "hasDogs": true
+  },
+  {
+    "id": "1861",
+    "name": "Zani's Furry Friends",
+    "city": "NYC",
+    "state": "NY",
+    "hasDogs": true
+  }
+]
