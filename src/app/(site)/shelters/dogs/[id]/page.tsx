@@ -110,7 +110,7 @@ function getOrgInfo(animal: RescueAnimal, included: RescueIncluded[]) {
   const citystate = typeof attrs.citystate === "string" ? attrs.citystate : "";
   const websiteUrl = typeof attrs.websiteUrl === "string" ? attrs.websiteUrl : "";
   const orgUrl = typeof attrs.url === "string" ? attrs.url : "";
-  return { name, citystate, websiteUrl, orgUrl };
+  return { id: orgId || "", name, citystate, websiteUrl, orgUrl };
 }
 
 async function getDogById(id: string) {
@@ -380,12 +380,42 @@ export default async function ShelterDogPage({
                       const href = normalizeExternalUrl(orgInfo.websiteUrl) || normalizeExternalUrl(orgInfo.orgUrl);
                       if (href) {
                         return (
-                          <a href={href} target="_blank" rel="noreferrer">
-                            {orgInfo.name || href}
-                          </a>
+                          <span className="d-inline-flex flex-wrap align-items-center gap-2">
+                            <a
+                              href={href}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="fw-semibold link-offset-2 link-underline-opacity-75 link-underline-opacity-100-hover"
+                              style={{ color: "var(--accent-color)" }}
+                              title="Open shelter website"
+                            >
+                              {orgInfo.name || href}
+                              <iconify-icon icon="mdi:open-in-new" className="ms-1" style={{ fontSize: "1.1em" }}></iconify-icon>
+                            </a>
+                            {orgInfo.id && orgInfo.name ? (
+                              <Link
+                                href={`/shelters?shelter=${encodeURIComponent(orgInfo.id)}&shelterName=${encodeURIComponent(orgInfo.name)}`}
+                                className="btn btn-sm btn-outline-dark text-uppercase rounded-1"
+                              >
+                                See kennel mates
+                              </Link>
+                            ) : null}
+                          </span>
                         );
                       }
-                      return <span>{orgInfo.name}</span>;
+                      return (
+                        <span className="d-inline-flex flex-wrap align-items-center gap-2">
+                          <span className="fw-semibold">{orgInfo.name}</span>
+                          {orgInfo.id && orgInfo.name ? (
+                            <Link
+                              href={`/shelters?shelter=${encodeURIComponent(orgInfo.id)}&shelterName=${encodeURIComponent(orgInfo.name)}`}
+                              className="btn btn-sm btn-outline-dark text-uppercase rounded-1"
+                            >
+                              See kennel mates
+                            </Link>
+                          ) : null}
+                        </span>
+                      );
                     })()}
                   </div>
                 )}
