@@ -20,15 +20,15 @@ export default function MobileFiltersPanel({
   return (
     <details
       ref={detailsRef}
-      className="d-md-none mb-4 border rounded-4"
+      className="mobile-filters-panel d-md-none mb-4 border rounded-4"
       style={{ background: "#F9F3EC", boxShadow: "0 10px 24px rgba(0,0,0,0.08)" }}
     >
       <summary
-        className="px-3 py-3 d-flex justify-content-between align-items-center fw-semibold text-uppercase"
+        className="mobile-filters-summary px-3 py-3 d-flex justify-content-between align-items-center fw-semibold text-uppercase"
         style={{ cursor: "pointer", letterSpacing: 0.8 }}
       >
         <span>Filters</span>
-        <iconify-icon icon="ri:arrow-down-s-line" className="fs-5"></iconify-icon>
+        <iconify-icon icon="ri:arrow-down-s-line" className="mobile-filters-chevron"></iconify-icon>
       </summary>
       <div className="px-3 pb-3">
         {children}

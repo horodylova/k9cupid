@@ -1101,6 +1101,51 @@ iconify-icon.pagination-arrow:hover {
   }
 }
 
+.filter-select-button {
+  position: relative;
+  padding-right: 46px;
+  overflow: hidden;
+  height: auto;
+  min-height: 44px;
+}
+
+.filter-select-chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.mobile-filters-panel > summary {
+  list-style: none;
+}
+
+.mobile-filters-panel > summary::-webkit-details-marker {
+  display: none;
+}
+
+.mobile-filters-summary {
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 14px;
+}
+
+.mobile-filters-panel[open] .mobile-filters-summary {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.mobile-filters-chevron {
+  font-size: 1.8rem;
+  line-height: 1;
+  margin-right: 2px;
+}
+
+.mobile-filters-panel[open] .mobile-filters-chevron {
+  transform: rotate(180deg);
+}
+
 
 /*--------------------------------------------------------------
 Single Product section style start

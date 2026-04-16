@@ -11,6 +11,8 @@ type ShelterOption = {
   state?: string;
 };
 
+const SESSION_SHELTER_HISTORY_KEY = "k9cupid_shelter_history_session_v1";
+
 function normalizeToken(input: string) {
   return input
     .toLowerCase()
@@ -43,10 +45,32 @@ export default function ShelterFilterSelect({
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+  const [sessionHistory, setSessionHistory] = useState<ShelterOption[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const raw = window.sessionStorage.getItem(SESSION_SHELTER_HISTORY_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw) as unknown;
+      if (!Array.isArray(parsed)) return [];
+      return parsed
+        .map((x) => {
+          const o = x as Partial<ShelterOption>;
+          return {
+            id: typeof o.id === "string" ? o.id : "",
+            name: typeof o.name === "string" ? o.name : "",
+            city: typeof o.city === "string" ? o.city : "",
+            state: typeof o.state === "string" ? o.state : "",
+          };
+        })
+        .filter((x) => x.id && x.name);
+    } catch {
+      return [];
+    }
+  });
 
   const title = selectedName || quickOptions.find((x) => x.id === selectedId)?.name || "All shelters";
 
-  const visibleQuick = useMemo(() => quickOptions.slice(0, 8), [quickOptions]);
+  const visibleQuick = useMemo(() => sessionHistory.slice(0, 8), [sessionHistory]);
 
   const allShelters = sheltersData as ShelterOption[];
   const normalizedFilterState = (filterState || "").trim().toUpperCase();
@@ -75,6 +99,14 @@ export default function ShelterFilterSelect({
   const pagedResults = useMemo(() => filtered.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize), [filtered, page]);
 
   const applySelection = (option: ShelterOption | null) => {
+    if (option) {
+      const nextHistory = [option, ...sessionHistory.filter((x) => x.id !== option.id)].slice(0, 10);
+      setSessionHistory(nextHistory);
+      try {
+        window.sessionStorage.setItem(SESSION_SHELTER_HISTORY_KEY, JSON.stringify(nextHistory));
+      } catch {}
+    }
+
     if (onSelect) {
       onSelect(option);
       setIsOpen(false);
@@ -165,7 +197,7 @@ export default function ShelterFilterSelect({
               {!query && visibleQuick.length > 0 && (
                 <div className="mb-3">
                   <div className="text-muted mb-2" style={{ fontSize: 12 }}>
-                    Quick picks from current results
+                    Previous shelters in this session
                   </div>
                   <div className="d-flex flex-wrap gap-2">
                     {visibleQuick.map((opt) => (

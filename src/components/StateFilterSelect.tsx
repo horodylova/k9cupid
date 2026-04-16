@@ -56,15 +56,15 @@ export default function StateFilterSelect({ value, onChange }: Props) {
     <div className="position-relative" ref={wrapperRef}>
       <button
         type="button"
-        className="form-control d-flex justify-content-between align-items-center"
+        className="form-control filter-select-button text-start d-flex align-items-center"
         onClick={() => setIsOpen((open) => !open)}
       >
-        <span className="text-truncate" style={{ maxWidth: "85%", minWidth: 0 }}>
+        <span className="filter-select-value text-truncate" style={{ maxWidth: "85%", minWidth: 0 }}>
           {selectedLabel}
         </span>
         <iconify-icon
           icon={isOpen ? "mdi:chevron-up" : "mdi:chevron-down"}
-          className="fs-5"
+          className="filter-select-chevron"
         ></iconify-icon>
       </button>
 
@@ -120,4 +120,3 @@ export default function StateFilterSelect({ value, onChange }: Props) {
     </div>
   );
 }
-

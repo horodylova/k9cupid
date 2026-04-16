@@ -41,7 +41,7 @@ export default function CityFilterSelect({ value, options, disabled = false, pla
     <div className="position-relative" ref={wrapperRef}>
       <button
         type="button"
-        className="form-control d-flex justify-content-between align-items-center"
+        className="form-control filter-select-button text-start d-flex align-items-center"
         disabled={disabled}
         onClick={() => {
           if (disabled) return;
@@ -49,10 +49,10 @@ export default function CityFilterSelect({ value, options, disabled = false, pla
         }}
         title={normalizedValue || placeholder}
       >
-        <span className="text-truncate" style={{ maxWidth: "85%", minWidth: 0 }}>
+        <span className="filter-select-value text-truncate" style={{ maxWidth: "85%", minWidth: 0 }}>
           {normalizedValue || placeholder}
         </span>
-        <iconify-icon icon={isOpen ? "mdi:chevron-up" : "mdi:chevron-down"} className="fs-5"></iconify-icon>
+        <iconify-icon icon={isOpen ? "mdi:chevron-up" : "mdi:chevron-down"} className="filter-select-chevron"></iconify-icon>
       </button>
 
       {isOpen && !disabled && (
@@ -106,4 +106,3 @@ export default function CityFilterSelect({ value, options, disabled = false, pla
     </div>
   );
 }
-

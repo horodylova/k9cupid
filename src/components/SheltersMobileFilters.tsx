@@ -159,12 +159,6 @@ export default function SheltersMobileFilters({
             />
           </div>
           <div>
-            <label className="form-label mb-1">Radius (miles)</label>
-            <select className="form-select" disabled>
-              <option>Coming soon</option>
-            </select>
-          </div>
-          <div>
             <label className="form-label mb-1">Breed</label>
             <input className="form-control" placeholder="Coming soon" disabled />
           </div>
