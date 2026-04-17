@@ -3,7 +3,6 @@ import Image from "next/image";
 import styles from "./shelters.module.css";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 import { normalizeHtmlText } from "@/lib/htmlText";
-import { createWindowedDeduper, makeRescuegroupsDogDedupKey } from "@/utils/rescuegroupsDedup";
 import ShelterDogWishlistHeartButton from "@/components/ShelterDogWishlistHeartButton";
 import SheltersDesktopFilters from "@/components/SheltersDesktopFilters";
 import SheltersMobileFilters from "@/components/SheltersMobileFilters";
@@ -137,6 +136,56 @@ function getAnimalLocation(item: RescueAnimal, includedByKey: Map<string, Rescue
   return getOrgLocation(orgAttrs);
 }
 
+function normalizeToken(v: string) {
+  return (v || "").trim().toLowerCase();
+}
+
+function deriveAgeBucket(attrs: RescueAnimal["attributes"] | undefined): "baby" | "young" | "adult" | "senior" | "" {
+  const raw = normalizeToken(String(attrs?.ageGroup || ""));
+  if (raw) {
+    if (raw.includes("baby")) return "baby";
+    if (raw.includes("young")) return "young";
+    if (raw.includes("adult")) return "adult";
+    if (raw.includes("senior")) return "senior";
+  }
+
+  const ageStr = normalizeToken(String(attrs?.ageString || ""));
+  if (!ageStr) return "";
+
+  const yearsMatch = ageStr.match(/(\d+)\s*year/);
+  const monthsMatch = ageStr.match(/(\d+)\s*month/);
+  const weeksMatch = ageStr.match(/(\d+)\s*week/);
+
+  const years = yearsMatch ? Number(yearsMatch[1]) : NaN;
+  const months = monthsMatch ? Number(monthsMatch[1]) : NaN;
+  const weeks = weeksMatch ? Number(weeksMatch[1]) : NaN;
+
+  if (Number.isFinite(weeks) && weeks < 52) return "baby";
+  if (Number.isFinite(months) && months < 12 && !Number.isFinite(years)) return "baby";
+
+  if (!Number.isFinite(years)) return "";
+  if (years < 1) return "baby";
+  if (years < 3) return "young";
+  if (years < 8) return "adult";
+  return "senior";
+}
+
+function matchesBreedAgeSizeFilters(
+  attrs: RescueAnimal["attributes"] | undefined,
+  selectedBreed: string,
+  selectedAge: string,
+  selectedSize: string
+) {
+  const breed = normalizeToken(attrs?.breedString || "");
+  const age = deriveAgeBucket(attrs);
+  const size = normalizeToken(attrs?.sizeGroup || "");
+
+  if (selectedBreed && !breed.includes(selectedBreed)) return false;
+  if (selectedAge && age !== selectedAge) return false;
+  if (selectedSize && !size.includes(selectedSize)) return false;
+  return true;
+}
+
 function isRelArray(rel: RescueRelationship | undefined): rel is { data: Array<{ type: string; id: string }> } {
   return Array.isArray(rel?.data);
 }
@@ -212,11 +261,9 @@ function getImage(animal: RescueAnimal, included: RescueIncluded[]) {
 async function getDogs({
   page,
   limit,
-  shelterId,
 }: {
   page: number;
   limit: number;
-  shelterId?: string;
 }): Promise<{ meta: RescueMeta; dogs: RescueAnimal[]; included: RescueIncluded[] }> {
   const apiKey = (process.env.RESCUEGROUPS_API_KEY || "").trim();
   if (!apiKey) {
@@ -237,41 +284,23 @@ async function getDogs({
     cache: "no-store",
   });
 
-  const makeUpstream = (dogsOnlyPath: boolean) => {
-    const upstream = shelterId
-      ? new URL(
-          dogsOnlyPath
-            ? `https://api.rescuegroups.org/v5/public/orgs/${encodeURIComponent(shelterId)}/animals/search/available/dogs`
-            : `https://api.rescuegroups.org/v5/public/orgs/${encodeURIComponent(shelterId)}/animals/search/available`
-        )
-      : new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");
-    upstream.searchParams.set("limit", String(limit));
-    upstream.searchParams.set("page", String(page));
-    upstream.searchParams.set("include", "pictures,orgs,locations");
-    upstream.searchParams.set(
-      "fields[animals]",
-      "name,species,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText"
-    );
-    upstream.searchParams.set("fields[pictures]", "small,large,original,order");
+  const upstream = new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");
+  upstream.searchParams.set("limit", String(limit));
+  upstream.searchParams.set("page", String(page));
+  upstream.searchParams.set("include", "pictures,orgs,locations");
+  upstream.searchParams.set(
+    "fields[animals]",
+    "name,species,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText"
+  );
+  upstream.searchParams.set("fields[pictures]", "small,large,original,order");
   upstream.searchParams.set("fields[orgs]", "name,url,citystate,city,state,websiteUrl");
-    upstream.searchParams.set("fields[locations]", "citystate,postalcode,state,country,lat,lon,coordinates");
-    return upstream;
-  };
+  upstream.searchParams.set("fields[locations]", "citystate,postalcode,state,country,lat,lon,coordinates");
 
-  const firstRes = await runFetch(makeUpstream(true));
-  const firstJson = (await firstRes.json()) as RescueResponse;
-  let meta = firstJson.meta || { count: 0, countReturned: 0, pageReturned: page, limit, pages: 1 };
-  let dogs = Array.isArray(firstJson.data) ? firstJson.data : [];
-  let included = Array.isArray(firstJson.included) ? firstJson.included : [];
-
-  if (shelterId && dogs.length === 0 && (meta.count || 0) === 0) {
-    const fallbackRes = await runFetch(makeUpstream(false));
-    const fallbackJson = (await fallbackRes.json()) as RescueResponse;
-    meta = fallbackJson.meta || meta;
-    dogs = Array.isArray(fallbackJson.data) ? fallbackJson.data : [];
-    included = Array.isArray(fallbackJson.included) ? fallbackJson.included : [];
-  }
-
+  const res = await runFetch(upstream);
+  const json = (await res.json()) as RescueResponse;
+  const meta = json.meta || { count: 0, countReturned: 0, pageReturned: page, limit, pages: 1 };
+  const dogs = Array.isArray(json.data) ? json.data : [];
+  const included = Array.isArray(json.included) ? json.included : [];
   return { meta, dogs, included };
 }
 
@@ -285,10 +314,16 @@ export default async function SheltersPage({
   const selectedShelterNameRaw = Array.isArray(searchParams?.shelterName) ? searchParams?.shelterName[0] : searchParams?.shelterName;
   const selectedStateRaw = Array.isArray(searchParams?.state) ? searchParams?.state[0] : searchParams?.state;
   const selectedCityRaw = Array.isArray(searchParams?.city) ? searchParams?.city[0] : searchParams?.city;
+  const selectedBreedRaw = Array.isArray(searchParams?.breed) ? searchParams?.breed[0] : searchParams?.breed;
+  const selectedAgeRaw = Array.isArray(searchParams?.age) ? searchParams?.age[0] : searchParams?.age;
+  const selectedSizeRaw = Array.isArray(searchParams?.size) ? searchParams?.size[0] : searchParams?.size;
   let selectedShelterId = (selectedShelterIdRaw || "").trim();
   let selectedShelterName = (selectedShelterNameRaw || "").trim();
   const selectedState = (selectedStateRaw || "").trim().toUpperCase();
   const selectedCity = (selectedCityRaw || "").trim();
+  const selectedBreed = normalizeToken((selectedBreedRaw || "").trim());
+  const selectedAge = normalizeToken((selectedAgeRaw || "").trim());
+  const selectedSize = normalizeToken((selectedSizeRaw || "").trim());
 
   if (selectedShelterName && (!selectedShelterId || !Array.isArray(sheltersData) || !sheltersData.some((s) => s.id === selectedShelterId))) {
     const normalized = selectedShelterName.toLowerCase().trim();
@@ -303,18 +338,20 @@ export default async function SheltersPage({
   const bannerTitle = selectedShelterName || "Shelters";
   const pageSize = 18;
   const maxScanPages = 8;
-  const hasLocationFilter = !selectedShelterId && Boolean(selectedState || selectedCity);
+  const clientFiltersActive = Boolean(
+    selectedShelterId || selectedState || selectedCity || selectedBreed || selectedAge || selectedSize
+  );
 
   const includedByKey = new Map<string, RescueIncluded>();
   let displayedDogs: RescueAnimal[] = [];
   let meta: RescueMeta = { count: 0, countReturned: 0, pageReturned: page, limit: pageSize, pages: 1 };
   let totalKnown = true;
-  const deduper = createWindowedDeduper(40);
+  const seenDogIds = new Set<string>();
 
   let hasNextPage = false;
   let hasPrevPage = page > 1;
 
-  if (hasLocationFilter) {
+  if (clientFiltersActive) {
     totalKnown = false;
     const offset = (page - 1) * pageSize;
     const probe = page * pageSize + 1;
@@ -324,7 +361,7 @@ export default async function SheltersPage({
     let upstreamPages = 1;
 
     while (scanPage <= upstreamPages && matches.length < probe) {
-      const res = await getDogs({ page: scanPage, limit: 250, shelterId: undefined });
+      const res = await getDogs({ page: scanPage, limit: 250 });
       if (scanPage === 1) upstreamPages = res.meta.pages || 1;
 
       for (const inc of res.included) {
@@ -335,17 +372,19 @@ export default async function SheltersPage({
         if (isExcludedRescuegroupsAnimalId(dog.id)) continue;
         if (isRescuegroupsInfoEntryName(dog.attributes?.name)) continue;
         if (!isLikelyDog(dog.attributes)) continue;
+        if (!matchesBreedAgeSizeFilters(dog.attributes, selectedBreed, selectedAge, selectedSize)) continue;
 
         const orgId = getFirstRelatedId(dog, "orgs");
-        const org = orgId ? includedByKey.get(`orgs:${orgId}`) : null;
-        const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
-        const orgName = typeof orgAttrs.name === "string" ? orgAttrs.name : "";
-        const { city, state } = getAnimalLocation(dog, includedByKey);
-        if (selectedState && (!state || state !== selectedState)) continue;
-        if (selectedCity && (!city || city.toLowerCase() !== selectedCity.toLowerCase())) continue;
+        if (selectedShelterId && orgId !== selectedShelterId) continue;
 
-        const dedupKey = makeRescuegroupsDogDedupKey({ name: dog.attributes?.name, orgName, orgId });
-        if (deduper.isDuplicate(dedupKey)) continue;
+        const { city, state } = getAnimalLocation(dog, includedByKey);
+        if (!selectedShelterId) {
+          if (selectedState && (!state || state !== selectedState)) continue;
+          if (selectedCity && (!city || city.toLowerCase() !== selectedCity.toLowerCase())) continue;
+        }
+
+        if (seenDogIds.has(dog.id)) continue;
+        seenDogIds.add(dog.id);
         matches.push(dog);
         if (matches.length >= probe) break;
       }
@@ -366,7 +405,7 @@ export default async function SheltersPage({
   } else {
     let scanPage = page;
     for (let scan = 0; scan < maxScanPages && displayedDogs.length < pageSize; scan += 1) {
-      const res = await getDogs({ page: scanPage, limit: pageSize, shelterId: selectedShelterId || undefined });
+      const res = await getDogs({ page: scanPage, limit: pageSize });
       if (scan === 0) meta = res.meta;
 
       for (const inc of res.included) {
@@ -377,17 +416,16 @@ export default async function SheltersPage({
         if (isExcludedRescuegroupsAnimalId(dog.id)) continue;
         if (isRescuegroupsInfoEntryName(dog.attributes?.name)) continue;
         if (!isLikelyDog(dog.attributes)) continue;
+        if (!matchesBreedAgeSizeFilters(dog.attributes, selectedBreed, selectedAge, selectedSize)) continue;
         const orgId = getFirstRelatedId(dog, "orgs");
-        const org = orgId ? includedByKey.get(`orgs:${orgId}`) : null;
-        const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
-        const orgName = typeof orgAttrs.name === "string" ? orgAttrs.name : "";
+        if (selectedShelterId && orgId !== selectedShelterId) continue;
         const { city: orgCity, state: orgState } = getAnimalLocation(dog, includedByKey);
         if (!selectedShelterId) {
           if (selectedState && (!orgState || orgState !== selectedState)) continue;
           if (selectedCity && (!orgCity || orgCity.toLowerCase() !== selectedCity.toLowerCase())) continue;
         }
-        const dedupKey = makeRescuegroupsDogDedupKey({ name: dog.attributes?.name, orgName, orgId });
-        if (deduper.isDuplicate(dedupKey)) continue;
+        if (seenDogIds.has(dog.id)) continue;
+        seenDogIds.add(dog.id);
         displayedDogs.push(dog);
         if (displayedDogs.length >= pageSize) break;
       }
@@ -430,6 +468,9 @@ export default async function SheltersPage({
     if (selectedShelterName) params.set("shelterName", selectedShelterName);
     if (selectedState) params.set("state", selectedState);
     if (selectedCity) params.set("city", selectedCity);
+    if (selectedBreed) params.set("breed", selectedBreed);
+    if (selectedAge) params.set("age", selectedAge);
+    if (selectedSize) params.set("size", selectedSize);
     if (p > 1) params.set("page", String(p));
     return `/shelters${params.toString() ? `?${params.toString()}` : ""}`;
   };
@@ -509,6 +550,9 @@ export default async function SheltersPage({
                 initialSelectedCity={selectedCity}
                 initialSelectedShelterId={selectedShelterId}
                 initialSelectedShelterName={selectedShelterName}
+                initialSelectedBreed={selectedBreed}
+                initialSelectedAge={selectedAge}
+                initialSelectedSize={selectedSize}
               />
 
               <div className="filter-shop d-md-flex justify-content-between align-items-center">
@@ -653,6 +697,9 @@ export default async function SheltersPage({
                   selectedCity={selectedCity}
                   selectedShelterId={selectedShelterId}
                   selectedShelterName={selectedShelterName}
+                  selectedBreed={selectedBreed}
+                  selectedAge={selectedAge}
+                  selectedSize={selectedSize}
                   quickShelters={shelterQuickOptions}
                 />
               </div>

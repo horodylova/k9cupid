@@ -98,14 +98,13 @@ export async function POST(request: Request) {
         );
       }
     } catch {
-      null;
     }
 
     return NextResponse.json(
       { ok: true, state: existing.rows.length > 0 ? "resubscribed" : "subscribed" },
       { status: 200 }
     );
-  } catch (e) {
+  } catch {
     return NextResponse.json(
       { ok: false, error: "Subscription failed." },
       { status: 500 }

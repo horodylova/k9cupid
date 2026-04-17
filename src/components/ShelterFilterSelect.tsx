@@ -88,6 +88,14 @@ export default function ShelterFilterSelect({
     return parts.join(", ");
   };
 
+  const scopeLabel = useMemo(() => {
+    const st = normalizedFilterState;
+    const city = (filterCity || "").trim();
+    if (st && city) return `${city}, ${st}`;
+    if (st) return st;
+    return "";
+  }, [filterCity, normalizedFilterState]);
+
   const filtered = useMemo(() => {
     const q = normalizeToken(query);
     if (!q) return scopedShelters;
@@ -201,7 +209,13 @@ export default function ShelterFilterSelect({
                   </div>
                   <div className="d-flex flex-wrap gap-2">
                     {visibleQuick.map((opt) => (
-                      <button key={opt.id} type="button" className="btn btn-sm btn-outline-dark" onClick={() => applySelection(opt)}>
+                      <button
+                        key={opt.id}
+                        type="button"
+                        className="btn btn-sm btn-outline-dark"
+                        onClick={() => applySelection(opt)}
+                        title={formatCityState(opt)}
+                      >
                         {opt.name}
                       </button>
                     ))}
@@ -210,25 +224,40 @@ export default function ShelterFilterSelect({
               )}
 
               {pagedResults.length === 0 ? (
-                <div className="text-muted">No shelters found.</div>
-              ) : (
-                <div className="list-group">
-                  {pagedResults.map((opt) => (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                      onClick={() => applySelection(opt)}
-                    >
-                      <span>{opt.name}</span>
-                      {formatCityState(opt) ? (
-                        <span className="text-muted" style={{ fontSize: 12 }}>
-                          {formatCityState(opt)}
-                        </span>
-                      ) : null}
-                    </button>
-                  ))}
+                <div className="text-muted">
+                  No shelters found{scopeLabel ? ` in ${scopeLabel}` : ""}.
                 </div>
+              ) : (
+                <>
+                  <div className="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                    <div className="text-muted" style={{ fontSize: 12 }}>
+                      {scopeLabel ? `Shelters in ${scopeLabel}` : "All shelters"}
+                    </div>
+                    <div className="text-muted" style={{ fontSize: 12 }}>
+                      {filtered.length}
+                    </div>
+                  </div>
+                  <div className="list-group">
+                    {pagedResults.map((opt) => {
+                      const citystate = formatCityState(opt);
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          className="list-group-item list-group-item-action"
+                          onClick={() => applySelection(opt)}
+                        >
+                          <div className="fw-semibold">{opt.name}</div>
+                          {citystate ? (
+                            <div className="text-muted" style={{ fontSize: 12 }}>
+                              {citystate}
+                            </div>
+                          ) : null}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
               )}
             </div>
 

@@ -7,6 +7,9 @@ import MobileFiltersPanel from "@/components/MobileFiltersPanel";
 import sheltersData from "@/data/rescuegroupsShelters.json";
 import StateFilterSelect from "@/components/StateFilterSelect";
 import CityFilterSelect from "@/components/CityFilterSelect";
+import OptionFilterSelect from "@/components/OptionFilterSelect";
+import Preloader from "@/components/Preloader";
+import BreedTypeahead from "@/components/BreedTypeahead";
 
 type ShelterOption = {
   id: string;
@@ -29,12 +32,18 @@ export default function SheltersMobileFilters({
   initialSelectedCity,
   initialSelectedShelterId,
   initialSelectedShelterName,
+  initialSelectedBreed,
+  initialSelectedAge,
+  initialSelectedSize,
 }: {
   quickOptions: ShelterOption[];
   initialSelectedState: string;
   initialSelectedCity: string;
   initialSelectedShelterId: string;
   initialSelectedShelterName: string;
+  initialSelectedBreed: string;
+  initialSelectedAge: string;
+  initialSelectedSize: string;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -47,13 +56,32 @@ export default function SheltersMobileFilters({
   const [pendingCity, setPendingCity] = useState(initialSelectedCity);
   const [pendingShelterId, setPendingShelterId] = useState(initialSelectedShelterId);
   const [pendingShelterName, setPendingShelterName] = useState(initialSelectedShelterName);
+  const [pendingBreed, setPendingBreed] = useState(initialSelectedBreed);
+  const [pendingAge, setPendingAge] = useState(initialSelectedAge);
+  const [pendingSize, setPendingSize] = useState(initialSelectedSize);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
     setPendingState(initialSelectedState);
     setPendingCity(initialSelectedCity);
     setPendingShelterId(initialSelectedShelterId);
     setPendingShelterName(initialSelectedShelterName);
-  }, [initialSelectedShelterId, initialSelectedShelterName, initialSelectedState, initialSelectedCity]);
+    setPendingBreed(initialSelectedBreed);
+    setPendingAge(initialSelectedAge);
+    setPendingSize(initialSelectedSize);
+  }, [
+    initialSelectedShelterId,
+    initialSelectedShelterName,
+    initialSelectedState,
+    initialSelectedCity,
+    initialSelectedBreed,
+    initialSelectedAge,
+    initialSelectedSize,
+  ]);
+
+  useEffect(() => {
+    setIsNavigating(false);
+  }, [searchParams]);
 
   const cityOptions = useMemo(() => {
     const st = normalizeState(pendingState);
@@ -88,7 +116,14 @@ export default function SheltersMobileFilters({
       next.set("shelter", pendingShelterId);
       next.set("shelterName", pendingShelterName || "");
     }
+    if (pendingBreed.trim()) next.set("breed", pendingBreed.trim());
+    else next.delete("breed");
+    if (pendingAge.trim()) next.set("age", pendingAge.trim());
+    else next.delete("age");
+    if (pendingSize.trim()) next.set("size", pendingSize.trim());
+    else next.delete("size");
     const q = next.toString();
+    setIsNavigating(true);
     router.push(q ? `${basePath}?${q}` : basePath);
   };
 
@@ -97,13 +132,20 @@ export default function SheltersMobileFilters({
     setPendingCity("");
     setPendingShelterId("");
     setPendingShelterName("");
+    setPendingBreed("");
+    setPendingAge("");
+    setPendingSize("");
     const next = new URLSearchParams(searchParams?.toString() || "");
     next.delete("page");
     next.delete("state");
     next.delete("city");
     next.delete("shelter");
     next.delete("shelterName");
+    next.delete("breed");
+    next.delete("age");
+    next.delete("size");
     const q = next.toString();
+    setIsNavigating(true);
     router.push(q ? `${basePath}?${q}` : basePath);
   };
 
@@ -113,10 +155,14 @@ export default function SheltersMobileFilters({
   }, [pendingShelterId, pendingShelterName, quickOptions]);
 
   return (
-    <MobileFiltersPanel onApply={onApply} onClear={onClear}>
-      <div className="widget-product-categories pt-0 pt-md-5">
-        <h4 className="widget-title m-0 mb-3">Filters</h4>
-        <div className="d-grid gap-3">
+    <>
+      {isNavigating && (
+        <Preloader overlay />
+      )}
+      <MobileFiltersPanel onApply={onApply} onClear={onClear}>
+        <div className="widget-product-categories pt-0 pt-md-5">
+          <h4 className="widget-title m-0 mb-3">Filters</h4>
+          <div className="d-grid gap-3">
           <div>
             <label className="form-label mb-1">State</label>
             <StateFilterSelect
@@ -160,22 +206,43 @@ export default function SheltersMobileFilters({
           </div>
           <div>
             <label className="form-label mb-1">Breed</label>
-            <input className="form-control" placeholder="Coming soon" disabled />
+            <div className="search-bar border rounded-2 border-dark-subtle pe-3 position-relative">
+              <BreedTypeahead value={pendingBreed} placeholder="Any breed" onChange={setPendingBreed} />
+            </div>
           </div>
           <div>
             <label className="form-label mb-1">Age</label>
-            <select className="form-select" disabled>
-              <option>Coming soon</option>
-            </select>
+            <OptionFilterSelect
+              value={pendingAge}
+              placeholder="Any age"
+              options={[
+                { value: "", label: "Any age" },
+                { value: "baby", label: "Baby" },
+                { value: "young", label: "Young" },
+                { value: "adult", label: "Adult" },
+                { value: "senior", label: "Senior" },
+              ]}
+              onChange={(v) => setPendingAge(v)}
+            />
           </div>
           <div>
             <label className="form-label mb-1">Size</label>
-            <select className="form-select" disabled>
-              <option>Coming soon</option>
-            </select>
+            <OptionFilterSelect
+              value={pendingSize}
+              placeholder="Any size"
+              options={[
+                { value: "", label: "Any size" },
+                { value: "small", label: "Small" },
+                { value: "medium", label: "Medium" },
+                { value: "large", label: "Large" },
+                { value: "x-large", label: "X-Large" },
+              ]}
+              onChange={(v) => setPendingSize(v)}
+            />
+          </div>
           </div>
         </div>
-      </div>
-    </MobileFiltersPanel>
+      </MobileFiltersPanel>
+    </>
   );
 }

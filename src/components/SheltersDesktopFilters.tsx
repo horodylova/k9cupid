@@ -6,6 +6,8 @@ import sheltersData from "@/data/rescuegroupsShelters.json";
 import StateFilterSelect from "@/components/StateFilterSelect";
 import SheltersDesktopFiltersPanel from "@/components/SheltersDesktopFiltersPanel";
 import CityFilterSelect from "@/components/CityFilterSelect";
+import OptionFilterSelect from "@/components/OptionFilterSelect";
+import BreedTypeahead from "@/components/BreedTypeahead";
 
 type ShelterRow = {
   id: string;
@@ -27,12 +29,18 @@ export default function SheltersDesktopFilters({
   selectedCity,
   selectedShelterId,
   selectedShelterName,
+  selectedBreed,
+  selectedAge,
+  selectedSize,
   quickShelters,
 }: {
   selectedState: string;
   selectedCity: string;
   selectedShelterId: string;
   selectedShelterName: string;
+  selectedBreed: string;
+  selectedAge: string;
+  selectedSize: string;
   quickShelters: ShelterRow[];
 }) {
   const shelters = sheltersData as ShelterRow[];
@@ -40,13 +48,19 @@ export default function SheltersDesktopFilters({
   const [pendingCity, setPendingCity] = useState(normalizeCity(selectedCity));
   const [pendingShelterId, setPendingShelterId] = useState((selectedShelterId || "").trim());
   const [pendingShelterName, setPendingShelterName] = useState((selectedShelterName || "").trim());
+  const [pendingBreed, setPendingBreed] = useState((selectedBreed || "").trim());
+  const [pendingAge, setPendingAge] = useState((selectedAge || "").trim());
+  const [pendingSize, setPendingSize] = useState((selectedSize || "").trim());
 
   useEffect(() => {
     setPendingState(normalizeState(selectedState));
     setPendingCity(normalizeCity(selectedCity));
     setPendingShelterId((selectedShelterId || "").trim());
     setPendingShelterName((selectedShelterName || "").trim());
-  }, [selectedState, selectedCity, selectedShelterId, selectedShelterName]);
+    setPendingBreed((selectedBreed || "").trim());
+    setPendingAge((selectedAge || "").trim());
+    setPendingSize((selectedSize || "").trim());
+  }, [selectedState, selectedCity, selectedShelterId, selectedShelterName, selectedBreed, selectedAge, selectedSize]);
 
   const selectedStateNorm = pendingState;
   const selectedCityNorm = pendingCity;
@@ -70,6 +84,9 @@ export default function SheltersDesktopFilters({
         city: pendingCity,
         shelter: pendingShelterId,
         shelterName: pendingShelterName,
+        breed: pendingBreed,
+        age: pendingAge,
+        size: pendingSize,
       }}
     >
       <div className="d-grid gap-3">
@@ -119,19 +136,39 @@ export default function SheltersDesktopFilters({
         </div>
         <div>
           <label className="form-label mb-1">Breed</label>
-          <input className="form-control" placeholder="Coming soon" disabled />
+          <div className="search-bar border rounded-2 border-dark-subtle pe-3 position-relative">
+            <BreedTypeahead value={pendingBreed} placeholder="Any breed" onChange={setPendingBreed} />
+          </div>
         </div>
         <div>
           <label className="form-label mb-1">Age</label>
-          <select className="form-select" disabled>
-            <option>Coming soon</option>
-          </select>
+          <OptionFilterSelect
+            value={pendingAge}
+            placeholder="Any age"
+            options={[
+              { value: "", label: "Any age" },
+              { value: "baby", label: "Baby" },
+              { value: "young", label: "Young" },
+              { value: "adult", label: "Adult" },
+              { value: "senior", label: "Senior" },
+            ]}
+            onChange={(v) => setPendingAge(v)}
+          />
         </div>
         <div>
           <label className="form-label mb-1">Size</label>
-          <select className="form-select" disabled>
-            <option>Coming soon</option>
-          </select>
+          <OptionFilterSelect
+            value={pendingSize}
+            placeholder="Any size"
+            options={[
+              { value: "", label: "Any size" },
+              { value: "small", label: "Small" },
+              { value: "medium", label: "Medium" },
+              { value: "large", label: "Large" },
+              { value: "x-large", label: "X-Large" },
+            ]}
+            onChange={(v) => setPendingSize(v)}
+          />
         </div>
 
       </div>

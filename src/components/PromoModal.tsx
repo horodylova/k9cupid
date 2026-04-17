@@ -44,7 +44,6 @@ export default function PromoModal() {
         try {
           localStorage.setItem(STORAGE_KEY, Date.now().toString());
         } catch {
-          null;
         }
       }, TIMEOUT_MS);
     };
