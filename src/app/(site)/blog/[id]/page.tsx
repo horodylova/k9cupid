@@ -99,6 +99,7 @@ function ShareBar({ canonicalUrl, title }: { canonicalUrl: string; title: string
           width={72}
           height={72}
           style={{ width: 72, height: 72, objectFit: "contain" }}
+          unoptimized
         />
       </Link>
       <div

@@ -102,6 +102,7 @@ export default async function BreedPage({ params }: { params: { name: string } }
                           width={72}
                           height={72}
                           style={{ objectFit: "contain" }}
+                          unoptimized
                         />
                         <div>
                           <div className="fw-semibold">Coming soon: Find a Puppy</div>

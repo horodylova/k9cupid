@@ -108,6 +108,7 @@ export default function QuizIntro() {
                     width={64}
                     height={64}
                     style={{ objectFit: "contain" }}
+                    unoptimized
                   />
                   <div>
                     <div className="fw-semibold" style={{ fontSize: 18 }}>

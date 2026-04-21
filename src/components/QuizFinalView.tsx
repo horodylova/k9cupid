@@ -41,6 +41,7 @@ export default function QuizFinalView({
                 height={180}
                 className="mb-4 img-fluid"
                 style={{ objectFit: "contain" }}
+                unoptimized
               />
               <h1 className="display-5 fw-bold mb-3 secondary-font">Your Perfect Matches</h1>
               

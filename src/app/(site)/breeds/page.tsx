@@ -133,6 +133,7 @@ export default async function BreedsPage({ searchParams }: Props) {
             height={70}
             className="me-3"
             style={{ objectFit: "contain" }}
+            unoptimized
           />
           <h4 className="widget-title m-0">Find Your Match</h4>
         </div>
@@ -286,6 +287,7 @@ export default async function BreedsPage({ searchParams }: Props) {
                                   width={56}
                                   height={56}
                                   style={{ objectFit: "contain" }}
+                                  unoptimized
                                 />
                                 <div>
                                   <div

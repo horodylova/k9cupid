@@ -18,6 +18,7 @@ export default function Footer() {
                     width={250}
                     height={250}
                     style={{ maxHeight: '120px', width: 'auto' }}
+                    unoptimized
                   />
                   <h5 className="footer-site-title mb-0">k9cupid</h5>
                 </Link>

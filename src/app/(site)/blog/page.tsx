@@ -215,6 +215,7 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
                                   width={56}
                                   height={56}
                                   style={{ width: "56px", height: "56px", objectFit: "contain" }}
+                                  unoptimized
                                 />
                                 <div>
                                   <h5 className="mb-0">Subscribe</h5>
@@ -296,6 +297,7 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
                               width={56}
                               height={56}
                               style={{ width: "56px", height: "56px", objectFit: "contain" }}
+                              unoptimized
                             />
                             <div>
                               <h5 className="mb-0">Subscribe</h5>

@@ -228,6 +228,7 @@ export default function Header() {
                     className="img-fluid logo-image"
                     width={819}
                     height={819}
+                    unoptimized
                     priority
                   />
                   <h1 className="brand-text">k9cupid</h1>
