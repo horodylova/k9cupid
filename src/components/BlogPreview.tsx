@@ -69,6 +69,7 @@ const BlogPreview = async () => {
       blogPosts = postsToProcess.map((post) => {
         const dateSource = post.publishedAt || post._createdAt;
         const dateObj = new Date(dateSource);
+
         return {
           id: post.slug,
           date: dateObj.getDate().toString(),
