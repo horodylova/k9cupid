@@ -39,6 +39,7 @@ export default function QuizInterimView({
                   width={320}
                   height={320}
                   className="quiz-interim-logo-static img-fluid"
+                  unoptimized
                 />
               </div>
               <div className="flex-grow-1 quiz-interim-text">
