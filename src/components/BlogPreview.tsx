@@ -126,6 +126,7 @@ const BlogPreview = async () => {
                     width={720}
                     height={420}
                     style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                    unoptimized
                   />
                 </Link>
                 <div className="card-body p-4">
@@ -152,6 +153,7 @@ const BlogPreview = async () => {
                       width={720}
                       height={360}
                       style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                      unoptimized
                     />
                   </Link>
                   <div className="card-body p-4">
@@ -179,6 +181,7 @@ const BlogPreview = async () => {
                           width={520}
                           height={360}
                           style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                          unoptimized
                         />
                       </Link>
                       <div className="card-body p-4">
@@ -236,6 +239,7 @@ const BlogPreview = async () => {
                           width={520}
                           height={360}
                           style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                          unoptimized
                         />
                       </Link>
                       <div className="card-body p-4">
