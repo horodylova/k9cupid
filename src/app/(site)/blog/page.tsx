@@ -56,6 +56,8 @@ const fallbackBlogPosts: BlogPost[] = [
 
 export const revalidate = 60;
 
+const withVersion = (url: string) => (url.includes("?") ? `${url}&v=1` : `${url}?v=1`);
+
 export default async function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
   const query = `*[_type == "post"] | order(coalesce(publishedAt, _createdAt) desc) {
     _id,
@@ -92,7 +94,9 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
           id: post.slug,
           date: dateObj.getDate().toString(),
           month: dateObj.toLocaleString('default', { month: 'short' }),
-          image: post.mainImage ? urlFor(post.mainImage).width(800).height(600).url() : '/images/placeholder.jpg',
+          image: post.mainImage
+            ? withVersion(urlFor(post.mainImage).width(800).height(600).url())
+            : withVersion('/images/placeholder.jpg'),
           title: post.title,
           excerpt: post.excerpt,
           featured: post._id === featuredRaw?._id, // Only mark the chosen one as featured
