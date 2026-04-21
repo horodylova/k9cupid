@@ -25,7 +25,6 @@ interface SanityPost {
 }
 
 const BlogPreview = async () => {
-  const withVersion = (url: string) => (url.includes("?") ? `${url}&v=1` : `${url}?v=1`);
   const query = `{
     "featured": *[_type == "post" && featured == true] | order(_updatedAt desc)[0] {
       _id,
@@ -121,7 +120,7 @@ const BlogPreview = async () => {
               <div className="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
                 <Link href={`/blog/${featuredPost.id}`}>
                   <Image
-                    src={withVersion(featuredPost.image)}
+                    src={featuredPost.image}
                     className="img-fluid"
                     alt={featuredPost.title}
                     width={720}
@@ -147,7 +146,7 @@ const BlogPreview = async () => {
                 <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
                   <Link href={`/blog/${belowFeaturedPost.id}`}>
                     <Image
-                      src={withVersion(belowFeaturedPost.image)}
+                      src={belowFeaturedPost.image}
                       className="img-fluid"
                       alt={belowFeaturedPost.title}
                       width={720}
@@ -174,7 +173,7 @@ const BlogPreview = async () => {
                     <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
                       <Link href={`/blog/${firstSidePost.id}`}>
                         <Image
-                          src={withVersion(firstSidePost.image)}
+                          src={firstSidePost.image}
                           className="img-fluid"
                           alt={firstSidePost.title}
                           width={520}
@@ -231,7 +230,7 @@ const BlogPreview = async () => {
                     <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
                       <Link href={`/blog/${secondSidePost.id}`}>
                         <Image
-                          src={withVersion(secondSidePost.image)}
+                          src={secondSidePost.image}
                           className="img-fluid"
                           alt={secondSidePost.title}
                           width={520}
