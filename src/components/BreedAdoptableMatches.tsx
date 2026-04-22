@@ -4,6 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 
+function upgradeRescuegroupsWidth(url: string, width: number) {
+  try {
+    const u = new URL(url);
+    if (u.hostname !== "cdn.rescuegroups.org") return url;
+    u.searchParams.set("width", String(width));
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
 type AdoptableMatch = {
   id: string;
   name: string;
@@ -65,6 +76,7 @@ export default function BreedAdoptableMatches({ breedName, matches }: BreedAdopt
               const detailsHref = `/shelters/dogs/${encodeURIComponent(dog.id)}`;
               const isPlaceholder = !dog.imageSrc;
               const imgSrc = dog.imageSrc || "/No%20photo%20yet.jpg";
+              const optimizedSrc = imgSrc.startsWith("http") ? upgradeRescuegroupsWidth(imgSrc, 900) : imgSrc;
               const alt = isPlaceholder ? "No photo yet" : dog.name;
               const badges = [dog.age, dog.sex, dog.size].filter(Boolean);
 
@@ -81,12 +93,11 @@ export default function BreedAdoptableMatches({ breedName, matches }: BreedAdopt
                           .join(" ")}
                       >
                         <Image
-                          src={imgSrc}
+                          src={optimizedSrc}
                           alt={alt}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           className="breed-adoptable-img"
-                          unoptimized
                         />
                       </div>
                       <div className="breed-adoptable-body">
