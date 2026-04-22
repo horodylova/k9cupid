@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getBreeds, Dog, getAdditionalBreedDetails } from "@/lib/api";
 import BreedGallery from "@/components/BreedGallery";
+import BreedAdoptableMatches from "@/components/BreedAdoptableMatches";
 import WishlistHeartButton from "@/components/WishlistHeartButton";
 import { notFound } from "next/navigation";
 
@@ -25,6 +26,214 @@ function getTemperamentTags(breed: Dog) {
   return tags.slice(0, 10);
 }
 
+type RescueMeta = {
+  count: number;
+  countReturned: number;
+  pageReturned: number;
+  limit: number;
+  pages: number;
+  transactionId?: string;
+};
+
+type RescueRelationship = { data: Array<{ type: string; id: string }> | { type: string; id: string } | null };
+
+type RescueAnimal = {
+  type: "animals";
+  id: string;
+  attributes?: {
+    name?: string;
+    species?: string;
+    breedString?: string;
+    sex?: string;
+    ageGroup?: string;
+    ageString?: string;
+    sizeGroup?: string;
+    url?: string;
+    pictureThumbnailUrl?: string;
+  };
+  relationships?: Record<string, RescueRelationship>;
+};
+
+type RescueIncluded = {
+  type: string;
+  id: string;
+  attributes?: Record<string, unknown>;
+};
+
+type RescueResponse = {
+  meta?: RescueMeta;
+  data?: RescueAnimal[];
+  included?: RescueIncluded[];
+};
+
+function normalizeTextToken(v: string) {
+  return (v || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function isLikelyDog(attrs: RescueAnimal["attributes"]) {
+  const species = (attrs?.species || "").trim().toLowerCase();
+  if (species) return species === "dog" || species === "canine";
+  return true;
+}
+
+function isRelArray(rel: RescueRelationship | undefined): rel is { data: Array<{ type: string; id: string }> } {
+  return Array.isArray(rel?.data);
+}
+
+function getFirstRelatedId(animal: RescueAnimal, relName: string) {
+  const rel = animal.relationships?.[relName]?.data || null;
+  if (!rel) return "";
+  if (Array.isArray(rel)) return rel[0]?.id || "";
+  return rel.id || "";
+}
+
+function getIncluded(included: RescueIncluded[], type: string, id: string) {
+  if (!id) return null;
+  return included.find((x) => x.type === type && x.id === id) || null;
+}
+
+function upgradeRescuegroupsWidth(url: string, width: number) {
+  try {
+    const u = new URL(url);
+    if (u.hostname !== "cdn.rescuegroups.org") return url;
+    u.searchParams.set("width", String(width));
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
+function getImage(animal: RescueAnimal, included: RescueIncluded[]) {
+  const thumb = animal.attributes?.pictureThumbnailUrl || null;
+
+  const rel = animal.relationships?.pictures;
+  if (isRelArray(rel)) {
+    for (const ref of rel.data) {
+      const pic = getIncluded(included, "pictures", ref.id);
+      const attrs = (pic?.attributes || {}) as Record<string, unknown>;
+      const order = typeof attrs.order === "number" ? attrs.order : null;
+      const original = typeof attrs.original === "string" ? attrs.original : null;
+      const large = typeof attrs.large === "string" ? attrs.large : null;
+      const small = typeof attrs.small === "string" ? attrs.small : null;
+      if (order === 1 && (original || large || small)) {
+        return {
+          src: original || large || small || "",
+        };
+      }
+    }
+
+    const firstRef = rel.data[0];
+    if (firstRef) {
+      const pic = getIncluded(included, "pictures", firstRef.id);
+      const attrs = (pic?.attributes || {}) as Record<string, unknown>;
+      const original = typeof attrs.original === "string" ? attrs.original : null;
+      const large = typeof attrs.large === "string" ? attrs.large : null;
+      const small = typeof attrs.small === "string" ? attrs.small : null;
+      if (original || large || small) {
+        return {
+          src: original || large || small || "",
+        };
+      }
+    }
+  }
+
+  if (thumb) {
+    const src = upgradeRescuegroupsWidth(thumb, 1200);
+    return { src };
+  }
+
+  return null;
+}
+
+function matchesBreed(breedName: string, breedString: string) {
+  const target = normalizeTextToken(breedName);
+  const haystack = normalizeTextToken(breedString);
+  if (!target || !haystack) return false;
+  return haystack.includes(target);
+}
+
+async function findAdoptableDogsForBreed(breedName: string) {
+  const apiKey = (process.env.RESCUEGROUPS_API_KEY || "").trim();
+  if (!apiKey) return [];
+
+  const limit = 250;
+  const maxPagesToScan = 8;
+  const desired = 6;
+
+  const matches: Array<{
+    id: string;
+    name: string;
+    breedString: string;
+    age: string;
+    sex: string;
+    size: string;
+    imageSrc: string;
+    orgName: string;
+    orgCitystate: string;
+  }> = [];
+
+  let page = 1;
+  let pages = 1;
+
+  while (page <= pages && page <= maxPagesToScan && matches.length < desired) {
+    const upstream = new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");
+    upstream.searchParams.set("limit", String(limit));
+    upstream.searchParams.set("page", String(page));
+    upstream.searchParams.set("include", "pictures,orgs");
+    upstream.searchParams.set("fields[animals]", "name,species,breedString,sex,ageGroup,ageString,sizeGroup,pictureThumbnailUrl");
+    upstream.searchParams.set("fields[pictures]", "small,large,original,order");
+    upstream.searchParams.set("fields[orgs]", "name,citystate");
+
+    const res = await fetch(upstream, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/vnd.api+json",
+        Accept: "application/vnd.api+json",
+        Authorization: apiKey,
+      },
+      next: { revalidate: 300 },
+    });
+
+    if (!res.ok) break;
+    const json = (await res.json()) as RescueResponse;
+    pages = Math.max(1, json.meta?.pages || 1);
+
+    const dogs = Array.isArray(json.data) ? json.data : [];
+    const included = Array.isArray(json.included) ? json.included : [];
+
+    for (const dog of dogs) {
+      if (!isLikelyDog(dog.attributes)) continue;
+      const breedString = dog.attributes?.breedString || "";
+      if (!matchesBreed(breedName, breedString)) continue;
+
+      const image = getImage(dog, included);
+      const orgId = getFirstRelatedId(dog, "orgs");
+      const org = getIncluded(included, "orgs", orgId);
+      const orgAttrs = (org?.attributes || {}) as Record<string, unknown>;
+      const orgName = typeof orgAttrs.name === "string" ? orgAttrs.name : "";
+      const orgCitystate = typeof orgAttrs.citystate === "string" ? orgAttrs.citystate : "";
+
+      matches.push({
+        id: dog.id,
+        name: dog.attributes?.name || "Dog",
+        breedString,
+        age: dog.attributes?.ageString || dog.attributes?.ageGroup || "",
+        sex: dog.attributes?.sex || "",
+        size: dog.attributes?.sizeGroup || "",
+        imageSrc: image?.src || "",
+        orgName,
+        orgCitystate,
+      });
+
+      if (matches.length >= desired) break;
+    }
+
+    page += 1;
+  }
+
+  return matches;
+}
+
 export default async function BreedPage({ params }: { params: { name: string } }) {
   const decodedName = decodeURIComponent(params.name);
   
@@ -39,6 +248,7 @@ export default async function BreedPage({ params }: { params: { name: string } }
     notFound();
   }
 
+  const adoptableMatches = await findAdoptableDogsForBreed(breed.name);
   const tags = getTemperamentTags(breed);
   const formatScore = (score: number) => (score >= 1 ? `${score}/5` : 'N/A');
   const getCoatLengthDisplay = (coatLength: number) => {
@@ -105,9 +315,9 @@ export default async function BreedPage({ params }: { params: { name: string } }
                           unoptimized
                         />
                         <div>
-                          <div className="fw-semibold">Coming soon: Find a Puppy</div>
+                          <div className="fw-semibold">See adoptable {breed.name} dogs below</div>
                           <div className="text-muted" style={{ fontSize: 14 }}>
-                            We’re building this feature so you’ll be able to browse available puppies right here.
+                            For now, scroll down to meet adoptable {breed.name} dogs from shelters and rescues.
                           </div>
                         </div>
                       </div>
@@ -252,6 +462,8 @@ export default async function BreedPage({ params }: { params: { name: string } }
           </div>
         </div>
       </section>
+
+      <BreedAdoptableMatches breedName={breed.name} matches={adoptableMatches} />
     </>
   );
 }
