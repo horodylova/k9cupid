@@ -21,7 +21,15 @@ export default function Banner() {
           <SwiperSlide className="py-2 py-md-5">
             <div className="row banner-content align-items-center">
               <div className="img-wrapper col-md-5">
-                <Image src="/images/banner-img.png" className="img-fluid banner-img" alt="Banner 1" width={606} height={759} priority />
+                <Image
+                  src="/images/banner-img.png"
+                  className="img-fluid banner-img"
+                  alt="Banner 1"
+                  width={606}
+                  height={759}
+                  sizes="(max-width: 768px) 100vw, 42vw"
+                  priority
+                />
               </div>
               <div className="content-wrapper col-md-7 p-3 p-md-5 mb-3 mb-md-5">
                 <div className="secondary-font text-primary text-uppercase mb-2 mb-md-4">Find Your Perfect Match</div>
@@ -38,7 +46,14 @@ export default function Banner() {
           <SwiperSlide className="py-2 py-md-5">
             <div className="row banner-content align-items-center">
               <div className="img-wrapper col-md-5">
-                <Image src="/images/banner-img2.png" className="img-fluid banner-img" alt="Banner 2" width={606} height={759} />
+                <Image
+                  src="/images/banner-img2.png"
+                  className="img-fluid banner-img"
+                  alt="Banner 2"
+                  width={606}
+                  height={759}
+                  sizes="(max-width: 768px) 100vw, 42vw"
+                />
               </div>
               <div className="content-wrapper col-md-7 p-3 p-md-5 mb-3 mb-md-5">
                 <div className="secondary-font text-primary text-uppercase mb-2 mb-md-4">Expert Advice</div>
@@ -55,7 +70,14 @@ export default function Banner() {
           <SwiperSlide className="py-2 py-md-5">
             <div className="row banner-content align-items-center">
               <div className="img-wrapper col-md-5">
-                <Image src="/images/banner-img4.png" className="img-fluid banner-img" alt="Banner 3" width={606} height={759} />
+                <Image
+                  src="/images/banner-img4.png"
+                  className="img-fluid banner-img"
+                  alt="Banner 3"
+                  width={606}
+                  height={759}
+                  sizes="(max-width: 768px) 100vw, 42vw"
+                />
               </div>
               <div className="content-wrapper col-md-7 p-3 p-md-5 mb-3 mb-md-5">
                 <div className="secondary-font text-primary text-uppercase mb-2 mb-md-4">Dog Care Guides</div>

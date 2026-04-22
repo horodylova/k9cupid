@@ -7,7 +7,6 @@ interface BlogPost {
   id: string;
   date: string;
   month: string;
-  image: string;
   title: string;
   excerpt: string;
   featured?: boolean;
@@ -48,20 +47,15 @@ const BlogPreview = async () => {
     }
   }`;
 
-  let blogPosts: BlogPost[] = [];
+  let blogPosts: Array<BlogPost & { mainImage: SanityPost["mainImage"] | null }> = [];
   
   try {
     const data = await client.fetch<{ featured: SanityPost | null; latest: SanityPost[] }>(query, {}, { next: { revalidate: 30 } });
     
-    // Determine the featured post: either the explicitly featured one or the latest one
     const featuredRaw = data.featured || data.latest[0];
     
-    // Filter out the featured post from the latest list to avoid duplication
-    // We want 3 secondary posts. If featured was in latest, we take the next one.
-    // If featured was NOT in latest (old post), we still take 3 from latest.
     const secondaryRaw = data.latest.filter(p => p._id !== featuredRaw?._id).slice(0, 3);
     
-    // Combine for processing
     const postsToProcess = featuredRaw ? [featuredRaw, ...secondaryRaw] : secondaryRaw;
 
     if (postsToProcess.length > 0) {
@@ -73,10 +67,10 @@ const BlogPreview = async () => {
           id: post.slug,
           date: dateObj.getDate().toString(),
           month: dateObj.toLocaleString('default', { month: 'short' }),
-          image: post.mainImage ? urlFor(post.mainImage).width(400).height(300).url() : '/images/placeholder.jpg',
+          mainImage: post.mainImage || null,
           title: post.title,
           excerpt: post.excerpt,
-          featured: post._id === featuredRaw?._id, // Mark only the chosen one as featured for UI logic
+          featured: post._id === featuredRaw?._id,
         };
       });
     }
@@ -94,6 +88,11 @@ const BlogPreview = async () => {
   const sidePosts = secondaryPosts.slice(1, 3);
   const firstSidePost = sidePosts[0];
   const secondSidePost = sidePosts[1];
+
+  const getSanityImageUrl = (mainImage: SanityPost["mainImage"] | null, width: number, height: number) => {
+    if (!mainImage) return "/images/placeholder.jpg";
+    return urlFor(mainImage).width(width).height(height).fit("crop").auto("format").quality(75).url();
+  };
 
   return (
     <section id="latest-blog" className="my-5">
@@ -120,13 +119,13 @@ const BlogPreview = async () => {
               <div className="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
                 <Link href={`/blog/${featuredPost.id}`}>
                   <Image
-                    src={featuredPost.image}
+                    src={getSanityImageUrl(featuredPost.mainImage, 1600, 933)}
                     className="img-fluid"
                     alt={featuredPost.title}
                     width={720}
                     height={420}
+                    sizes="(max-width: 992px) 100vw, 58vw"
                     style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                    unoptimized
                   />
                 </Link>
                 <div className="card-body p-4">
@@ -147,13 +146,13 @@ const BlogPreview = async () => {
                 <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
                   <Link href={`/blog/${belowFeaturedPost.id}`}>
                     <Image
-                      src={belowFeaturedPost.image}
+                      src={getSanityImageUrl(belowFeaturedPost.mainImage, 1600, 800)}
                       className="img-fluid"
                       alt={belowFeaturedPost.title}
                       width={720}
                       height={360}
+                      sizes="(max-width: 992px) 100vw, 58vw"
                       style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                      unoptimized
                     />
                   </Link>
                   <div className="card-body p-4">
@@ -175,13 +174,13 @@ const BlogPreview = async () => {
                     <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
                       <Link href={`/blog/${firstSidePost.id}`}>
                         <Image
-                          src={firstSidePost.image}
+                          src={getSanityImageUrl(firstSidePost.mainImage, 1200, 830)}
                           className="img-fluid"
                           alt={firstSidePost.title}
                           width={520}
                           height={360}
+                          sizes="(max-width: 992px) 100vw, 38vw"
                           style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                          unoptimized
                         />
                       </Link>
                       <div className="card-body p-4">
@@ -233,13 +232,13 @@ const BlogPreview = async () => {
                     <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
                       <Link href={`/blog/${secondSidePost.id}`}>
                         <Image
-                          src={secondSidePost.image}
+                          src={getSanityImageUrl(secondSidePost.mainImage, 1200, 830)}
                           className="img-fluid"
                           alt={secondSidePost.title}
                           width={520}
                           height={360}
+                          sizes="(max-width: 992px) 100vw, 38vw"
                           style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                          unoptimized
                         />
                       </Link>
                       <div className="card-body p-4">

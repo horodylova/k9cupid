@@ -77,7 +77,6 @@ export default function WishlistPage() {
                                     width={140}
                                     height={90}
                                     style={{ objectFit: "cover" }}
-                                    unoptimized
                                   />
                                 </div>
                               </div>
@@ -137,7 +136,6 @@ export default function WishlistPage() {
                                     width={140}
                                     height={90}
                                     style={{ objectFit: "cover" }}
-                                    unoptimized
                                   />
                                 </div>
                               </div>

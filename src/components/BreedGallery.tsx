@@ -50,7 +50,8 @@ export default function BreedGallery({ image, name }: BreedGalleryProps) {
                     fill
                     style={{ objectFit: 'cover' }}
                     className="img-fluid rounded-4"
-                    unoptimized // API images might be external
+                    sizes="(max-width: 992px) 100vw, 50vw"
+                    priority
                     onError={() => setImgSrc(fallbackSrc)}
                   />
                </div>
