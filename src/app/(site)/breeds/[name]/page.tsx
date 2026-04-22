@@ -249,6 +249,7 @@ export default async function BreedPage({ params }: { params: { name: string } }
   }
 
   const adoptableMatches = await findAdoptableDogsForBreed(breed.name);
+  const sheltersHref = adoptableMatches.length > 0 ? `/shelters?breed=${encodeURIComponent(breed.name)}` : "/shelters";
   const tags = getTemperamentTags(breed);
   const formatScore = (score: number) => (score >= 1 ? `${score}/5` : 'N/A');
   const getCoatLengthDisplay = (coatLength: number) => {
@@ -300,27 +301,29 @@ export default async function BreedPage({ params }: { params: { name: string } }
                   <div className="product-quantity pt-2">
                     <div className="stock-button-wrap">
                       <div className="d-flex flex-wrap pt-4">
-                        <button type="button" className="btn btn-primary me-3 px-4 pt-3 pb-3" disabled aria-disabled="true">
+                        <Link href={sheltersHref} className="btn btn-primary me-3 px-4 pt-3 pb-3">
                           <h5 className="text-uppercase m-0">Find a Puppy</h5>
-                        </button>
+                        </Link>
                         <WishlistHeartButton name={breed.name} href={href} imageSrc={breed.image_link || undefined} variant="inline" />
                       </div>
-                      <div className="mt-3 p-3 border rounded-4 bg-white d-flex align-items-center gap-3">
-                        <Image
-                          src="/Cupid%20with%20beagle.png"
-                          alt="k9cupid"
-                          width={72}
-                          height={72}
-                          style={{ objectFit: "contain" }}
-                          unoptimized
-                        />
-                        <div>
-                          <div className="fw-semibold">See adoptable {breed.name} dogs below</div>
-                          <div className="text-muted" style={{ fontSize: 14 }}>
-                            For now, scroll down to meet adoptable {breed.name} dogs from shelters and rescues.
+                      {adoptableMatches.length > 0 && (
+                        <div className="mt-3 p-3 border rounded-4 bg-white d-flex align-items-center gap-3">
+                          <Image
+                            src="/Cupid%20with%20beagle.png"
+                            alt="k9cupid"
+                            width={72}
+                            height={72}
+                            style={{ objectFit: "contain" }}
+                            unoptimized
+                          />
+                          <div>
+                            <div className="fw-semibold">See adoptable {breed.name} dogs below</div>
+                            <div className="text-muted" style={{ fontSize: 14 }}>
+                              For now, scroll down to meet adoptable {breed.name} dogs from shelters and rescues.
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>

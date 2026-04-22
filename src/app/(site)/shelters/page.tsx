@@ -261,9 +261,11 @@ function getImage(animal: RescueAnimal, included: RescueIncluded[]) {
 async function getDogs({
   page,
   limit,
+  ageGroup,
 }: {
   page: number;
   limit: number;
+  ageGroup?: "Senior";
 }): Promise<{ meta: RescueMeta; dogs: RescueAnimal[]; included: RescueIncluded[] }> {
   const apiKey = (process.env.RESCUEGROUPS_API_KEY || "").trim();
   if (!apiKey) {
@@ -274,15 +276,23 @@ async function getDogs({
     };
   }
 
-  const runFetch = async (upstream: URL) => fetch(upstream, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/vnd.api+json",
-      Accept: "application/vnd.api+json",
-      Authorization: apiKey,
-    },
-    cache: "no-store",
-  });
+  const runFetch = async (upstream: URL) =>
+    fetch(upstream, {
+      method: ageGroup ? "POST" : "GET",
+      headers: {
+        "Content-Type": "application/vnd.api+json",
+        Accept: "application/vnd.api+json",
+        Authorization: apiKey,
+      },
+      body: ageGroup
+        ? JSON.stringify({
+            data: {
+              filters: [{ fieldName: "animals.ageGroup", operation: "equal", criteria: ageGroup }],
+            },
+          })
+        : undefined,
+      cache: "no-store",
+    });
 
   const upstream = new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");
   upstream.searchParams.set("limit", String(limit));
@@ -361,7 +371,7 @@ export default async function SheltersPage({
     let upstreamPages = 1;
 
     while (scanPage <= upstreamPages && matches.length < probe) {
-      const res = await getDogs({ page: scanPage, limit: 250 });
+      const res = await getDogs({ page: scanPage, limit: 250, ageGroup: selectedAge === "senior" ? "Senior" : undefined });
       if (scanPage === 1) upstreamPages = res.meta.pages || 1;
 
       for (const inc of res.included) {
@@ -405,7 +415,7 @@ export default async function SheltersPage({
   } else {
     let scanPage = page;
     for (let scan = 0; scan < maxScanPages && displayedDogs.length < pageSize; scan += 1) {
-      const res = await getDogs({ page: scanPage, limit: pageSize });
+      const res = await getDogs({ page: scanPage, limit: pageSize, ageGroup: selectedAge === "senior" ? "Senior" : undefined });
       if (scan === 0) meta = res.meta;
 
       for (const inc of res.included) {
