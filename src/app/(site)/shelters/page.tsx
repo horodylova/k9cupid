@@ -6,6 +6,7 @@ import { normalizeHtmlText } from "@/lib/htmlText";
 import ShelterDogWishlistHeartButton from "@/components/ShelterDogWishlistHeartButton";
 import SheltersDesktopFilters from "@/components/SheltersDesktopFilters";
 import SheltersMobileFilters from "@/components/SheltersMobileFilters";
+import SheltersSorter from "@/components/SheltersSorter";
 import sheltersData from "@/data/rescuegroupsShelters.json";
 
 export const revalidate = 0;
@@ -35,6 +36,9 @@ type RescueAnimal = {
     url?: string;
     pictureThumbnailUrl?: string;
     descriptionText?: string;
+    availableDate?: string;
+    createdDate?: string;
+    updatedDate?: string;
   };
   relationships?: Record<string, RescueRelationship>;
 };
@@ -261,11 +265,15 @@ function getImage(animal: RescueAnimal, included: RescueIncluded[]) {
 async function getDogs({
   page,
   limit,
-  ageGroup,
+  sort,
+  filters,
+  includeDescription,
 }: {
   page: number;
   limit: number;
-  ageGroup?: "Senior";
+  sort?: string;
+  filters?: Array<{ fieldName: string; operation: string; criteria: string }>;
+  includeDescription?: boolean;
 }): Promise<{ meta: RescueMeta; dogs: RescueAnimal[]; included: RescueIncluded[] }> {
   const apiKey = (process.env.RESCUEGROUPS_API_KEY || "").trim();
   if (!apiKey) {
@@ -276,37 +284,62 @@ async function getDogs({
     };
   }
 
-  const runFetch = async (upstream: URL) =>
-    fetch(upstream, {
-      method: ageGroup ? "POST" : "GET",
+  const runFetch = async (upstream: URL, bodyFilters?: Array<{ fieldName: string; operation: string; criteria: string }>) => {
+    const shouldPost = Boolean(bodyFilters && bodyFilters.length > 0);
+    const res = await fetch(upstream, {
+      method: shouldPost ? "POST" : "GET",
       headers: {
         "Content-Type": "application/vnd.api+json",
         Accept: "application/vnd.api+json",
         Authorization: apiKey,
       },
-      body: ageGroup
+      body: shouldPost
         ? JSON.stringify({
             data: {
-              filters: [{ fieldName: "animals.ageGroup", operation: "equal", criteria: ageGroup }],
+              filters: bodyFilters,
             },
           })
         : undefined,
       cache: "no-store",
     });
 
+    if (res.ok || !shouldPost) return res;
+
+    const ageOnly = bodyFilters?.filter((f) => f.fieldName === "animals.ageGroup") || [];
+    const shouldPostAgeOnly = ageOnly.length > 0;
+    return fetch(upstream, {
+      method: shouldPostAgeOnly ? "POST" : "GET",
+      headers: {
+        "Content-Type": "application/vnd.api+json",
+        Accept: "application/vnd.api+json",
+        Authorization: apiKey,
+      },
+      body: shouldPostAgeOnly
+        ? JSON.stringify({
+            data: {
+              filters: ageOnly,
+            },
+          })
+        : undefined,
+      cache: "no-store",
+    });
+  };
+
   const upstream = new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");
   upstream.searchParams.set("limit", String(limit));
   upstream.searchParams.set("page", String(page));
-  upstream.searchParams.set("include", "pictures,orgs,locations");
+  upstream.searchParams.set("include", "orgs,locations");
+  if (sort) upstream.searchParams.set("sort", sort);
   upstream.searchParams.set(
     "fields[animals]",
-    "name,species,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText"
+    includeDescription
+      ? "name,species,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText,availableDate,createdDate,updatedDate"
+      : "name,species,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,availableDate,createdDate,updatedDate"
   );
-  upstream.searchParams.set("fields[pictures]", "small,large,original,order");
-  upstream.searchParams.set("fields[orgs]", "name,url,citystate,city,state,websiteUrl");
-  upstream.searchParams.set("fields[locations]", "citystate,postalcode,state,country,lat,lon,coordinates");
+  upstream.searchParams.set("fields[orgs]", "name,citystate,city,state");
+  upstream.searchParams.set("fields[locations]", "citystate,city,state");
 
-  const res = await runFetch(upstream);
+  const res = await runFetch(upstream, filters);
   const json = (await res.json()) as RescueResponse;
   const meta = json.meta || { count: 0, countReturned: 0, pageReturned: page, limit, pages: 1 };
   const dogs = Array.isArray(json.data) ? json.data : [];
@@ -327,13 +360,28 @@ export default async function SheltersPage({
   const selectedBreedRaw = Array.isArray(searchParams?.breed) ? searchParams?.breed[0] : searchParams?.breed;
   const selectedAgeRaw = Array.isArray(searchParams?.age) ? searchParams?.age[0] : searchParams?.age;
   const selectedSizeRaw = Array.isArray(searchParams?.size) ? searchParams?.size[0] : searchParams?.size;
+  const selectedSortRaw = Array.isArray(searchParams?.sort) ? searchParams?.sort[0] : searchParams?.sort;
   let selectedShelterId = (selectedShelterIdRaw || "").trim();
   let selectedShelterName = (selectedShelterNameRaw || "").trim();
   const selectedState = (selectedStateRaw || "").trim().toUpperCase();
   const selectedCity = (selectedCityRaw || "").trim();
   const selectedBreed = normalizeToken((selectedBreedRaw || "").trim());
+  const selectedBreedText = (selectedBreedRaw || "").trim();
   const selectedAge = normalizeToken((selectedAgeRaw || "").trim());
   const selectedSize = normalizeToken((selectedSizeRaw || "").trim());
+  const selectedSort = normalizeToken((selectedSortRaw || "").trim());
+  const getComparableDate = (value: string | undefined) => {
+    if (!value) return 0;
+    const t = Date.parse(value);
+    return Number.isFinite(t) ? t : 0;
+  };
+  const sortMode = selectedSort === "newest" || selectedSort === "added" || selectedSort === "updated" ? selectedSort : "";
+  const upstreamSort =
+    sortMode === "added"
+      ? "-animals.createdDate"
+      : sortMode === "updated"
+        ? "-animals.updatedDate"
+        : "-animals.availableDate";
 
   if (selectedShelterName && (!selectedShelterId || !Array.isArray(sheltersData) || !sheltersData.some((s) => s.id === selectedShelterId))) {
     const normalized = selectedShelterName.toLowerCase().trim();
@@ -348,6 +396,7 @@ export default async function SheltersPage({
   const bannerTitle = selectedShelterName || "Shelters";
   const pageSize = 18;
   const maxScanPages = 8;
+  const scanBatchSize = 2;
   const clientFiltersActive = Boolean(
     selectedShelterId || selectedState || selectedCity || selectedBreed || selectedAge || selectedSize
   );
@@ -369,11 +418,12 @@ export default async function SheltersPage({
 
     let scanPage = 1;
     let upstreamPages = 1;
+    const upstreamFilters: Array<{ fieldName: string; operation: string; criteria: string }> = [];
+    if (selectedAge === "senior") upstreamFilters.push({ fieldName: "animals.ageGroup", operation: "equal", criteria: "Senior" });
+    if (selectedShelterId) upstreamFilters.push({ fieldName: "animals.orgID", operation: "equal", criteria: selectedShelterId });
+    if (selectedBreedText) upstreamFilters.push({ fieldName: "animals.breedString", operation: "contains", criteria: selectedBreedText });
 
-    while (scanPage <= upstreamPages && matches.length < probe) {
-      const res = await getDogs({ page: scanPage, limit: 250, ageGroup: selectedAge === "senior" ? "Senior" : undefined });
-      if (scanPage === 1) upstreamPages = res.meta.pages || 1;
-
+    const processBatch = (res: { dogs: RescueAnimal[]; included: RescueIncluded[] }) => {
       for (const inc of res.included) {
         includedByKey.set(`${inc.type}:${inc.id}`, inc);
       }
@@ -398,13 +448,62 @@ export default async function SheltersPage({
         matches.push(dog);
         if (matches.length >= probe) break;
       }
+    };
 
-      scanPage += 1;
-      if (scanPage > 500) break;
+    const first = await getDogs({
+      page: scanPage,
+      limit: 250,
+      sort: upstreamSort,
+      filters: upstreamFilters,
+      includeDescription: false,
+    });
+    upstreamPages = first.meta.pages || 1;
+    processBatch(first);
+    scanPage += 1;
+
+    while (scanPage <= upstreamPages && matches.length < probe) {
+      const pagesToFetch = Array.from({ length: scanBatchSize }, (_, idx) => scanPage + idx).filter(
+        (p) => p <= upstreamPages
+      );
+      const batch = await Promise.all(
+        pagesToFetch.map((p) =>
+          getDogs({
+            page: p,
+            limit: 250,
+            sort: upstreamSort,
+            filters: upstreamFilters,
+            includeDescription: false,
+          })
+        )
+      );
+
+      for (const res of batch) {
+        processBatch(res);
+        if (matches.length >= probe) break;
+      }
+
+      scanPage += pagesToFetch.length;
     }
 
     hasNextPage = matches.length > page * pageSize;
-    displayedDogs = matches.slice(offset, offset + pageSize);
+    const sortedMatches =
+      sortMode === "newest"
+        ? matches
+            .slice()
+            .sort(
+              (a, b) =>
+                getComparableDate(b.attributes?.availableDate) - getComparableDate(a.attributes?.availableDate)
+            )
+        : sortMode === "added"
+          ? matches
+              .slice()
+              .sort((a, b) => getComparableDate(b.attributes?.createdDate) - getComparableDate(a.attributes?.createdDate))
+          : sortMode === "updated"
+            ? matches
+                .slice()
+                .sort((a, b) => getComparableDate(b.attributes?.updatedDate) - getComparableDate(a.attributes?.updatedDate))
+            : matches;
+    displayedDogs = sortedMatches.slice(offset, offset + pageSize);
     meta = {
       count: 0,
       countReturned: displayedDogs.length,
@@ -415,7 +514,13 @@ export default async function SheltersPage({
   } else {
     let scanPage = page;
     for (let scan = 0; scan < maxScanPages && displayedDogs.length < pageSize; scan += 1) {
-      const res = await getDogs({ page: scanPage, limit: pageSize, ageGroup: selectedAge === "senior" ? "Senior" : undefined });
+      const res = await getDogs({
+        page: scanPage,
+        limit: pageSize,
+        sort: upstreamSort,
+        filters: selectedAge === "senior" ? [{ fieldName: "animals.ageGroup", operation: "equal", criteria: "Senior" }] : undefined,
+        includeDescription: true,
+      });
       if (scan === 0) meta = res.meta;
 
       for (const inc of res.included) {
@@ -481,6 +586,7 @@ export default async function SheltersPage({
     if (selectedBreed) params.set("breed", selectedBreed);
     if (selectedAge) params.set("age", selectedAge);
     if (selectedSize) params.set("size", selectedSize);
+    if (sortMode) params.set("sort", sortMode);
     if (p > 1) params.set("page", String(p));
     return `/shelters${params.toString() ? `?${params.toString()}` : ""}`;
   };
@@ -576,11 +682,12 @@ export default async function SheltersPage({
                   </p>
                 </div>
                 <div className="sort-by">
-                  <span className="text-muted">Sort: Coming soon</span>
+                  <span className="text-muted me-2">Sort:</span>
+                  <SheltersSorter />
                 </div>
               </div>
 
-              <div className="product-grid row g-4">
+              <div className="product-grid row g-4 mt-4">
                 {displayedDogs.map((dog) => {
                   const name = dog.attributes?.name || "Dog";
                   const breed = dog.attributes?.breedString || "";

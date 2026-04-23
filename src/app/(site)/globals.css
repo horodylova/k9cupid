@@ -1253,7 +1253,7 @@ iconify-icon.pagination-arrow:hover {
 
   .shopify-grid .sidebar {
     max-width: 100%;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .shopify-grid .sidebar .form-control,

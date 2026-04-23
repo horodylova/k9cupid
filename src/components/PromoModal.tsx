@@ -11,6 +11,7 @@ const VIDEO_SRC = "/Every%20dog.mp4";
 const ANIMATION_MS = 220;
 
 export default function PromoModal() {
+  const enabled = process.env.NEXT_PUBLIC_PROMO_VIDEO_ENABLED === "true";
   const [isOpen, setIsOpen] = useState(false);
   const [showReplay, setShowReplay] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -19,6 +20,7 @@ export default function PromoModal() {
   const scheduledRef = useRef(false);
 
   useEffect(() => {
+    if (!enabled) return;
     const schedule = () => {
       if (scheduledRef.current) return;
       scheduledRef.current = true;
@@ -69,15 +71,16 @@ export default function PromoModal() {
       detach();
       if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
     };
-  }, []);
+  }, [enabled]);
 
   useEffect(() => {
+    if (!enabled) return;
     if (!isOpen) return;
     const v = videoRef.current;
     if (!v) return;
     v.currentTime = 0;
     v.play().catch(() => setShowReplay(true));
-  }, [isOpen]);
+  }, [enabled, isOpen]);
 
   const close = () => {
     setIsVisible(false);
@@ -98,7 +101,7 @@ export default function PromoModal() {
     setShowReplay(false);
   };
 
-  if (!isOpen) return null;
+  if (!enabled || !isOpen) return null;
 
   return (
     <div

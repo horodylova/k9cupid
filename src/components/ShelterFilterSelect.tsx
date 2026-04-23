@@ -149,12 +149,6 @@ export default function ShelterFilterSelect({
         <iconify-icon icon="mdi:chevron-down" className="fs-5 shelter-filter-chevron"></iconify-icon>
       </button>
 
-      {selectedId && (
-        <button type="button" className="btn btn-link p-0 mt-2 text-decoration-none" onClick={() => applySelection(null)}>
-          Clear shelter filter
-        </button>
-      )}
-
       {isOpen && (
         <div
           role="dialog"
