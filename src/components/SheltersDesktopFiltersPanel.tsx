@@ -87,10 +87,11 @@ export default function SheltersDesktopFiltersPanel({
       )}
       <h4 className="widget-title m-0 mb-3">Filters</h4>
       {children}
-      <div className="d-flex gap-2 mt-3">
+      <div className="d-flex gap-2 mt-3" style={{ minWidth: 0 }}>
         <button
           type="button"
-          className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1 flex-fill"
+          className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1"
+          style={{ flex: "1 1 0", minWidth: 0 }}
           onClick={() => apply("clear")}
           disabled={
             !isDirty &&
@@ -106,7 +107,8 @@ export default function SheltersDesktopFiltersPanel({
         </button>
         <button
           type="button"
-          className="btn btn-dark btn-md text-uppercase fs-6 rounded-1 flex-fill"
+          className="btn btn-dark btn-md text-uppercase fs-6 rounded-1"
+          style={{ flex: "1 1 0", minWidth: 0 }}
           onClick={() => apply("apply")}
         >
           Apply
