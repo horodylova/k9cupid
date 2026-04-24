@@ -23,7 +23,7 @@ interface BlogPost {
 
 export default async function ReadAlso({ currentDate }: ReadAlsoProps) {
   // Fetch 3 posts published BEFORE the current one (previous articles)
-  const query = `*[_type == "post" && coalesce(publishedAt, _createdAt) < $currentDate] | order(coalesce(publishedAt, _createdAt) desc)[0...3] {
+  const query = `*[_type == "post" && coalesce(publishedAt, _createdAt) <= now() && coalesce(publishedAt, _createdAt) < $currentDate] | order(coalesce(publishedAt, _createdAt) desc)[0...3] {
     _id,
     title,
     "slug": slug.current,

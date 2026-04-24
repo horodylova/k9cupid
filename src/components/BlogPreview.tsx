@@ -25,7 +25,7 @@ interface SanityPost {
 
 const BlogPreview = async () => {
   const query = `{
-    "featured": *[_type == "post" && featured == true] | order(_updatedAt desc)[0] {
+    "featured": *[_type == "post" && featured == true && coalesce(publishedAt, _createdAt) <= now()] | order(_updatedAt desc)[0] {
       _id,
       title,
       "slug": slug.current,
@@ -35,7 +35,7 @@ const BlogPreview = async () => {
       excerpt,
       featured
     },
-    "latest": *[_type == "post"] | order(publishedAt desc)[0...4] {
+    "latest": *[_type == "post" && coalesce(publishedAt, _createdAt) <= now()] | order(coalesce(publishedAt, _createdAt) desc)[0...4] {
       _id,
       title,
       "slug": slug.current,

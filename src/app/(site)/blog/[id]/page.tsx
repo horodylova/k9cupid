@@ -2,6 +2,7 @@ import ReadAlso from '@/components/ReadAlso';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react';
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   const siteUrl = (process.env.SITE_URL || "https://k9cupid.fit").replace(/\/+$/, "");
   const canonicalUrl = `${siteUrl}/blog/${params.id}`;
 
-  const query = `*[_type == "post" && slug.current == $slug][0] {
+  const query = `*[_type == "post" && slug.current == $slug && coalesce(publishedAt, _createdAt) <= now()][0] {
     title,
     excerpt,
     mainImage
@@ -171,7 +172,7 @@ function ShareBar({ canonicalUrl, title }: { canonicalUrl: string; title: string
 export default async function BlogPostPage({ params }: { params: { id: string } }) {
   const siteUrl = (process.env.SITE_URL || "https://k9cupid.fit").replace(/\/+$/, "");
   const canonicalUrl = `${siteUrl}/blog/${params.id}`;
-  const query = `*[_type == "post" && slug.current == $slug][0] {
+  const query = `*[_type == "post" && slug.current == $slug && coalesce(publishedAt, _createdAt) <= now()][0] {
     title,
     mainImage,
     publishedAt,
@@ -179,8 +180,8 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
     body,
     "categories": categories[]->title,
     tags,
-    "prev": *[_type == "post" && publishedAt < ^.publishedAt] | order(publishedAt desc)[0] { "title": title, "slug": slug.current },
-    "next": *[_type == "post" && publishedAt > ^.publishedAt] | order(publishedAt asc)[0] { "title": title, "slug": slug.current }
+    "prev": *[_type == "post" && coalesce(publishedAt, _createdAt) <= now() && coalesce(publishedAt, _createdAt) < coalesce(^.publishedAt, ^._createdAt)] | order(coalesce(publishedAt, _createdAt) desc)[0] { "title": title, "slug": slug.current },
+    "next": *[_type == "post" && coalesce(publishedAt, _createdAt) <= now() && coalesce(publishedAt, _createdAt) > coalesce(^.publishedAt, ^._createdAt)] | order(coalesce(publishedAt, _createdAt) asc)[0] { "title": title, "slug": slug.current }
   }`;
 
   let post = null;
@@ -191,16 +192,10 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
     console.error("Sanity fetch failed:", error);
   }
 
-  // Fallback if no post found or Sanity not configured
   if (!post) {
-    // Ideally render 404 or a placeholder
-    // For now, we return the static placeholder for demonstration if slug matches placeholder
-    if (params.id === 'finding-your-perfect-canine-companion' || !post) {
-         // Return the static template for demo purposes if nothing found
-         // But better to just show "Post not found" or keep the static content as a "demo post"
-         // I will keep the static content as fallback for now so the page isn't broken
-         return (
-            <>
+    if (process.env.NODE_ENV !== "production" && params.id === 'finding-your-perfect-canine-companion') {
+      return (
+        <>
               <section id="banner" className="py-3" style={{ background: '#F9F3EC' }}>
                 <div className="container">
                   <div className="hero-content py-5 my-3">
@@ -257,8 +252,9 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                 </div>
               </div>
             </>
-         );
+      );
     }
+    notFound();
   }
 
   const components = {

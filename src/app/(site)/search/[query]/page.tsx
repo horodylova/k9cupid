@@ -65,7 +65,7 @@ export default async function SearchResultsPage({
     (async () => {
       try {
         const pattern = `*${query}*`;
-        const groq = `*[_type == "post" && (title match $pattern || excerpt match $pattern)] | order(coalesce(publishedAt, _createdAt) desc)[0...30] {
+        const groq = `*[_type == "post" && coalesce(publishedAt, _createdAt) <= now() && (title match $pattern || excerpt match $pattern)] | order(coalesce(publishedAt, _createdAt) desc)[0...30] {
           title,
           "slug": slug.current
         }`;
