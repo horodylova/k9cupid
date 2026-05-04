@@ -1,4 +1,4 @@
-import ReadAlso from '@/components/ReadAlso';
+import ReadAlso from '@/components/blog/ReadAlso';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from "next";

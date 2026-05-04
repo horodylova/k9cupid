@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import BreedTypeahead from "@/components/BreedTypeahead";
+import BreedTypeahead from "./BreedTypeahead";
 
 export default function BreedSearchBar() {
   const router = useRouter();

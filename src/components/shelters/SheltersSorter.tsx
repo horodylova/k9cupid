@@ -2,8 +2,8 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
-import OptionFilterSelect from "@/components/OptionFilterSelect";
-import Preloader from "@/components/Preloader";
+import OptionFilterSelect from "@/components/filters/OptionFilterSelect";
+import Preloader from "@/components/ui/Preloader";
 
 export default function SheltersSorter() {
   const router = useRouter();
@@ -28,7 +28,7 @@ export default function SheltersSorter() {
         value={current}
         options={options}
         placeholder="Default"
-        onChange={(nextSort) => {
+        onChange={(nextSort: string) => {
           const params = new URLSearchParams(searchParams?.toString() || "");
           params.delete("page");
           if (!nextSort) params.delete("sort");

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 import { normalizeHtmlText } from "@/lib/htmlText";
-import ShelterDogWishlistHeartButton from "@/components/ShelterDogWishlistHeartButton";
+import ShelterDogWishlistHeartButton from "@/components/shelters/ShelterDogWishlistHeartButton";
 
 export const revalidate = 60;
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import NewsletterSubscribeForm from "@/components/NewsletterSubscribeForm";
+import NewsletterSubscribeForm from "@/components/newsletter/NewsletterSubscribeForm";
 
 export default function Footer() {
   return (

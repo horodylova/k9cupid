@@ -1,5 +1,5 @@
 import { activityLevelQuestion, QuizOptionId } from "@/lib/quizQuestions";
-import PhotoSingleChoiceQuestion from "@/components/PhotoSingleChoiceQuestion";
+import PhotoSingleChoiceQuestion from "./PhotoSingleChoiceQuestion";
 
 type ActivityLevelQuestionProps = {
   selected: QuizOptionId | undefined;

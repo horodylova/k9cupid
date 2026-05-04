@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import QuizInterimGrid from "@/components/quiz-interim/QuizInterimGrid";
+import QuizInterimGrid from "@/components/quiz/interim/QuizInterimGrid";
 import { Dog } from "@/lib/api";
-import { QuizStartOverModal } from "@/components/QuizModals";
+import { QuizStartOverModal } from "@/components/quiz/QuizModals";
 
 interface QuizFinalViewProps {
   analysis: { title: string; text: string };

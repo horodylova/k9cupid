@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./PromoModal.module.css";
-import NewsletterSubscribeForm from "@/components/NewsletterSubscribeForm";
+import NewsletterSubscribeForm from "@/components/newsletter/NewsletterSubscribeForm";
 
 const TIMEOUT_MS = 60000;
 const STORAGE_KEY = "k9PromoVideoLastSeen";

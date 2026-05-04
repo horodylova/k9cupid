@@ -1,5 +1,5 @@
 import { childrenQuestion, QuizOptionId } from "@/lib/quizQuestions";
-import TagMultiChoiceQuestion from "@/components/TagMultiChoiceQuestion";
+import TagMultiChoiceQuestion from "./TagMultiChoiceQuestion";
 
 type ChildrenQuestionProps = {
   selected: QuizOptionId[];
@@ -21,4 +21,3 @@ export default function ChildrenQuestion({
     />
   );
 }
-

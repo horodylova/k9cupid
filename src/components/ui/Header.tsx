@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { useNavigation } from '@/context/NavigationContext';
-import GlobalSearchBar from '@/components/GlobalSearchBar';
+import GlobalSearchBar from '@/components/search/GlobalSearchBar';
 
 export default function Header() {
   const [loading, setLoading] = useState(true);

@@ -1,5 +1,5 @@
 import { workScheduleQuestion, QuizOptionId } from "@/lib/quizQuestions";
-import PhotoSingleChoiceQuestion from "@/components/PhotoSingleChoiceQuestion";
+import PhotoSingleChoiceQuestion from "./PhotoSingleChoiceQuestion";
 
 type WorkScheduleQuestionProps = {
   selected: QuizOptionId | undefined;

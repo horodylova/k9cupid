@@ -25,29 +25,29 @@ import {
 import { useQuizSession } from "@/hooks/useQuizSession";
 import { saveQuizFinalResults } from "@/lib/quizStorage";
 
-import SharedSpacesQuestion from "@/components/SharedSpacesQuestion";
-import ChildrenQuestion from "@/components/ChildrenQuestion";
-import PetsQuestion from "@/components/PetsQuestion";
-import ScaleQuestion from "@/components/ScaleQuestion";
-import HomeTypeQuestion from "@/components/HomeTypeQuestion";
-import PhysicalHandlingQuestion from "@/components/PhysicalHandlingQuestion";
-import VisitorsQuestion from "@/components/VisitorsQuestion";
-import HairToleranceQuestion from "@/components/HairToleranceQuestion";
-import DroolingToleranceQuestion from "@/components/DroolingToleranceQuestion";
-import WorkScheduleQuestion from "@/components/WorkScheduleQuestion";
-import ActivityLevelQuestion from "@/components/ActivityLevelQuestion";
-import ActiveImportanceQuestion from "@/components/ActiveImportanceQuestion";
-import ActiveDaysQuestion from "@/components/ActiveDaysQuestion";
-import SocialBehaviorQuestion from "@/components/SocialBehaviorQuestion";
-import PurposeQuestion from "@/components/PurposeQuestion";
+import SharedSpacesQuestion from "@/components/quiz/questions/SharedSpacesQuestion";
+import ChildrenQuestion from "@/components/quiz/questions/ChildrenQuestion";
+import PetsQuestion from "@/components/quiz/questions/PetsQuestion";
+import ScaleQuestion from "@/components/quiz/questions/ScaleQuestion";
+import HomeTypeQuestion from "@/components/quiz/questions/HomeTypeQuestion";
+import PhysicalHandlingQuestion from "@/components/quiz/questions/PhysicalHandlingQuestion";
+import VisitorsQuestion from "@/components/quiz/questions/VisitorsQuestion";
+import HairToleranceQuestion from "@/components/quiz/questions/HairToleranceQuestion";
+import DroolingToleranceQuestion from "@/components/quiz/questions/DroolingToleranceQuestion";
+import WorkScheduleQuestion from "@/components/quiz/questions/WorkScheduleQuestion";
+import ActivityLevelQuestion from "@/components/quiz/questions/ActivityLevelQuestion";
+import ActiveImportanceQuestion from "@/components/quiz/questions/ActiveImportanceQuestion";
+import ActiveDaysQuestion from "@/components/quiz/questions/ActiveDaysQuestion";
+import SocialBehaviorQuestion from "@/components/quiz/questions/SocialBehaviorQuestion";
+import PurposeQuestion from "@/components/quiz/questions/PurposeQuestion";
 import { useNavigation } from "@/context/NavigationContext";
 import { getQuizInterimBreeds } from "@/app/actions";
 import { Dog } from "@/lib/api";
 import { calculateFinalBreeds } from "@/lib/quizScoring";
 import { getResultAnalysis } from "@/lib/quizAnalysis";
-import QuizInterimView from "@/components/QuizInterimView";
-import QuizFinalView from "@/components/QuizFinalView";
-import { QuizStartOverModal, QuizLeaveModal } from "@/components/QuizModals";
+import QuizInterimView from "@/components/quiz/QuizInterimView";
+import QuizFinalView from "@/components/quiz/QuizFinalView";
+import { QuizStartOverModal, QuizLeaveModal } from "@/components/quiz/QuizModals";
 
 export default function QuizRunner() {
   const { session, recordAnswer, isInitialized, setStatus } = useQuizSession();
@@ -518,7 +518,7 @@ export default function QuizRunner() {
                   {step === 1 && (
                     <HomeTypeQuestion
                       selected={selectedHome}
-                      onChange={(value) =>
+                      onChange={(value: QuizOptionId) =>
                         recordAnswer({
                           id: homeTypeQuestion.id,
                           value: value,
@@ -530,7 +530,7 @@ export default function QuizRunner() {
                   {step === 2 && (
                     <SharedSpacesQuestion
                       selected={selectedSharedSpaces}
-                      onChange={(next) =>
+                      onChange={(next: QuizOptionId[]) =>
                         recordAnswer({
                           id: "shared_spaces",
                           value: next,
@@ -542,7 +542,7 @@ export default function QuizRunner() {
                   {step === 3 && (
                     <PhysicalHandlingQuestion
                       selected={selectedPhysicalHandling}
-                      onChange={(value) =>
+                      onChange={(value: QuizOptionId) =>
                         recordAnswer({
                           id: physicalHandlingQuestion.id,
                           value: value,
@@ -554,7 +554,7 @@ export default function QuizRunner() {
                   {step === 4 && (
                     <ChildrenQuestion
                       selected={selectedChildren}
-                      onChange={(next) =>
+                      onChange={(next: QuizOptionId[]) =>
                         recordAnswer({
                           id: childrenQuestion.id,
                           value: next,
@@ -566,7 +566,7 @@ export default function QuizRunner() {
                   {step === 5 && (
                     <PetsQuestion
                       selected={selectedOtherPets}
-                      onChange={(next) =>
+                      onChange={(next: QuizOptionId[]) =>
                         recordAnswer({
                           id: otherPetsQuestion.id,
                           value: next,
@@ -578,7 +578,7 @@ export default function QuizRunner() {
                   {step === 6 && (
                     <VisitorsQuestion
                       selected={selectedVisitors}
-                      onChange={(value) =>
+                      onChange={(value: QuizOptionId) =>
                         recordAnswer({
                           id: visitorsQuestion.id,
                           value: value,
@@ -590,7 +590,7 @@ export default function QuizRunner() {
                   {step === 7 && (
                     <SocialBehaviorQuestion
                       selected={selectedSocialBehavior}
-                      onChange={(value) =>
+                      onChange={(value: QuizOptionId) =>
                         recordAnswer({
                           id: socialBehaviorQuestion.id,
                           value: value,
@@ -605,7 +605,7 @@ export default function QuizRunner() {
                       subtitle={noiseToleranceQuestion.description}
                       labels={noiseToleranceQuestion.scaleLabels}
                       value={selectedNoiseTolerance}
-                      onChange={(next) =>
+                      onChange={(next: number) =>
                         recordAnswer({
                           id: noiseToleranceQuestion.id,
                           value: next,
@@ -617,7 +617,7 @@ export default function QuizRunner() {
                   {step === 9 && (
                     <HairToleranceQuestion
                       selected={selectedHairTolerance}
-                      onChange={(value) =>
+                      onChange={(value: QuizOptionId) =>
                         recordAnswer({
                           id: hairToleranceQuestion.id,
                           value: value,
@@ -632,7 +632,7 @@ export default function QuizRunner() {
                       subtitle={groomingTimeQuestion.description}
                       labels={groomingTimeQuestion.scaleLabels}
                       value={selectedGroomingTime}
-                      onChange={(next) =>
+                      onChange={(next: number) =>
                         recordAnswer({
                           id: groomingTimeQuestion.id,
                           value: next,
@@ -644,7 +644,7 @@ export default function QuizRunner() {
                   {step === 11 && (
                   <DroolingToleranceQuestion
                     selected={selectedDroolingTolerance}
-                    onChange={(value) =>
+                    onChange={(value: QuizOptionId) =>
                       recordAnswer({
                         id: droolingToleranceQuestion.id,
                         value: value,
@@ -667,7 +667,7 @@ export default function QuizRunner() {
                 {step === 13 && (
                   <WorkScheduleQuestion
                     selected={selectedWorkSchedule}
-                    onChange={(value) =>
+                    onChange={(value: QuizOptionId) =>
                       recordAnswer({
                         id: workScheduleQuestion.id,
                         value: value,
@@ -679,7 +679,7 @@ export default function QuizRunner() {
                 {step === 14 && (
                     <ActivityLevelQuestion
                       selected={selectedActivityLevel}
-                      onChange={(value) =>
+                      onChange={(value: QuizOptionId) =>
                         recordAnswer({
                           id: activityLevelQuestion.id,
                           value: value,
@@ -691,7 +691,7 @@ export default function QuizRunner() {
                   {step === 15 && (
                     <ActiveImportanceQuestion
                       selected={selectedActiveImportance}
-                      onChange={(value) =>
+                      onChange={(value: QuizOptionId) =>
                         recordAnswer({
                           id: activeImportanceQuestion.id,
                           value: value,
@@ -703,7 +703,7 @@ export default function QuizRunner() {
                   {step === 16 && (
                     <ActiveDaysQuestion
                       selected={selectedActiveDays}
-                      onChange={(value) =>
+                      onChange={(value: QuizOptionId) =>
                         recordAnswer({
                           id: activeDaysQuestion.id,
                           value: value,
@@ -717,7 +717,7 @@ export default function QuizRunner() {
                       title={walksTimeQuestion.title}
                       labels={walksTimeQuestion.scaleLabels}
                       value={selectedWalksTime}
-                      onChange={(next) =>
+                      onChange={(next: number) =>
                         recordAnswer({
                           id: walksTimeQuestion.id,
                           value: next,
@@ -729,7 +729,7 @@ export default function QuizRunner() {
                   {step === 18 && (
                     <PurposeQuestion
                       selected={selectedPurpose}
-                      onChange={(value) =>
+                      onChange={(value: QuizOptionId | QuizOptionId[]) =>
                         recordAnswer({
                           id: purposeQuestion.id,
                           value: value,
@@ -783,4 +783,3 @@ export default function QuizRunner() {
     </>
   );
 }
-

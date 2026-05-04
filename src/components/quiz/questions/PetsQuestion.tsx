@@ -1,5 +1,5 @@
 import { otherPetsQuestion, QuizOptionId } from "@/lib/quizQuestions";
-import TagMultiChoiceQuestion from "@/components/TagMultiChoiceQuestion";
+import TagMultiChoiceQuestion from "./TagMultiChoiceQuestion";
 
 type PetsQuestionProps = {
   selected: QuizOptionId[];
@@ -18,4 +18,3 @@ export default function PetsQuestion({ selected, onChange }: PetsQuestionProps) 
     />
   );
 }
-

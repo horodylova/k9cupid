@@ -2,14 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import ShelterFilterSelect from "@/components/ShelterFilterSelect";
-import MobileFiltersPanel from "@/components/MobileFiltersPanel";
+import ShelterFilterSelect from "@/components/shelters/ShelterFilterSelect";
+import MobileFiltersPanel from "@/components/shelters/MobileFiltersPanel";
 import sheltersData from "@/data/rescuegroupsShelters.json";
-import StateFilterSelect from "@/components/StateFilterSelect";
-import CityFilterSelect from "@/components/CityFilterSelect";
-import OptionFilterSelect from "@/components/OptionFilterSelect";
-import Preloader from "@/components/Preloader";
-import BreedTypeahead from "@/components/BreedTypeahead";
+import StateFilterSelect from "@/components/shelters/StateFilterSelect";
+import CityFilterSelect from "@/components/shelters/CityFilterSelect";
+import OptionFilterSelect from "@/components/filters/OptionFilterSelect";
+import Preloader from "@/components/ui/Preloader";
+import BreedTypeahead from "@/components/breeds/BreedTypeahead";
 
 type ShelterOption = {
   id: string;
@@ -167,7 +167,7 @@ export default function SheltersMobileFilters({
             <label className="form-label mb-1">State</label>
             <StateFilterSelect
               value={normalizeState(pendingState)}
-              onChange={(code) => {
+              onChange={(code: string) => {
                 const st = normalizeState(code);
                 setPendingState(st);
                 setPendingCity("");
@@ -184,7 +184,7 @@ export default function SheltersMobileFilters({
               disabled={!normalizeState(pendingState) || cityOptions.length === 0}
               placeholder={normalizeState(pendingState) ? "All cities" : "Select state first"}
               allLabel="All cities"
-              onChange={(city) => {
+              onChange={(city: string) => {
                 setPendingCity(city);
                 setPendingShelterId("");
                 setPendingShelterName("");
@@ -198,7 +198,7 @@ export default function SheltersMobileFilters({
               quickOptions={quickOptions}
               filterState={normalizeState(pendingState)}
               filterCity={pendingCity}
-              onSelect={(opt) => {
+              onSelect={(opt: ShelterOption | null | undefined) => {
                 setPendingShelterId(opt?.id || "");
                 setPendingShelterName(opt?.name || "");
               }}
@@ -222,7 +222,7 @@ export default function SheltersMobileFilters({
                 { value: "adult", label: "Adult" },
                 { value: "senior", label: "Senior" },
               ]}
-              onChange={(v) => setPendingAge(v)}
+              onChange={(v: string) => setPendingAge(v)}
             />
           </div>
           <div>
@@ -237,7 +237,7 @@ export default function SheltersMobileFilters({
                 { value: "large", label: "Large" },
                 { value: "x-large", label: "X-Large" },
               ]}
-              onChange={(v) => setPendingSize(v)}
+              onChange={(v: string) => setPendingSize(v)}
             />
           </div>
           </div>
