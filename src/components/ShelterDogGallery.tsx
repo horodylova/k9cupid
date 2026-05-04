@@ -49,6 +49,7 @@ export default function ShelterDogGallery({
             priority
             sizes="(max-width: 992px) 100vw, 50vw"
             style={{ objectFit: isPlaceholder ? "cover" : "contain", padding: isPlaceholder ? 0 : 12 }}
+            unoptimized
           />
         </div>
       </div>
@@ -80,6 +81,7 @@ export default function ShelterDogGallery({
                       fill
                       sizes="(max-width: 992px) 33vw, 180px"
                       style={{ objectFit: "cover" }}
+                      unoptimized
                     />
                   </div>
                 </button>

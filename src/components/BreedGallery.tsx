@@ -53,6 +53,7 @@ export default function BreedGallery({ image, name }: BreedGalleryProps) {
                     sizes="(max-width: 992px) 100vw, 50vw"
                     priority
                     onError={() => setImgSrc(fallbackSrc)}
+                    unoptimized
                   />
                </div>
             </SwiperSlide>

@@ -76,6 +76,7 @@ export default function PhotoMultiChoiceQuestion({
                         fill
                         sizes="(max-width: 768px) 50vw, 25vw"
                         className="object-fit-cover w-100 h-100"
+                        unoptimized
                       />
                     ) : (
                       <div

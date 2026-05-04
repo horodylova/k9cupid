@@ -26,6 +26,7 @@ export default function QuizBreedCard({ breed }: QuizBreedCardProps) {
             className="object-fit-cover"
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
             onError={() => setImgSrc("/no-image-available.jpg")}
+            unoptimized
           />
         </div>
         <div className="card-body p-2 text-center">

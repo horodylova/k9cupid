@@ -164,6 +164,7 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
                       width={960}
                       height={640}
                       style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                      unoptimized
                     />
                   </Link>
                 </div>
@@ -217,6 +218,7 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
                                   width={56}
                                   height={56}
                                   style={{ width: "56px", height: "56px", objectFit: "contain" }}
+                                  unoptimized
                                 />
                                 <div>
                                   <h5 className="mb-0">Subscribe</h5>
@@ -254,6 +256,7 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
                         width={800}
                         height={600}
                         style={{ width: "100%", height: "auto", objectFit: "cover" }}
+                        unoptimized
                       />
                     </Link>
                     <div className="card-body p-0">
@@ -298,6 +301,7 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
                               width={56}
                               height={56}
                               style={{ width: "56px", height: "56px", objectFit: "contain" }}
+                              unoptimized
                             />
                             <div>
                               <h5 className="mb-0">Subscribe</h5>

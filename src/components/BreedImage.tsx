@@ -21,6 +21,7 @@ export default function BreedImage({ src, alt }: BreedImageProps) {
       height={300}
       sizes="(max-width: 768px) 100vw, 33vw"
       style={{ width: '100%', height: 'auto', display: 'block' }}
+      unoptimized
     />
   );
 }

@@ -25,6 +25,7 @@ export function QuizStartOverModal({ onCancel }: QuizStartOverModalProps) {
               width={120}
               height={120}
               className="img-fluid"
+              unoptimized
             />
             <h2 className="h5 mb-0 mt-3">Start from scratch?</h2>
           </div>
@@ -84,6 +85,7 @@ export function QuizLeaveModal({ pendingHref, onCancel, onConfirm }: QuizLeaveMo
               width={120}
               height={120}
               className="img-fluid"
+              unoptimized
             />
             <h2 className="h5 mb-0 mt-3">Need a little break?</h2>
           </div>

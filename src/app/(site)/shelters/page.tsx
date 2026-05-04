@@ -732,6 +732,7 @@ export default async function SheltersPage({
                               fill
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               style={{ objectFit: isPlaceholder ? "cover" : "contain", padding: isPlaceholder ? 0 : 10 }}
+                              unoptimized
                             />
                           </div>
                         </Link>
