@@ -56,6 +56,7 @@ export default function CartPage() {
                                   className="img-fluid rounded-4" 
                                   width={100}
                                   height={100}
+                                  unoptimized
                                 />
                               </div>
                             </div>

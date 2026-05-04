@@ -51,6 +51,7 @@ export default async function ReadAlso({ currentDate }: ReadAlsoProps) {
                       alt={post.title}
                       fill
                       className="object-fit-cover"
+                      unoptimized
                     />
                   ) : (
                     <div className="w-100 h-100 bg-light d-flex align-items-center justify-content-center text-muted">

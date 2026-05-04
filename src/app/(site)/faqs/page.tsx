@@ -214,6 +214,7 @@ export default function FaqsPage() {
                           width={56}
                           height={56}
                           priority
+                          unoptimized
                         />
                       </div>
                       <div className="custom-alert__content">
@@ -292,6 +293,7 @@ export default function FaqsPage() {
                             width={56}
                             height={56}
                             priority
+                            unoptimized
                           />
                         </div>
                         <div className="custom-alert__content">

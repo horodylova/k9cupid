@@ -129,6 +129,7 @@ export default function ContactPage() {
                           width={56}
                           height={56}
                           priority
+                          unoptimized
                         />
                       </div>
                       <div className="custom-alert__content">

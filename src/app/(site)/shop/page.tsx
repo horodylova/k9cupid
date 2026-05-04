@@ -143,6 +143,7 @@ export default function ShopPage() {
                           width={600} 
                           height={600}
                           style={{ width: '100%', height: 'auto' }}
+                          unoptimized
                         />
                       </Link>
                       <div className="card-body p-0">
