@@ -4,7 +4,7 @@ import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/l
 import { normalizeHtmlText } from "@/lib/htmlText";
 import ShelterDogWishlistHeartButton from "@/components/ShelterDogWishlistHeartButton";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 const PLACEHOLDER_SRC = "/No%20photo%20yet.jpg";
 
@@ -134,7 +134,7 @@ async function getDogById(id: string) {
       Accept: "application/vnd.api+json",
       Authorization: apiKey,
     },
-    cache: "no-store",
+    next: { revalidate: 60 },
   });
 
   if (!res.ok) return null;
@@ -200,7 +200,7 @@ export default async function ShelterDogPage({
                 <Link className="breadcrumb-item nav-link" href="/">
                   Home
                 </Link>
-                <Link className="breadcrumb-item nav-link" href={backHref}>
+                <Link className="breadcrumb-item nav-link" href={backHref} prefetch={false}>
                   Shelters
                 </Link>
                 <span className="breadcrumb-item active" aria-current="page">
@@ -217,7 +217,7 @@ export default async function ShelterDogPage({
               <h1 className="h4 mb-2">Dog not found</h1>
               <div className="text-muted">This listing may have been removed or is unavailable.</div>
               <div className="mt-4">
-                <Link href={backHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
+                <Link href={backHref} prefetch={false} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
                   Back to Shelters
                 </Link>
               </div>
@@ -271,7 +271,7 @@ export default async function ShelterDogPage({
                 <Link className="breadcrumb-item nav-link" href="/">
                   Home
                 </Link>
-                <Link className="breadcrumb-item nav-link" href={backHref}>
+                <Link className="breadcrumb-item nav-link" href={backHref} prefetch={false}>
                   Shelters
                 </Link>
                 <span className="breadcrumb-item active" aria-current="page">
@@ -292,7 +292,7 @@ export default async function ShelterDogPage({
                   : "This entry is informational (for example, pre-approval or application details) and is not an adoptable dog profile."}
               </div>
               <div className="mt-4">
-                <Link href={backHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
+                <Link href={backHref} prefetch={false} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
                   Back to Shelters
                 </Link>
               </div>
@@ -397,6 +397,7 @@ export default async function ShelterDogPage({
                             {orgInfo.id && orgInfo.name ? (
                               <Link
                                 href={`/shelters?shelter=${encodeURIComponent(orgInfo.id)}&shelterName=${encodeURIComponent(orgInfo.name)}`}
+                                prefetch={false}
                                 className="btn btn-sm btn-outline-dark text-uppercase rounded-1"
                               >
                                 See kennel mates
@@ -411,6 +412,7 @@ export default async function ShelterDogPage({
                           {orgInfo.id && orgInfo.name ? (
                             <Link
                               href={`/shelters?shelter=${encodeURIComponent(orgInfo.id)}&shelterName=${encodeURIComponent(orgInfo.name)}`}
+                              prefetch={false}
                               className="btn btn-sm btn-outline-dark text-uppercase rounded-1"
                             >
                               See kennel mates
@@ -448,7 +450,7 @@ export default async function ShelterDogPage({
                 )}
 
                 <div className="d-flex flex-column flex-sm-row gap-3 mt-4">
-                  <Link href={backHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
+                  <Link href={backHref} prefetch={false} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1">
                     Back
                   </Link>
                   <ShelterDogWishlistHeartButton

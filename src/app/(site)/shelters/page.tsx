@@ -9,7 +9,7 @@ import SheltersMobileFilters from "@/components/SheltersMobileFilters";
 import SheltersSorter from "@/components/SheltersSorter";
 import sheltersData from "@/data/rescuegroupsShelters.json";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 type RescueMeta = {
   count: number;
@@ -300,7 +300,7 @@ async function getDogs({
             },
           })
         : undefined,
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
 
     if (res.ok || !shouldPost) return res;
@@ -321,7 +321,7 @@ async function getDogs({
             },
           })
         : undefined,
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
   };
 
@@ -366,7 +366,6 @@ export default async function SheltersPage({
   const selectedState = (selectedStateRaw || "").trim().toUpperCase();
   const selectedCity = (selectedCityRaw || "").trim();
   const selectedBreed = normalizeToken((selectedBreedRaw || "").trim());
-  const selectedBreedText = (selectedBreedRaw || "").trim();
   const selectedAge = normalizeToken((selectedAgeRaw || "").trim());
   const selectedSize = normalizeToken((selectedSizeRaw || "").trim());
   const selectedSort = normalizeToken((selectedSortRaw || "").trim());
@@ -418,10 +417,6 @@ export default async function SheltersPage({
 
     let scanPage = 1;
     let upstreamPages = 1;
-    const upstreamFilters: Array<{ fieldName: string; operation: string; criteria: string }> = [];
-    if (selectedAge === "senior") upstreamFilters.push({ fieldName: "animals.ageGroup", operation: "equal", criteria: "Senior" });
-    if (selectedShelterId) upstreamFilters.push({ fieldName: "animals.orgID", operation: "equal", criteria: selectedShelterId });
-    if (selectedBreedText) upstreamFilters.push({ fieldName: "animals.breedString", operation: "contains", criteria: selectedBreedText });
 
     const processBatch = (res: { dogs: RescueAnimal[]; included: RescueIncluded[] }) => {
       for (const inc of res.included) {
@@ -454,16 +449,16 @@ export default async function SheltersPage({
       page: scanPage,
       limit: 250,
       sort: upstreamSort,
-      filters: upstreamFilters,
       includeDescription: false,
     });
     upstreamPages = first.meta.pages || 1;
+    const scanLimit = Math.min(upstreamPages, Math.max(maxScanPages, Math.min(20, page * 2)));
     processBatch(first);
     scanPage += 1;
 
-    while (scanPage <= upstreamPages && matches.length < probe) {
+    while (scanPage <= scanLimit && matches.length < probe) {
       const pagesToFetch = Array.from({ length: scanBatchSize }, (_, idx) => scanPage + idx).filter(
-        (p) => p <= upstreamPages
+        (p) => p <= scanLimit
       );
       const batch = await Promise.all(
         pagesToFetch.map((p) =>
@@ -471,7 +466,6 @@ export default async function SheltersPage({
             page: p,
             limit: 250,
             sort: upstreamSort,
-            filters: upstreamFilters,
             includeDescription: false,
           })
         )
@@ -485,7 +479,7 @@ export default async function SheltersPage({
       scanPage += pagesToFetch.length;
     }
 
-    hasNextPage = matches.length > page * pageSize;
+    hasNextPage = matches.length > page * pageSize || upstreamPages > scanLimit;
     const sortedMatches =
       sortMode === "newest"
         ? matches
@@ -518,7 +512,6 @@ export default async function SheltersPage({
         page: scanPage,
         limit: pageSize,
         sort: upstreamSort,
-        filters: selectedAge === "senior" ? [{ fieldName: "animals.ageGroup", operation: "equal", criteria: "Senior" }] : undefined,
         includeDescription: true,
       });
       if (scan === 0) meta = res.meta;
@@ -719,7 +712,7 @@ export default async function SheltersPage({
                           orgName={orgName}
                           citystate={citystate}
                         />
-                        <Link href={detailsHref}>
+                        <Link href={detailsHref} prefetch={false}>
                           <div
                             className={`position-relative ${styles.cardImage}`}
                             style={{
@@ -739,7 +732,7 @@ export default async function SheltersPage({
 
                         <div className="card-body p-0 pt-4 d-flex flex-column">
                           <div className="px-3">
-                            <Link href={detailsHref}>
+                            <Link href={detailsHref} prefetch={false}>
                               <h3 className="card-title m-0">{name}</h3>
                             </Link>
                             <div className="text-muted mt-2" style={{ fontSize: 14, lineHeight: 1.4 }}>
@@ -758,7 +751,7 @@ export default async function SheltersPage({
                           </div>
 
                           <div className="mt-auto px-3 pb-3 pt-3">
-                            <Link href={detailsHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1 w-100">
+                            <Link href={detailsHref} prefetch={false} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1 w-100">
                               Details
                               <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1 ms-2">
                                 <use xlinkHref="#arrow-right"></use>
@@ -782,7 +775,7 @@ export default async function SheltersPage({
                 <nav className="navigation paging-navigation text-center mt-5" role="navigation">
                   <div className="pagination loop-pagination d-flex justify-content-center align-items-center">
                     {hasPrevPage && (
-                      <Link href={getPageLink(page - 1)} className="pagination-arrow d-flex align-items-center mx-3">
+                      <Link href={getPageLink(page - 1)} prefetch={false} className="pagination-arrow d-flex align-items-center mx-3">
                         <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
                       </Link>
                     )}
@@ -792,14 +785,14 @@ export default async function SheltersPage({
                       const isCurrent = p === page;
                       if (isCurrent) return <span key={p} aria-current="page" className="page-numbers mt-2 fs-3 mx-3 current">{p}</span>;
                       return (
-                        <Link key={p} className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(p as number)}>
+                        <Link key={p} className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(p as number)} prefetch={false}>
                           {p}
                         </Link>
                       );
                     })}
 
                     {hasNextPage && (
-                      <Link href={getPageLink(page + 1)} className="pagination-arrow d-flex align-items-center mx-3">
+                      <Link href={getPageLink(page + 1)} prefetch={false} className="pagination-arrow d-flex align-items-center mx-3">
                         <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
                       </Link>
                     )}
