@@ -5,6 +5,7 @@ import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import Script from "next/script";
 import PromoModal from "@/components/ui/PromoModal";
+import CookieBanner from "@/components/ui/CookieBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +18,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           {children}
         </main>
         <Footer />
+        <CookieBanner />
         <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" strategy="afterInteractive" />
     </div>
   );

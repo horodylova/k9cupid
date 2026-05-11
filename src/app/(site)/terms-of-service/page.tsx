@@ -25,7 +25,7 @@ export default function TermsOfServicePage() {
         <div className="container">
           <div className="row">
             <div className="col-lg-10">
-              <p className="secondary-font text-muted mb-4">Effective date: March 11, 2026</p>
+              <p className="secondary-font text-muted mb-4">Effective date: May 11, 2026</p>
 
               <p className="secondary-font mb-4">
                 These Terms of Service govern your access to and use of the k9cupid website and related features,

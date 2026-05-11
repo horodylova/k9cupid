@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
 type Props = {
@@ -210,6 +211,17 @@ export default function NewsletterSubscribeForm({
           </form>
         </div>
       )}
+      <div className="text-muted secondary-font mt-2" style={{ fontSize: 12, lineHeight: 1.4 }}>
+        By subscribing, you agree to our{" "}
+        <Link href="/privacy-policy" className="text-decoration-underline">
+          Privacy Policy
+        </Link>{" "}
+        and{" "}
+        <Link href="/terms-of-service" className="text-decoration-underline">
+          Terms of Service
+        </Link>
+        .
+      </div>
 
       {toast && (
         <div

@@ -262,6 +262,19 @@ export default function FaqsPage() {
                         required
                       />
                     </div>
+                    <div className="mb-3" style={{ marginTop: -6 }}>
+                      <div className="text-muted secondary-font" style={{ fontSize: 12, lineHeight: 1.4 }}>
+                        By submitting this form, you agree that we may contact you at the email provided and process your information as described in our{" "}
+                        <Link href="/privacy-policy" className="text-decoration-underline">
+                          Privacy Policy
+                        </Link>{" "}
+                        and{" "}
+                        <Link href="/terms-of-service" className="text-decoration-underline">
+                          Terms of Service
+                        </Link>
+                        . If you request quiz results, we will use your email to send them.
+                      </div>
+                    </div>
                     <div className="col-lg-12 mb-3">
                       <input type="tel" name="phone" placeholder="Phone Number" className="form-control ps-3" />
                     </div>

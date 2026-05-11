@@ -358,6 +358,26 @@ a {
   border: 1px solid #EAEAEA;
 }
 
+.k9-consent-switch.form-check-input {
+  width: 3.25rem;
+  height: 1.75rem;
+  margin-top: 0;
+  cursor: pointer;
+  background-color: #fff;
+  border: 2px solid #41403E;
+  box-shadow: none;
+}
+
+.k9-consent-switch.form-check-input:checked {
+  background-color: var(--bs-primary);
+  border-color: #41403E;
+}
+
+.k9-consent-switch.form-check-input:focus {
+  border-color: #41403E;
+  box-shadow: 0 0 0 0.2rem rgba(222, 173, 111, 0.35);
+}
+
 .search-bar ::placeholder {
   font-family: var(--secondary-font);
 }

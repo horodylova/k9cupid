@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
         <div className="container">
           <div className="row">
             <div className="col-lg-10">
-              <p className="secondary-font text-muted mb-4">Effective date: March 11, 2026</p>
+              <p className="secondary-font text-muted mb-4">Effective date: May 11, 2026</p>
 
               <p className="secondary-font mb-4">
                 This Privacy Policy explains how k9cupid collects, uses, and shares information when you use our
@@ -60,6 +60,58 @@ export default function PrivacyPolicyPage() {
                 <li>Cookies and similar technologies used for essential site functionality.</li>
               </ul>
 
+              <h3 className="mt-5 mb-3">Cookies and tracking technologies</h3>
+              <p className="secondary-font">
+                We use cookies, local storage, and similar technologies to run the site and improve your experience.
+                Some are essential (for example, keeping your session, preferences, or quiz progress). Others may be
+                used for analytics and marketing. Where required, we will ask for your consent before using non-essential
+                cookies.
+              </p>
+              <p className="secondary-font mb-2">We use the following cookie categories:</p>
+              <ul className="secondary-font">
+                <li>Strictly Necessary: required to provide core functionality and security.</li>
+                <li>Analytics: help us understand site usage and improve performance.</li>
+                <li>Advertising/Marketing: used to measure ad performance and build audiences for advertising.</li>
+              </ul>
+
+              <h4 className="mt-4 mb-2">Analytics and advertising</h4>
+              <p className="secondary-font">
+                When enabled, we may use Google Analytics 4 (GA4) and the Meta Pixel to understand how people use the
+                site, measure performance, and support marketing and retargeting. These tools may set cookies or use
+                similar technologies. Where required, we will not activate these technologies unless you accept
+                non-essential cookies.
+              </p>
+              <h4 className="mt-4 mb-2">Tools we use (analytics and advertising)</h4>
+              <p className="secondary-font">
+                We may use third-party tools that set cookies or collect information from your device/browser (where
+                enabled).
+              </p>
+              <p className="secondary-font">
+                Google Analytics 4 (GA4) (Provider: Google LLC) is used for analytics and measurement (site usage,
+                performance, and conversions). It may collect information such as page views, events (for example,
+                button clicks), approximate location (derived from IP), device/browser information, and identifiers
+                (which may include cookies and other device identifiers). GA4 data retention is configured in our
+                Google Analytics settings.
+              </p>
+              <p className="secondary-font">
+                Meta Pixel (Facebook Pixel) (Provider: Meta Platforms, Inc.) may be used for advertising/marketing
+                measurement (conversion tracking), analytics related to ad performance, and audience building (where
+                enabled). It may collect information such as page views and events, device/browser information, and
+                identifiers (which may include cookies and other device identifiers). Meta may use this information in
+                accordance with its own policies.
+              </p>
+              <p className="secondary-font">
+                These providers may process information as independent controllers for their own purposes. We encourage
+                you to review their privacy policies for details.
+              </p>
+              <p className="secondary-font">
+                You can manage your cookie preferences using our cookie banner and the footer link{" "}
+                <Link href="#privacy-choices" className="text-decoration-underline">
+                  Do Not Sell or Share My Personal Information
+                </Link>
+                .
+              </p>
+
               <h3 className="mt-5 mb-3">How we use information</h3>
               <ul className="secondary-font">
                 <li>Provide and improve the quiz, breed content, and site experience.</li>
@@ -75,12 +127,27 @@ export default function PrivacyPolicyPage() {
                 be processed and delivered via a form handling provider. We may also use a content platform to power
                 blog posts and media.
               </p>
+              <h4 className="mt-4 mb-2">Service providers</h4>
+              <ul className="secondary-font">
+                <li>Formspree (contact and FAQ forms).</li>
+                <li>Brevo (newsletter email delivery).</li>
+                <li>Sanity (content management for blog posts and media).</li>
+                <li>Vercel (hosting and delivery infrastructure).</li>
+              </ul>
+              <p className="secondary-font">
+                RescueGroups provides adoption listings and related information. We do not send your email address or
+                phone number to RescueGroups.
+              </p>
 
               <h3 className="mt-5 mb-3">Data retention</h3>
               <p className="secondary-font">
                 We retain information only as long as necessary for the purposes described in this policy. Quiz data
                 stored in your browser can typically be cleared by clearing your browser storage. Messages sent to us
                 may be retained to provide support, maintain records, and comply with legal obligations.
+              </p>
+              <p className="secondary-font">
+                Some providers allow retention controls in their dashboards. Where available, we configure retention
+                settings to align with operational needs and legal requirements.
               </p>
 
               <h3 className="mt-5 mb-3">Your choices</h3>
@@ -89,6 +156,64 @@ export default function PrivacyPolicyPage() {
                 <li>You can clear cookies and site data in your browser settings.</li>
                 <li>You can request access, correction, or deletion of your personal information by contacting us.</li>
               </ul>
+              <p className="secondary-font">
+                Our on-site controls (where shown) allow you to accept or reject non-essential cookies. Your choices
+                typically apply to the browser/device where you make them.
+              </p>
+
+              <h3 className="mt-5 mb-3" id="privacy-choices" style={{ scrollMarginTop: 120 }}>
+                Do Not Sell or Share My Personal Information
+              </h3>
+              <p className="secondary-font">
+                This section explains how you can opt out of certain non-essential tracking and, where applicable,
+                opt out of “sharing” for cross-context behavioral advertising. Our cookie banner and footer controls
+                (where available) are intended to help you manage these choices for your browser/device.
+              </p>
+              <h4 className="mt-4 mb-2">Your privacy choices (US)</h4>
+              <p className="secondary-font">
+                Depending on where you live, you may have the right to opt out of certain uses of your information,
+                including targeted advertising. If we use marketing and retargeting technologies, some laws treat this
+                as “sharing” for cross-context behavioral advertising. You can opt out by rejecting non-essential
+                cookies in our cookie banner (where available) and by enabling Global Privacy Control (GPC) in your
+                browser. You may also contact us to request help with your privacy choices.
+              </p>
+              <h4 className="mt-4 mb-2">California privacy rights (CCPA/CPRA)</h4>
+              <p className="secondary-font">
+                If you are a California resident, you may have rights under the California Consumer Privacy Act (as
+                amended by the CPRA), subject to exceptions, including the right to know, delete, correct, and opt out
+                of sale/sharing of personal information, where applicable. We will not discriminate against you for
+                exercising your rights.
+              </p>
+              <p className="secondary-font mb-2">
+                Depending on how you use the site, we may collect the following categories of personal information:
+              </p>
+              <ul className="secondary-font">
+                <li>Identifiers: email address, online identifiers, IP address.</li>
+                <li>Internet or network activity: pages viewed, interactions, device/browser details.</li>
+                <li>Inferences/preferences: quiz responses and preferences, saved items (for example, saved breeds or dogs).</li>
+                <li>Approximate geolocation: inferred from IP.</li>
+              </ul>
+              <p className="secondary-font">
+                Some advertising technologies may be considered a sale or sharing of personal information under
+                California law, even if no money changes hands, when used for cross-context behavioral advertising.
+              </p>
+              <p className="secondary-font">
+                How to opt out (Do Not Sell or Share): you may opt out by choosing “Reject” in our cookie banner (where
+                shown) and by using our footer controls (where available) to manage your preferences for that
+                browser/device.
+              </p>
+              <p className="secondary-font">
+                If we offer a “Do Not Sell or Share My Personal Information” control, it is intended as an opt-out
+                mechanism for non-essential cookies and, where applicable, “sharing” for cross-context behavioral
+                advertising.
+              </p>
+
+
+              <h4 className="mt-4 mb-2">Global Privacy Control (GPC)</h4>
+              <p className="secondary-font">
+                If your browser sends a Global Privacy Control (GPC) signal, we will treat it as a request to opt out
+                of non-essential cookies and, where applicable, opt out of “sharing” for targeted advertising.
+              </p>
 
               <h3 className="mt-5 mb-3">Children&apos;s privacy</h3>
               <p className="secondary-font">

@@ -1,8 +1,32 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import NewsletterSubscribeForm from "@/components/newsletter/NewsletterSubscribeForm";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
+  const [doNotSell, setDoNotSell] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+    try {
+      const v = window.localStorage.getItem("cc_consent_v1");
+      setDoNotSell(v === "rejected");
+    } catch {
+      setDoNotSell(false);
+    }
+  }, []);
+
+  const updateConsent = (nextDoNotSell: boolean) => {
+    setDoNotSell(nextDoNotSell);
+    try {
+      window.localStorage.setItem("cc_consent_v1", nextDoNotSell ? "rejected" : "accepted");
+    } catch {
+    }
+  };
+
   return (
     <>
       <footer id="footer" className="mt-5">
@@ -142,6 +166,25 @@ export default function Footer() {
                     <li className="menu-item">
                       <Link href="/terms-of-service" className="nav-link">Terms of Service</Link>
                     </li>
+                    <li className="menu-item">
+                      <div className="d-flex align-items-center justify-content-between gap-3">
+                        <Link href="/privacy-policy#privacy-choices" className="nav-link" id="do-not-sell-or-share" style={{ flex: 1 }}>
+                          Do Not Sell or Share My Personal Information
+                        </Link>
+                        {hydrated && (
+                          <div className="form-check form-switch m-0" style={{ minWidth: 44 }}>
+                            <input
+                              className="form-check-input k9-consent-switch"
+                              type="checkbox"
+                              role="switch"
+                              aria-label="Do Not Sell or Share toggle"
+                              checked={doNotSell}
+                              onChange={(e) => updateConsent(e.target.checked)}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </li>
                   </ul>
                 </div>
 
@@ -169,6 +212,25 @@ export default function Footer() {
                       </li>
                       <li className="menu-item">
                         <Link href="/terms-of-service" className="nav-link">Terms of Service</Link>
+                      </li>
+                      <li className="menu-item">
+                        <div className="d-flex align-items-center justify-content-between gap-3">
+                          <Link href="/privacy-policy#privacy-choices" className="nav-link" style={{ flex: 1 }}>
+                            Do Not Sell or Share My Personal Information
+                          </Link>
+                          {hydrated && (
+                            <div className="form-check form-switch m-0" style={{ minWidth: 44 }}>
+                              <input
+                                className="form-check-input k9-consent-switch"
+                                type="checkbox"
+                                role="switch"
+                                aria-label="Do Not Sell or Share toggle"
+                                checked={doNotSell}
+                                onChange={(e) => updateConsent(e.target.checked)}
+                              />
+                            </div>
+                          )}
+                        </div>
                       </li>
                     </ul>
                   </div>
