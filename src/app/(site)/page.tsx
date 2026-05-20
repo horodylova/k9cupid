@@ -1,7 +1,5 @@
-import dynamic from 'next/dynamic';
 import BlogPreview from "@/components/blog/BlogPreview";
-
-const Banner = dynamic(() => import('@/components/ui/Banner'), { ssr: false });
+import Banner from "@/components/ui/Banner";
 
 export default function Home() {
   return (

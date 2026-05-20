@@ -229,7 +229,6 @@ export default function Header() {
                     width={819}
                     height={819}
                     unoptimized
-                    priority
                   />
                   <h1 className="brand-text">k9cupid</h1>
                 </Link>

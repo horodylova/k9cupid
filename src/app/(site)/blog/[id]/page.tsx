@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   const ogTitle = post?.title || fallbackTitle;
 
   const imageUrl = post?.mainImage
-    ? urlFor(post.mainImage).width(1200).height(630).url()
+    ? urlFor(post.mainImage).width(1200).height(630).fit("crop").url()
     : `${siteUrl}/icon.svg`;
 
   return {
@@ -283,7 +283,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
 
         const img = (
           <Image
-            src={urlFor(value).width(width).url()}
+            src={urlFor(value).width(width).height(height).fit("max").url()}
             alt={value.alt || 'Blog Image'}
             width={width}
             height={height}
@@ -320,7 +320,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
           <div className="my-5 clearfix">
              <div className={`rounded-3 ${isRight ? 'float-md-end ms-md-4' : 'float-md-start me-md-4'} mb-3`} style={{ maxWidth: '300px', width: '100%' }}>
                 <Image 
-                    src={urlFor(value.image).width(400).url()}
+                    src={urlFor(value.image).width(400).height(300).fit("max").url()}
                     alt={value.image.alt || 'Illustration'}
                     width={400}
                     height={300}
@@ -403,7 +403,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                     {post.mainImage && (
                       <div className="post-thumbnail mb-3">
                         <Image 
-                          src={urlFor(post.mainImage).width(1200).height(800).url()} 
+                          src={urlFor(post.mainImage).width(1200).height(800).fit("crop").url()} 
                           alt={post.title} 
                           className="img-fluid"
                           width={1200}

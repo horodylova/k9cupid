@@ -80,7 +80,7 @@ export async function getLatestPosts(limit = 3): Promise<LatestPost[]> {
       day: "numeric",
     });
     const imageUrl = post.mainImage
-      ? urlFor(post.mainImage).width(1120).height(700).url()
+      ? urlFor(post.mainImage).width(1120).height(700).fit("crop").url()
       : undefined;
 
     return {

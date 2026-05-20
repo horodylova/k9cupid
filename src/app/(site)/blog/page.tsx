@@ -93,7 +93,7 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
           date: dateObj.getDate().toString(),
           month: dateObj.toLocaleString('default', { month: 'short' }),
           image: post.mainImage
-            ? urlFor(post.mainImage).width(800).height(600).url()
+            ? urlFor(post.mainImage).width(800).height(600).fit("crop").url()
             : '/images/placeholder.jpg',
           title: post.title,
           excerpt: post.excerpt,
@@ -157,15 +157,16 @@ export default async function BlogPage({ searchParams }: { searchParams: { page?
               <div className="col-lg-7">
                 <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
                   <Link href={`/blog/${featuredPost.id}`}>
-                    <Image
-                      src={featuredPost.image}
-                      className="img-fluid"
-                      alt={featuredPost.title}
-                      width={960}
-                      height={640}
-                      style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                      unoptimized
-                    />
+                    <div style={{ position: "relative", width: "100%", aspectRatio: "960 / 640" }}>
+                      <Image
+                        src={featuredPost.image}
+                        alt={featuredPost.title}
+                        fill
+                        sizes="(max-width: 992px) 100vw, 58vw"
+                        style={{ objectFit: "cover" }}
+                        unoptimized
+                      />
+                    </div>
                   </Link>
                 </div>
               </div>

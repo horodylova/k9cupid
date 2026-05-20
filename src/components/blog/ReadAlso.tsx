@@ -47,7 +47,7 @@ export default async function ReadAlso({ currentDate }: ReadAlsoProps) {
                 <div className="position-relative" style={{ height: '200px' }}>
                   {post.mainImage ? (
                     <Image
-                      src={urlFor(post.mainImage).width(600).height(400).url()}
+                      src={urlFor(post.mainImage).width(600).height(400).fit("crop").url()}
                       alt={post.title}
                       fill
                       className="object-fit-cover"

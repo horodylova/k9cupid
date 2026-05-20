@@ -118,15 +118,15 @@ const BlogPreview = async () => {
             <div className="col-lg-7">
               <div className="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
                 <Link href={`/blog/${featuredPost.id}`}>
-                  <Image
-                    src={getSanityImageUrl(featuredPost.mainImage, 1600, 933)}
-                    className="img-fluid"
-                    alt={featuredPost.title}
-                    width={720}
-                    height={420}
-                    sizes="(max-width: 992px) 100vw, 58vw"
-                    style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                  />
+                  <div style={{ position: "relative", width: "100%", aspectRatio: "720 / 420" }}>
+                    <Image
+                      src={getSanityImageUrl(featuredPost.mainImage, 1600, 933)}
+                      alt={featuredPost.title}
+                      fill
+                      sizes="(max-width: 992px) 100vw, 58vw"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
                 </Link>
                 <div className="card-body p-4">
                   <div className="d-flex align-items-center gap-3 text-uppercase text-muted fw-semibold mb-2">
@@ -145,15 +145,15 @@ const BlogPreview = async () => {
               {belowFeaturedPost && (
                 <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
                   <Link href={`/blog/${belowFeaturedPost.id}`}>
-                    <Image
-                      src={getSanityImageUrl(belowFeaturedPost.mainImage, 1600, 800)}
-                      className="img-fluid"
-                      alt={belowFeaturedPost.title}
-                      width={720}
-                      height={360}
-                      sizes="(max-width: 992px) 100vw, 58vw"
-                      style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                    />
+                    <div style={{ position: "relative", width: "100%", aspectRatio: "720 / 360" }}>
+                      <Image
+                        src={getSanityImageUrl(belowFeaturedPost.mainImage, 1600, 800)}
+                        alt={belowFeaturedPost.title}
+                        fill
+                        sizes="(max-width: 992px) 100vw, 58vw"
+                        style={{ objectFit: "cover" }}
+                      />
+                    </div>
                   </Link>
                   <div className="card-body p-4">
                     <div className="text-uppercase text-muted fw-semibold mb-2">
@@ -173,15 +173,15 @@ const BlogPreview = async () => {
                   <div className="col-12">
                     <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
                       <Link href={`/blog/${firstSidePost.id}`}>
-                        <Image
-                          src={getSanityImageUrl(firstSidePost.mainImage, 1200, 830)}
-                          className="img-fluid"
-                          alt={firstSidePost.title}
-                          width={520}
-                          height={360}
-                          sizes="(max-width: 992px) 100vw, 38vw"
-                          style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                        />
+                        <div style={{ position: "relative", width: "100%", aspectRatio: "520 / 360" }}>
+                          <Image
+                            src={getSanityImageUrl(firstSidePost.mainImage, 1200, 830)}
+                            alt={firstSidePost.title}
+                            fill
+                            sizes="(max-width: 992px) 100vw, 38vw"
+                            style={{ objectFit: "cover" }}
+                          />
+                        </div>
                       </Link>
                       <div className="card-body p-4">
                         <div className="text-uppercase text-muted fw-semibold mb-2">
