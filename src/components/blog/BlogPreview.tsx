@@ -91,7 +91,7 @@ const BlogPreview = async () => {
 
   const getSanityImageUrl = (mainImage: SanityPost["mainImage"] | null, width: number, height: number) => {
     if (!mainImage) return "/images/placeholder.jpg";
-    return urlFor(mainImage).width(width).height(height).fit("crop").auto("format").quality(75).url();
+    return urlFor(mainImage).width(width).height(height).fit("crop").url();
   };
 
   return (
@@ -120,7 +120,7 @@ const BlogPreview = async () => {
                 <Link href={`/blog/${featuredPost.id}`}>
                   <div style={{ position: "relative", width: "100%", aspectRatio: "720 / 420" }}>
                     <Image
-                      src={getSanityImageUrl(featuredPost.mainImage, 1600, 933)}
+                      src={getSanityImageUrl(featuredPost.mainImage, 900, 525)}
                       alt={featuredPost.title}
                       fill
                       sizes="(max-width: 992px) 100vw, 58vw"
@@ -147,7 +147,7 @@ const BlogPreview = async () => {
                   <Link href={`/blog/${belowFeaturedPost.id}`}>
                     <div style={{ position: "relative", width: "100%", aspectRatio: "720 / 360" }}>
                       <Image
-                        src={getSanityImageUrl(belowFeaturedPost.mainImage, 1600, 800)}
+                        src={getSanityImageUrl(belowFeaturedPost.mainImage, 900, 450)}
                         alt={belowFeaturedPost.title}
                         fill
                         sizes="(max-width: 992px) 100vw, 58vw"
@@ -175,7 +175,7 @@ const BlogPreview = async () => {
                       <Link href={`/blog/${firstSidePost.id}`}>
                         <div style={{ position: "relative", width: "100%", aspectRatio: "520 / 360" }}>
                           <Image
-                            src={getSanityImageUrl(firstSidePost.mainImage, 1200, 830)}
+                            src={getSanityImageUrl(firstSidePost.mainImage, 700, 485)}
                             alt={firstSidePost.title}
                             fill
                             sizes="(max-width: 992px) 100vw, 38vw"
@@ -230,15 +230,15 @@ const BlogPreview = async () => {
                   <div className="col-12">
                     <div className="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
                       <Link href={`/blog/${secondSidePost.id}`}>
-                        <Image
-                          src={getSanityImageUrl(secondSidePost.mainImage, 1200, 830)}
-                          className="img-fluid"
-                          alt={secondSidePost.title}
-                          width={520}
-                          height={360}
-                          sizes="(max-width: 992px) 100vw, 38vw"
-                          style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                        />
+                        <div style={{ position: "relative", width: "100%", aspectRatio: "520 / 360" }}>
+                          <Image
+                            src={getSanityImageUrl(secondSidePost.mainImage, 700, 485)}
+                            alt={secondSidePost.title}
+                            fill
+                            sizes="(max-width: 992px) 100vw, 38vw"
+                            style={{ objectFit: "cover" }}
+                          />
+                        </div>
                       </Link>
                       <div className="card-body p-4">
                         <div className="text-uppercase text-muted fw-semibold mb-2">

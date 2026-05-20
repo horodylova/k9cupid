@@ -9,7 +9,7 @@ export default function Banner() {
           <div className="row banner-content align-items-center">
             <div className="img-wrapper col-md-5">
               <Image
-                src="/images/banner-img.png"
+                src="/images/banner-img.WebP"
                 className="img-fluid banner-img"
                 alt="Banner"
                 width={606}

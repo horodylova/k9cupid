@@ -35,7 +35,7 @@ export default function QuizFinalView({
           <div className="col-12 col-xl-12">
             <div className="text-center mb-5">
               <Image
-                src="/images/k9cupid-logo-final.png"
+                src="/images/k9cupid-logo-final.WebP"
                 alt="K9 Cupid Final Result"
                 width={180}
                 height={180}
