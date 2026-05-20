@@ -6,13 +6,15 @@ import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { useNavigation } from '@/context/NavigationContext';
 import GlobalSearchBar from '@/components/search/GlobalSearchBar';
+import { loadWishlist, subscribeWishlist } from '@/lib/wishlistStorage';
+import { loadShelterDogWishlist, subscribeShelterDogWishlist } from '@/lib/shelterDogWishlistStorage';
 
 export default function Header() {
-  const [loading, setLoading] = useState(true);
   const { items, totalItems, removeItem, totalPrice } = useCart();
   const { attemptNavigation } = useNavigation();
   const [sizeValue, setSizeValue] = useState('');
   const [isSizeOpen, setIsSizeOpen] = useState(false);
+  const [wishlistCount, setWishlistCount] = useState(0);
 
   const closeMenu = () => {
     const offcanvasNavbar = document.getElementById('offcanvasNavbar');
@@ -40,12 +42,19 @@ export default function Header() {
     : 'Browse by Size';
 
   useEffect(() => {
-    // Simulate preloader fade out
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1200); // 1.2s matching animation roughly
+    const compute = () => {
+      const breeds = loadWishlist();
+      const dogs = loadShelterDogWishlist();
+      setWishlistCount(breeds.length + dogs.length);
+    };
 
-    return () => clearTimeout(timer);
+    compute();
+    const unsubBreeds = subscribeWishlist(() => compute());
+    const unsubDogs = subscribeShelterDogWishlist(() => compute());
+    return () => {
+      unsubBreeds();
+      unsubDogs();
+    };
   }, []);
 
   useEffect(() => {
@@ -61,10 +70,6 @@ export default function Header() {
     window.addEventListener('pointerdown', onPointerDown);
     return () => window.removeEventListener('pointerdown', onPointerDown);
   }, [isSizeOpen]);
-
-  if (loading) {
-     // Optional: Render preloader here or return null if handled by CSS/Layout
-  }
 
   return (
     <>
@@ -131,15 +136,6 @@ export default function Header() {
           </symbol>
         </defs>
       </svg>
-
-      {loading && (
-        <div className="preloader-wrapper">
-          <div className="preloader">
-          </div>
-        </div>
-      )}
-
-
       <div className="offcanvas offcanvas-end" data-bs-scroll="true" tabIndex={-1} id="offcanvasCart" aria-labelledby="My Cart">
         <div className="offcanvas-header justify-content-center">
           <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -228,7 +224,6 @@ export default function Header() {
                     className="img-fluid logo-image"
                     width={819}
                     height={819}
-                    unoptimized
                   />
                   <h1 className="brand-text">k9cupid</h1>
                 </Link>
@@ -269,7 +264,18 @@ export default function Header() {
                 </li>
                 <li>
                   <Link href="/wishlist" className="mx-3">
-                    <iconify-icon icon="mdi:heart" className="fs-4"></iconify-icon>
+                    <span className="position-relative d-inline-flex">
+                      <iconify-icon icon="mdi:heart" className="fs-4"></iconify-icon>
+                      {wishlistCount > 0 && (
+                        <span
+                          className="position-absolute translate-middle badge rounded-circle bg-primary"
+                            style={{ top: -8, left: 'calc(100% + 2px)', minWidth: 18, height: 18, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, lineHeight: 1 }}
+                          aria-label={`${wishlistCount} saved items`}
+                        >
+                          {wishlistCount}
+                        </span>
+                      )}
+                    </span>
                   </Link>
                 </li>
 
@@ -402,7 +408,18 @@ export default function Header() {
                     </li>
                     <li>
                       <Link href="/wishlist" className="mx-3">
-                        <iconify-icon icon="mdi:heart" className="fs-4"></iconify-icon>
+                        <span className="position-relative d-inline-flex">
+                          <iconify-icon icon="mdi:heart" className="fs-4"></iconify-icon>
+                          {wishlistCount > 0 && (
+                            <span
+                              className="position-absolute translate-middle badge rounded-circle bg-primary"
+                              style={{ top: -8, left: 'calc(100% + 2px)', minWidth: 18, height: 18, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, lineHeight: 1 }}
+                              aria-label={`${wishlistCount} saved items`}
+                            >
+                              {wishlistCount}
+                            </span>
+                          )}
+                        </span>
                       </Link>
                     </li>
                     <li>

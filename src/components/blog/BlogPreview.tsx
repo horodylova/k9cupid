@@ -206,7 +206,6 @@ const BlogPreview = async () => {
                           width={56}
                           height={56}
                           style={{ objectFit: "contain" }}
-                          unoptimized
                         />
                         <div>
                           <div className="text-uppercase text-muted fw-semibold" style={{ fontSize: 12, letterSpacing: 0.6 }}>

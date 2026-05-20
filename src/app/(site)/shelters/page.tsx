@@ -396,9 +396,7 @@ export default async function SheltersPage({
   const pageSize = 18;
   const maxScanPages = 8;
   const scanBatchSize = 2;
-  const clientFiltersActive = Boolean(
-    selectedShelterId || selectedState || selectedCity || selectedBreed || selectedAge || selectedSize
-  );
+  const clientFiltersActive = Boolean(!selectedShelterId && (selectedState || selectedCity || selectedBreed || selectedAge || selectedSize));
 
   const includedByKey = new Map<string, RescueIncluded>();
   let displayedDogs: RescueAnimal[] = [];
@@ -409,7 +407,41 @@ export default async function SheltersPage({
   let hasNextPage = false;
   let hasPrevPage = page > 1;
 
-  if (clientFiltersActive) {
+  if (selectedShelterId) {
+    const orgFilters = [{ fieldName: "orgs.id", operation: "equal", criteria: selectedShelterId }];
+    let scanPage = page;
+    for (let scan = 0; scan < maxScanPages && displayedDogs.length < pageSize; scan += 1) {
+      const res = await getDogs({
+        page: scanPage,
+        limit: pageSize,
+        sort: upstreamSort,
+        filters: orgFilters,
+        includeDescription: true,
+      });
+      if (scan === 0) meta = res.meta;
+
+      for (const inc of res.included) {
+        includedByKey.set(`${inc.type}:${inc.id}`, inc);
+      }
+
+      for (const dog of res.dogs) {
+        if (isExcludedRescuegroupsAnimalId(dog.id)) continue;
+        if (isRescuegroupsInfoEntryName(dog.attributes?.name)) continue;
+        if (!isLikelyDog(dog.attributes)) continue;
+        if (!matchesBreedAgeSizeFilters(dog.attributes, selectedBreed, selectedAge, selectedSize)) continue;
+        if (seenDogIds.has(dog.id)) continue;
+        seenDogIds.add(dog.id);
+        displayedDogs.push(dog);
+        if (displayedDogs.length >= pageSize) break;
+      }
+
+      if (scanPage >= (res.meta.pages || 1)) break;
+      scanPage += 1;
+    }
+
+    const totalPages = Math.max(1, meta.pages || 1);
+    hasNextPage = page < totalPages;
+  } else if (clientFiltersActive) {
     totalKnown = false;
     const offset = (page - 1) * pageSize;
     const probe = page * pageSize + 1;

@@ -125,7 +125,7 @@ export default function NewsletterSubscribeForm({
       {successBehavior === "inline" && inlineSuccess ? (
         <div className="custom-alert custom-alert--success">
           <div className="custom-alert__media">
-            <Image src={alertImage} alt="k9cupid" className="custom-alert__img" width={56} height={56} unoptimized />
+            <Image src={alertImage} alt="k9cupid" className="custom-alert__img" width={56} height={56} />
           </div>
           <div className="custom-alert__content">
             <h5 className="custom-alert__title">{inlineSuccess.title}</h5>
@@ -241,7 +241,7 @@ export default function NewsletterSubscribeForm({
         >
           <div className={`custom-alert ${toast.type === "success" ? "custom-alert--success" : "custom-alert--error"}`} style={{ alignItems: "flex-start" }}>
             <div className="custom-alert__media">
-              <Image src={alertImage} alt="k9cupid" className="custom-alert__img" width={56} height={56} unoptimized />
+              <Image src={alertImage} alt="k9cupid" className="custom-alert__img" width={56} height={56} />
             </div>
             <div className="custom-alert__content">
               <h5 className="custom-alert__title">{toast.title}</h5>

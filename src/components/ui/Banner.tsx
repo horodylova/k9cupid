@@ -16,7 +16,6 @@ export default function Banner() {
                 height={759}
                 sizes="(max-width: 768px) 100vw, 42vw"
                 priority
-                unoptimized
               />
             </div>
             <div className="content-wrapper col-md-7 p-3 p-md-5 mb-3 mb-md-5">
