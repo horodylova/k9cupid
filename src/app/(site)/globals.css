@@ -145,6 +145,9 @@ body {
   --bs-primary: #DEAD6F;
   --bs-primary-rgb: 222, 173, 111;
 
+  --bs-link-color: var(--brand-accent-text);
+  --bs-link-hover-color: #6f4518;
+
   --bs-primary-bg-subtle: #FFF9EB;
   --bs-border-color: #F7F7F7;
 
@@ -154,6 +157,59 @@ body {
   --bs-danger-rgb: 249, 235, 231;
   --bs-warning-rgb: 255, 249, 235;
   --bs-info-rgb: 230, 243, 250;
+}
+
+:root {
+  --brand-accent-text: #8a5a1f;
+}
+
+.text-primary {
+  color: var(--brand-accent-text) !important;
+}
+
+.btn-primary {
+  --bs-btn-color: var(--bs-body-color);
+  --bs-btn-hover-color: var(--bs-body-color);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--brand-accent-text);
+  --bs-btn-border-color: var(--brand-accent-text);
+  --bs-btn-hover-bg: var(--brand-accent-text);
+  --bs-btn-hover-border-color: var(--brand-accent-text);
+  --bs-btn-active-bg: var(--brand-accent-text);
+  --bs-btn-active-border-color: var(--brand-accent-text);
+  --bs-btn-disabled-color: var(--brand-accent-text);
+  --bs-btn-disabled-border-color: var(--brand-accent-text);
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+}
+
+.icon-button:focus-visible {
+  outline: 2px solid var(--bs-body-color);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 .btn-primary:disabled, .btn-primary.disabled {

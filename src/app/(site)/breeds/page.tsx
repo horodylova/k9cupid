@@ -6,6 +6,7 @@ import BreedSearchBar from "@/components/breeds/BreedSearchBar";
 import BreedSorter from "@/components/breeds/BreedSorter";
 import BreedImage from "@/components/breeds/BreedImage";
 import WishlistHeartButton from "@/components/wishlist/WishlistHeartButton";
+import Preloader from "@/components/ui/Preloader";
 import { Suspense } from "react";
 
 function getTemperamentTags(breed: Dog) {
@@ -36,7 +37,7 @@ export const revalidate = 60;
 
 export default function BreedsPageWrapper(props: Props) {
   return (
-    <Suspense fallback={<div>Loading breeds...</div>}>
+    <Suspense fallback={<Preloader overlay />}>
       <BreedsPage {...props} />
     </Suspense>
   );
@@ -218,7 +219,7 @@ async function BreedsPage({ searchParams }: Props) {
               <Link className="breadcrumb-item nav-link" href="/">Home</Link>
               <span className="breadcrumb-item active" aria-current="page">Breeds</span>
             </nav>
-            <Suspense fallback={<div>Loading search...</div>}>
+            <Suspense fallback={<Preloader overlay />}>
               <div className="mt-4" style={{ maxWidth: '500px' }}>
                 <BreedSearchBar />
               </div>
@@ -249,7 +250,7 @@ async function BreedsPage({ searchParams }: Props) {
                   <p className="m-0">Showing {start}–{end} of {total} breeds</p>
                 </div>
                 <div className="sort-by">
-                  <Suspense fallback={<div>Loading sort...</div>}>
+                  <Suspense fallback={<Preloader overlay />}>
                     <BreedSorter />
                   </Suspense>
                 </div>
@@ -344,8 +345,12 @@ async function BreedsPage({ searchParams }: Props) {
                 <nav className="navigation paging-navigation text-center mt-5" role="navigation">
                   <div className="pagination loop-pagination d-flex justify-content-center align-items-center">
                     {hasPrevPage && (
-                      <Link href={getPageLink(currentPage - 1)} className="pagination-arrow d-flex align-items-center mx-3">
-                        <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
+                      <Link
+                        href={getPageLink(currentPage - 1)}
+                        className="pagination-arrow d-flex align-items-center mx-3 icon-button"
+                        aria-label="Previous page"
+                      >
+                        <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                       </Link>
                     )}
 
@@ -367,8 +372,12 @@ async function BreedsPage({ searchParams }: Props) {
                     })}
 
                     {hasNextPage && (
-                      <Link href={getPageLink(currentPage + 1)} className="pagination-arrow d-flex align-items-center mx-3">
-                        <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
+                      <Link
+                        href={getPageLink(currentPage + 1)}
+                        className="pagination-arrow d-flex align-items-center mx-3 icon-button"
+                        aria-label="Next page"
+                      >
+                        <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                       </Link>
                     )}
                   </div>

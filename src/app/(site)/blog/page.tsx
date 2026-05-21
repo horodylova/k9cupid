@@ -191,6 +191,7 @@ async function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
                     <div className="mt-auto">
                       <Link href={`/blog/${featuredPost.id}`} className="blog-read">
                         read more
+                        <span className="visually-hidden"> about {featuredPost.title}</span>
                       </Link>
                     </div>
                   </div>
@@ -276,6 +277,7 @@ async function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
                         <p className="blog-paragraph fs-6">{post.excerpt}</p>
                         <Link href={`/blog/${post.id}`} className="blog-read">
                           read more
+                          <span className="visually-hidden"> about {post.title}</span>
                         </Link>
                       </div>
                     </div>
@@ -342,12 +344,16 @@ async function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
                 
                 {/* Previous Button */}
                 {page > 1 ? (
-                  <Link href={`/blog?page=${page - 1}`} className="pagination-arrow d-flex align-items-center mx-3">
-                    <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
+                  <Link
+                    href={`/blog?page=${page - 1}`}
+                    className="pagination-arrow d-flex align-items-center mx-3 icon-button"
+                    aria-label="Previous page"
+                  >
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                   </Link>
                 ) : (
                   <span className="pagination-arrow d-flex align-items-center mx-3 text-muted" style={{ opacity: 0.5, cursor: 'not-allowed' }}>
-                    <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                   </span>
                 )}
 
@@ -383,12 +389,16 @@ async function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
 
                 {/* Next Button */}
                 {page < totalPages ? (
-                  <Link href={`/blog?page=${page + 1}`} className="pagination-arrow d-flex align-items-center mx-3">
-                    <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
+                  <Link
+                    href={`/blog?page=${page + 1}`}
+                    className="pagination-arrow d-flex align-items-center mx-3 icon-button"
+                    aria-label="Next page"
+                  >
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                   </Link>
                 ) : (
                   <span className="pagination-arrow d-flex align-items-center mx-3 text-muted" style={{ opacity: 0.5, cursor: 'not-allowed' }}>
-                    <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                   </span>
                 )}
               </div>

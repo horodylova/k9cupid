@@ -171,9 +171,9 @@ export default function ShopPage() {
                             >
                               <h5 className="text-uppercase m-0">Add to Cart</h5>
                             </a>
-                            <a href="#" className="btn-wishlist px-4 pt-3 ">
-                              <iconify-icon icon="fluent:heart-28-filled" className="fs-5"></iconify-icon>
-                            </a>
+                            <button type="button" className="btn-wishlist px-4 pt-3 icon-button" aria-label="Add to wishlist">
+                              <iconify-icon icon="fluent:heart-28-filled" className="fs-5" aria-hidden="true"></iconify-icon>
+                            </button>
                           </div>
                         </div>
 
@@ -185,14 +185,14 @@ export default function ShopPage() {
 
               <nav className="navigation paging-navigation text-center mt-5" role="navigation">
                 <div className="pagination loop-pagination d-flex justify-content-center align-items-center">
-                  <a href="#" className="pagination-arrow d-flex align-items-center mx-3">
-                    <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
+                  <a href="#" className="pagination-arrow d-flex align-items-center mx-3 icon-button" aria-label="Previous page">
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                   </a>
                   <span aria-current="page" className="page-numbers mt-2 fs-3 mx-3 current">1</span>
                   <a className="page-numbers mt-2 fs-3 mx-3" href="#">2</a>
                   <a className="page-numbers mt-2 fs-3 mx-3" href="#">3</a>
-                  <a href="#" className="pagination-arrow d-flex align-items-center mx-3">
-                    <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
+                  <a href="#" className="pagination-arrow d-flex align-items-center mx-3 icon-button" aria-label="Next page">
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                   </a>
                 </div>
               </nav>
@@ -204,8 +204,8 @@ export default function ShopPage() {
                   <div className="widget-search-bar">
                     <div className="search-bar border rounded-2 border-dark-subtle pe-3">
                       <form id="search-form" className="text-center d-flex align-items-center" action="" method="">
-                        <input type="text" className="form-control border-0 bg-transparent" placeholder="Search for products" />
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <input type="text" className="form-control border-0 bg-transparent" placeholder="Search for products" aria-label="Search for products" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                           <path fill="currentColor"
                             d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
                         </svg>

@@ -196,14 +196,14 @@ export default function Header() {
             <div className="d-flex d-lg-none align-items-end mt-3">
               <ul className="d-flex justify-content-end list-unstyled m-0">
                 <li>
-                  <Link href="/account" className="mx-3">
-                    <iconify-icon icon="healthicons:person" className="fs-4"></iconify-icon>
+                  <Link href="/account" className="icon-button mx-3" aria-label="Account">
+                    <iconify-icon icon="healthicons:person" className="fs-4" aria-hidden="true"></iconify-icon>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/wishlist" className="mx-3">
+                  <Link href="/wishlist" className="icon-button mx-3" aria-label="Wishlist">
                     <span className="position-relative d-inline-flex">
-                      <iconify-icon icon="mdi:heart" className="fs-4"></iconify-icon>
+                      <iconify-icon icon="mdi:heart" className="fs-4" aria-hidden="true"></iconify-icon>
                       {wishlistCount > 0 && (
                         <span
                           className="position-absolute translate-middle badge rounded-circle bg-primary"
@@ -218,27 +218,45 @@ export default function Header() {
                 </li>
 
                 <li>
-                  <a href="#" className="mx-3 d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
-                    aria-controls="offcanvasCart">
-                    <iconify-icon icon="mdi:cart" className="fs-4 position-relative"></iconify-icon>
+                  <button
+                    type="button"
+                    className="icon-button mx-3 d-none"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasCart"
+                    aria-controls="offcanvasCart"
+                    aria-label="Open cart"
+                  >
+                    <iconify-icon icon="mdi:cart" className="fs-4 position-relative" aria-hidden="true"></iconify-icon>
                     <span className="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
                       {totalItems}
                     </span>
-                  </a>
+                  </button>
                 </li>
 
                 <li>
-                  <a href="#" className="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch"
-                    aria-controls="offcanvasSearch">
-                    <iconify-icon icon="tabler:search" className="fs-4"></iconify-icon>
-                  </a>
+                  <button
+                    type="button"
+                    className="icon-button mx-3"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasSearch"
+                    aria-controls="offcanvasSearch"
+                    aria-label="Open search"
+                  >
+                    <iconify-icon icon="tabler:search" className="fs-4" aria-hidden="true"></iconify-icon>
+                  </button>
                 </li>
               </ul>
 
             </div>
 
-            <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-              aria-controls="offcanvasNavbar">
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbar"
+              aria-controls="offcanvasNavbar"
+              aria-label="Toggle navigation"
+            >
               <span className="navbar-toggler-icon"></span>
             </button>
 
@@ -340,14 +358,14 @@ export default function Header() {
                 <div className="d-none d-lg-flex align-items-end">
                   <ul className="d-flex justify-content-end list-unstyled m-0">
                     <li>
-                      <Link href="/account" className="mx-3">
-                        <iconify-icon icon="healthicons:person" className="fs-4"></iconify-icon>
+                      <Link href="/account" className="icon-button mx-3" aria-label="Account">
+                        <iconify-icon icon="healthicons:person" className="fs-4" aria-hidden="true"></iconify-icon>
                       </Link>
                     </li>
                     <li>
-                      <Link href="/wishlist" className="mx-3">
+                      <Link href="/wishlist" className="icon-button mx-3" aria-label="Wishlist">
                         <span className="position-relative d-inline-flex">
-                          <iconify-icon icon="mdi:heart" className="fs-4"></iconify-icon>
+                          <iconify-icon icon="mdi:heart" className="fs-4" aria-hidden="true"></iconify-icon>
                           {wishlistCount > 0 && (
                             <span
                               className="position-absolute translate-middle badge rounded-circle bg-primary"
@@ -361,13 +379,19 @@ export default function Header() {
                       </Link>
                     </li>
                     <li>
-                      <a href="#" className="mx-3 d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
-                        aria-controls="offcanvasCart">
-                        <iconify-icon icon="mdi:cart" className="fs-4 position-relative"></iconify-icon>
+                      <button
+                        type="button"
+                        className="icon-button mx-3 d-none"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasCart"
+                        aria-controls="offcanvasCart"
+                        aria-label="Open cart"
+                      >
+                        <iconify-icon icon="mdi:cart" className="fs-4 position-relative" aria-hidden="true"></iconify-icon>
                         <span className="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
                           {totalItems}
                         </span>
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </div>

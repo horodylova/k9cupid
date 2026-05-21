@@ -817,8 +817,13 @@ async function SheltersPage({
                 <nav className="navigation paging-navigation text-center mt-5" role="navigation">
                   <div className="pagination loop-pagination d-flex justify-content-center align-items-center">
                     {hasPrevPage && (
-                      <Link href={getPageLink(page - 1)} prefetch={false} className="pagination-arrow d-flex align-items-center mx-3">
-                        <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
+                      <Link
+                        href={getPageLink(page - 1)}
+                        prefetch={false}
+                        className="pagination-arrow d-flex align-items-center mx-3 icon-button"
+                        aria-label="Previous page"
+                      >
+                        <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                       </Link>
                     )}
 
@@ -834,8 +839,13 @@ async function SheltersPage({
                     })}
 
                     {hasNextPage && (
-                      <Link href={getPageLink(page + 1)} prefetch={false} className="pagination-arrow d-flex align-items-center mx-3">
-                        <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
+                      <Link
+                        href={getPageLink(page + 1)}
+                        prefetch={false}
+                        className="pagination-arrow d-flex align-items-center mx-3 icon-button"
+                        aria-label="Next page"
+                      >
+                        <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                       </Link>
                     )}
                   </div>

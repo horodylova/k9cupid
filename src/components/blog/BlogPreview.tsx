@@ -138,6 +138,7 @@ const BlogPreview = async () => {
                   <p className="blog-paragraph fs-6 mb-3">{featuredPost.excerpt}</p>
                   <Link href={`/blog/${featuredPost.id}`} className="blog-read">
                     read more
+                    <span className="visually-hidden"> about {featuredPost.title}</span>
                   </Link>
                 </div>
               </div>
