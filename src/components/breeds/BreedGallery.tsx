@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
+import styles from './BreedGallery.module.css';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -43,7 +44,7 @@ export default function BreedGallery({ image, name }: BreedGalleryProps) {
             className="mySwiper2"
           >
             <SwiperSlide>
-               <div className="breed-gallery-wrapper">
+               <div className={styles.wrapper}>
                   <Image 
                     src={imgSrc} 
                     alt={name}

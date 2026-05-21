@@ -1,0 +1,11 @@
+.imageFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 606 / 759;
+}
+
+@media (max-width: 767px) {
+  .imageFrame {
+    max-height: 40vh;
+  }
+}
