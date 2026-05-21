@@ -91,7 +91,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <section id="register" style={{ backgroundImage: 'url(/images/background-img.webp)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <section id="register" style={{ backgroundImage: 'url(/images/background-img.WebP)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="container ">
           <div className="row py-5 my-5">
             <div className="col-lg-6 py-5 my-5">

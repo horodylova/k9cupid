@@ -384,7 +384,7 @@ export default function AccountPage() {
         <section
           id="register"
           style={{
-            backgroundImage: "url(/images/background-img.webp)",
+            backgroundImage: "url(/images/background-img.WebP)",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
