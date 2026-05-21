@@ -142,6 +142,8 @@ body {
   --bs-body-line-height: 2;
   --bs-body-color: #41403E;
 
+  --bs-secondary-color: #4f4a45;
+
   --bs-primary: #DEAD6F;
   --bs-primary-rgb: 222, 173, 111;
 
@@ -160,7 +162,7 @@ body {
 }
 
 :root {
-  --brand-accent-text: #8a5a1f;
+  --brand-accent-text: #734716;
 }
 
 .text-primary {
@@ -198,6 +200,21 @@ body {
 .icon-button:focus-visible {
   outline: 2px solid var(--bs-body-color);
   outline-offset: 2px;
+}
+
+.btn-close {
+  width: 44px;
+  height: 44px;
+  padding: 12px;
+}
+
+.social-links a,
+.sharebar-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .visually-hidden {
