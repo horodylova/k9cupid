@@ -8,15 +8,17 @@ export default function Banner() {
         <div className="py-2 py-md-5">
           <div className="row banner-content align-items-center">
             <div className="img-wrapper col-md-5">
-              <Image
-                src="/images/banner-img.WebP"
-                className="img-fluid banner-img"
-                alt="Banner"
-                width={606}
-                height={759}
-                sizes="(max-width: 768px) 100vw, 42vw"
-                priority
-              />
+              <div className="banner-imageFrame" style={{ position: "relative", width: "100%", aspectRatio: "606 / 759" }}>
+                <Image
+                  src="/images/banner-img.webp"
+                  className="banner-img"
+                  alt="Banner"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 42vw"
+                  priority
+                  style={{ objectFit: "contain" }}
+                />
+              </div>
             </div>
             <div className="content-wrapper col-md-7 p-3 p-md-5 mb-3 mb-md-5">
               <div className="secondary-font text-primary text-uppercase mb-2 mb-md-4">Find Your Perfect Match</div>

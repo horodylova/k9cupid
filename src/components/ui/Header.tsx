@@ -219,11 +219,12 @@ export default function Header() {
               <div className="main-logo">
                 <Link href="/">
                   <Image
-                    src="/images/k9cupid-logo-final.WebP"
+                    src="/images/k9cupid-logo-final.webp"
                     alt="k9cupid logo"
                     className="img-fluid logo-image"
-                    width={819}
-                    height={819}
+                    width={120}
+                    height={120}
+                    sizes="(max-width: 767px) 90px, 120px"
                   />
                   <h1 className="brand-text">k9cupid</h1>
                 </Link>

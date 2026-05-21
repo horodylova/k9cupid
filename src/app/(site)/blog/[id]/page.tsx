@@ -95,7 +95,7 @@ function ShareBar({ canonicalUrl, title }: { canonicalUrl: string; title: string
     <div className="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-5">
       <Link href="/" className="d-inline-flex align-items-center text-decoration-none">
         <Image
-          src="/images/k9cupid-logo-final.WebP"
+          src="/images/k9cupid-logo-final.webp"
           alt="k9cupid"
           width={72}
           height={72}
