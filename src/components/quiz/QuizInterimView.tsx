@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import QuizInterimGrid from "@/components/quiz/interim/QuizInterimGrid";
 import { Dog } from "@/lib/api";
+import styles from "./QuizInterimView.module.css";
 
 interface QuizInterimViewProps {
   showShortlist: boolean;
@@ -23,32 +24,32 @@ export default function QuizInterimView({
   return (
     <>
       {!showShortlist && (
-        <div className="rounded-4 p-3 p-md-4 quiz-interim-card position-relative">
-          <div className="quiz-interim-content rounded-4 p-3 p-md-4">
+        <div className={`rounded-4 p-3 p-md-4 ${styles.card} position-relative`}>
+          <div className={`rounded-4 p-3 p-md-4 ${styles.content}`}>
             <div className="mb-3">
               <div className="text-uppercase fw-semibold" style={{ letterSpacing: "0.12em" }}>
                 You did the work
               </div>
             </div>
 
-            <div className="quiz-interim-hero d-flex align-items-start gap-3">
+            <div className={`d-flex align-items-start gap-3 ${styles.hero}`}>
               <div className="d-none d-md-block flex-shrink-0">
                 <Image
                   src="/Cupid and Dogs-Picsart-BackgroundRemover.png"
                   alt="Cupid and dogs"
                   width={320}
                   height={320}
-                  className="quiz-interim-logo-static img-fluid"
+                  className={`${styles.logoStatic} img-fluid`}
                   unoptimized
                 />
               </div>
-              <div className="flex-grow-1 quiz-interim-text">
-                <h1 className="display-6 fw-normal mb-2 quiz-interim-title">A promising pack is ready.</h1>
-                <p className="fs-5 mb-3 quiz-interim-copy">
+              <div className={`flex-grow-1 ${styles.text}`}>
+                <h1 className={`display-6 fw-normal mb-2 ${styles.title}`}>A promising pack is ready.</h1>
+                <p className={`fs-5 mb-3 ${styles.copy}`}>
                   We narrowed the list to breeds that can truly fit your life. Want to meet them now, or keep tuning things like
                   friendliness, dog social skills, and vibe?
                 </p>
-                <div className="d-flex flex-column flex-md-row gap-2 quiz-interim-actions">
+                <div className={`d-flex flex-column flex-md-row gap-2 ${styles.actions}`}>
                   <button
                     type="button"
                     className="btn btn-light text-uppercase fw-semibold"

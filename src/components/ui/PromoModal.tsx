@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import styles from "./PromoModal.module.css";
 import NewsletterSubscribeForm from "@/components/newsletter/NewsletterSubscribeForm";
 
@@ -103,7 +104,7 @@ export default function PromoModal() {
 
   if (!enabled || !isOpen) return null;
 
-  return (
+  return createPortal(
     <div
       className={`${styles.overlay} ${isVisible ? styles.overlayVisible : ""}`}
       role="dialog"
@@ -145,6 +146,7 @@ export default function PromoModal() {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

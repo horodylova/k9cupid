@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
+import styles from "./BreedAdoptableMatches.module.css";
 
 function upgradeRescuegroupsWidth(url: string, width: number) {
   try {
@@ -40,28 +41,28 @@ export default function BreedAdoptableMatches({ breedName, matches }: BreedAdopt
   return (
     <section className="py-5">
       <div className="container">
-        <div className="breed-adoptable-panel">
-          <div className="breed-adoptable-top">
-            <div className="breed-adoptable-topLeft">
-              <div className="breed-adoptable-iconWrap">
+        <div className={styles.panel}>
+          <div className={styles.top}>
+            <div className={styles.topLeft}>
+              <div className={styles.iconWrap}>
                 <Image
                   src="/Cupid%20with%20beagle.png"
                   alt="Cupid"
                   width={64}
                   height={64}
-                  className="breed-adoptable-icon"
+                  className={styles.icon}
                   unoptimized
                 />
               </div>
-              <div className="breed-adoptable-headline">
-                <div className="breed-adoptable-pill">Adoptable now</div>
-                <h2 className="breed-adoptable-title">A {breedName} is waiting for you</h2>
-                <div className="breed-adoptable-subtitle">
+              <div className={styles.headline}>
+                <div className={styles.pill}>Adoptable now</div>
+                <h2 className={styles.title}>A {breedName} is waiting for you</h2>
+                <div className={styles.subtitle}>
                   We found dogs with this breed in their profile who are available right now. Tap a card to meet them.
                 </div>
               </div>
             </div>
-            <div className="breed-adoptable-actions">
+            <div className={styles.actions}>
               <Link
                 href={`/shelters?breed=${encodeURIComponent(breedName)}`}
                 className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1"
@@ -83,11 +84,11 @@ export default function BreedAdoptableMatches({ breedName, matches }: BreedAdopt
               return (
                 <div key={dog.id} className="col-12 col-sm-6 col-lg-4">
                   <Link href={detailsHref} className="text-decoration-none">
-                    <div className="breed-adoptable-card">
+                    <div className={styles.card}>
                       <div
                         className={[
-                          "breed-adoptable-imageFrame",
-                          isPlaceholder ? "is-placeholder" : "",
+                          styles.imageFrame,
+                          isPlaceholder ? styles.isPlaceholder : "",
                         ]
                           .filter(Boolean)
                           .join(" ")}
@@ -97,27 +98,21 @@ export default function BreedAdoptableMatches({ breedName, matches }: BreedAdopt
                           alt={alt}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="breed-adoptable-img"
+                          className={styles.img}
                         />
                       </div>
-                      <div className="breed-adoptable-body">
-                        <div className="breed-adoptable-name" title={dog.name}>
-                          {dog.name}
+
+                      <div className={styles.body}>
+                        <h3 className={styles.name}>{dog.name}</h3>
+                        <div className={styles.badges}>
+                          {badges.map((b) => (
+                            <span key={b} className={styles.badge}>
+                              {b}
+                            </span>
+                          ))}
                         </div>
-                        {badges.length > 0 && (
-                          <div className="breed-adoptable-badges">
-                            {badges.map((b) => (
-                              <span key={b} className="breed-adoptable-badge">
-                                {b}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                        <div className="breed-adoptable-org">
-                          {dog.orgName ? dog.orgName : "Shelter"}
-                          {dog.orgCitystate ? ` · ${dog.orgCitystate}` : ""}
-                        </div>
-                        <div className="breed-adoptable-breed">{dog.breedString}</div>
+                        <div className={styles.org}>{dog.orgName}</div>
+                        <div className={styles.breed}>{dog.breedString}</div>
                       </div>
                     </div>
                   </Link>

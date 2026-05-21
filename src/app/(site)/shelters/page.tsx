@@ -1,5 +1,8 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Preloader from "@/components/ui/Preloader";
+import { ArrowRightIcon } from "@/components/ui/icons";
 import styles from "./shelters.module.css";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 import { normalizeHtmlText } from "@/lib/htmlText";
@@ -10,6 +13,16 @@ import SheltersSorter from "@/components/shelters/SheltersSorter";
 import sheltersData from "@/data/rescuegroupsShelters.json";
 
 export const revalidate = 60;
+
+export default function SheltersPageWrapper(props: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  return (
+    <Suspense fallback={<Preloader overlay />}>
+      <SheltersPage {...props} />
+    </Suspense>
+  );
+}
 
 type RescueMeta = {
   count: number;
@@ -347,7 +360,7 @@ async function getDogs({
   return { meta, dogs, included };
 }
 
-export default async function SheltersPage({
+async function SheltersPage({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
@@ -757,7 +770,6 @@ export default async function SheltersPage({
                               fill
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               style={{ objectFit: isPlaceholder ? "cover" : "contain", padding: isPlaceholder ? 0 : 10 }}
-                              unoptimized
                             />
                           </div>
                         </Link>
@@ -785,9 +797,7 @@ export default async function SheltersPage({
                           <div className="mt-auto px-3 pb-3 pt-3">
                             <Link href={detailsHref} prefetch={false} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1 w-100">
                               Details
-                              <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1 ms-2">
-                                <use xlinkHref="#arrow-right"></use>
-                              </svg>
+                              <ArrowRightIcon className="mb-1 ms-2" />
                             </Link>
                           </div>
                         </div>

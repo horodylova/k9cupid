@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import NewsletterSubscribeForm from "@/components/newsletter/NewsletterSubscribeForm";
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 
 interface BlogPost {
   id: string;
@@ -56,7 +56,15 @@ const fallbackBlogPosts: BlogPost[] = [
 
 export const revalidate = 60;
 
-export default async function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
+export default function BlogPageWrapper(props: { searchParams: { page?: string } }) {
+  return (
+    <Suspense fallback={<div>Loading blog...</div>}>
+      <BlogPage {...props} />
+    </Suspense>
+  );
+}
+
+async function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
   const query = `*[_type == "post" && coalesce(publishedAt, _createdAt) <= now()] | order(coalesce(publishedAt, _createdAt) desc) {
     _id,
     title,

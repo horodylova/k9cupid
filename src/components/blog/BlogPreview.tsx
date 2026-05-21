@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
+import { ArrowRightIcon } from '../ui/icons';
 
 interface BlogPost {
   id: string;
@@ -106,9 +107,7 @@ const BlogPreview = async () => {
             <div>
               <Link href="/blog" className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                 Read all
-                <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1">
-                  <use xlinkHref="#arrow-right"></use>
-                </svg>
+                <ArrowRightIcon className="mb-1" />
               </Link>
             </div>
           </div>

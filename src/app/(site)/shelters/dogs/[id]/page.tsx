@@ -1,10 +1,23 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Preloader from "@/components/ui/Preloader";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 import { normalizeHtmlText } from "@/lib/htmlText";
 import ShelterDogWishlistHeartButton from "@/components/shelters/ShelterDogWishlistHeartButton";
 
 export const revalidate = 60;
+
+export default function ShelterDogPageWrapper(props: {
+  params: { id: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  return (
+    <Suspense fallback={<Preloader overlay />}>
+      <ShelterDogPage {...props} />
+    </Suspense>
+  );
+}
 
 const PLACEHOLDER_SRC = "/No%20photo%20yet.jpg";
 
@@ -178,7 +191,7 @@ function normalizeExternalUrl(url: string) {
   }
 }
 
-export default async function ShelterDogPage({
+async function ShelterDogPage({
   params,
   searchParams,
 }: {

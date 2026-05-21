@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowRightIcon } from "@/components/ui/icons";
 import { getBreeds, Dog } from "@/lib/api";
 import BreedSearchBar from "@/components/breeds/BreedSearchBar";
 import BreedSorter from "@/components/breeds/BreedSorter";
@@ -31,7 +32,17 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export default async function BreedsPage({ searchParams }: Props) {
+export const revalidate = 60;
+
+export default function BreedsPageWrapper(props: Props) {
+  return (
+    <Suspense fallback={<div>Loading breeds...</div>}>
+      <BreedsPage {...props} />
+    </Suspense>
+  );
+}
+
+async function BreedsPage({ searchParams }: Props) {
   const name = typeof searchParams.name === 'string' ? searchParams.name : undefined;
   const energy = searchParams.energy ? Number(searchParams.energy) : undefined;
   const trainability = searchParams.trainability ? Number(searchParams.trainability) : undefined;
@@ -310,9 +321,7 @@ export default async function BreedsPage({ searchParams }: Props) {
                                 className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 px-4 w-100 w-md-auto"
                               >
                                 Try CarCupid
-                                <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1 ms-2">
-                                  <use xlinkHref="#arrow-right"></use>
-                                </svg>
+                                <ArrowRightIcon className="mb-1 ms-2" />
                               </a>
                             </div>
                           </div>

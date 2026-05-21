@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRightIcon } from "./icons";
 
 export default function Banner() {
   return (
@@ -25,9 +26,7 @@ export default function Banner() {
               </h2>
               <Link href="/quiz" className="btn btn-outline-dark btn-md btn-lg-md text-uppercase fs-6 rounded-1 mt-3">
                 Start the Quiz
-                <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1">
-                  <use xlinkHref="#arrow-right"></use>
-                </svg>
+                <ArrowRightIcon className="mb-1" />
               </Link>
             </div>
           </div>
