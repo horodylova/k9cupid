@@ -172,6 +172,12 @@ body {
 .btn-primary {
   --bs-btn-color: var(--bs-body-color);
   --bs-btn-hover-color: var(--bs-body-color);
+  --bs-btn-bg: var(--accent-color);
+  --bs-btn-border-color: var(--accent-color);
+  --bs-btn-hover-bg: var(--accent-color);
+  --bs-btn-hover-border-color: var(--accent-color);
+  --bs-btn-active-bg: var(--accent-color);
+  --bs-btn-active-border-color: var(--accent-color);
 }
 
 .btn-outline-primary {
