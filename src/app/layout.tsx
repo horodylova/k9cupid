@@ -51,7 +51,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${chilanka.variable} ${montserrat.variable}`}>
       <head>
-        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="" />
+        <link rel="dns-prefetch" href="//cdn.sanity.io" />
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//cdn.rescuegroups.org" />
+        <link rel="preconnect" href="https://cdn.rescuegroups.org" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//code.iconify.design" />
+        <link rel="preconnect" href="https://code.iconify.design" crossOrigin="anonymous" />
       </head>
       <body>
         <NavigationProvider>
@@ -59,7 +66,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </CartProvider>
         </NavigationProvider>
-        <Script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" strategy="afterInteractive" />
+        <Script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" strategy="lazyOnload" />
       </body>
     </html>
   );
