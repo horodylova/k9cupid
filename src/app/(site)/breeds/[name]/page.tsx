@@ -4,6 +4,7 @@ import { getBreeds, Dog, getAdditionalBreedDetails } from "@/lib/api";
 import BreedGallery from "@/components/breeds/BreedGallery";
 import BreedAdoptableMatches from "@/components/breeds/BreedAdoptableMatches";
 import WishlistHeartButton from "@/components/wishlist/WishlistHeartButton";
+import TrackEvent from "@/components/analytics/TrackEvent";
 import { notFound } from "next/navigation";
 
 function getTemperamentTags(breed: Dog) {
@@ -262,6 +263,7 @@ export default async function BreedPage({ params }: { params: { name: string } }
 
   return (
     <>
+      <TrackEvent event="breed_view" params={{ breed_name: breed.name, source: "breed_detail" }} />
       <section id="banner" className="py-3" style={{ background: '#F9F3EC' }}>
         <div className="container">
           <div className="hero-content py-5 my-3">

@@ -4,6 +4,7 @@ import { Chilanka, Montserrat } from "next/font/google";
 import Script from "next/script";
 import { CartProvider } from "@/context/CartContext";
 import { NavigationProvider } from "@/context/NavigationContext";
+import GtmLoader from "@/components/analytics/GtmLoader";
 
 const chilanka = Chilanka({
   weight: "400",
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </CartProvider>
         </NavigationProvider>
+        <GtmLoader />
         <Script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" strategy="lazyOnload" />
       </body>
     </html>

@@ -2,7 +2,7 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { track } from "@/lib/analytics";
+import { captureAttribution, track } from "@/lib/analytics";
 
 export default function PageViewTracker() {
   const pathname = usePathname();
@@ -13,6 +13,8 @@ export default function PageViewTracker() {
     const qs = searchParams?.toString();
     const pagePath = pathname + (qs ? `?${qs}` : "");
 
+    captureAttribution();
+
     if (last.current === pagePath) return;
     last.current = pagePath;
 
@@ -21,4 +23,3 @@ export default function PageViewTracker() {
 
   return null;
 }
-

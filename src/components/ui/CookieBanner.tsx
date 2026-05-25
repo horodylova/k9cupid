@@ -23,6 +23,7 @@ export default function CookieBanner() {
       window.localStorage.setItem(storageKey, value);
     } catch {
     }
+    window.dispatchEvent(new Event("cc_consent_update"));
     setVisible(false);
   };
 

@@ -8,6 +8,7 @@ import {
   subscribeShelterDogWishlist,
   upsertShelterDogWishlistItem,
 } from "@/lib/shelterDogWishlistStorage";
+import { track } from "@/lib/analytics";
 
 type ShelterDogWishlistHeartButtonProps = {
   id: string;
@@ -61,13 +62,14 @@ export default function ShelterDogWishlistHeartButton({
         e.stopPropagation();
         if (active) {
           removeShelterDogWishlistItem(normalizedHref);
+          track("wishlist_remove", { item_type: "shelter_dog", item_id: id, item_name: normalizedName, item_href: normalizedHref });
           return;
         }
         upsertShelterDogWishlistItem(payload);
+        track("wishlist_add", { item_type: "shelter_dog", item_id: id, item_name: normalizedName, item_href: normalizedHref });
       }}
     >
       <iconify-icon icon={icon} className="wishlist-heart-icon"></iconify-icon>
     </button>
   );
 }
-

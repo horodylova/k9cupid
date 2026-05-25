@@ -5,6 +5,8 @@ import Preloader from "@/components/ui/Preloader";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 import { normalizeHtmlText } from "@/lib/htmlText";
 import ShelterDogWishlistHeartButton from "@/components/shelters/ShelterDogWishlistHeartButton";
+import TrackEvent from "@/components/analytics/TrackEvent";
+import TrackedOutboundLink from "@/components/analytics/TrackedOutboundLink";
 
 export const revalidate = 60;
 
@@ -318,6 +320,10 @@ async function ShelterDogPage({
 
   return (
     <>
+      <TrackEvent
+        event="shelter_dog_view"
+        params={{ dog_id: dog.id, dog_name: name, org_name: orgInfo.name, source: "shelter_dog_detail" }}
+      />
       <section id="banner" className="py-3" style={{ background: "#F9F3EC" }}>
         <div className="container">
           <div className="hero-content py-5 my-3">
@@ -476,14 +482,16 @@ async function ShelterDogPage({
                     variant="inline"
                   />
                   {listingUrl && (
-                    <a
+                    <TrackedOutboundLink
                       href={listingUrl}
                       target="_blank"
                       rel="noreferrer"
                       className="btn btn-dark btn-md text-uppercase fs-6 rounded-1"
+                      eventName="shelter_outbound_click"
+                      params={{ dog_id: dog.id, dog_name: name, org_name: orgInfo.name, source: "shelter_dog_detail" }}
                     >
                       Open listing
-                    </a>
+                    </TrackedOutboundLink>
                   )}
                 </div>
 

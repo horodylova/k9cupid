@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { track } from "@/lib/analytics";
 
 type Props = {
   source?: string;
@@ -82,6 +83,12 @@ export default function NewsletterSubscribeForm({
         }
 
         setEmail("");
+
+        track("lead", {
+          lead_type: "newsletter",
+          source,
+          state: data.state || (isAlready ? "already_subscribed" : "subscribed"),
+        });
       } else {
         setToast({
           type: "error",
