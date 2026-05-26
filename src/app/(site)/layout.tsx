@@ -3,8 +3,8 @@ import "./globals.css";
 import { ReactNode } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Script from "next/script";
 import PromoModal from "@/components/PromoModal";
+import BootstrapClient from "@/components/BootstrapClient";
 
 export const dynamic = "force-dynamic";
 
@@ -13,11 +13,11 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
     <div className="d-flex flex-column min-vh-100">
         <Header />
         <PromoModal />
+        <BootstrapClient />
         <main style={{ flex: 1 }}>
           {children}
         </main>
         <Footer />
-        <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" strategy="afterInteractive" />
     </div>
   );
 }
