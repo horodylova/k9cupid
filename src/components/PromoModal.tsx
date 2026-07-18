@@ -9,6 +9,7 @@ const STORAGE_KEY = "k9PromoVideoLastSeen";
 const SHOW_AGAIN_MS = 7 * 24 * 60 * 60 * 1000;
 const VIDEO_SRC = "/Every%20dog.mp4";
 const ANIMATION_MS = 220;
+const PROMO_ENABLED = false;
 
 export default function PromoModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,7 @@ export default function PromoModal() {
 
   useEffect(() => {
     const schedule = () => {
+      if (!PROMO_ENABLED) return;
       if (scheduledRef.current) return;
       scheduledRef.current = true;
 

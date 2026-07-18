@@ -8,7 +8,7 @@ import SheltersDesktopFilters from "@/components/SheltersDesktopFilters";
 import SheltersMobileFilters from "@/components/SheltersMobileFilters";
 import sheltersData from "@/data/rescuegroupsShelters.json";
 
-export const revalidate = 0;
+export const revalidate = 300;
 
 type RescueMeta = {
   count: number;
@@ -291,7 +291,7 @@ async function getDogs({
             },
           })
         : undefined,
-      cache: "no-store",
+      next: { revalidate: 300 },
     });
 
   const upstream = new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");

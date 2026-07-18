@@ -10,6 +10,13 @@ type SanityPost = {
 
 export const revalidate = 0;
 
+export const metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 function parsePage(value: unknown): number {
   const raw = Array.isArray(value) ? value[0] : value;
   const n = typeof raw === "string" ? parseInt(raw, 10) : NaN;

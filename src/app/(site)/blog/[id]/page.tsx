@@ -8,7 +8,7 @@ import { PortableText } from '@portabletext/react';
 import { ReactNode } from 'react';
 import { PortableTextBlock } from 'sanity';
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 interface SanityImageValue {
   asset?: {
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   let post: { title?: string; excerpt?: string; mainImage?: unknown } | null = null;
 
   try {
-    post = await client.fetch(query, { slug: params.id }, { next: { revalidate: 0 } });
+    post = await client.fetch(query, { slug: params.id }, { next: { revalidate: 3600 } });
   } catch {
     post = null;
   }
@@ -186,7 +186,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
   let post = null;
 
   try {
-    post = await client.fetch(query, { slug: params.id }, { next: { revalidate: 0 } });
+    post = await client.fetch(query, { slug: params.id }, { next: { revalidate: 3600 } });
   } catch (error) {
     console.error("Sanity fetch failed:", error);
   }
