@@ -24,7 +24,7 @@ export default function Footer() {
                 </Link>
                 <div className="footer-brand-content">
                   <p className="blog-paragraph fs-6 mt-3 footer-brand-text">
-                    Your ultimate guide to finding the perfect canine companion. We help you discover, understand, and connect with the dog breed that fits your lifestyle.
+                    Find and understand the dog breed that fits your lifestyle.
                   </p>
                   <div className="social-links">
                     <ul className="d-flex list-unstyled gap-3">
@@ -142,6 +142,9 @@ export default function Footer() {
                     <li className="menu-item">
                       <Link href="/terms-of-service" className="nav-link">Terms of Service</Link>
                     </li>
+                    <li className="menu-item">
+                      <Link href="/breeder-guidelines" className="nav-link">Breeder Guidelines</Link>
+                    </li>
                   </ul>
                 </div>
 
@@ -169,6 +172,9 @@ export default function Footer() {
                       </li>
                       <li className="menu-item">
                         <Link href="/terms-of-service" className="nav-link">Terms of Service</Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link href="/breeder-guidelines" className="nav-link">Breeder Guidelines</Link>
                       </li>
                     </ul>
                   </div>

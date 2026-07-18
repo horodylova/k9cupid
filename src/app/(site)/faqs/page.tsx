@@ -106,17 +106,18 @@ export default function FaqsPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const isValid = form.reportValidity();
+
+    if (!isValid) {
+      setStatus(null);
+      return;
+    }
+
     setSubmitting(true);
     setStatus(null);
 
     const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
-    if (!endpoint) {
-      setStatus({ type: "error", message: "Form endpoint is not configured." });
-      setSubmitting(false);
-      return;
-    }
-
-    const form = e.currentTarget;
     const formData = new FormData(form);
 
     const res = await submitForm(endpoint, formData);

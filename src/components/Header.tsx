@@ -381,6 +381,9 @@ export default function Header() {
                     <Link href="/shelters" onClick={(e) => handleLinkClick(e, '/shelters')} className="nav-link">Shelters</Link>
                   </li>
                   <li className="nav-item">
+                    <Link href="/for-breeders" onClick={(e) => handleLinkClick(e, '/for-breeders')} className="nav-link">For Breeders</Link>
+                  </li>
+                  <li className="nav-item">
                     <Link href="/blog" onClick={(e) => handleLinkClick(e, '/blog')} className="nav-link">Blog</Link>
                   </li>
                   <li className="nav-item">
