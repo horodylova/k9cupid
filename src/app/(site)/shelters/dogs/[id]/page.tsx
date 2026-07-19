@@ -4,7 +4,7 @@ import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/l
 import { normalizeHtmlText } from "@/lib/htmlText";
 import ShelterDogWishlistHeartButton from "@/components/ShelterDogWishlistHeartButton";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 const PLACEHOLDER_SRC = "/No%20photo%20yet.jpg";
 
@@ -134,7 +134,7 @@ async function getDogById(id: string) {
       Accept: "application/vnd.api+json",
       Authorization: apiKey,
     },
-    next: { revalidate: 300 },
+    next: { revalidate: 3600 },
   });
 
   if (!res.ok) return null;
