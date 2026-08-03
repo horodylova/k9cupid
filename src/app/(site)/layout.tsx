@@ -1,10 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 import { ReactNode } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import PromoModal from "@/components/PromoModal";
-import BootstrapClient from "@/components/BootstrapClient";
+import Header from "@/components/ui/Header";
+import Footer from "@/components/ui/Footer";
+import PromoModal from "@/components/ui/PromoModal";
+import BootstrapClient from "@/components/ui/BootstrapClient";
 
 export const dynamic = "force-dynamic";
 

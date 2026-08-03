@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getBreeds, Dog, getAdditionalBreedDetails } from "@/lib/api";
-import BreedGallery from "@/components/BreedGallery";
-import BreedAdoptableMatches from "@/components/BreedAdoptableMatches";
-import WishlistHeartButton from "@/components/WishlistHeartButton";
+import BreedGallery from "@/components/breeds/BreedGallery";
+import BreedAdoptableMatches from "@/components/breeds/BreedAdoptableMatches";
+import WishlistHeartButton from "@/components/wishlist/WishlistHeartButton";
 import { notFound } from "next/navigation";
 
 function getTemperamentTags(breed: Dog) {

@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getBreeds, Dog } from "@/lib/api";
-import BreedSearchBar from "@/components/BreedSearchBar";
-import BreedSorter from "@/components/BreedSorter";
-import BreedImage from "@/components/BreedImage";
-import WishlistHeartButton from "@/components/WishlistHeartButton";
+import BreedSearchBar from "@/components/breeds/BreedSearchBar";
+import BreedSorter from "@/components/breeds/BreedSorter";
+import BreedImage from "@/components/breeds/BreedImage";
+import WishlistHeartButton from "@/components/wishlist/WishlistHeartButton";
 import { Suspense } from "react";
 
 function getTemperamentTags(breed: Dog) {

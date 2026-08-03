@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Preloader from "@/components/Preloader";
+import Preloader from "@/components/ui/Preloader";
 
 export default function SheltersDesktopFiltersPanel({
   children,

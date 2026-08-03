@@ -3,9 +3,9 @@ import Image from "next/image";
 import styles from "./shelters.module.css";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 import { normalizeHtmlText } from "@/lib/htmlText";
-import ShelterDogWishlistHeartButton from "@/components/ShelterDogWishlistHeartButton";
-import SheltersDesktopFilters from "@/components/SheltersDesktopFilters";
-import SheltersMobileFilters from "@/components/SheltersMobileFilters";
+import ShelterDogWishlistHeartButton from "@/components/shelters/ShelterDogWishlistHeartButton";
+import SheltersDesktopFilters from "@/components/shelters/SheltersDesktopFilters";
+import SheltersMobileFilters from "@/components/shelters/SheltersMobileFilters";
 import sheltersData from "@/data/rescuegroupsShelters.json";
 
 export const revalidate = 300;

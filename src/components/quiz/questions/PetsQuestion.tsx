@@ -1,5 +1,5 @@
 import { otherPetsQuestion, QuizOptionId } from "@/lib/quizQuestions";
-import TagMultiChoiceQuestion from "@/components/TagMultiChoiceQuestion";
+import TagMultiChoiceQuestion from "@/components/quiz/questions/TagMultiChoiceQuestion";
 
 type PetsQuestionProps = {
   selected: QuizOptionId[];

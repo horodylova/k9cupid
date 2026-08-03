@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Dog } from "@/lib/api";
-import WishlistHeartButton from "@/components/WishlistHeartButton";
+import WishlistHeartButton from "@/components/wishlist/WishlistHeartButton";
 
 type QuizBreedCardProps = {
   breed: Dog;

@@ -2,14 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import ShelterFilterSelect from "@/components/ShelterFilterSelect";
-import MobileFiltersPanel from "@/components/MobileFiltersPanel";
+import ShelterFilterSelect from "@/components/shelters/ShelterFilterSelect";
+import MobileFiltersPanel from "@/components/shelters/MobileFiltersPanel";
 import sheltersData from "@/data/rescuegroupsShelters.json";
-import StateFilterSelect from "@/components/StateFilterSelect";
-import CityFilterSelect from "@/components/CityFilterSelect";
-import OptionFilterSelect from "@/components/OptionFilterSelect";
-import Preloader from "@/components/Preloader";
-import BreedTypeahead from "@/components/BreedTypeahead";
+import StateFilterSelect from "@/components/shelters/StateFilterSelect";
+import CityFilterSelect from "@/components/shelters/CityFilterSelect";
+import OptionFilterSelect from "@/components/filters/OptionFilterSelect";
+import Preloader from "@/components/ui/Preloader";
+import BreedTypeahead from "@/components/breeds/BreedTypeahead";
 
 type ShelterOption = {
   id: string;
