@@ -5,6 +5,7 @@ import BreedSearchBar from "@/components/breeds/BreedSearchBar";
 import BreedSorter from "@/components/breeds/BreedSorter";
 import BreedImage from "@/components/breeds/BreedImage";
 import WishlistHeartButton from "@/components/wishlist/WishlistHeartButton";
+import { ArrowRightIcon } from "@/components/ui/icons";
 import { Suspense } from "react";
 
 function getTemperamentTags(breed: Dog) {
@@ -308,9 +309,7 @@ export default async function BreedsPage({ searchParams }: Props) {
                                 className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 px-4 w-100 w-md-auto"
                               >
                                 Try CarCupid
-                                <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1 ms-2">
-                                  <use xlinkHref="#arrow-right"></use>
-                                </svg>
+                                <ArrowRightIcon className="mb-1 ms-2" width="24" height="24" />
                               </a>
                             </div>
                           </div>
