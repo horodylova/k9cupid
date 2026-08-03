@@ -11,6 +11,9 @@ const chilanka = Chilanka({
   subsets: ["latin"],
   variable: "--font-chilanka",
   display: "swap",
+  preload: true,
+  fallback: ["ui-rounded", "system-ui", "-apple-system", "Segoe UI", "Arial"],
+  adjustFontFallback: true,
 });
 
 const montserrat = Montserrat({
@@ -18,6 +21,9 @@ const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
   display: "swap",
+  preload: true,
+  fallback: ["system-ui", "-apple-system", "Segoe UI", "Arial"],
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
@@ -45,6 +51,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${chilanka.variable} ${montserrat.variable}`}>
+      <head>
+        <link rel="dns-prefetch" href="//cdn.sanity.io" />
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//cdn.rescuegroups.org" />
+        <link rel="preconnect" href="https://cdn.rescuegroups.org" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//code.iconify.design" />
+        <link rel="preconnect" href="https://code.iconify.design" crossOrigin="anonymous" />
+      </head>
       <body>
         <NavigationProvider>
           <CartProvider>
@@ -52,7 +68,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </CartProvider>
         </NavigationProvider>
         <GtmLoader />
-        <Script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" strategy="afterInteractive" />
+        <Script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" strategy="lazyOnload" />
       </body>
     </html>
   );
