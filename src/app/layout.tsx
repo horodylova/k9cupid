@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Chilanka, Montserrat } from "next/font/google";
 import Script from "next/script";
+import GtmLoader from "@/components/analytics/GtmLoader";
 import { CartProvider } from "@/context/CartContext";
 import { NavigationProvider } from "@/context/NavigationContext";
 
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </CartProvider>
         </NavigationProvider>
+        <GtmLoader />
         <Script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" strategy="afterInteractive" />
       </body>
     </html>
