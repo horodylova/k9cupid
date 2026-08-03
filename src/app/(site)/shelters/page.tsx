@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "./shelters.module.css";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 import { normalizeHtmlText } from "@/lib/htmlText";
+import { ArrowRightIcon } from "@/components/ui/icons";
 import ShelterDogWishlistHeartButton from "@/components/shelters/ShelterDogWishlistHeartButton";
 import SheltersDesktopFilters from "@/components/shelters/SheltersDesktopFilters";
 import SheltersMobileFilters from "@/components/shelters/SheltersMobileFilters";
@@ -652,9 +653,7 @@ export default async function SheltersPage({
                           <div className="mt-auto px-3 pb-3 pt-3">
                             <Link href={detailsHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1 w-100">
                               Details
-                              <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1 ms-2">
-                                <use xlinkHref="#arrow-right"></use>
-                              </svg>
+                              <ArrowRightIcon className="mb-1 ms-2" width="24" height="24" />
                             </Link>
                           </div>
                         </div>

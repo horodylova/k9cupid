@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { ArrowRightIcon } from "@/components/ui/icons";
 
 import {
   activityLevelQuestion,
@@ -248,9 +249,7 @@ export default function AccountPage() {
                     className="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 py-2 px-4"
                   >
                     Take the Quiz
-                    <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1 ms-2">
-                      <use xlinkHref="#arrow-right"></use>
-                    </svg>
+                    <ArrowRightIcon className="mb-1 ms-2" width="24" height="24" />
                   </Link>
                 </>
               ) : (

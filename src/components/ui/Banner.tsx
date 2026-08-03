@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ArrowRightIcon } from '@/components/ui/icons';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -36,9 +37,7 @@ export default function Banner() {
                 <h2 className="banner-title display-4 display-md-1 fw-normal">Discover the dog breed that <span className="text-primary">fits your lifestyle</span></h2>
                 <Link href="/quiz" className="btn btn-outline-dark btn-md btn-lg-md text-uppercase fs-6 rounded-1 mt-3">
                   Start the Quiz
-                  <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1">
-                    <use xlinkHref="#arrow-right"></use>
-                  </svg>
+                  <ArrowRightIcon className="mb-1" width="24" height="24" />
                 </Link>
               </div>
             </div>
@@ -60,9 +59,7 @@ export default function Banner() {
                 <h2 className="banner-title display-4 display-md-1 fw-normal">Learn everything about <span className="text-primary">your favorite breeds</span></h2>
                 <Link href="/breeds" className="btn btn-outline-dark btn-md btn-lg-md text-uppercase fs-6 rounded-1 mt-3">
                   Explore Breeds
-                  <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1">
-                    <use xlinkHref="#arrow-right"></use>
-                  </svg>
+                  <ArrowRightIcon className="mb-1" width="24" height="24" />
                 </Link>
               </div>
             </div>
@@ -84,9 +81,7 @@ export default function Banner() {
                 <h2 className="banner-title display-4 display-md-1 fw-normal">Tips for a happy <span className="text-primary">life together</span></h2>
                 <Link href="/blog" className="btn btn-outline-dark btn-md btn-lg-md text-uppercase fs-6 rounded-1 mt-3">
                   Read Articles
-                  <svg width="24" height="24" viewBox="0 0 24 24" className="mb-1">
-                    <use xlinkHref="#arrow-right"></use>
-                  </svg>
+                  <ArrowRightIcon className="mb-1" width="24" height="24" />
                 </Link>
               </div>
             </div>
