@@ -12,16 +12,16 @@ export const dynamic = "force-dynamic";
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="d-flex flex-column min-vh-100">
-        <Header />
-        <PromoModal />
-        <BootstrapClient />
-        <main style={{ flex: 1 }}>
-          {children}
-          <Suspense fallback={null}>
-            <PageViewTracker />
-          </Suspense>
-        </main>
-        <Footer />
+      <Header />
+      <main style={{ flex: 1 }}>
+        {children}
+        <Suspense fallback={null}>
+          <PageViewTracker />
+        </Suspense>
+      </main>
+      <PromoModal />
+      <BootstrapClient />
+      <Footer />
     </div>
   );
 }
