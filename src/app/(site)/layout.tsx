@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
+import PageViewTracker from "@/components/analytics/PageViewTracker";
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import PromoModal from "@/components/ui/PromoModal";
@@ -16,6 +17,9 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
         <BootstrapClient />
         <main style={{ flex: 1 }}>
           {children}
+          <Suspense fallback={null}>
+            <PageViewTracker />
+          </Suspense>
         </main>
         <Footer />
     </div>
