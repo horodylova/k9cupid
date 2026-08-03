@@ -24,6 +24,7 @@ import {
 } from "@/lib/quizQuestions";
 import { useQuizSession } from "@/hooks/useQuizSession";
 import { saveQuizFinalResults } from "@/lib/quizStorage";
+import { track } from "@/lib/analytics";
 
 import SharedSpacesQuestion from "@/components/quiz/questions/SharedSpacesQuestion";
 import ChildrenQuestion from "@/components/quiz/questions/ChildrenQuestion";
@@ -63,8 +64,30 @@ export default function QuizRunner() {
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const fetchingRef = useRef(false);
   const savedFinalRef = useRef(false);
+  const trackedCompleteRef = useRef(false);
+  const latestStepRef = useRef(step);
+  const latestSessionRef = useRef(session);
 
   const totalSteps = 19;
+
+  useEffect(() => {
+    latestStepRef.current = step;
+    latestSessionRef.current = session;
+  }, [step, session]);
+
+  useEffect(() => {
+    return () => {
+      const s = latestSessionRef.current;
+      if (!s) return;
+      if (s.status === "completed") return;
+      track("quiz_abandon", {
+        quiz_id: s.id,
+        answered_count: s.answers.length,
+        step: latestStepRef.current,
+        source: "quiz_start",
+      });
+    };
+  }, []);
 
   const selectedHome = session?.answers.find(
     (answer) => answer.id === homeTypeQuestion.id
@@ -374,6 +397,7 @@ export default function QuizRunner() {
   useEffect(() => {
     if (step !== 19) {
       savedFinalRef.current = false;
+      trackedCompleteRef.current = false;
       return;
     }
     if (!session?.answers || finalBreeds.length === 0 || savedFinalRef.current) {
@@ -386,6 +410,21 @@ export default function QuizRunner() {
     }
     savedFinalRef.current = true;
   }, [step, session?.answers, session?.status, finalBreeds, setStatus]);
+
+  useEffect(() => {
+    if (step !== 19) return;
+    if (!session) return;
+    if (session.status !== "completed") return;
+    if (trackedCompleteRef.current) return;
+    trackedCompleteRef.current = true;
+
+    track("quiz_complete", {
+      quiz_id: session.id,
+      final_breeds_count: finalBreeds.length,
+      top_breed: finalBreeds[0]?.name,
+      source: "quiz_start",
+    });
+  }, [step, session, finalBreeds]);
 
   if (!isInitialized || !pageReady || !hasResumed) {
     return (
@@ -783,4 +822,3 @@ export default function QuizRunner() {
     </>
   );
 }
-

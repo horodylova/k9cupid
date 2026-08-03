@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { isWishlisted, normalizeWishlistHref, removeWishlistItem, subscribeWishlist, upsertWishlistItem } from "@/lib/wishlistStorage";
+import { track } from "@/lib/analytics";
 
 type WishlistHeartButtonProps = {
   name: string;
@@ -38,6 +39,11 @@ export default function WishlistHeartButton({
 
   const label = active ? "Remove from wishlist" : "Add to wishlist";
   const icon = active ? "mdi:heart" : "mdi:heart-outline";
+  const itemType = normalizedHref.startsWith("/breeds/")
+    ? "breed"
+    : normalizedHref.startsWith("/shelters/dogs/")
+      ? "shelter_dog"
+      : "unknown";
 
   return (
     <button
@@ -49,9 +55,11 @@ export default function WishlistHeartButton({
         e.stopPropagation();
         if (active) {
           removeWishlistItem(normalizedHref);
+          track("wishlist_remove", { item_type: itemType, item_name: normalizedName, item_href: normalizedHref });
           return;
         }
         upsertWishlistItem(payload);
+        track("wishlist_add", { item_type: itemType, item_name: normalizedName, item_href: normalizedHref });
       }}
     >
       <iconify-icon icon={icon} className="wishlist-heart-icon"></iconify-icon>
