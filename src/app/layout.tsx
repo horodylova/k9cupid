@@ -20,6 +20,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://k9cupid.fit"),
   title: "k9cupid - Find Your Perfect Dog Match",
   description: "Discover the dog breed that fits your lifestyle with k9cupid.",
   icons: {
