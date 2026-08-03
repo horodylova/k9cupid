@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import QuizInterimGrid from "@/components/quiz-interim/QuizInterimGrid";
+import QuizInterimGrid from "@/components/quiz/interim/QuizInterimGrid";
 import { Dog } from "@/lib/api";
 
 interface QuizInterimViewProps {

@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import ShelterFilterSelect from "@/components/ShelterFilterSelect";
+import ShelterFilterSelect from "@/components/shelters/ShelterFilterSelect";
 import sheltersData from "@/data/rescuegroupsShelters.json";
-import StateFilterSelect from "@/components/StateFilterSelect";
-import SheltersDesktopFiltersPanel from "@/components/SheltersDesktopFiltersPanel";
-import CityFilterSelect from "@/components/CityFilterSelect";
-import OptionFilterSelect from "@/components/OptionFilterSelect";
-import BreedTypeahead from "@/components/BreedTypeahead";
+import StateFilterSelect from "@/components/shelters/StateFilterSelect";
+import SheltersDesktopFiltersPanel from "@/components/shelters/SheltersDesktopFiltersPanel";
+import CityFilterSelect from "@/components/shelters/CityFilterSelect";
+import OptionFilterSelect from "@/components/filters/OptionFilterSelect";
+import BreedTypeahead from "@/components/breeds/BreedTypeahead";
 
 type ShelterRow = {
   id: string;

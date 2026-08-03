@@ -25,29 +25,29 @@ import {
 import { useQuizSession } from "@/hooks/useQuizSession";
 import { saveQuizFinalResults } from "@/lib/quizStorage";
 
-import SharedSpacesQuestion from "@/components/SharedSpacesQuestion";
-import ChildrenQuestion from "@/components/ChildrenQuestion";
-import PetsQuestion from "@/components/PetsQuestion";
-import ScaleQuestion from "@/components/ScaleQuestion";
-import HomeTypeQuestion from "@/components/HomeTypeQuestion";
-import PhysicalHandlingQuestion from "@/components/PhysicalHandlingQuestion";
-import VisitorsQuestion from "@/components/VisitorsQuestion";
-import HairToleranceQuestion from "@/components/HairToleranceQuestion";
-import DroolingToleranceQuestion from "@/components/DroolingToleranceQuestion";
-import WorkScheduleQuestion from "@/components/WorkScheduleQuestion";
-import ActivityLevelQuestion from "@/components/ActivityLevelQuestion";
-import ActiveImportanceQuestion from "@/components/ActiveImportanceQuestion";
-import ActiveDaysQuestion from "@/components/ActiveDaysQuestion";
-import SocialBehaviorQuestion from "@/components/SocialBehaviorQuestion";
-import PurposeQuestion from "@/components/PurposeQuestion";
+import SharedSpacesQuestion from "@/components/quiz/questions/SharedSpacesQuestion";
+import ChildrenQuestion from "@/components/quiz/questions/ChildrenQuestion";
+import PetsQuestion from "@/components/quiz/questions/PetsQuestion";
+import ScaleQuestion from "@/components/quiz/questions/ScaleQuestion";
+import HomeTypeQuestion from "@/components/quiz/questions/HomeTypeQuestion";
+import PhysicalHandlingQuestion from "@/components/quiz/questions/PhysicalHandlingQuestion";
+import VisitorsQuestion from "@/components/quiz/questions/VisitorsQuestion";
+import HairToleranceQuestion from "@/components/quiz/questions/HairToleranceQuestion";
+import DroolingToleranceQuestion from "@/components/quiz/questions/DroolingToleranceQuestion";
+import WorkScheduleQuestion from "@/components/quiz/questions/WorkScheduleQuestion";
+import ActivityLevelQuestion from "@/components/quiz/questions/ActivityLevelQuestion";
+import ActiveImportanceQuestion from "@/components/quiz/questions/ActiveImportanceQuestion";
+import ActiveDaysQuestion from "@/components/quiz/questions/ActiveDaysQuestion";
+import SocialBehaviorQuestion from "@/components/quiz/questions/SocialBehaviorQuestion";
+import PurposeQuestion from "@/components/quiz/questions/PurposeQuestion";
 import { useNavigation } from "@/context/NavigationContext";
 import { getQuizInterimBreeds } from "@/app/actions";
 import { Dog } from "@/lib/api";
 import { calculateFinalBreeds } from "@/lib/quizScoring";
 import { getResultAnalysis } from "@/lib/quizAnalysis";
-import QuizInterimView from "@/components/QuizInterimView";
-import QuizFinalView from "@/components/QuizFinalView";
-import { QuizStartOverModal, QuizLeaveModal } from "@/components/QuizModals";
+import QuizInterimView from "@/components/quiz/QuizInterimView";
+import QuizFinalView from "@/components/quiz/QuizFinalView";
+import { QuizStartOverModal, QuizLeaveModal } from "@/components/quiz/QuizModals";
 
 export default function QuizRunner() {
   const { session, recordAnswer, isInitialized, setStatus } = useQuizSession();

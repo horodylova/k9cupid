@@ -1,5 +1,5 @@
 import { sharedSpacesQuestion, QuizOptionId } from "@/lib/quizQuestions";
-import PhotoMultiChoiceQuestion from "@/components/PhotoMultiChoiceQuestion";
+import PhotoMultiChoiceQuestion from "@/components/quiz/questions/PhotoMultiChoiceQuestion";
 
 type SharedSpacesQuestionProps = {
   selected: QuizOptionId[];

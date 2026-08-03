@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { submitForm } from "@/utils/submitForm";
 import Image from "next/image";
-import NewsletterSubscribeForm from "@/components/NewsletterSubscribeForm";
+import NewsletterSubscribeForm from "@/components/newsletter/NewsletterSubscribeForm";
 
 export default function ContactPage() {
   const [submitting, setSubmitting] = useState(false);

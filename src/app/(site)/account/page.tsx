@@ -31,7 +31,7 @@ import {
 import { getResultAnalysis } from "@/lib/quizAnalysis";
 import { getQuizInterimBreeds } from "@/app/actions";
 import { calculateFinalBreeds } from "@/lib/quizScoring";
-import QuizInterimGrid from "@/components/quiz-interim/QuizInterimGrid";
+import QuizInterimGrid from "@/components/quiz/interim/QuizInterimGrid";
 
 export default function AccountPage() {
   const [session, setSession] = useState<QuizSession | null>(null);
