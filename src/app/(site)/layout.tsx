@@ -6,6 +6,7 @@ import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import PromoModal from "@/components/ui/PromoModal";
 import BootstrapClient from "@/components/ui/BootstrapClient";
+import CookieBanner from "@/components/ui/CookieBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +23,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       <PromoModal />
       <BootstrapClient />
       <Footer />
+      <CookieBanner />
     </div>
   );
 }

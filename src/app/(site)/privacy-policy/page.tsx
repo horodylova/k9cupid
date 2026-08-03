@@ -83,7 +83,7 @@ export default function PrivacyPolicyPage() {
                 may be retained to provide support, maintain records, and comply with legal obligations.
               </p>
 
-              <h3 className="mt-5 mb-3">Your choices</h3>
+              <h3 className="mt-5 mb-3" id="privacy-choices">Your choices</h3>
               <ul className="secondary-font">
                 <li>You can choose what information to include when contacting us.</li>
                 <li>You can clear cookies and site data in your browser settings.</li>
