@@ -105,6 +105,11 @@ export default function ForBreedersPage() {
     setSubmitting(true);
     setStatus(null);
     const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+    if (!endpoint) {
+      setSubmitting(false);
+      setStatus({ type: 'error', message: 'There was an error sending your application. Please try again.' });
+      return;
+    }
     const formData = new FormData(form);
 
     const res = await submitForm(endpoint, formData);

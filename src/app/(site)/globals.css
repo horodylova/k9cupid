@@ -106,6 +106,7 @@ CSS STRUCTURE:
 /* Theme Colors */
 :root {
   --accent-color: #DEAD6F;
+  --brand-accent-text: #734716;
   --dark-color: #222222;
   --light-dark-color: #727272;
   --light-color: #fff;
@@ -1647,4 +1648,72 @@ Single Product section style start
   color: #888888 !important;
   opacity: 1 !important;
   cursor: not-allowed;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+}
+
+.icon-button:focus-visible {
+  outline: 2px solid var(--bs-body-color);
+  outline-offset: 2px;
+}
+
+.btn-close {
+  width: 44px;
+  height: 44px;
+  padding: 12px;
+}
+
+.social-links a,
+.sharebar-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.text-primary {
+  color: var(--brand-accent-text) !important;
+}
+
+.k9-consent-switch.form-check-input {
+  width: 3.25rem;
+  height: 1.75rem;
+  margin-top: 0;
+  cursor: pointer;
+  background-color: #fff;
+  border: 2px solid #41403E;
+  box-shadow: none;
+}
+
+.k9-consent-switch.form-check-input:checked {
+  background-color: var(--bs-primary);
+  border-color: #41403E;
+}
+
+.k9-consent-switch.form-check-input:focus {
+  border-color: #41403E;
+  box-shadow: 0 0 0 0.2rem rgba(222, 173, 111, 0.35);
 }

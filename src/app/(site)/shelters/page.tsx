@@ -1,15 +1,28 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Preloader from "@/components/ui/Preloader";
+import { ArrowRightIcon } from "@/components/ui/icons";
 import styles from "./shelters.module.css";
 import { isExcludedRescuegroupsAnimalId, isRescuegroupsInfoEntryName } from "@/lib/rescuegroupsExclusions";
 import { normalizeHtmlText } from "@/lib/htmlText";
-import { ArrowRightIcon } from "@/components/ui/icons";
 import ShelterDogWishlistHeartButton from "@/components/shelters/ShelterDogWishlistHeartButton";
 import SheltersDesktopFilters from "@/components/shelters/SheltersDesktopFilters";
 import SheltersMobileFilters from "@/components/shelters/SheltersMobileFilters";
+import SheltersSorter from "@/components/shelters/SheltersSorter";
 import sheltersData from "@/data/rescuegroupsShelters.json";
 
-export const revalidate = 300;
+export const revalidate = 60;
+
+export default function SheltersPageWrapper(props: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  return (
+    <Suspense fallback={<Preloader overlay />}>
+      <SheltersPage {...props} />
+    </Suspense>
+  );
+}
 
 type RescueMeta = {
   count: number;
@@ -36,6 +49,9 @@ type RescueAnimal = {
     url?: string;
     pictureThumbnailUrl?: string;
     descriptionText?: string;
+    availableDate?: string;
+    createdDate?: string;
+    updatedDate?: string;
   };
   relationships?: Record<string, RescueRelationship>;
 };
@@ -262,11 +278,15 @@ function getImage(animal: RescueAnimal, included: RescueIncluded[]) {
 async function getDogs({
   page,
   limit,
-  ageGroup,
+  sort,
+  filters,
+  includeDescription,
 }: {
   page: number;
   limit: number;
-  ageGroup?: "Senior";
+  sort?: string;
+  filters?: Array<{ fieldName: string; operation: string; criteria: string }>;
+  includeDescription?: boolean;
 }): Promise<{ meta: RescueMeta; dogs: RescueAnimal[]; included: RescueIncluded[] }> {
   const apiKey = (process.env.RESCUEGROUPS_API_KEY || "").trim();
   if (!apiKey) {
@@ -277,37 +297,62 @@ async function getDogs({
     };
   }
 
-  const runFetch = async (upstream: URL) =>
-    fetch(upstream, {
-      method: ageGroup ? "POST" : "GET",
+  const runFetch = async (upstream: URL, bodyFilters?: Array<{ fieldName: string; operation: string; criteria: string }>) => {
+    const shouldPost = Boolean(bodyFilters && bodyFilters.length > 0);
+    const res = await fetch(upstream, {
+      method: shouldPost ? "POST" : "GET",
       headers: {
         "Content-Type": "application/vnd.api+json",
         Accept: "application/vnd.api+json",
         Authorization: apiKey,
       },
-      body: ageGroup
+      body: shouldPost
         ? JSON.stringify({
             data: {
-              filters: [{ fieldName: "animals.ageGroup", operation: "equal", criteria: ageGroup }],
+              filters: bodyFilters,
             },
           })
         : undefined,
-      next: { revalidate: 300 },
+      next: { revalidate: 60 },
     });
+
+    if (res.ok || !shouldPost) return res;
+
+    const ageOnly = bodyFilters?.filter((f) => f.fieldName === "animals.ageGroup") || [];
+    const shouldPostAgeOnly = ageOnly.length > 0;
+    return fetch(upstream, {
+      method: shouldPostAgeOnly ? "POST" : "GET",
+      headers: {
+        "Content-Type": "application/vnd.api+json",
+        Accept: "application/vnd.api+json",
+        Authorization: apiKey,
+      },
+      body: shouldPostAgeOnly
+        ? JSON.stringify({
+            data: {
+              filters: ageOnly,
+            },
+          })
+        : undefined,
+      next: { revalidate: 60 },
+    });
+  };
 
   const upstream = new URL("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/");
   upstream.searchParams.set("limit", String(limit));
   upstream.searchParams.set("page", String(page));
-  upstream.searchParams.set("include", "pictures,orgs,locations");
+  upstream.searchParams.set("include", "orgs,locations");
+  if (sort) upstream.searchParams.set("sort", sort);
   upstream.searchParams.set(
     "fields[animals]",
-    "name,species,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText"
+    includeDescription
+      ? "name,species,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,descriptionText,availableDate,createdDate,updatedDate"
+      : "name,species,breedString,sex,ageGroup,ageString,sizeGroup,url,pictureThumbnailUrl,availableDate,createdDate,updatedDate"
   );
-  upstream.searchParams.set("fields[pictures]", "small,large,original,order");
-  upstream.searchParams.set("fields[orgs]", "name,url,citystate,city,state,websiteUrl");
-  upstream.searchParams.set("fields[locations]", "citystate,postalcode,state,country,lat,lon,coordinates");
+  upstream.searchParams.set("fields[orgs]", "name,citystate,city,state");
+  upstream.searchParams.set("fields[locations]", "citystate,city,state");
 
-  const res = await runFetch(upstream);
+  const res = await runFetch(upstream, filters);
   const json = (await res.json()) as RescueResponse;
   const meta = json.meta || { count: 0, countReturned: 0, pageReturned: page, limit, pages: 1 };
   const dogs = Array.isArray(json.data) ? json.data : [];
@@ -315,7 +360,7 @@ async function getDogs({
   return { meta, dogs, included };
 }
 
-export default async function SheltersPage({
+async function SheltersPage({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
@@ -328,6 +373,7 @@ export default async function SheltersPage({
   const selectedBreedRaw = Array.isArray(searchParams?.breed) ? searchParams?.breed[0] : searchParams?.breed;
   const selectedAgeRaw = Array.isArray(searchParams?.age) ? searchParams?.age[0] : searchParams?.age;
   const selectedSizeRaw = Array.isArray(searchParams?.size) ? searchParams?.size[0] : searchParams?.size;
+  const selectedSortRaw = Array.isArray(searchParams?.sort) ? searchParams?.sort[0] : searchParams?.sort;
   let selectedShelterId = (selectedShelterIdRaw || "").trim();
   let selectedShelterName = (selectedShelterNameRaw || "").trim();
   const selectedState = (selectedStateRaw || "").trim().toUpperCase();
@@ -335,6 +381,19 @@ export default async function SheltersPage({
   const selectedBreed = normalizeToken((selectedBreedRaw || "").trim());
   const selectedAge = normalizeToken((selectedAgeRaw || "").trim());
   const selectedSize = normalizeToken((selectedSizeRaw || "").trim());
+  const selectedSort = normalizeToken((selectedSortRaw || "").trim());
+  const getComparableDate = (value: string | undefined) => {
+    if (!value) return 0;
+    const t = Date.parse(value);
+    return Number.isFinite(t) ? t : 0;
+  };
+  const sortMode = selectedSort === "newest" || selectedSort === "added" || selectedSort === "updated" ? selectedSort : "";
+  const upstreamSort =
+    sortMode === "added"
+      ? "-animals.createdDate"
+      : sortMode === "updated"
+        ? "-animals.updatedDate"
+        : "-animals.availableDate";
 
   if (selectedShelterName && (!selectedShelterId || !Array.isArray(sheltersData) || !sheltersData.some((s) => s.id === selectedShelterId))) {
     const normalized = selectedShelterName.toLowerCase().trim();
@@ -349,9 +408,8 @@ export default async function SheltersPage({
   const bannerTitle = selectedShelterName || "Shelters";
   const pageSize = 18;
   const maxScanPages = 8;
-  const clientFiltersActive = Boolean(
-    selectedShelterId || selectedState || selectedCity || selectedBreed || selectedAge || selectedSize
-  );
+  const scanBatchSize = 2;
+  const clientFiltersActive = Boolean(!selectedShelterId && (selectedState || selectedCity || selectedBreed || selectedAge || selectedSize));
 
   const includedByKey = new Map<string, RescueIncluded>();
   let displayedDogs: RescueAnimal[] = [];
@@ -362,7 +420,41 @@ export default async function SheltersPage({
   let hasNextPage = false;
   let hasPrevPage = page > 1;
 
-  if (clientFiltersActive) {
+  if (selectedShelterId) {
+    const orgFilters = [{ fieldName: "orgs.id", operation: "equal", criteria: selectedShelterId }];
+    let scanPage = page;
+    for (let scan = 0; scan < maxScanPages && displayedDogs.length < pageSize; scan += 1) {
+      const res = await getDogs({
+        page: scanPage,
+        limit: pageSize,
+        sort: upstreamSort,
+        filters: orgFilters,
+        includeDescription: true,
+      });
+      if (scan === 0) meta = res.meta;
+
+      for (const inc of res.included) {
+        includedByKey.set(`${inc.type}:${inc.id}`, inc);
+      }
+
+      for (const dog of res.dogs) {
+        if (isExcludedRescuegroupsAnimalId(dog.id)) continue;
+        if (isRescuegroupsInfoEntryName(dog.attributes?.name)) continue;
+        if (!isLikelyDog(dog.attributes)) continue;
+        if (!matchesBreedAgeSizeFilters(dog.attributes, selectedBreed, selectedAge, selectedSize)) continue;
+        if (seenDogIds.has(dog.id)) continue;
+        seenDogIds.add(dog.id);
+        displayedDogs.push(dog);
+        if (displayedDogs.length >= pageSize) break;
+      }
+
+      if (scanPage >= (res.meta.pages || 1)) break;
+      scanPage += 1;
+    }
+
+    const totalPages = Math.max(1, meta.pages || 1);
+    hasNextPage = page < totalPages;
+  } else if (clientFiltersActive) {
     totalKnown = false;
     const offset = (page - 1) * pageSize;
     const probe = page * pageSize + 1;
@@ -371,10 +463,7 @@ export default async function SheltersPage({
     let scanPage = 1;
     let upstreamPages = 1;
 
-    while (scanPage <= upstreamPages && matches.length < probe) {
-      const res = await getDogs({ page: scanPage, limit: 250, ageGroup: selectedAge === "senior" ? "Senior" : undefined });
-      if (scanPage === 1) upstreamPages = res.meta.pages || 1;
-
+    const processBatch = (res: { dogs: RescueAnimal[]; included: RescueIncluded[] }) => {
       for (const inc of res.included) {
         includedByKey.set(`${inc.type}:${inc.id}`, inc);
       }
@@ -399,13 +488,61 @@ export default async function SheltersPage({
         matches.push(dog);
         if (matches.length >= probe) break;
       }
+    };
 
-      scanPage += 1;
-      if (scanPage > 500) break;
+    const first = await getDogs({
+      page: scanPage,
+      limit: 250,
+      sort: upstreamSort,
+      includeDescription: false,
+    });
+    upstreamPages = first.meta.pages || 1;
+    const scanLimit = Math.min(upstreamPages, Math.max(maxScanPages, Math.min(20, page * 2)));
+    processBatch(first);
+    scanPage += 1;
+
+    while (scanPage <= scanLimit && matches.length < probe) {
+      const pagesToFetch = Array.from({ length: scanBatchSize }, (_, idx) => scanPage + idx).filter(
+        (p) => p <= scanLimit
+      );
+      const batch = await Promise.all(
+        pagesToFetch.map((p) =>
+          getDogs({
+            page: p,
+            limit: 250,
+            sort: upstreamSort,
+            includeDescription: false,
+          })
+        )
+      );
+
+      for (const res of batch) {
+        processBatch(res);
+        if (matches.length >= probe) break;
+      }
+
+      scanPage += pagesToFetch.length;
     }
 
-    hasNextPage = matches.length > page * pageSize;
-    displayedDogs = matches.slice(offset, offset + pageSize);
+    hasNextPage = matches.length > page * pageSize || upstreamPages > scanLimit;
+    const sortedMatches =
+      sortMode === "newest"
+        ? matches
+            .slice()
+            .sort(
+              (a, b) =>
+                getComparableDate(b.attributes?.availableDate) - getComparableDate(a.attributes?.availableDate)
+            )
+        : sortMode === "added"
+          ? matches
+              .slice()
+              .sort((a, b) => getComparableDate(b.attributes?.createdDate) - getComparableDate(a.attributes?.createdDate))
+          : sortMode === "updated"
+            ? matches
+                .slice()
+                .sort((a, b) => getComparableDate(b.attributes?.updatedDate) - getComparableDate(a.attributes?.updatedDate))
+            : matches;
+    displayedDogs = sortedMatches.slice(offset, offset + pageSize);
     meta = {
       count: 0,
       countReturned: displayedDogs.length,
@@ -416,7 +553,12 @@ export default async function SheltersPage({
   } else {
     let scanPage = page;
     for (let scan = 0; scan < maxScanPages && displayedDogs.length < pageSize; scan += 1) {
-      const res = await getDogs({ page: scanPage, limit: pageSize, ageGroup: selectedAge === "senior" ? "Senior" : undefined });
+      const res = await getDogs({
+        page: scanPage,
+        limit: pageSize,
+        sort: upstreamSort,
+        includeDescription: true,
+      });
       if (scan === 0) meta = res.meta;
 
       for (const inc of res.included) {
@@ -482,6 +624,7 @@ export default async function SheltersPage({
     if (selectedBreed) params.set("breed", selectedBreed);
     if (selectedAge) params.set("age", selectedAge);
     if (selectedSize) params.set("size", selectedSize);
+    if (sortMode) params.set("sort", sortMode);
     if (p > 1) params.set("page", String(p));
     return `/shelters${params.toString() ? `?${params.toString()}` : ""}`;
   };
@@ -577,11 +720,12 @@ export default async function SheltersPage({
                   </p>
                 </div>
                 <div className="sort-by">
-                  <span className="text-muted">Sort: Coming soon</span>
+                  <span className="text-muted me-2">Sort:</span>
+                  <SheltersSorter />
                 </div>
               </div>
 
-              <div className="product-grid row g-4">
+              <div className="product-grid row g-4 mt-4">
                 {displayedDogs.map((dog) => {
                   const name = dog.attributes?.name || "Dog";
                   const breed = dog.attributes?.breedString || "";
@@ -613,7 +757,7 @@ export default async function SheltersPage({
                           orgName={orgName}
                           citystate={citystate}
                         />
-                        <Link href={detailsHref}>
+                        <Link href={detailsHref} prefetch={false}>
                           <div
                             className={`position-relative ${styles.cardImage}`}
                             style={{
@@ -632,7 +776,7 @@ export default async function SheltersPage({
 
                         <div className="card-body p-0 pt-4 d-flex flex-column">
                           <div className="px-3">
-                            <Link href={detailsHref}>
+                            <Link href={detailsHref} prefetch={false}>
                               <h3 className="card-title m-0">{name}</h3>
                             </Link>
                             <div className="text-muted mt-2" style={{ fontSize: 14, lineHeight: 1.4 }}>
@@ -651,9 +795,9 @@ export default async function SheltersPage({
                           </div>
 
                           <div className="mt-auto px-3 pb-3 pt-3">
-                            <Link href={detailsHref} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1 w-100">
+                            <Link href={detailsHref} prefetch={false} className="btn btn-outline-dark btn-md text-uppercase fs-6 rounded-1 w-100">
                               Details
-                              <ArrowRightIcon className="mb-1 ms-2" width="24" height="24" />
+                              <ArrowRightIcon className="mb-1 ms-2" />
                             </Link>
                           </div>
                         </div>
@@ -673,8 +817,13 @@ export default async function SheltersPage({
                 <nav className="navigation paging-navigation text-center mt-5" role="navigation">
                   <div className="pagination loop-pagination d-flex justify-content-center align-items-center">
                     {hasPrevPage && (
-                      <Link href={getPageLink(page - 1)} className="pagination-arrow d-flex align-items-center mx-3">
-                        <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1"></iconify-icon>
+                      <Link
+                        href={getPageLink(page - 1)}
+                        prefetch={false}
+                        className="pagination-arrow d-flex align-items-center mx-3 icon-button"
+                        aria-label="Previous page"
+                      >
+                        <iconify-icon icon="ic:baseline-keyboard-arrow-left" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                       </Link>
                     )}
 
@@ -683,15 +832,20 @@ export default async function SheltersPage({
                       const isCurrent = p === page;
                       if (isCurrent) return <span key={p} aria-current="page" className="page-numbers mt-2 fs-3 mx-3 current">{p}</span>;
                       return (
-                        <Link key={p} className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(p as number)}>
+                        <Link key={p} className="page-numbers mt-2 fs-3 mx-3" href={getPageLink(p as number)} prefetch={false}>
                           {p}
                         </Link>
                       );
                     })}
 
                     {hasNextPage && (
-                      <Link href={getPageLink(page + 1)} className="pagination-arrow d-flex align-items-center mx-3">
-                        <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1"></iconify-icon>
+                      <Link
+                        href={getPageLink(page + 1)}
+                        prefetch={false}
+                        className="pagination-arrow d-flex align-items-center mx-3 icon-button"
+                        aria-label="Next page"
+                      >
+                        <iconify-icon icon="ic:baseline-keyboard-arrow-right" className="pagination-arrow fs-1" aria-hidden="true"></iconify-icon>
                       </Link>
                     )}
                   </div>

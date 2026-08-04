@@ -25,6 +25,11 @@ export default function ContactPage() {
     setStatus(null);
 
     const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+    if (!endpoint) {
+      setSubmitting(false);
+      setStatus({ type: 'error', message: 'There was an error sending your message.' });
+      return;
+    }
     const formData = new FormData(form);
 
     const res = await submitForm(endpoint, formData);
