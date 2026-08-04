@@ -56,7 +56,7 @@ function truncateText(text: string, maxLen: number) {
 }
 
 export async function getLatestPosts(limit = 3): Promise<LatestPost[]> {
-  const query = `*[_type == "post"] | order(coalesce(publishedAt, _createdAt) desc)[0...${Math.max(
+  const query = `*[_type == "post" && coalesce(publishedAt, _createdAt) <= now()] | order(coalesce(publishedAt, _createdAt) desc)[0...${Math.max(
     1,
     Math.min(10, limit)
   )}] {
@@ -80,7 +80,7 @@ export async function getLatestPosts(limit = 3): Promise<LatestPost[]> {
       day: "numeric",
     });
     const imageUrl = post.mainImage
-      ? urlFor(post.mainImage).width(1120).height(700).url()
+      ? urlFor(post.mainImage).width(1120).height(700).fit("crop").url()
       : undefined;
 
     return {

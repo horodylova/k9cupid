@@ -7,7 +7,7 @@ export interface FormSubmissionResponse {
 const DEFAULT_FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ?? 'https://formspree.io/f/mqebkzrw';
 
 export async function submitForm(
-  endpoint: string | undefined,
+  endpoint: string,
   formData: FormData
 ): Promise<FormSubmissionResponse> {
   try {

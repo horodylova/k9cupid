@@ -56,7 +56,7 @@ export async function GET(request: Request) {
       if (!sanity) return [] as SearchItem[];
       try {
         const pattern = `*${query}*`;
-        const groq = `*[_type == "post" && (title match $pattern || excerpt match $pattern)] | order(coalesce(publishedAt, _createdAt) desc)[0...6] {
+        const groq = `*[_type == "post" && coalesce(publishedAt, _createdAt) <= now() && (title match $pattern || excerpt match $pattern)] | order(coalesce(publishedAt, _createdAt) desc)[0...6] {
           title,
           "slug": slug.current
         }`;

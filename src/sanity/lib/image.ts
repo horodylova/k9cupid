@@ -7,5 +7,5 @@ const builder = createImageUrlBuilder({
 })
 
 export const urlFor = (source: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-  return builder.image(source)
+  return builder.image(source).auto('format').quality(75)
 }
